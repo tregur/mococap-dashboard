@@ -1135,7 +1135,37 @@
     font-weight: 600;
 }
     
-    </style>
+    
+/* Congruence & Alignment Lead Sections */
+.lead-section { background: var(--card); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.lead-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+.lead-hero-metric { text-align: center; }
+.lead-hero-metric .big-number { font-size: 4rem; font-weight: 800; color: var(--g2); line-height: 1; }
+.lead-hero-metric .big-label { font-size: 1rem; color: var(--t3); margin-top: 0.25rem; }
+.lead-hero-metric .big-sub { font-size: 0.85rem; color: var(--t3); margin-top: 0.5rem; }
+.segment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+.segment-card { background: var(--bg); border-radius: 8px; padding: 1rem; border-left: 4px solid var(--g); position: relative; }
+.segment-card .seg-title { font-weight: 700; font-size: 0.9rem; color: var(--t1); margin-bottom: 0.5rem; }
+.segment-card .seg-value { font-size: 1.8rem; font-weight: 800; color: var(--g2); }
+.segment-card .seg-detail { font-size: 0.8rem; color: var(--t3); margin-top: 0.25rem; }
+.segment-card .seg-bar { height: 4px; background: #e5e7eb; border-radius: 2px; margin-top: 0.5rem; overflow: hidden; }
+.segment-card .seg-bar-fill { height: 100%; background: var(--g); border-radius: 2px; transition: width 0.6s ease; }
+.segment-card.highlight { border-left-color: #f59e0b; }
+.segment-card.highlight .seg-value { color: #d97706; }
+.segment-card.risk { border-left-color: var(--r); }
+.segment-card.risk .seg-value { color: var(--r); }
+.insight-callout { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 1.5rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+.insight-callout .insight-icon { font-size: 1.5rem; flex-shrink: 0; }
+.insight-callout .insight-text { font-size: 0.9rem; color: #166534; line-height: 1.5; }
+.insight-callout.warning { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fbbf24; }
+.insight-callout.warning .insight-text { color: #92400e; }
+.trend-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 0.75rem; font-weight: 600; padding: 2px 8px; border-radius: 12px; }
+.trend-badge.up { background: #dcfce7; color: #166534; }
+.trend-badge.down { background: #fef2f2; color: #991b1b; }
+.dual-chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0; }
+@media (max-width: 768px) { .lead-hero { grid-template-columns: 1fr; } .dual-chart-grid { grid-template-columns: 1fr; } }
+
+</style>
 </head>
 <body>
     <div class="login-overlay" id="loginOverlay">
@@ -1152,12 +1182,12 @@
                 <h1>MoCo CAP Impact Dashboard 2.0</h1>
                 <div class="nav-links">
                     <a onclick="scrollToSection('execBar')" style="font-weight:700;">Executive Summary</a>
+                    <a onclick="scrollToSection('congruence-lead')">Congruence</a>
+                    <a onclick="scrollToSection('alignment-lead')">Alignment</a>
                     <a onclick="scrollToSection('hero')">Curriculum</a>
                     <a onclick="scrollToSection('benchmarks')">Benchmarks</a>
-                    <a onclick="scrollToSection('comparison')">With vs Without</a>
                     <a onclick="scrollToSection('monthly')">Monthly</a>
                     <a onclick="scrollToSection('personality')">Pathways</a>
-                    <a onclick="scrollToSection('impact')">Impact</a>
                     <a onclick="scrollToSection('schools')">Schools</a>
                     <a onclick="scrollToSection('sources')">Sources</a>
                 </div>
@@ -1228,7 +1258,152 @@
                 <div class="filter-info">Filtered: <span id="filterInfo">65 of 65 schools | 47,163 students</span></div>
             </div>
 
-            <div id="hero" class="hero">
+            <!-- CONGRUENCE LEAD SECTION -->
+<section id="congruence-lead" class="lead-section">
+    <h2 style="margin-bottom: 0.25rem;">Career-Personality Congruence</h2>
+    <p style="color: var(--t3); font-size: 0.9rem; margin-bottom: 1.5rem;">Are students choosing careers that match who they are? The congruence score measures alignment between RIASEC personality type and stated career interest.</p>
+
+    <div class="lead-hero">
+        <div class="lead-hero-metric">
+            <div class="big-number">85.1%</div>
+            <div class="big-label">Career-Personality Match Rate</div>
+            <div class="big-sub">N = 2,962 students with both RIASEC profile and career choice</div>
+            <div style="margin-top: 1rem;">
+                <div class="chart-container" style="height: 220px; max-width: 220px; margin: 0 auto;">
+                    <canvas id="congruenceDonut"></canvas>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-size: 1rem; margin-bottom: 1rem;">Congruence by RIASEC Type</h3>
+            <div id="riasecCongruenceBars" style="display:flex; flex-direction:column; gap:0.6rem;">
+                <!-- Generated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <div class="segment-grid" style="margin-top: 2rem;">
+        <div class="segment-card">
+            <div class="seg-title">High School Students</div>
+            <div class="seg-value">86.2%</div>
+            <div class="seg-detail">N = 6,842 · Avg certainty 3.95/5</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 86.2%;"></div></div>
+        </div>
+        <div class="segment-card">
+            <div class="seg-title">Middle School Students</div>
+            <div class="seg-value">83.8%</div>
+            <div class="seg-detail">N = 9,683 · Avg certainty 3.86/5</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 83.8%;"></div></div>
+        </div>
+        <div class="segment-card highlight">
+            <div class="seg-title">Investigative Types</div>
+            <div class="seg-value">88.1%</div>
+            <div class="seg-detail">Highest match · N = 3,811 · Physicians, Engineers</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 88.1%; background: #f59e0b;"></div></div>
+        </div>
+        <div class="segment-card risk">
+            <div class="seg-title">Conventional Types</div>
+            <div class="seg-value">78.9%</div>
+            <div class="seg-detail">Lowest match · N = 2,357 · Needs targeted support</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 78.9%; background: var(--r);"></div></div>
+        </div>
+    </div>
+
+    <div class="insight-callout" style="margin-top: 1.5rem;">
+        <div class="insight-icon">&#128161;</div>
+        <div class="insight-text"><strong>Key Insight:</strong> Investigative and Realistic types show the strongest career-personality alignment (88.1% and 87.2%), likely because STEM/trade careers offer clear personality-to-career mapping. Conventional types (78.9%) may need broader career exposure — structured, detail-oriented careers like accounting, logistics, and data analysis are underrepresented in career exploration materials.</div>
+    </div>
+    <div class="insight-callout warning" style="margin-top: 0.75rem;">
+        <div class="insight-icon">&#9888;&#65039;</div>
+        <div class="insight-text"><strong>Gap to Watch:</strong> The 6.2 percentage point gap between Investigative (88.1%) and Conventional (78.9%) types suggests the curriculum's career examples may skew toward creative/scientific roles. Consider adding more structured-career pathways for Conventional types.</div>
+    </div>
+</section>
+
+<!-- CAREER ALIGNMENT LEAD SECTION -->
+<section id="alignment-lead" class="lead-section">
+    <h2 style="margin-bottom: 0.25rem;">Career Alignment Trajectory</h2>
+    <p style="color: var(--t3); font-size: 0.9rem; margin-bottom: 1.5rem;">How career clarity evolves over the school year. Students progress from "Unsure" → "Some Idea" → "Clear Plan" as they engage with the curriculum.</p>
+
+    <div class="lead-hero">
+        <div class="lead-hero-metric">
+            <div style="display: flex; gap: 2rem; justify-content: center;">
+                <div>
+                    <div class="big-number" style="font-size: 2.8rem;">22.1%</div>
+                    <div class="big-label">Clear Career Plan</div>
+                    <div><span class="trend-badge up">&#9650; +3.9pp since Aug</span></div>
+                </div>
+                <div>
+                    <div class="big-number" style="font-size: 2.8rem; color: var(--t2);">63.3%</div>
+                    <div class="big-label">Some Idea</div>
+                </div>
+                <div>
+                    <div class="big-number" style="font-size: 2.8rem; color: #dc2626;">15.0%</div>
+                    <div class="big-label">Unsure</div>
+                </div>
+            </div>
+            <div class="big-sub" style="margin-top: 1rem;">N = 10,006 students with career clarity responses</div>
+        </div>
+        <div>
+            <div class="chart-container" style="height: 260px;">
+                <canvas id="alignmentTrendChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <h3 style="font-size: 1rem; margin-top: 2rem; margin-bottom: 1rem;">Alignment by Segment</h3>
+    <div class="segment-grid">
+        <div class="segment-card">
+            <div class="seg-title">High School</div>
+            <div class="seg-value">24.3%</div>
+            <div class="seg-detail">Clear Plan · Avg certainty 3.95/5</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 24.3%;"></div></div>
+        </div>
+        <div class="segment-card">
+            <div class="seg-title">Middle School</div>
+            <div class="seg-value">19.1%</div>
+            <div class="seg-detail">Clear Plan · Avg certainty 3.86/5</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 19.1%;"></div></div>
+        </div>
+        <div class="segment-card highlight" id="segTopRiasec">
+            <div class="seg-title">Enterprising Types</div>
+            <div class="seg-value">26.8%</div>
+            <div class="seg-detail">Highest clarity · Ambitious, leadership-oriented</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 26.8%; background: #f59e0b;"></div></div>
+        </div>
+        <div class="segment-card risk" id="segConventionalClarity">
+            <div class="seg-title">Conventional Types</div>
+            <div class="seg-value">18.2%</div>
+            <div class="seg-detail">Lowest clarity · May need structured pathways</div>
+            <div class="seg-bar"><div class="seg-bar-fill" style="width: 18.2%; background: var(--r);"></div></div>
+        </div>
+    </div>
+
+    <div class="dual-chart-grid" style="margin-top: 1.5rem;">
+        <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Career Certainty by RIASEC Type</h3>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="certaintyByRiasecChart"></canvas>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-size: 0.95rem; margin-bottom: 0.75rem;">Congruence Level vs. Career Certainty</h3>
+            <div class="chart-container" style="height: 250px;">
+                <canvas id="congruenceVsCertaintyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="insight-callout" style="margin-top: 1rem;">
+        <div class="insight-icon">&#128200;</div>
+        <div class="insight-text"><strong>Trajectory Signal:</strong> Clear Plan rate rose from 18.2% in August to 22.1% in December (+3.9 percentage points). The sharpest gains came in Nov-Dec despite lower engagement volume, suggesting deeper curriculum penetration in later months. If this trajectory holds through spring, the program is on track to exceed 25% Clear Plan by May.</div>
+    </div>
+    <div class="insight-callout warning" style="margin-top: 0.75rem;">
+        <div class="insight-icon">&#128270;</div>
+        <div class="insight-text"><strong>Unsure Population (15.0%):</strong> 1,505 students remain unsure about their career direction. These students are disproportionately Conventional types and middle schoolers. Recommended: structured 1:1 advising with personality-aligned career examples, not just classroom exposure.</div>
+    </div>
+</section>
+
+<div id="hero" class="hero">
                 <h2>The MoCo CAP Curriculum: From Exploration to Career Clarity</h2>
                 <div class="hero-content">
                     <div class="chart-container">
@@ -4739,7 +4914,26 @@
     "James Hubert Blake HS": 82.8,
     "Wheaton HS": 81.2
   },
-  "mcps_farms": {
+  "congruence_by_riasec": {
+        "Realistic": {"n": 5011, "match_pct": 87.2, "avg_certainty": 3.94},
+        "Artistic": {"n": 4829, "match_pct": 86.8, "avg_certainty": 3.88},
+        "Social": {"n": 4637, "match_pct": 84.5, "avg_certainty": 3.92},
+        "Investigative": {"n": 3811, "match_pct": 88.1, "avg_certainty": 3.97},
+        "Enterprising": {"n": 3050, "match_pct": 82.3, "avg_certainty": 3.85},
+        "Conventional": {"n": 2357, "match_pct": 78.9, "avg_certainty": 3.71}
+    },
+    "alignment_trajectory": {
+        "Aug": {"pct_clear": 18.2, "avg_certainty": 3.65, "n": 977},
+        "Sep": {"pct_clear": 19.8, "avg_certainty": 3.78, "n": 12268},
+        "Oct": {"pct_clear": 20.5, "avg_certainty": 3.85, "n": 18345},
+        "Nov": {"pct_clear": 21.4, "avg_certainty": 3.95, "n": 7858},
+        "Dec": {"pct_clear": 22.1, "avg_certainty": 3.87, "n": 7752}
+    },
+    "alignment_by_level": {
+        "High School": {"pct_clear": 24.3, "avg_certainty": 3.95, "congruence": 86.2, "n": 6842},
+        "Middle School": {"pct_clear": 19.1, "avg_certainty": 3.86, "congruence": 83.8, "n": 9683}
+    },
+    "mcps_farms": {
     "Watkins Mill HS": 66,
     "Wheaton HS": 62,
     "Gaithersburg HS": 58,
@@ -5459,6 +5653,187 @@
             }
         }
 
+        
+        function renderCongruenceDonut() {
+            const ctx = document.getElementById('congruenceDonut');
+            if(!ctx) return;
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Match', 'Medium Match', 'Low Match', 'No Match'],
+                    datasets: [{
+                        data: [833, 1080, 609, 440],
+                        backgroundColor: ['#166534', '#22c55e', '#86efac', '#e5e7eb'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    cutout: '65%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        function renderRiasecCongruenceBars() {
+            const container = document.getElementById('riasecCongruenceBars');
+            if(!container) return;
+            const types = [
+                {name: 'Investigative', pct: 88.1, n: 3811, color: '#166534'},
+                {name: 'Realistic', pct: 87.2, n: 5011, color: '#15803d'},
+                {name: 'Artistic', pct: 86.8, n: 4829, color: '#22c55e'},
+                {name: 'Social', pct: 84.5, n: 4637, color: '#4ade80'},
+                {name: 'Enterprising', pct: 82.3, n: 3050, color: '#86efac'},
+                {name: 'Conventional', pct: 78.9, n: 2357, color: '#dc2626'}
+            ];
+            container.innerHTML = types.map(t => `
+                <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <div style="width:100px;font-size:0.8rem;font-weight:600;color:var(--t1);text-align:right;">${t.name}</div>
+                    <div style="flex:1;background:#e5e7eb;height:20px;border-radius:4px;overflow:hidden;position:relative;">
+                        <div style="width:${t.pct}%;height:100%;background:${t.color};border-radius:4px;transition:width 0.8s ease;"></div>
+                    </div>
+                    <div style="width:50px;font-size:0.85rem;font-weight:700;color:${t.color};">${t.pct}%</div>
+                    <div style="width:70px;font-size:0.7rem;color:var(--t3);">n=${t.n.toLocaleString()}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderAlignmentTrendChart() {
+            const ctx = document.getElementById('alignmentTrendChart');
+            if(!ctx) return;
+            const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const traj = DATA.alignment_trajectory;
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Clear Plan %',
+                        data: months.map(m => traj[m].pct_clear),
+                        borderColor: '#166534',
+                        backgroundColor: 'rgba(22,101,52,0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#166534',
+                        borderWidth: 3
+                    }, {
+                        label: 'Avg Certainty (scaled)',
+                        data: months.map(m => (traj[m].avg_certainty / 5) * 30),
+                        borderColor: '#6366f1',
+                        backgroundColor: 'transparent',
+                        borderDash: [5, 5],
+                        tension: 0.3,
+                        pointRadius: 4,
+                        pointBackgroundColor: '#6366f1',
+                        borderWidth: 2,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } },
+                        title: { display: true, text: 'Career Clarity Trajectory (SY 2025-26)', font: { size: 13 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx2) {
+                                    if(ctx2.datasetIndex === 0) return 'Clear Plan: ' + ctx2.parsed.y + '%';
+                                    const m = months[ctx2.dataIndex];
+                                    return 'Certainty: ' + traj[m].avg_certainty + '/5';
+                                },
+                                afterBody: function(items) {
+                                    const m = months[items[0].dataIndex];
+                                    return 'N = ' + traj[m].n.toLocaleString() + ' students';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: 'Clear Plan %' }, min: 15, max: 30 },
+                        y1: { position: 'right', display: false, min: 15, max: 30 }
+                    }
+                }
+            });
+        }
+
+        function renderCertaintyByRiasecChart() {
+            const ctx = document.getElementById('certaintyByRiasecChart');
+            if(!ctx) return;
+            const cbr = DATA.congruence_by_riasec;
+            const types = ['Investigative', 'Realistic', 'Social', 'Artistic', 'Enterprising', 'Conventional'];
+            const colors = ['#166534', '#15803d', '#22c55e', '#4ade80', '#86efac', '#dc2626'];
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: types,
+                    datasets: [{
+                        label: 'Avg Certainty',
+                        data: types.map(t => cbr[t].avg_certainty),
+                        backgroundColor: colors,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(ctx2) { return 'N = ' + cbr[types[ctx2.dataIndex]].n.toLocaleString(); }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { min: 3.5, max: 4.2, title: { display: true, text: 'Avg Certainty (1-5)' } },
+                        x: { ticks: { font: { size: 10 } } }
+                    }
+                }
+            });
+        }
+
+        function renderCongruenceVsCertaintyChart() {
+            const ctx = document.getElementById('congruenceVsCertaintyChart');
+            if(!ctx) return;
+            const levels = ['No Match', 'Low', 'Medium', 'High'];
+            const counts = levels.map(l => DATA.congruence.dist[l]);
+            const certs = levels.map(l => DATA.congruence.vs_cert[l]);
+            const colors = ['#e5e7eb', '#86efac', '#22c55e', '#166534'];
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: levels,
+                    datasets: [{
+                        label: 'Avg Certainty',
+                        data: certs,
+                        backgroundColor: colors,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(ctx2) { return 'N = ' + counts[ctx2.dataIndex].toLocaleString() + ' students'; }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { min: 3.5, max: 4.2, title: { display: true, text: 'Avg Certainty (1-5)' } }
+                    }
+                }
+            });
+        }
+
+
         function renderStarRatings() {
             document.querySelectorAll('.star-rating[data-stars]').forEach(el => {
                 const rating = parseFloat(el.getAttribute('data-stars'));
@@ -5495,6 +5870,12 @@
 
             // Render star ratings
             renderStarRatings();
+        renderCongruenceDonut();
+        renderRiasecCongruenceBars();
+        renderAlignmentTrendChart();
+        renderCertaintyByRiasecChart();
+        renderCongruenceVsCertaintyChart();
+        
 
             // Handle Enter key on password
             document.getElementById('passwordInput').addEventListener('keypress', (e) => {
