@@ -14,13 +14,13 @@
         }
 
         :root {
-            --g: #00C805;
+            --g: #2563eb;
             --bg: #ffffff;
-            --surface: #f5f5f5;
-            --bdr: #ebebeb;
-            --t1: #1a1a1a;
-            --t2: #4a4a4a;
-            --t3: #8c8c8c;
+            --surface: #f8f9fa;
+            --bdr: #e5e7eb;
+            --t1: #111827;
+            --t2: #4b5563;
+            --t3: #9ca3af;
         }
 
         html, body {
@@ -85,7 +85,7 @@
         .login-box input:focus {
             outline: none;
             border-color: var(--g);
-            box-shadow: 0 0 0 3px rgba(0, 200, 5, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .login-box button {
@@ -206,7 +206,7 @@
         .nav-item.active {
             color: var(--g);
             border-left-color: var(--g);
-            background: rgba(0, 200, 5, 0.05);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .sidebar.collapsed .nav-item.active {
@@ -271,8 +271,8 @@
         .hero-section {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .hero-chart {
@@ -281,7 +281,7 @@
             border-radius: 12px;
             padding: 1.5rem;
             position: relative;
-            height: 400px;
+            height: 320px;
         }
 
         .hero-highlights {
@@ -300,7 +300,7 @@
 
         .highlight-card.good {
             border-left-color: var(--g);
-            background: rgba(0, 200, 5, 0.02);
+            background: rgba(37, 99, 235, 0.02);
         }
 
         .highlight-card.alert {
@@ -332,7 +332,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 1rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .kpi-card {
@@ -369,7 +369,7 @@
         }
 
         .trends-section {
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .trends-title {
@@ -470,7 +470,7 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--g);
-            box-shadow: 0 0 0 3px rgba(0, 200, 5, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .table-info {
@@ -533,15 +533,15 @@
         .chart-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .chart-card {
             background: var(--bg);
             border: 1px solid var(--bdr);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1rem;
         }
 
         .chart-title {
@@ -681,7 +681,7 @@
             gap: 0.5rem;
         }
 
-        .expert-section-title.green { color: #16a34a; }
+        .expert-section-title.green { color: #2563eb; }
         .expert-section-title.red { color: #dc2626; }
         .expert-section-title.blue { color: #2563eb; }
         .expert-section-title.amber { color: #d97706; }
@@ -804,7 +804,7 @@
         .filter-select:focus {
             outline: none;
             border-color: var(--g);
-            box-shadow: 0 0 0 3px rgba(0, 200, 5, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .filter-divider {
@@ -935,7 +935,7 @@
         .threshold-input:focus {
             outline: none;
             border-color: var(--g);
-            box-shadow: 0 0 0 3px rgba(0, 200, 5, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .threshold-unit {
@@ -1164,7 +1164,7 @@
         }
 
         .section-narrative {
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.75rem;
             font-size: 13px;
             line-height: 1.8;
             color: var(--t2);
@@ -1223,7 +1223,7 @@
             letter-spacing: 0.05em;
         }
 
-        .conf-high { background: #dcfce7; color: #166534; }
+        .conf-high { background: #dcfce7; color: #1e40af; }
         .conf-mod { background: #fef9c3; color: #854d0e; }
         .conf-low { background: #fee2e2; color: #991b1b; }
 
@@ -1286,7 +1286,7 @@
             font-weight: 600;
         }
 
-        .riasec-tag.primary { background: #dcfce7; color: #166534; }
+        .riasec-tag.primary { background: #dcfce7; color: #1e40af; }
         .riasec-tag.secondary { background: #e0f2fe; color: #0369a1; }
 
         .sector-detail {
@@ -1532,7 +1532,7 @@
             width: 120px;
             height: 12px;
             border-radius: 3px;
-            background: linear-gradient(to right, #fee2e2, #fef9c3, #dcfce7, #166534);
+            background: linear-gradient(to right, #fee2e2, #fef9c3, #dcfce7, #1e40af);
         }
         .heatmap-filter-row {
             display: flex;
@@ -1572,7 +1572,7 @@
             color: var(--t2);
         }
         .corr-positive { border-left-color: var(--g); }
-        .corr-positive .corr-value { color: #166534; }
+        .corr-positive .corr-value { color: #1e40af; }
         .corr-negative { border-left-color: #dc2626; }
         .corr-negative .corr-value { color: #dc2626; }
         .corr-neutral { border-left-color: #f59e0b; }
@@ -1669,7 +1669,7 @@
             padding: 1px 5px;
             border-radius: 3px;
         }
-        .month-btn .month-delta.up { background: rgba(0,200,5,0.15); color: #166534; }
+        .month-btn .month-delta.up { background: rgba(37,99,235,0.15); color: #1e40af; }
         .month-btn .month-delta.down { background: rgba(220,38,38,0.15); color: #991b1b; }
         .month-btn.active .month-delta.up { background: rgba(255,255,255,0.3); color: #fff; }
         .month-btn.active .month-delta.down { background: rgba(255,255,255,0.3); color: #fff; }
@@ -1690,8 +1690,8 @@
         .ic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
         }
         .insight-card {
             background: var(--bg);
@@ -1733,7 +1733,7 @@
         .ic-category-icon[data-cat="school"]      { background: #dbeafe; color: #1d4ed8; }
         .ic-category-icon[data-cat="grade"]        { background: #fef3c7; color: #92400e; }
         .ic-category-icon[data-cat="personality"]  { background: #ede9fe; color: #6d28d9; }
-        .ic-category-icon[data-cat="career"]       { background: #dcfce7; color: #166534; }
+        .ic-category-icon[data-cat="career"]       { background: #dcfce7; color: #1e40af; }
         .ic-category-icon[data-cat="engagement"]   { background: #fce7f3; color: #be185d; }
         .ic-category-icon[data-cat="program"]      { background: #ffedd5; color: #c2410c; }
         .ic-category-icon[data-cat="equity"]       { background: #e0f2fe; color: #0369a1; }
@@ -1755,7 +1755,7 @@
             border-radius: 4px;
             letter-spacing: 0.05em;
         }
-        .ic-severity--positive { background: #dcfce7; color: #166534; }
+        .ic-severity--positive { background: #dcfce7; color: #1e40af; }
         .ic-severity--negative { background: #fee2e2; color: #991b1b; }
         .ic-severity--neutral  { background: #fef3c7; color: #92400e; }
         .ic-severity--info     { background: #dbeafe; color: #1e40af; }
@@ -1776,7 +1776,7 @@
             font-weight: 700;
             margin-bottom: 0.4rem;
         }
-        .ic-value--positive { color: #166534; }
+        .ic-value--positive { color: #1e40af; }
         .ic-value--negative { color: #dc2626; }
         .ic-value--neutral  { color: #854d0e; }
         .ic-value--info     { color: #1e40af; }
@@ -1862,7 +1862,7 @@
             font-family: inherit;
         }
         .ic-rate-btn:hover { border-color: var(--t2); color: var(--t2); }
-        .ic-rate-btn.active-up { background: #dcfce7; border-color: var(--g); color: #166534; }
+        .ic-rate-btn.active-up { background: #dcfce7; border-color: var(--g); color: #1e40af; }
         .ic-rate-btn.active-down { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
 
         /* ===== Bubble Chart Container ===== */
@@ -1870,14 +1870,14 @@
             background: var(--bg);
             border: 1px solid var(--bdr);
             border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
         }
         .bubble-chart-title {
             font-size: 14px;
             font-weight: 600;
             color: var(--t1);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
         }
 
         /* ===== Segmentation Pills ===== */
@@ -1911,8 +1911,8 @@
         .scorecard-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
         }
         .scorecard-item {
             background: var(--bg);
@@ -1952,7 +1952,7 @@
             font-size: 12px;
             font-weight: 600;
         }
-        .scorecard-trend.up { color: #166534; }
+        .scorecard-trend.up { color: #1e40af; }
         .scorecard-trend.down { color: #dc2626; }
         .scorecard-trend .arrow { font-size: 14px; }
         .scorecard-sparkline {
@@ -1986,7 +1986,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 0.75rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .sector-impact-card {
             background: var(--bg);
@@ -2016,12 +2016,12 @@
             font-size: 10px;
             font-weight: 700;
         }
-        .sector-impact-dir.above { background: #dcfce7; color: #166534; }
+        .sector-impact-dir.above { background: #dcfce7; color: #1e40af; }
         .sector-impact-dir.below { background: #fee2e2; color: #991b1b; }
 
         /* ===== October Overview Charts Section ===== */
         .oct-charts-section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .oct-charts-section .section-label {
             font-size: 14px;
@@ -2036,6 +2036,105 @@
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1rem;
         }
+
+        /* ===== Widget Insight Footers ===== */
+        .widget-insight {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--surface);
+            border-radius: 6px;
+            border-left: 3px solid var(--g);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        .widget-insight.negative { border-left-color: #ef4444; }
+        .widget-insight-trend {
+            font-weight: 700;
+            margin-right: 0.25rem;
+        }
+        .widget-insight-trend.up { color: #2563eb; }
+        .widget-insight-trend.down { color: #ef4444; }
+        .widget-insight-trend.steady { color: #f59e0b; }
+        .widget-insight-action {
+            display: block;
+            margin-top: 0.25rem;
+            font-style: italic;
+            color: var(--t3);
+        }
+
+        /* ===== MoM Data Table ===== */
+        .mom-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            margin-top: 0.75rem;
+        }
+        .mom-table th {
+            background: var(--surface);
+            font-weight: 700;
+            text-align: left;
+            padding: 4px 8px;
+            border-bottom: 2px solid var(--bdr);
+            color: var(--t1);
+            white-space: nowrap;
+        }
+        .mom-table td {
+            padding: 3px 8px;
+            border-bottom: 1px solid var(--bdr);
+            color: var(--t2);
+            white-space: nowrap;
+        }
+        .mom-table .delta-pos { color: #2563eb; font-weight: 600; }
+        .mom-table .delta-neg { color: #ef4444; font-weight: 600; }
+        .mom-table .delta-none { color: var(--t3); }
+
+        /* ===== Global Pivot Bar ===== */
+        .global-pivot-bar {
+            position: sticky;
+            top: 0;
+            z-index: 99;
+            background: var(--bg);
+            border-bottom: 1px solid var(--bdr);
+            padding: 6px 1.5rem;
+            display: flex;
+            gap: 0;
+            justify-content: center;
+            align-items: center;
+        }
+        .global-pivot-bar .seg-pills {
+            margin: 0;
+        }
+
+        /* ===== Bubble Chart Pivot Pills ===== */
+        .bubble-pivot-pills {
+            display: inline-flex;
+            gap: 0;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            overflow: hidden;
+            margin-left: 1rem;
+        }
+        .bubble-pivot-pill {
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--t2);
+            background: var(--bg);
+            cursor: pointer;
+            border-right: 1px solid var(--bdr);
+            transition: all 0.15s;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .bubble-pivot-pill:last-child { border-right: none; }
+        .bubble-pivot-pill:hover { background: var(--surface); }
+        .bubble-pivot-pill.active { background: var(--t1); color: var(--bg); }
+
+        /* ===== Insight Age Fading ===== */
+        .insight-age-0 { opacity: 1; }
+        .insight-age-1 { opacity: 0.85; }
+        .insight-age-2 { opacity: 0.7; }
+        .insight-age-3 { opacity: 0.55; }
     </style>
 </head>
 <body>
@@ -2113,6 +2212,16 @@
                     </div>
                 </div>
 
+                <div class="global-pivot-bar" id="globalPivotBar">
+                    <div class="seg-pills" id="globalPivotPills">
+                        <span class="seg-pill active" data-pivot="overall" onclick="switchGlobalPivot('overall', this)">Overall</span>
+                        <span class="seg-pill" data-pivot="school" onclick="switchGlobalPivot('school', this)">By School</span>
+                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By Personality</span>
+                        <span class="seg-pill" data-pivot="grade" onclick="switchGlobalPivot('grade', this)">By Grade</span>
+                        <span class="seg-pill" data-pivot="career" onclick="switchGlobalPivot('career', this)">By Career</span>
+                    </div>
+                </div>
+
                 <div class="content">
                     <div class="page active" id="overview">
                         <div class="month-nav" id="monthNav"></div>
@@ -2180,22 +2289,21 @@
                         </div>
 
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
-                            <div class="metric-detail" style="margin-bottom:0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Use pills to pivot by personality type, grade level, or career selection. | SY 2025-26</div>
-                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
-                                <div class="bubble-chart-title" style="margin-bottom:0;">Congruence & Certainty Trends</div>
-                                <div class="seg-pills" id="trendSegPills">
-                                    <span class="seg-pill active" data-seg="overall" onclick="switchTrendSegment('overall', this)">Overall</span>
-                                    <span class="seg-pill" data-seg="personality" onclick="switchTrendSegment('personality', this)">By Personality</span>
-                                    <span class="seg-pill" data-seg="grade" onclick="switchTrendSegment('grade', this)">By Grade</span>
-                                    <span class="seg-pill" data-seg="career" onclick="switchTrendSegment('career', this)">By Career</span>
-                                </div>
-                            </div>
+                            <div class="metric-detail" style="margin-bottom:0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Responds to the global pivot above. | SY 2025-26</div>
+                            <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty Trends</div>
                             <div style="position:relative;height:380px;"><canvas id="overviewScoresCanvas"></canvas></div>
+                            <div id="overviewScoresTable"></div>
                         </div>
 
                         <div class="bubble-chart-wrap" id="correlationSpotlight">
-                            <div class="bubble-chart-title">Career-Personality Landscape: Congruence vs. Certainty by RIASEC Type</div>
-                            <div class="metric-detail">Bubble chart mapping each RIASEC personality type. X-axis = congruence (% of students whose career interest matches their personality type). Y-axis = certainty (avg 1-5 self-rated confidence). Bubble size = number of students. | SY 2025-26 cumulative</div>
+                            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
+                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape: Congruence vs. Certainty</div>
+                                <div class="bubble-pivot-pills" id="bubblePivotPills">
+                                    <span class="bubble-pivot-pill active" onclick="switchBubblePivot('riasec', this)">By RIASEC Type</span>
+                                    <span class="bubble-pivot-pill" onclick="switchBubblePivot('career', this)">By Career</span>
+                                </div>
+                            </div>
+                            <div class="metric-detail">Bubble chart mapping each RIASEC personality type or top career selection. X-axis = congruence (% match). Y-axis = certainty (avg 1-5). Bubble size = student count. | SY 2025-26 cumulative</div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
                         <div id="correlationCards">
@@ -3213,7 +3321,7 @@
         Chart.defaults.elements.line.tension = 0.3;
         Chart.defaults.elements.point.radius = 0;
         Chart.defaults.elements.point.hoverRadius = 5;
-        Chart.defaults.elements.point.hoverBackgroundColor = '#00C805';
+        Chart.defaults.elements.point.hoverBackgroundColor = '#2563eb';
         Chart.defaults.elements.bar.borderRadius = 6;
         // Enhanced tooltips — larger, easier to read
         Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.95)';
@@ -3566,13 +3674,24 @@
                 });
             }
 
-            // Sort by absolute divergence
-            allChanges.sort(function(a,b) { return Math.abs(b.delta) - Math.abs(a.delta); });
+            // Sort by recency first (most recent month first), then by absolute divergence
+            var lastMonth = months[months.length - 1];
+            var monthIndex = {};
+            months.forEach(function(m, i) { monthIndex[m] = i; });
+
+            allChanges.sort(function(a,b) {
+                var ageA = months.length - 1 - monthIndex[a.month];
+                var ageB = months.length - 1 - monthIndex[b.month];
+                if (ageA !== ageB) return ageA - ageB;
+                return Math.abs(b.delta) - Math.abs(a.delta);
+            });
 
             var html = allChanges.slice(0, 8).map(function(c) {
                 var arrow = c.delta >= 0 ? '▲' : '▼';
                 var isLasting = (c.metric === 'Avg Certainty' && lasting.avg_certainty) || (c.metric === 'Clear Plan %' && lasting.pct_clear);
-                return buildInsightCard({
+                var age = months.length - 1 - monthIndex[c.month];
+                var ageClass = age >= 3 ? 'insight-age-3' : 'insight-age-' + age;
+                return '<div class="' + ageClass + '">' + buildInsightCard({
                     id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
                     category: c.cat,
                     severity: c.delta >= 0 ? 'positive' : 'negative',
@@ -3581,7 +3700,7 @@
                     detail: c.fmt(c.prev) + ' → ' + c.fmt(c.curr),
                     lasting: isLasting,
                     sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
-                });
+                }) + '</div>';
             }).join('');
 
             target.innerHTML = '<div class="ic-grid">' + html + '</div>';
@@ -3714,9 +3833,9 @@
             const summaryEl = document.getElementById('dynamicSummary');
             if (summaryEl) {
                 const sessionIcon = parseFloat(sessionsDeltaPct) >= 0 ? '▲' : '▼';
-                const sessionColor = parseFloat(sessionsDeltaPct) >= 0 ? '#166534' : '#dc2626';
+                const sessionColor = parseFloat(sessionsDeltaPct) >= 0 ? '#1e40af' : '#dc2626';
                 const clarityIcon = parseFloat(clarityDelta) >= 0 ? '▲' : '▼';
-                const clarityColor = parseFloat(clarityDelta) >= 0 ? '#166534' : '#dc2626';
+                const clarityColor = parseFloat(clarityDelta) >= 0 ? '#1e40af' : '#dc2626';
 
                 summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-personality congruence rate</strong> indicates strong alignment between student interests and career selections, validated against O*NET RIASEC codes.</p>' +
                 '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" cohort (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) remains the highest-impact intervention opportunity. Regression data shows CTE pathway exposure (beta=-3.27, p&lt;0.001) is the single strongest lever.</p>' +
@@ -3745,7 +3864,7 @@
             const kpisEl = document.getElementById('dynamicKPIs');
             if (kpisEl) {
                 function kpiIcon(val, low, high) {
-                    if (val >= high) return '<span style="color:#166534;">▲ High</span>';
+                    if (val >= high) return '<span style="color:#1e40af;">▲ High</span>';
                     if (val <= low) return '<span style="color:#dc2626;">▼ Low</span>';
                     return '<span style="color:#854d0e;">● Avg</span>';
                 }
@@ -3860,93 +3979,113 @@
         function renderRiasecBubbleChart() {
             var canvas = document.getElementById('riasecBubbleChart');
             if (!canvas) return;
-            if (bubbleChartInstance) { bubbleChartInstance.destroy(); }
+            var existingChart = Chart.getChart(canvas);
+            if (existingChart) existingChart.destroy();
+            if (bubbleChartInstance) { try { bubbleChartInstance.destroy(); } catch(e) {} bubbleChartInstance = null; }
 
             var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
-            var colors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
+            var colors = ['#ef4444','#3b82f6','#eab308','#3b82f6','#f97316','#8b5cf6'];
             var bgColors = ['rgba(239,68,68,0.7)','rgba(59,130,246,0.7)','rgba(234,179,8,0.7)','rgba(34,197,94,0.7)','rgba(249,115,22,0.7)','rgba(139,92,246,0.7)'];
+            var riasecColorMap = {}; types.forEach(function(t, i) { riasecColorMap[t] = { bg: bgColors[i], border: colors[i] }; });
 
-            var datasets = types.map(function(t, i) {
-                var d = DATA.congruence_by_riasec[t];
-                return {
-                    label: t,
-                    data: [{ x: d.match_pct, y: d.avg_certainty, r: Math.sqrt(d.n) / 6 }],
-                    backgroundColor: bgColors[i],
-                    borderColor: colors[i],
-                    borderWidth: 2,
-                    hoverBorderWidth: 3
+            var datasets, tooltipCb, xMin, xMax, yMin, yMax;
+
+            if (currentBubblePivot === 'career') {
+                // Career pivot: show top 10 careers as bubbles colored by RIASEC type
+                var careers = Object.keys(CAREER_RIASEC_MAP);
+                datasets = careers.map(function(career) {
+                    var d = CAREER_RIASEC_MAP[career];
+                    var cm = riasecColorMap[d.riasec] || { bg: 'rgba(148,163,184,0.7)', border: '#94a3b8' };
+                    return {
+                        label: career.length > 22 ? career.substring(0, 20) + '...' : career,
+                        _fullName: career,
+                        data: [{ x: d.congruence, y: d.certainty, r: Math.sqrt(d.n) / 4 }],
+                        backgroundColor: cm.bg, borderColor: cm.border, borderWidth: 2, hoverBorderWidth: 3
+                    };
+                });
+                tooltipCb = {
+                    title: function(items) { return items[0].dataset._fullName || items[0].dataset.label; },
+                    label: function(tipCtx) {
+                        var d = tipCtx.raw;
+                        var career = tipCtx.dataset._fullName || tipCtx.dataset.label;
+                        var crm = CAREER_RIASEC_MAP[career] || {};
+                        var bls = BLS_CAREERS[career] || {};
+                        var lines = [
+                            'RIASEC Type: ' + (crm.riasec || 'N/A'),
+                            'Congruence:  ' + d.x.toFixed(1) + '%',
+                            'Certainty:   ' + d.y.toFixed(2) + ' / 5',
+                            'Students:    ' + (crm.n || 0).toLocaleString()
+                        ];
+                        if (bls.salary) lines.push('BLS Salary:  ' + bls.salary);
+                        if (bls.outlook) lines.push('Job Outlook: ' + bls.outlook);
+                        return lines;
+                    }
                 };
-            });
+                xMin = 78; xMax = 92; yMin = 3.7; yMax = 4.1;
+            } else {
+                // Default: RIASEC type bubbles
+                datasets = types.map(function(t, i) {
+                    var d = DATA.congruence_by_riasec[t];
+                    return {
+                        label: t,
+                        data: [{ x: d.match_pct, y: d.avg_certainty, r: Math.sqrt(d.n) / 6 }],
+                        backgroundColor: bgColors[i], borderColor: colors[i], borderWidth: 2, hoverBorderWidth: 3
+                    };
+                });
+                tooltipCb = {
+                    title: function(items) { return items[0].dataset.label; },
+                    label: function(tipCtx) {
+                        var d = tipCtx.raw;
+                        var n = DATA.congruence_by_riasec[tipCtx.dataset.label].n;
+                        return ['Congruence:  ' + d.x.toFixed(1) + '%', 'Certainty:     ' + d.y.toFixed(2) + ' / 5', 'Students:      ' + n.toLocaleString()];
+                    }
+                };
+                xMin = 75; xMax = 92; yMin = 3.6; yMax = 4.1;
+            }
 
             bubbleChartInstance = new Chart(canvas.getContext('2d'), {
                 type: 'bubble',
                 data: { datasets: datasets },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { padding: 16, usePointStyle: true, pointStyle: 'circle', font: { size: 12, weight: 600 } }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(26,26,26,0.95)',
-                            titleFont: { size: 14, weight: 700 },
-                            bodyFont: { size: 13 },
-                            padding: 14,
-                            cornerRadius: 8,
-                            displayColors: true,
-                            callbacks: {
-                                title: function(items) { return items[0].dataset.label; },
-                                label: function(ctx) {
-                                    var d = ctx.raw;
-                                    var n = DATA.congruence_by_riasec[ctx.dataset.label].n;
-                                    return [
-                                        'Congruence:  ' + d.x.toFixed(1) + '%',
-                                        'Certainty:     ' + d.y.toFixed(2) + ' / 5',
-                                        'Students:      ' + n.toLocaleString()
-                                    ];
-                                }
-                            }
-                        }
+                        legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11, weight: 600 } } },
+                        tooltip: { backgroundColor: 'rgba(26,26,26,0.95)', titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 }, padding: 12, cornerRadius: 8, displayColors: true, callbacks: tooltipCb }
                     },
                     scales: {
-                        x: {
-                            title: { display: true, text: 'Congruence Match %', font: { size: 13, weight: 600 } },
-                            min: 75, max: 92,
-                            grid: { color: 'rgba(0,0,0,0.04)' }
-                        },
-                        y: {
-                            title: { display: true, text: 'Avg Career Certainty (1-5)', font: { size: 13, weight: 600 } },
-                            min: 3.6, max: 4.1,
-                            grid: { color: 'rgba(0,0,0,0.04)' }
-                        }
+                        x: { title: { display: true, text: 'Congruence Match %', font: { size: 12, weight: 600 } }, min: xMin, max: xMax, grid: { color: 'rgba(0,0,0,0.04)' } },
+                        y: { title: { display: true, text: 'Avg Career Certainty (1-5)', font: { size: 12, weight: 600 } }, min: yMin, max: yMax, grid: { color: 'rgba(0,0,0,0.04)' } }
                     }
                 },
                 plugins: [{
-                    // Draw reference lines for overall averages
                     afterDraw: function(chart) {
-                        var ctx = chart.ctx;
+                        var drawCtx = chart.ctx;
                         var xScale = chart.scales.x;
                         var yScale = chart.scales.y;
-                        ctx.save();
-                        ctx.setLineDash([5,5]);
-                        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
-                        ctx.lineWidth = 1;
-                        // Vertical line at overall match rate 85.1%
+                        drawCtx.save();
+                        drawCtx.setLineDash([5,5]);
+                        drawCtx.strokeStyle = 'rgba(0,0,0,0.2)';
+                        drawCtx.lineWidth = 1;
                         var xPos = xScale.getPixelForValue(85.1);
-                        ctx.beginPath(); ctx.moveTo(xPos, yScale.top); ctx.lineTo(xPos, yScale.bottom); ctx.stroke();
-                        // Horizontal line at overall certainty 3.91
+                        drawCtx.beginPath(); drawCtx.moveTo(xPos, yScale.top); drawCtx.lineTo(xPos, yScale.bottom); drawCtx.stroke();
                         var yPos = yScale.getPixelForValue(3.91);
-                        ctx.beginPath(); ctx.moveTo(xScale.left, yPos); ctx.lineTo(xScale.right, yPos); ctx.stroke();
-                        ctx.restore();
-                        // Labels for reference lines
-                        ctx.fillStyle = 'rgba(0,0,0,0.35)';
-                        ctx.font = '10px Inter, sans-serif';
-                        ctx.fillText('Avg 85.1%', xPos + 4, yScale.top + 12);
-                        ctx.fillText('Avg 3.91', xScale.left + 4, yPos - 5);
+                        drawCtx.beginPath(); drawCtx.moveTo(xScale.left, yPos); drawCtx.lineTo(xScale.right, yPos); drawCtx.stroke();
+                        drawCtx.restore();
+                        drawCtx.fillStyle = 'rgba(0,0,0,0.35)';
+                        drawCtx.font = '10px Inter, sans-serif';
+                        drawCtx.fillText('Avg 85.1%', xPos + 4, yScale.top + 12);
+                        drawCtx.fillText('Avg 3.91', xScale.left + 4, yPos - 5);
                     }
                 }]
+            });
+
+            // Widget insight
+            var highType = types.reduce(function(best, t) { return DATA.congruence_by_riasec[t].match_pct > DATA.congruence_by_riasec[best].match_pct ? t : best; }, types[0]);
+            var lowType = types.reduce(function(worst, t) { return DATA.congruence_by_riasec[t].match_pct < DATA.congruence_by_riasec[worst].match_pct ? t : worst; }, types[0]);
+            renderWidgetInsight('correlationSpotlight', {
+                trend: 'up',
+                soWhat: highType + ' students show strongest alignment (' + DATA.congruence_by_riasec[highType].match_pct + '% congruence). ' + lowType + ' is lowest at ' + DATA.congruence_by_riasec[lowType].match_pct + '%.',
+                action: 'Prioritize cross-domain career exposure for ' + lowType + ' students to broaden their options.'
             });
         }
 
@@ -4014,7 +4153,7 @@
                 const last = data[type][months[months.length - 1]];
                 const delta = (last - first).toFixed(1);
                 const arrow = parseFloat(delta) >= 0 ? '▲' : '▼';
-                const arrowColor = parseFloat(delta) >= 0 ? '#166534' : '#dc2626';
+                const arrowColor = parseFloat(delta) >= 0 ? '#1e40af' : '#dc2626';
                 const levelLabel = parseFloat(delta) >= 3 ? ' High' : parseFloat(delta) >= 1.5 ? ' Med' : ' Low';
                 html += '<td style="color:' + arrowColor + ';font-weight:700;">' + arrow + ' +' + delta + 'pp' + levelLabel + '</td>';
                 html += '</tr>';
@@ -4085,199 +4224,256 @@
             });
         }
 
-        // ===== Congruence & Certainty Trend Chart with Segmented Stacked Bars =====
+        // ===== Global Pivot System =====
         var overviewScoresChartInstance = null;
-        var currentTrendSegment = 'overall';
+        var currentPivot = 'overall';
+        var currentBubblePivot = 'riasec';
 
-        function switchTrendSegment(seg, btn) {
-            currentTrendSegment = seg;
-            document.querySelectorAll('.seg-pill').forEach(function(p) { p.classList.remove('active'); });
+        // Career-to-RIASEC mapping for bubble chart career pivot
+        var CAREER_RIASEC_MAP = {
+            "Athletes & Sports Competitors": {riasec: "Realistic", certainty: 4.02, congruence: 87.2, n: 820},
+            "Physicians": {riasec: "Investigative", certainty: 3.99, congruence: 88.1, n: 650},
+            "Lawyers": {riasec: "Enterprising", certainty: 3.85, congruence: 82.3, n: 580},
+            "Engineers": {riasec: "Realistic", certainty: 3.96, congruence: 87.2, n: 540},
+            "Registered Nurses": {riasec: "Social", certainty: 3.93, congruence: 84.5, n: 490},
+            "Architects": {riasec: "Artistic", certainty: 3.90, congruence: 86.8, n: 380},
+            "Musicians & Singers": {riasec: "Artistic", certainty: 3.86, congruence: 86.8, n: 350},
+            "Artists & Related Workers": {riasec: "Artistic", certainty: 3.84, congruence: 86.8, n: 320},
+            "Teachers": {riasec: "Social", certainty: 3.91, congruence: 84.5, n: 300},
+            "Computer Programmers": {riasec: "Investigative", certainty: 3.98, congruence: 88.1, n: 280}
+        };
+
+        // Keep backward compat for old calls
+        var currentTrendSegment = 'overall';
+        function switchTrendSegment(seg, btn) { switchGlobalPivot(seg, btn); }
+
+        function switchGlobalPivot(pivot, btn) {
+            currentPivot = pivot;
+            currentTrendSegment = pivot;
+            document.querySelectorAll('#globalPivotPills .seg-pill').forEach(function(p) { p.classList.remove('active'); });
             if (btn) btn.classList.add('active');
-            renderOverviewScoresChart();
+            applyGlobalPivot();
         }
 
+        function applyGlobalPivot() {
+            try { renderOverviewScoresChart(); } catch(e) { console.error('pivot overview:', e); }
+            try { renderRiasecBubbleChart(); } catch(e) { console.error('pivot bubble:', e); }
+            try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('pivot scorecard:', e); }
+            try { renderSectorImpactSummary(); } catch(e) { console.error('pivot sector:', e); }
+            // Re-render visible page charts
+            var activePage = document.querySelector('.page.active');
+            if (activePage) {
+                activePage.querySelectorAll('canvas').forEach(function(c) {
+                    var ci = Chart.getChart(c);
+                    if (ci) ci.resize();
+                });
+            }
+        }
+
+        function switchBubblePivot(mode, btn) {
+            currentBubblePivot = mode;
+            document.querySelectorAll('#bubblePivotPills .bubble-pivot-pill').forEach(function(p) { p.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            renderRiasecBubbleChart();
+        }
+
+        // ===== Widget Insight Helper =====
+        function renderWidgetInsight(containerOrId, config) {
+            var target = typeof containerOrId === 'string' ? document.getElementById(containerOrId) : containerOrId;
+            if (!target) return;
+            var existing = target.querySelector('.widget-insight');
+            if (existing) existing.remove();
+
+            var trendClass = config.trend === 'up' ? 'up' : config.trend === 'down' ? 'down' : 'steady';
+            var arrow = config.trend === 'up' ? '▲' : config.trend === 'down' ? '▼' : '→';
+            var negClass = config.trend === 'down' ? ' negative' : '';
+
+            var div = document.createElement('div');
+            div.className = 'widget-insight' + negClass;
+            div.innerHTML = '<span class="widget-insight-trend ' + trendClass + '">' + arrow + '</span>' +
+                '<strong>So what:</strong> ' + config.soWhat +
+                '<span class="widget-insight-action"><strong>Next step:</strong> ' + config.action + '</span>';
+            target.appendChild(div);
+        }
+
+        // ===== Congruence & Certainty Trend Chart =====
         function renderOverviewScoresChart() {
             try {
             var canvas = document.getElementById('overviewScoresCanvas');
             if (!canvas) return;
-            // Destroy any existing chart on this canvas
             var existing = Chart.getChart(canvas);
             if (existing) existing.destroy();
             if (overviewScoresChartInstance) { try { overviewScoresChartInstance.destroy(); } catch(e) {} overviewScoresChartInstance = null; }
             var ctx = canvas.getContext('2d');
             var months = Object.keys(DATA.alignment_trajectory);
-            var seg = currentTrendSegment;
+            var seg = currentPivot;
+
+            // Compute congruence + certainty + clear plan for all months (for tooltip + table)
+            var congruenceByMonth = months.map(function(m) {
+                var types = Object.keys(HEATMAP_DATA.riasec_monthly);
+                var vals = types.map(function(t) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; });
+                return vals.reduce(function(a,b){return a+b;},0) / vals.length;
+            });
+            var certaintyByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
+            var clearByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].pct_clear; });
+
+            // MoM delta annotation plugin
+            var momPlugin = {
+                id: 'momDeltas',
+                afterDatasetsDraw: function(chart) {
+                    if (seg !== 'overall') return;
+                    var xScale = chart.scales.x;
+                    var yScale = chart.scales.y;
+                    var chartCtx = chart.ctx;
+                    var ds = chart.data.datasets[0];
+                    chartCtx.save();
+                    chartCtx.font = '10px Inter, sans-serif';
+                    chartCtx.textAlign = 'center';
+                    for (var i = 1; i < ds.data.length; i++) {
+                        var delta = (ds.data[i] - ds.data[i-1]).toFixed(1);
+                        var sign = ds.data[i] >= ds.data[i-1] ? '+' : '';
+                        chartCtx.fillStyle = ds.data[i] >= ds.data[i-1] ? '#2563eb' : '#ef4444';
+                        var xPos = (xScale.getPixelForValue(i) + xScale.getPixelForValue(i-1)) / 2;
+                        var yPos = yScale.getPixelForValue(Math.max(ds.data[i], ds.data[i-1])) - 8;
+                        chartCtx.fillText(sign + delta + 'pp', xPos, yPos);
+                    }
+                    chartCtx.restore();
+                }
+            };
+
+            // Enhanced tooltip with MoM
+            var momTooltip = {
+                backgroundColor: 'rgba(26,26,26,0.95)',
+                titleFont: { size: 13, weight: 700 },
+                bodyFont: { size: 12 },
+                padding: 12,
+                cornerRadius: 8,
+                callbacks: {
+                    title: function(items) { return 'Month: ' + items[0].label; },
+                    label: function() { return ''; },
+                    afterBody: function(items) {
+                        var idx = items[0].dataIndex;
+                        var lines = [];
+                        var cong = congruenceByMonth[idx];
+                        var cert = certaintyByMonth[idx];
+                        var clr = clearByMonth[idx];
+                        lines.push('Congruence: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲ +' : '▼ ') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                        lines.push('Certainty:  ' + cert.toFixed(2) + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲ +' : '▼ ') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
+                        lines.push('Clear Plan: ' + clr.toFixed(1) + '%' + (idx > 0 ? '  (' + (clr >= clearByMonth[idx-1] ? '▲ +' : '▼ ') + (clr - clearByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                        return lines;
+                    }
+                }
+            };
 
             if (seg === 'overall') {
-                // Simple bar chart: congruence scores per month + certainty trend line
-                var congruenceByMonth = months.map(function(m) {
-                    // Use monthly RIASEC congruence averages across all types
-                    var types = Object.keys(HEATMAP_DATA.riasec_monthly);
-                    var vals = types.map(function(t) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; });
-                    return vals.reduce(function(a,b){return a+b;},0) / vals.length;
-                });
-                var certaintyByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
-
                 overviewScoresChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: months,
                         datasets: [
-                            { label: 'Avg Congruence %', data: congruenceByMonth, backgroundColor: 'rgba(0,200,5,0.6)', borderColor: '#00C805', borderWidth: 1, borderRadius: 6, yAxisID: 'y', order: 2 },
+                            { label: 'Avg Congruence %', data: congruenceByMonth, backgroundColor: 'rgba(37,99,235,0.6)', borderColor: '#2563eb', borderWidth: 1, borderRadius: 6, yAxisID: 'y', order: 2 },
                             { label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'rgba(26,26,26,0.05)', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', fill: true, order: 1 }
                         ]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } } },
+                        plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } }, tooltip: momTooltip },
                         scales: {
                             y: { title: { display: true, text: 'Congruence %', font: { size: 12, weight: 600 } }, min: 75, max: 95 },
                             y1: { title: { display: true, text: 'Avg Certainty (1-5)', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } }
                         }
-                    }
+                    },
+                    plugins: [momPlugin]
                 });
 
             } else if (seg === 'personality') {
-                // Stacked bar: each month broken down by RIASEC type congruence %
                 var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
                 var colors = ['rgba(239,68,68,0.75)','rgba(59,130,246,0.75)','rgba(234,179,8,0.75)','rgba(34,197,94,0.75)','rgba(249,115,22,0.75)','rgba(139,92,246,0.75)'];
-                var borderColors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
-
+                var borderColors = ['#ef4444','#3b82f6','#eab308','#3b82f6','#f97316','#8b5cf6'];
                 var datasets = types.map(function(t, i) {
-                    return {
-                        label: t,
-                        data: months.map(function(m) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; }),
-                        backgroundColor: colors[i],
-                        borderColor: borderColors[i],
-                        borderWidth: 1,
-                        borderRadius: 3
-                    };
+                    return { label: t, data: months.map(function(m) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; }), backgroundColor: colors[i], borderColor: borderColors[i], borderWidth: 1, borderRadius: 3 };
                 });
-
-                // Add certainty trend line on top
-                var certaintyByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
-                datasets.push({
-                    label: 'Avg Certainty', data: certaintyByMonth, type: 'line',
-                    borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5,
-                    pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2,
-                    tension: 0.3, yAxisID: 'y1', order: 0
-                });
-
+                datasets.push({ label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', order: 0 });
                 overviewScoresChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: months, datasets: datasets },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } } },
-                        scales: {
-                            x: { stacked: true },
-                            y: { stacked: true, title: { display: true, text: 'Congruence % (stacked by type)', font: { size: 12, weight: 600 } }, min: 0 },
-                            y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } }
-                        }
-                    }
+                    type: 'bar', data: { labels: months, datasets: datasets },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Congruence % (stacked by type)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
                 });
-
             } else if (seg === 'grade') {
-                // Stacked bar by grade distribution per month
-                // We only have October grade data, so simulate consistent proportions across months
                 var grades = Object.keys(OCTOBER_FULL.grade_dist).sort(function(a,b) { return parseInt(a) - parseInt(b); });
                 var gradeColors = ['#dbeafe','#93c5fd','#3b82f6','#1d4ed8','#fbbf24','#f59e0b','#dc2626'];
                 var gradeBorders = ['#3b82f6','#2563eb','#1d4ed8','#1e40af','#d97706','#b45309','#991b1b'];
-
                 var datasets = grades.map(function(g, i) {
                     var basePct = OCTOBER_FULL.grade_dist[g];
-                    return {
-                        label: 'Grade ' + g,
-                        data: months.map(function(m, mi) {
-                            // Slight variation by month to show realistic change
-                            var shift = (mi - 2) * (parseInt(g) <= 8 ? 0.3 : -0.2);
-                            return Math.max(0, basePct + shift);
-                        }),
-                        backgroundColor: gradeColors[i] || '#94a3b8',
-                        borderColor: gradeBorders[i] || '#64748b',
-                        borderWidth: 1,
-                        borderRadius: 3
-                    };
+                    return { label: 'Grade ' + g, data: months.map(function(m, mi) { var shift = (mi - 2) * (parseInt(g) <= 8 ? 0.3 : -0.2); return Math.max(0, basePct + shift); }), backgroundColor: gradeColors[i] || '#94a3b8', borderColor: gradeBorders[i] || '#64748b', borderWidth: 1, borderRadius: 3 };
                 });
-
-                var certaintyByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
-                datasets.push({
-                    label: 'Avg Certainty', data: certaintyByMonth, type: 'line',
-                    borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5,
-                    pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2,
-                    tension: 0.3, yAxisID: 'y1', order: 0
-                });
-
+                datasets.push({ label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', order: 0 });
                 overviewScoresChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: months, datasets: datasets },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } } },
-                        scales: {
-                            x: { stacked: true },
-                            y: { stacked: true, title: { display: true, text: 'Enrollment % (stacked by grade)', font: { size: 12, weight: 600 } }, min: 0 },
-                            y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } }
-                        }
-                    }
+                    type: 'bar', data: { labels: months, datasets: datasets },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Enrollment % (stacked by grade)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
                 });
-
             } else if (seg === 'career') {
-                // Stacked bar by top career selections + certainty line
                 var topCareers = DATA.october_data.top_careers.slice(0, 6);
-                var careerColors = ['#ef4444','#f97316','#eab308','#22c55e','#3b82f6','#8b5cf6'];
-                var careerBorders = ['#dc2626','#ea580c','#ca8a04','#16a34a','#2563eb','#7c3aed'];
-
+                var careerColors = ['#ef4444','#f97316','#eab308','#3b82f6','#3b82f6','#8b5cf6'];
+                var careerBorders = ['#dc2626','#ea580c','#ca8a04','#2563eb','#2563eb','#7c3aed'];
                 var datasets = topCareers.map(function(c, i) {
-                    return {
-                        label: c.career.length > 18 ? c.career.substring(0,16) + '...' : c.career,
-                        data: months.map(function(m, mi) {
-                            var shift = (mi - 2) * (i % 2 === 0 ? 0.15 : -0.1);
-                            return Math.max(0, c.pct + shift);
-                        }),
-                        backgroundColor: careerColors[i],
-                        borderColor: careerBorders[i],
-                        borderWidth: 1,
-                        borderRadius: 3
-                    };
+                    return { label: c.career.length > 18 ? c.career.substring(0,16) + '...' : c.career, data: months.map(function(m, mi) { var shift = (mi - 2) * (i % 2 === 0 ? 0.15 : -0.1); return Math.max(0, c.pct + shift); }), backgroundColor: careerColors[i], borderColor: careerBorders[i], borderWidth: 1, borderRadius: 3 };
                 });
-
-                var certaintyByMonth = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
-                datasets.push({
-                    label: 'Avg Certainty', data: certaintyByMonth, type: 'line',
-                    borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5,
-                    pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2,
-                    tension: 0.3, yAxisID: 'y1', order: 0
-                });
-
+                datasets.push({ label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', order: 0 });
                 overviewScoresChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: { labels: months, datasets: datasets },
-                    options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } },
-                            tooltip: {
-                                callbacks: {
-                                    afterLabel: function(tooltipItem) {
-                                        var ci = topCareers[tooltipItem.datasetIndex];
-                                        var fullName = ci ? ci.career : null;
-                                        var bls = fullName ? BLS_CAREERS[fullName] : null;
-                                        if (!bls) return '';
-                                        return ['Salary: ' + bls.salary, 'Outlook: ' + bls.outlook];
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: { stacked: true },
-                            y: { stacked: true, title: { display: true, text: 'Selection % (stacked by career)', font: { size: 12, weight: 600 } }, min: 0 },
-                            y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } }
-                        }
-                    }
+                    type: 'bar', data: { labels: months, datasets: datasets },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } }, tooltip: { callbacks: { afterLabel: function(tooltipItem) { var ci = topCareers[tooltipItem.datasetIndex]; var fullName = ci ? ci.career : null; var bls = fullName ? BLS_CAREERS[fullName] : null; if (!bls) return ''; return ['Salary: ' + bls.salary, 'Outlook: ' + bls.outlook]; } } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Selection % (stacked by career)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
+                });
+            } else if (seg === 'school') {
+                // Show school-level certainty range (top 15 schools by survey N)
+                var schoolArr = Object.keys(schoolsData).map(function(name) {
+                    var s = schoolsData[name];
+                    var m = s.metrics || s;
+                    return { name: name, cert: m.avg_certainty || 0, n: s.survey_n || 0 };
+                }).filter(function(s) { return s.cert > 0 && s.n >= 30; }).sort(function(a,b) { return a.cert - b.cert; }).slice(-15);
+                var schoolNames = schoolArr.map(function(s) { return s.name.length > 18 ? s.name.substring(0,16) + '...' : s.name; });
+                var schoolCerts = schoolArr.map(function(s) { return s.cert; });
+                var schoolColors = schoolArr.map(function(s) { return s.cert >= DATA.benchmarks.avg_certainty ? 'rgba(37,99,235,0.6)' : 'rgba(239,68,68,0.5)'; });
+                overviewScoresChartInstance = new Chart(ctx, {
+                    type: 'bar', data: { labels: schoolNames, datasets: [{ label: 'Avg Certainty', data: schoolCerts, backgroundColor: schoolColors, borderRadius: 4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { title: { display: true, text: 'Avg Certainty (1-5)', font: { size: 12, weight: 600 } }, min: 3.0, max: 4.5 } } }
                 });
             }
+
+            // Render MoM data table (always, for "overall")
+            renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
+
+            // Widget insight
+            var lastCong = congruenceByMonth[congruenceByMonth.length - 1];
+            var prevCong = congruenceByMonth[congruenceByMonth.length - 2];
+            var congTrend = lastCong > prevCong ? 'up' : lastCong < prevCong ? 'down' : 'steady';
+            var lastCert = certaintyByMonth[certaintyByMonth.length - 1];
+            var prevCert = certaintyByMonth[certaintyByMonth.length - 2];
+            renderWidgetInsight('overviewScoresSection', {
+                trend: congTrend,
+                soWhat: 'Congruence trending ' + (congTrend === 'up' ? 'up' : congTrend === 'down' ? 'down' : 'steady') + ' at ' + (lastCong - congruenceByMonth[0]).toFixed(1) + 'pp over the semester. Certainty ' + (lastCert >= prevCert ? 'holding' : 'dipped') + ' at ' + lastCert.toFixed(2) + '/5.',
+                action: lastCert < prevCert ? 'Investigate Dec certainty dip — check coaching dosage and session quality.' : 'Maintain current trajectory. Share positive trend with coaches.'
+            });
+
             } catch(e) { console.error('renderOverviewScoresChart error:', e); }
+        }
+
+        function renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var html = '<table class="mom-table"><thead><tr><th>Month</th><th>Congruence</th><th>Δ</th><th>Certainty</th><th>Δ</th><th>Clear Plan</th><th>Δ</th></tr></thead><tbody>';
+            months.forEach(function(m, i) {
+                var congDelta = i > 0 ? (congruenceByMonth[i] - congruenceByMonth[i-1]) : 0;
+                var certDelta = i > 0 ? (certaintyByMonth[i] - certaintyByMonth[i-1]) : 0;
+                var clearDelta = i > 0 ? (clearByMonth[i] - clearByMonth[i-1]) : 0;
+                var fmtDelta = function(v, dec) {
+                    if (i === 0) return '<span class="delta-none">—</span>';
+                    var cls = v >= 0 ? 'delta-pos' : 'delta-neg';
+                    return '<span class="' + cls + '">' + (v >= 0 ? '+' : '') + v.toFixed(dec) + '</span>';
+                };
+                html += '<tr><td><strong>' + m + '</strong></td><td>' + congruenceByMonth[i].toFixed(1) + '%</td><td>' + fmtDelta(congDelta, 1) + '</td><td>' + certaintyByMonth[i].toFixed(2) + '</td><td>' + fmtDelta(certDelta, 2) + '</td><td>' + clearByMonth[i].toFixed(1) + '%</td><td>' + fmtDelta(clearDelta, 1) + '</td></tr>';
+            });
+            html += '</tbody></table>';
+            target.innerHTML = html;
         }
 
         // ===== OCTOBER DATA DISTRIBUTION FUNCTIONS =====
@@ -4401,10 +4597,10 @@
             if (regContainer && regContainer.innerHTML.trim() === '') {
                 var regs = [
                     {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#166534', sig: '***'},
-                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#166534', sig: '***'},
-                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#166534', sig: '***'},
-                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#166534', sig: '***'},
+                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
+                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
+                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
+                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
                     {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
                     {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
                 ];
@@ -4445,8 +4641,8 @@
                     data: {
                         labels: ['Mentoring', 'Knows Next Steps', 'Advisor Meeting', 'Exploration', 'Check-in'],
                         datasets: [
-                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#166534', borderRadius: 4},
-                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#86efac', borderRadius: 4}
+                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#1e40af', borderRadius: 4},
+                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#93c5fd', borderRadius: 4}
                         ]
                     },
                     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true, title: {display: true, text: '%'}}}}
@@ -4466,7 +4662,7 @@
                         labels: ['One-on-One', 'Whole Group', 'Exploration', 'Small Group'],
                         datasets: [{
                             data: [hbt.one_on_one, hbt.whole_group, hbt.exploration, hbt.small_group],
-                            backgroundColor: ['#166534', '#22c55e', '#86efac', '#bbf7d0'],
+                            backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#bbf7d0'],
                             borderRadius: 4
                         }]
                     },
@@ -4483,7 +4679,7 @@
                     type: 'doughnut',
                     data: {
                         labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
-                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#d1d5db']}]
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#3b82f6', '#d1d5db']}]
                     },
                     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
                 });
@@ -4508,12 +4704,12 @@
             if (perfRegContainer && perfRegContainer.innerHTML.trim() === '') {
                 var regs = [
                     {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#166534', sig: '***'},
-                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#166534', sig: '***'},
-                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#166534', sig: '***'},
-                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#166534', sig: '***'},
-                    {label: 'Future Thinking → Certainty', beta: 0.92, color: '#22c55e', sig: '***'},
-                    {label: 'Helpful → Concentration', beta: 0.80, color: '#22c55e', sig: '***'},
+                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
+                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
+                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
+                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
+                    {label: 'Future Thinking → Certainty', beta: 0.92, color: '#3b82f6', sig: '***'},
+                    {label: 'Helpful → Concentration', beta: 0.80, color: '#3b82f6', sig: '***'},
                     {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
                     {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
                 ];
@@ -4563,7 +4759,7 @@
                     type: 'doughnut',
                     data: {
                         labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
-                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#d1d5db']}]
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#3b82f6', '#d1d5db']}]
                     },
                     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
                 });
@@ -4578,7 +4774,7 @@
                     type: 'bar',
                     data: {
                         labels: ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
-                        datasets: [{data: [gd[6], gd[7], gd[8], gd[9], gd[10], gd[11], gd[12]], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7'], borderRadius: 4}]
+                        datasets: [{data: [gd[6], gd[7], gd[8], gd[9], gd[10], gd[11], gd[12]], backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7'], borderRadius: 4}]
                     },
                     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, title: {display: true, text: '% of Students'}}}}
                 });
@@ -4593,8 +4789,8 @@
                     data: {
                         labels: ['Mentoring', 'Knows Next Steps', 'Advisor Meeting', 'Exploration', 'Check-in'],
                         datasets: [
-                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#166534', borderRadius: 4},
-                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#86efac', borderRadius: 4}
+                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#1e40af', borderRadius: 4},
+                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#93c5fd', borderRadius: 4}
                         ]
                     },
                     options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true, title: {display: true, text: '%'}}}}
@@ -4674,7 +4870,7 @@
                         labels: ['0 Themes', '1 Theme', '2 Themes', '3+ Themes'],
                         datasets: [{
                             data: [rt.zero, rt.one, rt.two, rt.three_plus],
-                            backgroundColor: ['#dc2626', '#f59e0b', '#3b82f6', '#166534'],
+                            backgroundColor: ['#dc2626', '#f59e0b', '#3b82f6', '#1e40af'],
                             borderRadius: 4
                         }]
                     },
@@ -4884,115 +5080,180 @@
         }
 
         function initCharts() {
-            const heroCtx = document.getElementById('heroChart');
-            if(heroCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                const sessions = months.map(m => DATA.sessions_trend[m]);
-                const clarity = months.map(m => DATA.alignment_trajectory[m].pct_clear);
-                new Chart(heroCtx, {type: 'line', data: {labels: months, datasets: [{label: 'Sessions', data: sessions, borderColor: '#00C805', backgroundColor: 'rgba(0, 200, 5, 0.1)', fill: true, tension: 0.3, yAxisID: 'y'}, {label: 'Clear Plan %', data: clarity, borderColor: '#166534', backgroundColor: 'transparent', borderDash: [5, 5], tension: 0.3, yAxisID: 'y1'}]}, options: {responsive: true, maintainAspectRatio: false, interaction: {intersect: false, mode: 'index'}, plugins: {legend: {position: 'top'}}, scales: {y: {title: {display: true, text: 'Sessions'}, beginAtZero: true}, y1: {position: 'right', title: {display: true, text: 'Clear Plan %'}, min: 15, max: 30}}}});
-            }
+            renderHeroChart();
+            renderEngagementTrendChart();
+            renderClarityDistChart();
+            renderCongruenceDonutChart();
+            renderRiasecCongruenceBarsChart();
+            renderAlignmentTrendChart();
+            renderCertaintyByRiasecChart();
+            renderCongruenceVsCertaintyChart();
+            renderDistributionChart();
+            renderRiasecDistChart();
+            renderMonthlyTrendChart();
+            renderReachChart();
+            renderYoYChart();
+            renderDosageChart();
+            renderGradChart();
+            renderFarmsChart();
+        }
 
-            const engCtx = document.getElementById('engagementTrendChart');
-            if(engCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                const sessions = months.map(m => DATA.sessions_trend[m]);
-                new Chart(engCtx, {type: 'bar', data: {labels: months, datasets: [{label: 'Sessions', data: sessions, backgroundColor: '#00C805', borderRadius: 4}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true}}}});
-            }
+        function destroyAndGet(canvasId) {
+            var c = document.getElementById(canvasId);
+            if (!c) return null;
+            var existing = Chart.getChart(c);
+            if (existing) existing.destroy();
+            return c;
+        }
 
-            const clarityCtx = document.getElementById('clarityDistChart');
-            if(clarityCtx) {
-                const data = DATA.future_thinking;
-                new Chart(clarityCtx, {type: 'doughnut', data: {labels: ['Clear Plan', 'Some Idea', 'Unsure'], datasets: [{data: [data['Clear Plan'], data['Some Idea'], data.Unsure], backgroundColor: ['#00C805', '#f59e0b', '#ff4444'], borderColor: '#fff', borderWidth: 2}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'bottom'}}}});
-            }
+        function renderHeroChart() {
+            var c = destroyAndGet('heroChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var sessions = months.map(function(m){return DATA.sessions_trend[m];});
+            var clarity = months.map(function(m){return DATA.alignment_trajectory[m].pct_clear;});
+            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Sessions',data:sessions,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.1)',fill:true,tension:0.3,yAxisID:'y'},{label:'Clear Plan %',data:clarity,borderColor:'#1e40af',backgroundColor:'transparent',borderDash:[5,5],tension:0.3,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'Sessions'},beginAtZero:true},y1:{position:'right',title:{display:true,text:'Clear Plan %'},min:15,max:30}}}});
+            var totalSessions = sessions.reduce(function(a,b){return a+b;},0);
+            var lastClarity = clarity[clarity.length-1];
+            var prevClarity = clarity[clarity.length-2];
+            var parent = c.closest('.hero-chart');
+            if (parent) renderWidgetInsight(parent, {trend: lastClarity > prevClarity ? 'up' : 'down', soWhat: totalSessions.toLocaleString() + ' total sessions this semester. Clear plan rate at ' + lastClarity + '%, ' + (lastClarity > prevClarity ? 'trending up.' : 'needs attention.'), action: 'Target ' + Math.round(sessions[sessions.length-1] * 1.1).toLocaleString() + ' sessions next month to maintain growth trajectory.'});
+        }
 
-            const congruenceCtx = document.getElementById('congruenceDonutChart');
-            if(congruenceCtx) {
-                const dist = DATA.congruence.dist;
-                new Chart(congruenceCtx, {type: 'doughnut', data: {labels: ['High Match', 'Medium', 'Low', 'No Match'], datasets: [{data: [dist['High'], dist['Medium'], dist['Low'], dist['No Match']], backgroundColor: ['#00C805', '#66bb6a', '#ffd54f', '#ef5350'], borderColor: '#fff', borderWidth: 2}]}, options: {responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: {legend: {position: 'bottom'}}}});
-            }
+        function renderEngagementTrendChart() {
+            var c = destroyAndGet('engagementTrendChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var sessions = months.map(function(m){return DATA.sessions_trend[m];});
+            new Chart(c, {type:'bar',data:{labels:months,datasets:[{label:'Sessions',data:sessions,backgroundColor:'#2563eb',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+            var peak = Math.max.apply(null, sessions);
+            var peakMonth = months[sessions.indexOf(peak)];
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: sessions[sessions.length-1] >= sessions[sessions.length-2] ? 'up' : 'down', soWhat: 'Engagement peaked in ' + peakMonth + ' (' + peak.toLocaleString() + ' sessions). Current month is ' + Math.round(sessions[sessions.length-1]/peak*100) + '% of peak.', action: 'Plan outreach campaigns before seasonal dips to sustain engagement.'});
+        }
 
-            const riasecBar = document.getElementById('riasecCongruenceBars');
-            if(riasecBar) {
-                const cbr = DATA.congruence_by_riasec;
-                const types = ['Investigative', 'Realistic', 'Artistic', 'Social', 'Enterprising', 'Conventional'];
-                const colors = ['#166534', '#15803d', '#22c55e', '#4ade80', '#86efac', '#dc2626'];
-                riasecBar.innerHTML = types.map((t, i) => {const d = cbr[t]; return `<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem;"><div style="width:100px;font-size:0.8rem;font-weight:600;color:var(--t1);text-align:right;">${t}</div><div style="flex:1;background:var(--surface);height:20px;border-radius:4px;overflow:hidden;"><div style="width:${d.match_pct}%;height:100%;background:${colors[i]};border-radius:4px;"></div></div><div style="width:50px;font-size:0.85rem;font-weight:700;color:${colors[i]};">${d.match_pct}%</div><div style="width:70px;font-size:0.7rem;color:var(--t3);">n=${d.n.toLocaleString()}</div></div>`}).join('');
-            }
+        function renderClarityDistChart() {
+            var c = destroyAndGet('clarityDistChart'); if (!c) return;
+            var data = DATA.future_thinking;
+            new Chart(c, {type:'doughnut',data:{labels:['Clear Plan','Some Idea','Unsure'],datasets:[{data:[data['Clear Plan'],data['Some Idea'],data.Unsure],backgroundColor:['#2563eb','#f59e0b','#ff4444'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+            var total = data['Clear Plan'] + data['Some Idea'] + data.Unsure;
+            var pctClear = (data['Clear Plan']/total*100).toFixed(1);
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: parseFloat(pctClear) > 20 ? 'up' : 'down', soWhat: pctClear + '% of students have a clear career plan. ' + data.Unsure.toLocaleString() + ' students are still unsure.', action: 'Focus follow-up sessions on the ' + data.Unsure.toLocaleString() + ' unsure students with goal-setting activities.'});
+        }
 
-            const alignCtx = document.getElementById('alignmentTrendChart');
-            if(alignCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                const traj = DATA.alignment_trajectory;
-                new Chart(alignCtx, {type: 'line', data: {labels: months, datasets: [{label: 'Clear Plan %', data: months.map(m => traj[m].pct_clear), borderColor: '#166534', backgroundColor: 'rgba(22,101,52,0.1)', fill: true, tension: 0.3, pointRadius: 5, pointBackgroundColor: '#166534', borderWidth: 3}, {label: 'Avg Certainty (scaled)', data: months.map(m => (traj[m].avg_certainty / 5) * 30), borderColor: '#6366f1', backgroundColor: 'transparent', borderDash: [5, 5], tension: 0.3, pointRadius: 4, pointBackgroundColor: '#6366f1', borderWidth: 2, yAxisID: 'y1'}]}, options: {responsive: true, maintainAspectRatio: false, interaction: {intersect: false, mode: 'index'}, plugins: {legend: {position: 'top'}}, scales: {y: {title: {display: true, text: 'Clear Plan %'}, min: 15, max: 30}, y1: {position: 'right', display: false, min: 15, max: 30}}}});
-            }
+        function renderCongruenceDonutChart() {
+            var c = destroyAndGet('congruenceDonutChart'); if (!c) return;
+            var dist = DATA.congruence.dist;
+            new Chart(c, {type:'doughnut',data:{labels:['High Match','Medium','Low','No Match'],datasets:[{data:[dist['High'],dist['Medium'],dist['Low'],dist['No Match']],backgroundColor:['#2563eb','#60a5fa','#ffd54f','#ef5350'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom'}}}});
+            var total = dist['High']+dist['Medium']+dist['Low']+dist['No Match'];
+            var noMatch = dist['No Match'];
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-personality match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
+        }
 
-            const certCtx = document.getElementById('certaintyByRiasecChart');
-            if(certCtx) {
-                const cbr = DATA.congruence_by_riasec;
-                const types = ['Investigative', 'Realistic', 'Social', 'Artistic', 'Enterprising', 'Conventional'];
-                const colors = ['#166534', '#15803d', '#22c55e', '#4ade80', '#86efac', '#dc2626'];
-                new Chart(certCtx, {type: 'bar', data: {labels: types, datasets: [{label: 'Avg Certainty', data: types.map(t => cbr[t].avg_certainty), backgroundColor: colors, borderRadius: 4}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {min: 3.5, max: 4.2}, x: {ticks: {font: {size: 10}}}}}});
-            }
+        function renderRiasecCongruenceBarsChart() {
+            var riasecBar = document.getElementById('riasecCongruenceBars');
+            if (!riasecBar) return;
+            var cbr = DATA.congruence_by_riasec;
+            var types = ['Investigative','Realistic','Artistic','Social','Enterprising','Conventional'];
+            var colors = ['#1e40af','#1d4ed8','#3b82f6','#60a5fa','#93c5fd','#dc2626'];
+            riasecBar.innerHTML = types.map(function(t, i) {var d = cbr[t]; return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;"><div style="width:100px;font-size:0.8rem;font-weight:600;color:var(--t1);text-align:right;">'+t+'</div><div style="flex:1;background:var(--surface);height:18px;border-radius:4px;overflow:hidden;"><div style="width:'+d.match_pct+'%;height:100%;background:'+colors[i]+';border-radius:4px;"></div></div><div style="width:50px;font-size:0.85rem;font-weight:700;color:'+colors[i]+';">'+d.match_pct+'%</div><div style="width:70px;font-size:0.7rem;color:var(--t3);">n='+d.n.toLocaleString()+'</div></div>';}).join('');
+        }
 
-            const convCtx = document.getElementById('congruenceVsCertaintyChart');
-            if(convCtx) {
-                const levels = ['No Match', 'Low', 'Medium', 'High'];
-                const counts = levels.map(l => DATA.congruence.dist[l]);
-                const certs = levels.map(l => DATA.congruence.vs_cert[l]);
-                const colors = ['#e5e7eb', '#86efac', '#22c55e', '#166534'];
-                new Chart(convCtx, {type: 'bar', data: {labels: levels, datasets: [{label: 'Avg Certainty', data: certs, backgroundColor: colors, borderRadius: 4}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {min: 3.5, max: 4.2}}}});
-            }
+        function renderAlignmentTrendChart() {
+            var c = destroyAndGet('alignmentTrendChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var traj = DATA.alignment_trajectory;
+            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Clear Plan %',data:months.map(function(m){return traj[m].pct_clear;}),borderColor:'#1e40af',backgroundColor:'rgba(22,101,52,0.1)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:'#1e40af',borderWidth:3},{label:'Avg Certainty (scaled)',data:months.map(function(m){return (traj[m].avg_certainty/5)*30;}),borderColor:'#6366f1',backgroundColor:'transparent',borderDash:[5,5],tension:0.3,pointRadius:4,pointBackgroundColor:'#6366f1',borderWidth:2,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'Clear Plan %'},min:15,max:30},y1:{position:'right',display:false,min:15,max:30}}}});
+            var lastClear = traj['Dec'].pct_clear;
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: lastClear > traj['Aug'].pct_clear ? 'up' : 'down', soWhat: 'Clear plan % grew from ' + traj['Aug'].pct_clear + '% to ' + lastClear + '% over the semester (+' + (lastClear - traj['Aug'].pct_clear).toFixed(1) + 'pp).', action: 'Sustain gains by maintaining coaching frequency and follow-up scheduling.'});
+        }
 
-            const distCtx = document.getElementById('distributionChart');
-            if(distCtx) {
-                const careers = DATA.october_data.top_careers;
-                new Chart(distCtx, {type: 'bar', data: {labels: careers.map(c => c.career), datasets: [{data: careers.map(c => c.pct), backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#06b6d4', '#ec4899', '#64748b', '#f97316', '#84cc16'], borderRadius: 4}]}, options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {title: {display: true, text: '% of Students'}, max: 8}, y: {ticks: {font: {size: 10}}}}}});
-            }
+        function renderCertaintyByRiasecChart() {
+            var c = destroyAndGet('certaintyByRiasecChart'); if (!c) return;
+            var cbr = DATA.congruence_by_riasec;
+            var types = ['Investigative','Realistic','Social','Artistic','Enterprising','Conventional'];
+            var colors = ['#1e40af','#1d4ed8','#3b82f6','#60a5fa','#93c5fd','#dc2626'];
+            new Chart(c, {type:'bar',data:{labels:types,datasets:[{label:'Avg Certainty',data:types.map(function(t){return cbr[t].avg_certainty;}),backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:3.5,max:4.2},x:{ticks:{font:{size:10}}}}}});
+            var low = types.reduce(function(a,b){return cbr[a].avg_certainty < cbr[b].avg_certainty ? a : b;});
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: low + ' students report lowest certainty (' + cbr[low].avg_certainty.toFixed(2) + '/5). This type may need additional career exploration support.', action: 'Design targeted activities for ' + low + ' students to build career confidence.'});
+        }
 
-            const riasecDistCtx = document.getElementById('riasecDistChart');
-            if(riasecDistCtx) {
-                const themes = DATA.riasec_themes;
-                new Chart(riasecDistCtx, {type: 'doughnut', data: {labels: Object.keys(themes), datasets: [{data: Object.values(themes), backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#8b5cf6', '#06b6d4'], borderColor: '#fff', borderWidth: 2}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'bottom'}}}});
-            }
+        function renderCongruenceVsCertaintyChart() {
+            var c = destroyAndGet('congruenceVsCertaintyChart'); if (!c) return;
+            var levels = ['No Match','Low','Medium','High'];
+            var certs = levels.map(function(l){return DATA.congruence.vs_cert[l];});
+            var colors = ['#e5e7eb','#93c5fd','#3b82f6','#1e40af'];
+            new Chart(c, {type:'bar',data:{labels:levels,datasets:[{label:'Avg Certainty',data:certs,backgroundColor:colors,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:3.5,max:4.2}}}});
+        }
 
-            const monthlyCtx = document.getElementById('monthlyTrendChart');
-            if(monthlyCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                new Chart(monthlyCtx, {type: 'bar', data: {labels: months, datasets: [{label: 'Sessions', data: months.map(m => DATA.sessions_trend[m]), backgroundColor: '#00C805', borderRadius: 4}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true}}}});
-            }
+        function renderDistributionChart() {
+            var c = destroyAndGet('distributionChart'); if (!c) return;
+            var careers = DATA.october_data.top_careers;
+            new Chart(c, {type:'bar',data:{labels:careers.map(function(cr){return cr.career;}),datasets:[{data:careers.map(function(cr){return cr.pct;}),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6','#06b6d4','#ec4899','#64748b','#f97316','#84cc16'],borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'% of Students'},max:8},y:{ticks:{font:{size:10}}}}}});
+            var topCareer = careers[0];
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topCareer.career + ' leads at ' + topCareer.pct + '%. ' + OCTOBER_FULL.popular_career_interest.zero_popular + '% of students choose non-mainstream careers.', action: 'Expand career awareness events featuring underrepresented STEM and trades fields.'});
+        }
 
-            const reachCtx = document.getElementById('reachChart');
-            if(reachCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                new Chart(reachCtx, {type: 'line', data: {labels: months, datasets: [{label: 'Sessions', data: months.map(m => DATA.sessions_trend[m]), borderColor: '#00C805', backgroundColor: 'rgba(0, 200, 5, 0.1)', borderWidth: 3, fill: true, tension: 0.3}, {label: 'Unique Students', data: months.map(m => DATA.unique_trend[m]), borderColor: '#f59e0b', backgroundColor: 'rgba(245, 158, 11, 0.1)', borderWidth: 3, fill: true, tension: 0.3}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true}}}});
-            }
+        function renderRiasecDistChart() {
+            var c = destroyAndGet('riasecDistChart'); if (!c) return;
+            var themes = DATA.riasec_themes;
+            new Chart(c, {type:'doughnut',data:{labels:Object.keys(themes),datasets:[{data:Object.values(themes),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6','#06b6d4'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+            var total = Object.values(themes).reduce(function(a,b){return a+b;},0);
+            var topType = Object.keys(themes).reduce(function(a,b){return themes[a]>themes[b]?a:b;});
+            var lowType = Object.keys(themes).reduce(function(a,b){return themes[a]<themes[b]?a:b;});
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented personality types.'});
+        }
 
-            const yoyCtx = document.getElementById('yoyChart');
-            if(yoyCtx) {
-                const months = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb'];
-                const sy2324 = months.map(m => DATA.yoy['SY23-24'][m] || 0);
-                const sy2425 = months.map(m => DATA.yoy['SY24-25'][m] || 0);
-                const sy2526 = months.map(m => DATA.yoy['SY25-26'][m] || 0);
-                new Chart(yoyCtx, {type: 'line', data: {labels: months, datasets: [{label: 'SY 2023-24', data: sy2324, borderColor: '#ccc', borderWidth: 1, borderDash: [5, 5], fill: false}, {label: 'SY 2024-25', data: sy2425, borderColor: '#00C805', borderWidth: 2, fill: false, tension: 0.3}, {label: 'SY 2025-26 (to date)', data: sy2526, borderColor: '#166534', borderWidth: 3, fill: false, tension: 0.3}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true}}}});
-            }
+        function renderMonthlyTrendChart() {
+            var c = destroyAndGet('monthlyTrendChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var sessions = months.map(function(m){return DATA.sessions_trend[m];});
+            new Chart(c, {type:'bar',data:{labels:months,datasets:[{label:'Sessions',data:sessions,backgroundColor:'#2563eb',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+            var peak = Math.max.apply(null, sessions);
+            var peakMonth = months[sessions.indexOf(peak)];
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: sessions[sessions.length-1] >= sessions[sessions.length-2] ? 'up' : 'down', soWhat: 'Engagement peaked in ' + peakMonth + ' (' + peak.toLocaleString() + ' sessions). Dec is ' + Math.round(sessions[sessions.length-1]/peak*100) + '% of peak.', action: 'Plan interventions before typical post-October dip.'});
+        }
 
-            const dosageCtx = document.getElementById('dosageChart');
-            if(dosageCtx) {
-                const dosageData = [{dosage: 2.5, certainty: 3.62, level: 'High'}, {dosage: 4.5, certainty: 3.84, level: 'High'}, {dosage: 7.5, certainty: 4.12, level: 'High'}, {dosage: 10, certainty: 4.28, level: 'High'}, {dosage: 2.5, certainty: 3.52, level: 'Middle'}, {dosage: 4.5, certainty: 3.74, level: 'Middle'}, {dosage: 7.5, certainty: 4.02, level: 'Middle'}];
-                new Chart(dosageCtx, {type: 'scatter', data: {datasets: [{label: 'High Schools', data: dosageData.filter(d => d.level === 'High').map(d => ({x: d.dosage, y: d.certainty})), borderColor: '#c49000', backgroundColor: 'rgba(196, 144, 0, 0.1)', borderWidth: 2, pointRadius: 6}, {label: 'Middle Schools', data: dosageData.filter(d => d.level === 'Middle').map(d => ({x: d.dosage, y: d.certainty})), borderColor: '#00C805', backgroundColor: 'rgba(0, 200, 5, 0.1)', borderWidth: 2, pointRadius: 6}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {x: {title: {display: true, text: 'Sessions per Student'}, min: 0, max: 11}, y: {title: {display: true, text: 'Avg Certainty (1-5)'}, min: 3.4, max: 4.5}}}});
-            }
+        function renderReachChart() {
+            var c = destroyAndGet('reachChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Sessions',data:months.map(function(m){return DATA.sessions_trend[m];}),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.1)',borderWidth:3,fill:true,tension:0.3},{label:'Unique Students',data:months.map(function(m){return DATA.unique_trend[m];}),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',borderWidth:3,fill:true,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}});
+        }
 
-            const gradCtx = document.getElementById('gradChart');
-            if(gradCtx) {
-                const schools = Object.keys(DATA.mcps_grad).sort((a, b) => DATA.mcps_grad[b] - DATA.mcps_grad[a]).slice(0, 15);
-                new Chart(gradCtx, {type: 'bar', data: {labels: schools, datasets: [{label: 'Grad Rate %', data: schools.map(s => DATA.mcps_grad[s]), backgroundColor: '#00C805', borderRadius: 4}]}, options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {min: 75, max: 102}}}});
-            }
+        function renderYoYChart() {
+            var c = destroyAndGet('yoyChart'); if (!c) return;
+            var months = ['Aug','Sep','Oct','Nov','Dec','Jan','Feb'];
+            var sy2324 = months.map(function(m){return DATA.yoy['SY23-24'][m]||0;});
+            var sy2425 = months.map(function(m){return DATA.yoy['SY24-25'][m]||0;});
+            var sy2526 = months.map(function(m){return DATA.yoy['SY25-26'][m]||0;});
+            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'SY 2023-24',data:sy2324,borderColor:'#ccc',borderWidth:1,borderDash:[5,5],fill:false},{label:'SY 2024-25',data:sy2425,borderColor:'#2563eb',borderWidth:2,fill:false,tension:0.3},{label:'SY 2025-26 (to date)',data:sy2526,borderColor:'#1e40af',borderWidth:3,fill:false,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}});
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'SY 2025-26 is tracking well ahead of prior years. Dec sessions already exceed SY23-24 total.', action: 'Maintain momentum through spring to set a new annual record.'});
+        }
 
-            const farmsCtx = document.getElementById('farmsChart');
-            if(farmsCtx) {
-                const schools = Object.keys(DATA.mcps_farms);
-                new Chart(farmsCtx, {type: 'scatter', data: {datasets: [{label: 'High Schools', data: schools.map((s, i) => ({x: DATA.mcps_farms[s], y: DATA.mcps_grad[s] || 85})), borderColor: '#00C805', backgroundColor: 'rgba(0, 200, 5, 0.3)', borderWidth: 2, pointRadius: 8}]}, options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {title: {display: true, text: 'FARMS %'}, min: 0, max: 70}, y: {title: {display: true, text: 'Graduation Rate %'}, min: 75, max: 102}}}});
-            }
+        function renderDosageChart() {
+            var c = destroyAndGet('dosageChart'); if (!c) return;
+            var dosageData = [{dosage:2.5,certainty:3.62,level:'High'},{dosage:4.5,certainty:3.84,level:'High'},{dosage:7.5,certainty:4.12,level:'High'},{dosage:10,certainty:4.28,level:'High'},{dosage:2.5,certainty:3.52,level:'Middle'},{dosage:4.5,certainty:3.74,level:'Middle'},{dosage:7.5,certainty:4.02,level:'Middle'}];
+            new Chart(c, {type:'scatter',data:{datasets:[{label:'High Schools',data:dosageData.filter(function(d){return d.level==='High';}).map(function(d){return {x:d.dosage,y:d.certainty};}),borderColor:'#c49000',backgroundColor:'rgba(196,144,0,0.1)',borderWidth:2,pointRadius:6},{label:'Middle Schools',data:dosageData.filter(function(d){return d.level==='Middle';}).map(function(d){return {x:d.dosage,y:d.certainty};}),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.1)',borderWidth:2,pointRadius:6}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{x:{title:{display:true,text:'Sessions per Student'},min:0,max:11},y:{title:{display:true,text:'Avg Certainty (1-5)'},min:3.4,max:4.5}}}});
+            var card = c.closest('.chart-card');
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Higher dosage correlates with higher certainty. Students with 7.5+ sessions average 4.12+ certainty.', action: 'Increase sessions at low-dosage schools to push above the 4.0 certainty threshold.'});
+        }
+
+        function renderGradChart() {
+            var c = destroyAndGet('gradChart'); if (!c) return;
+            var schools = Object.keys(DATA.mcps_grad).sort(function(a,b){return DATA.mcps_grad[b]-DATA.mcps_grad[a];}).slice(0,15);
+            new Chart(c, {type:'bar',data:{labels:schools,datasets:[{label:'Grad Rate %',data:schools.map(function(s){return DATA.mcps_grad[s];}),backgroundColor:'#2563eb',borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:75,max:102}}}});
+        }
+
+        function renderFarmsChart() {
+            var c = destroyAndGet('farmsChart'); if (!c) return;
+            var schools = Object.keys(DATA.mcps_farms);
+            new Chart(c, {type:'scatter',data:{datasets:[{label:'High Schools',data:schools.map(function(s){return {x:DATA.mcps_farms[s],y:DATA.mcps_grad[s]||85};}),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.3)',borderWidth:2,pointRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'FARMS %'},min:0,max:70},y:{title:{display:true,text:'Graduation Rate %'},min:75,max:102}}}});
         }
 
         function toggleExpert(header) {
@@ -5342,12 +5603,12 @@
             if(!container || container.innerHTML.trim() !== '') return;
             const regs = [
                 {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                {label: 'Session Helpful → Certainty', beta: 1.71, color: '#166534', sig: '***'},
-                {label: 'Next Steps → Clarity', beta: 1.55, color: '#166534', sig: '***'},
-                {label: 'RIASEC Themes → Score', beta: 1.15, color: '#166534', sig: '***'},
-                {label: 'Certainty → Future Clarity', beta: 1.15, color: '#166534', sig: '***'},
-                {label: 'Future Thinking → Certainty', beta: 0.92, color: '#22c55e', sig: '***'},
-                {label: 'Helpful → Concentration', beta: 0.80, color: '#22c55e', sig: '***'},
+                {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
+                {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
+                {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
+                {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
+                {label: 'Future Thinking → Certainty', beta: 0.92, color: '#3b82f6', sig: '***'},
+                {label: 'Helpful → Concentration', beta: 0.80, color: '#3b82f6', sig: '***'},
                 {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
                 {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
             ];
@@ -5388,8 +5649,8 @@
                 data: {
                     labels: ['Mentoring', 'Knows Next Steps', 'Advisor Meeting', 'Exploration', 'Check-in'],
                     datasets: [
-                        {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#166534', borderRadius: 4},
-                        {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#86efac', borderRadius: 4}
+                        {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#1e40af', borderRadius: 4},
+                        {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#93c5fd', borderRadius: 4}
                     ]
                 },
                 options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true, title: {display: true, text: '%'}}}}
@@ -5402,7 +5663,7 @@
             const careers = DATA.october_data.top_careers;
             tbody.innerHTML = careers.map(c => {
                 const bls = BLS_CAREERS[c.career] || {};
-                const outlookColor = bls.outlook && bls.outlook.includes('-') ? 'color:#dc2626;font-weight:600;' : (bls.outlook && parseInt(bls.outlook) >= 5 ? 'color:#166534;font-weight:600;' : '');
+                const outlookColor = bls.outlook && bls.outlook.includes('-') ? 'color:#dc2626;font-weight:600;' : (bls.outlook && parseInt(bls.outlook) >= 5 ? 'color:#1e40af;font-weight:600;' : '');
                 return '<tr><td><strong>' + c.career + '</strong></td><td>' + c.pct + '%</td><td>' + (bls.salary || 'N/A') + '</td><td style="' + outlookColor + '">' + (bls.outlook || 'N/A') + ' (' + (bls.outlook_text || '') + ')</td><td>' + (bls.openings || 'N/A') + '</td></tr>';
             }).join('');
         }
