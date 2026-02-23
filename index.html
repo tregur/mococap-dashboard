@@ -2248,6 +2248,14 @@
                             <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
                                 <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
                             </div>
+                            <div id="bubbleColorKey" style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.5rem;padding:4px 0;">
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>Realistic</span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block;"></span>Investigative</span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#eab308;display:inline-block;"></span>Artistic</span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Social</span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;"></span>Enterprising</span>
+                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>Conventional</span>
+                            </div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
 
@@ -4250,7 +4258,7 @@
                             }
                         },
                         plugins: {
-                            legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11, weight: 600 } } },
+                            legend: { display: false },
                             tooltip: {
                                 backgroundColor: 'rgba(26,26,26,0.95)',
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
@@ -4522,7 +4530,7 @@
                             }
                         },
                         plugins: {
-                            legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } } },
+                            legend: { display: false },
                             tooltip: {
                                 backgroundColor: 'rgba(26,26,26,0.95)',
                                 titleFont: { size: 13, weight: 700 }, bodyFont: { size: 11 },
