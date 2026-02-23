@@ -1407,80 +1407,29 @@
             border-color: var(--g);
         }
 
-        .section-month-tabs {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .section-month-snapshot {
+        .section-month-link {
             margin-bottom: 1rem;
         }
 
-        .month-snapshot-header {
-            display: flex;
+        .section-month-link a {
+            display: inline-flex;
             align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-            padding: 0.75rem 1rem;
-            background: var(--surface);
-            border-radius: 8px;
-            border-left: 4px solid var(--g);
+            gap: 0.25rem;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--g);
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            transition: all 0.2s;
         }
 
-        .month-snapshot-header h3 {
-            margin: 0;
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--t1);
-        }
-
-        .month-snapshot-header .month-badge {
-            padding: 3px 10px;
-            border-radius: 12px;
+        .section-month-link a:hover {
             background: var(--g);
             color: white;
-            font-size: 11px;
-            font-weight: 600;
+            border-color: var(--g);
         }
-
-        .month-kpi-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .month-kpi {
-            padding: 0.75rem;
-            background: var(--surface);
-            border-radius: 8px;
-            border: 1px solid var(--bdr);
-            text-align: center;
-        }
-
-        .month-kpi-value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--g);
-            line-height: 1.2;
-        }
-
-        .month-kpi-label {
-            font-size: 11px;
-            color: var(--t2);
-            margin-top: 2px;
-        }
-
-        .month-kpi-delta {
-            font-size: 11px;
-            font-weight: 600;
-            margin-top: 2px;
-        }
-
-        .month-kpi-delta.up { color: #059669; }
-        .month-kpi-delta.down { color: #dc2626; }
 
         .month-content {
             display: none;
@@ -2478,16 +2427,7 @@
                             <p>The program currently has <strong>2,172 students with clear career plans</strong>, 6,329 with "some idea," and 1,505 who remain unsure. The "Some Idea" group (63.3%) is the most actionable — targeted interventions could convert many toward clarity.</p>
                             <div class="metric-detail">Sources: MoCo CAP Score Cards Aug-Dec 2025; Oct 2025 Analysis; Career Development Theory</div>
                         </div>
-                        <div class="section-month-tabs" data-page="career-plan">
-                            <button class="month-tab active" onclick="switchSectionMonth('career-plan','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('career-plan','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('career-plan','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('career-plan','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('career-plan','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('career-plan','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-career-plan" style="display:none;"></div>
-                        <div id="sectionAllContent-career-plan">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="insight-box">
                             <strong>More Sessions = Better Outcomes:</strong> Schools with higher per-student session counts show stronger certainty outcomes. Poolesville HS (6.88 sessions/student, certainty 4.54) and Richard Montgomery HS (5.26 sessions/student, certainty 4.38) demonstrate that deeper engagement drives better results. Session count explains about 22% of the difference in career certainty.
                         </div>
@@ -2507,7 +2447,6 @@
                         </div>
                         <!-- October: Clarity Regression Insights & Follow-Up -->
                         <div id="careerPlanOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
-                        </div>
                     </div>
 
                     <div class="page" id="program-perf">
@@ -2516,16 +2455,7 @@
                             <p><strong>Equity Note:</strong> Schools with higher rates of students receiving free/reduced meals (FARMS above 40%) receive slightly more sessions per student, which means the program is reaching under-resourced communities. However, certainty scores in these schools average 0.31 points lower, suggesting these students may need more intensive support.</p>
                             <div class="metric-detail">Sources: MoCo CAP Platform Data (1,537 students with 2+ sessions); MCPS Public Data (FARMS rates, graduation rates Class of 2023)</div>
                         </div>
-                        <div class="section-month-tabs" data-page="program-perf">
-                            <button class="month-tab active" onclick="switchSectionMonth('program-perf','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('program-perf','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('program-perf','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('program-perf','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('program-perf','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('program-perf','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-program-perf" style="display:none;"></div>
-                        <div id="sectionAllContent-program-perf">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <!-- October: Session Helpfulness by Type -->
                         <div class="chart-grid">
                             <div class="chart-card">
@@ -2578,7 +2508,6 @@
                             </table>
                             <div id="ic-coach-performance"></div>
                         </div>
-                        </div>
                     </div>
 
                     <div class="page" id="engagement">
@@ -2586,16 +2515,7 @@
                             <p><strong>Engagement Patterns:</strong> October represents peak engagement (18,974 sessions) driven by college application season. The Nov→Dec decline (-2.3%) is within expected seasonal patterns — winter break and final exams reduce available coaching time. Critically, the <strong>reach remained stable</strong> (7,858→7,715 unique students, just -1.8%), indicating sustained student interest despite fewer opportunities.</p>
                             <div class="metric-detail">Sources: MoCo CAP Platform Session Logs Jul-Dec 2025; MoCo CAP Score Cards</div>
                         </div>
-                        <div class="section-month-tabs" data-page="engagement">
-                            <button class="month-tab active" onclick="switchSectionMonth('engagement','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('engagement','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('engagement','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('engagement','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('engagement','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('engagement','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-engagement" style="display:none;"></div>
-                        <div id="sectionAllContent-engagement">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="insight-box">
                             <strong>Year-over-Year Growth:</strong> SY 2025-26 is dramatically outpacing prior years. September alone (12,268 students) exceeded the entire SY 2023-24 first semester. This 3x growth rate validates the program's scaling strategy.
                         </div>
@@ -2639,7 +2559,6 @@
                             <div style="position:relative;height:220px;"><canvas id="engFollowupChart"></canvas></div>
                         </div>
                         <div id="engOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
-                        </div>
                     </div>
 
                     <div class="page" id="riasec">
@@ -2648,16 +2567,7 @@
                             <p><strong>Cross-Reference Insight:</strong> Comparing against O*NET national workforce data, MoCo CAP students show higher Artistic representation (+4.2pp) and lower Conventional (-3.1pp) than the adult workforce. This gap represents both a developmental norm and a guidance opportunity — helping students see how their creative interests map to real careers.</p>
                             <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (23,695 students assessed); O*NET National Workforce RIASEC Distribution; Holland (1997); Nye et al. (2012) meta-analysis</div>
                         </div>
-                        <div class="section-month-tabs" data-page="riasec">
-                            <button class="month-tab active" onclick="switchSectionMonth('riasec','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('riasec','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('riasec','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('riasec','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('riasec','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('riasec','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-riasec" style="display:none;"></div>
-                        <div id="sectionAllContent-riasec">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">RIASEC Type Distribution (10,006 students)</div>
@@ -2700,23 +2610,13 @@
                                 <span>High %</span>
                             </div>
                         </div>
-                        </div>
                     </div>
 
                     <div class="page" id="sectors">
                         <div class="section-narrative">
                             <p><strong>Montgomery County Priority Sectors × RIASEC Crosswalk:</strong> Eight workforce sectors have been identified as priorities for Montgomery County economic development. Below, each sector is mapped to primary and secondary RIASEC types, enabling targeted career coaching that connects student personality profiles to local workforce demand.</p>
                         </div>
-                        <div class="section-month-tabs" data-page="sectors">
-                            <button class="month-tab active" onclick="switchSectionMonth('sectors','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('sectors','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('sectors','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('sectors','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('sectors','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('sectors','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-sectors" style="display:none;"></div>
-                        <div id="sectionAllContent-sectors">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="priority-sector-card">
                             <div class="sector-name">1. Biosciences & Health Technology</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Investigative</span><span class="riasec-tag secondary">Realistic</span></div>
@@ -2764,23 +2664,13 @@
                             <div style="position:relative;height:250px;"><canvas id="sectorsCTEChart"></canvas></div>
                         </div>
                         <div id="sectorsOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
-                        </div>
                     </div>
 
                     <div class="page" id="distribution">
                         <div class="section-narrative">
                             <p><strong>Top 10 Career Selections (October, 18,920 students):</strong> Athletes & Sports Competitors lead at 7.1%, followed by Lawyers (4.0%) and Physicians (3.7%). The top 10 careers account for only 28.7% of all selections, indicating a healthy long tail of diverse interests across 200+ career codes.</p>
                         </div>
-                        <div class="section-month-tabs" data-page="distribution">
-                            <button class="month-tab active" onclick="switchSectionMonth('distribution','all',this)">All Months</button>
-                            <button class="month-tab" onclick="switchSectionMonth('distribution','Aug',this)">Aug</button>
-                            <button class="month-tab" onclick="switchSectionMonth('distribution','Sep',this)">Sep</button>
-                            <button class="month-tab" onclick="switchSectionMonth('distribution','Oct',this)">Oct</button>
-                            <button class="month-tab" onclick="switchSectionMonth('distribution','Nov',this)">Nov</button>
-                            <button class="month-tab" onclick="switchSectionMonth('distribution','Dec',this)">Dec</button>
-                        </div>
-                        <div id="sectionMonthDetail-distribution" style="display:none;"></div>
-                        <div id="sectionAllContent-distribution">
+                        <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="insight-box alert">
                             <strong>Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (7.1%) + "Actors" (1.5%) = 8.6% pursuing glamour careers with very limited labor market capacity (~16,500 national positions, -3% growth). The program should add a "Career Reality Check" module that pairs aspiration data with BLS outlook data. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
                         </div>
@@ -2807,7 +2697,6 @@
                         </div>
                         <!-- October: Popular Career Concentration -->
                         <div id="distributionOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
-                        </div>
                     </div>
 
                     <div class="page" id="experts">
@@ -5395,241 +5284,6 @@
                 nextStep: 'Continue highlighting sector-aligned career pathways over popular/glamour careers.',
                 sources: [{label: 'Oct Career Data', action: 'page:monthly-report'}, {label: 'BLS Reality Check', action: 'page:distribution'}]
             });
-        }
-
-        // === Section Monthly Views ===
-        var MONTH_NAMES = {Aug: 'August', Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December'};
-        var MONTH_ORDER = ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-        function getMonthDelta(month, key) {
-            var idx = MONTH_ORDER.indexOf(month);
-            if (idx <= 0) return null;
-            var prev = MONTHLY_DATA[MONTH_ORDER[idx - 1]];
-            var curr = MONTHLY_DATA[month];
-            if (!prev || !curr) return null;
-            return curr[key] - prev[key];
-        }
-
-        function formatDelta(val, suffix) {
-            if (val === null || val === undefined) return '';
-            var sign = val > 0 ? '+' : '';
-            var cls = val > 0 ? 'up' : val < 0 ? 'down' : '';
-            return '<div class="month-kpi-delta ' + cls + '">' + sign + val.toFixed(1) + (suffix || '') + ' vs prior month</div>';
-        }
-
-        function buildMonthKPIs(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d) return '';
-            return '<div class="month-kpi-row">' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.sessions.toLocaleString() + '</div><div class="month-kpi-label">Sessions</div>' + formatDelta(getMonthDelta(month, 'sessions'), '') + '</div>' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.unique.toLocaleString() + '</div><div class="month-kpi-label">Unique Students</div>' + formatDelta(getMonthDelta(month, 'unique'), '') + '</div>' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.certainty.toFixed(2) + '</div><div class="month-kpi-label">Avg Certainty (1-5)</div>' + formatDelta(getMonthDelta(month, 'certainty'), '') + '</div>' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.pct_clear.toFixed(1) + '%</div><div class="month-kpi-label">Clear Plan %</div>' + formatDelta(getMonthDelta(month, 'pct_clear'), 'pp') + '</div>' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.helpfulness_pct.toFixed(1) + '%</div><div class="month-kpi-label">Helpfulness</div>' + formatDelta(getMonthDelta(month, 'helpfulness_pct'), 'pp') + '</div>' +
-                '<div class="month-kpi"><div class="month-kpi-value">' + d.cte_openness.toFixed(0) + '%</div><div class="month-kpi-label">CTE Openness</div>' + formatDelta(getMonthDelta(month, 'cte_openness'), 'pp') + '</div>' +
-            '</div>';
-        }
-
-        function buildMonthGradeTable(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d || !d.grade_dist) return '';
-            var html = '<div class="chart-card"><div class="chart-title">Grade Distribution — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>Grade</th><th>% of Students</th></tr></thead><tbody>';
-            [6,7,8,9,10,11,12].forEach(function(g) {
-                html += '<tr><td>Grade ' + g + '</td><td>' + (d.grade_dist[g] || 0).toFixed(1) + '%</td></tr>';
-            });
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function buildMonthSessionTypes(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d || !d.session_types) return '';
-            var st = d.session_types;
-            var html = '<div class="chart-card"><div class="chart-title">Session Type Mix — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>Type</th><th>% of Sessions</th></tr></thead><tbody>';
-            html += '<tr><td>Whole Group</td><td>' + st.whole_group.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Small Group</td><td>' + st.small_group.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>One-on-One</td><td>' + st.one_on_one.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Exploration</td><td>' + st.exploration.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Other</td><td>' + st.other.toFixed(1) + '%</td></tr>';
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function buildMonthRiasecThemes(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d || !d.riasec_themes) return '';
-            var rt = d.riasec_themes;
-            var html = '<div class="chart-card"><div class="chart-title">RIASEC Theme Depth — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>Theme Count</th><th>% of Students</th></tr></thead><tbody>';
-            html += '<tr><td>0 Themes (no clear type)</td><td>' + rt.zero.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>1 Theme</td><td>' + rt.one.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>2 Themes</td><td>' + rt.two.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>3+ Themes</td><td>' + rt.three_plus.toFixed(1) + '%</td></tr>';
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function buildMonthFollowup(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d || !d.followup) return '';
-            var fu = d.followup;
-            var html = '<div class="chart-card"><div class="chart-title">Follow-Up Requests — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>Follow-Up Type</th><th>% Requesting</th></tr></thead><tbody>';
-            html += '<tr><td>Want Any Follow-Up</td><td>' + fu.want_any.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Mentoring</td><td>' + fu.mentoring.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Advisor Meeting</td><td>' + fu.advisor_meeting.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Exploration Activities</td><td>' + fu.exploration.toFixed(1) + '%</td></tr>';
-            html += '<tr><td>Check-in</td><td>' + fu.checkin.toFixed(1) + '%</td></tr>';
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function buildMonthTopCareers(month) {
-            var d = MONTHLY_DATA[month];
-            if (!d || !d.top_careers) return '';
-            var html = '<div class="chart-card"><div class="chart-title">Top Career Selections — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>#</th><th>Career</th></tr></thead><tbody>';
-            d.top_careers.forEach(function(c, i) {
-                html += '<tr><td>' + (i + 1) + '</td><td>' + c + '</td></tr>';
-            });
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function buildMonthRiasecCongruence(month) {
-            var riasecM = HEATMAP_DATA.riasec_monthly;
-            var html = '<div class="chart-card"><div class="chart-title">RIASEC Congruence Scores — ' + MONTH_NAMES[month] + '</div>';
-            html += '<table class="coach-table"><thead><tr><th>RIASEC Type</th><th>Congruence %</th>';
-            var idx = MONTH_ORDER.indexOf(month);
-            if (idx > 0) html += '<th>Change from ' + MONTH_ORDER[idx - 1] + '</th>';
-            html += '</tr></thead><tbody>';
-            ['Realistic', 'Investigative', 'Artistic', 'Social', 'Enterprising', 'Conventional'].forEach(function(type) {
-                var val = riasecM[type] ? riasecM[type][month] : null;
-                html += '<tr><td>' + type + '</td><td>' + (val ? val.toFixed(1) + '%' : 'N/A') + '</td>';
-                if (idx > 0) {
-                    var prevVal = riasecM[type] ? riasecM[type][MONTH_ORDER[idx - 1]] : null;
-                    if (val && prevVal) {
-                        var delta = val - prevVal;
-                        var cls = delta > 0 ? 'color:#059669;font-weight:600;' : delta < 0 ? 'color:#dc2626;font-weight:600;' : '';
-                        html += '<td style="' + cls + '">' + (delta > 0 ? '+' : '') + delta.toFixed(1) + 'pp</td>';
-                    } else {
-                        html += '<td>—</td>';
-                    }
-                }
-                html += '</tr>';
-            });
-            html += '</tbody></table></div>';
-            return html;
-        }
-
-        function renderSectionMonthView(pageId, month) {
-            var d = MONTHLY_DATA[month];
-            if (!d) return '<div class="insight-box">No data available for ' + MONTH_NAMES[month] + '.</div>';
-
-            var html = '<div class="section-month-snapshot">';
-            html += '<div class="month-snapshot-header"><h3>' + MONTH_NAMES[month] + ' 2025 Snapshot</h3>';
-            html += '<span class="month-badge">' + d.n_sample.toLocaleString() + ' students surveyed</span>';
-            if (d.hasFullData) html += '<span class="month-badge" style="background:#059669;">Full Survey Data</span>';
-            html += '</div>';
-
-            // KPIs for all sections
-            html += buildMonthKPIs(month);
-
-            // So What + Next Step
-            html += '<div class="insight-box" style="margin-bottom:1rem;">';
-            html += '<strong>So What:</strong> ' + d.soWhat;
-            html += '<br><strong>Next Step:</strong> ' + d.nextStep;
-            html += '</div>';
-
-            // Section-specific content
-            if (pageId === 'career-plan') {
-                html += '<div class="chart-grid">';
-                html += buildMonthRiasecCongruence(month);
-                html += buildMonthTopCareers(month);
-                html += '</div>';
-                html += buildMonthFollowup(month);
-                if (d.hasFullData) {
-                    html += '<div class="insight-box" style="margin-top:0.75rem;border-left:4px solid #059669;">';
-                    html += '<strong>October Deep Dive Available:</strong> October has full regression analysis from 1,012 student surveys. See the "All Months" view for detailed career clarity drivers and actionable recommendations.';
-                    html += '</div>';
-                }
-            } else if (pageId === 'program-perf') {
-                html += '<div class="chart-grid">';
-                html += buildMonthSessionTypes(month);
-                html += buildMonthGradeTable(month);
-                html += '</div>';
-                if (d.hasFullData) {
-                    html += '<div class="insight-box" style="margin-top:0.75rem;border-left:4px solid #059669;">';
-                    html += '<strong>October Deep Dive Available:</strong> October includes helpfulness analysis by delivery type, regression drivers, and YoY comparisons. See the "All Months" view for full details.';
-                    html += '</div>';
-                }
-            } else if (pageId === 'engagement') {
-                html += '<div class="chart-grid">';
-                html += buildMonthSessionTypes(month);
-                html += buildMonthGradeTable(month);
-                html += '</div>';
-                html += buildMonthFollowup(month);
-            } else if (pageId === 'riasec') {
-                html += buildMonthRiasecCongruence(month);
-                html += buildMonthRiasecThemes(month);
-            } else if (pageId === 'sectors') {
-                html += buildMonthRiasecCongruence(month);
-                html += '<div class="insight-box" style="margin-top:0.75rem;">';
-                html += '<strong>CTE Openness:</strong> ' + d.cte_openness.toFixed(0) + '% of students in ' + MONTH_NAMES[month] + ' expressed interest in Career & Technical Education pathways.';
-                var cteDelta = getMonthDelta(month, 'cte_openness');
-                if (cteDelta !== null) {
-                    html += ' (' + (cteDelta > 0 ? '+' : '') + cteDelta.toFixed(1) + 'pp from prior month)';
-                }
-                html += '</div>';
-                if (d.hasFullData) {
-                    html += '<div class="insight-box" style="margin-top:0.75rem;border-left:4px solid #059669;">';
-                    html += '<strong>October Deep Dive:</strong> CTE pathway breakdown and sector alignment analysis available in "All Months" view.';
-                    html += '</div>';
-                }
-            } else if (pageId === 'distribution') {
-                html += buildMonthTopCareers(month);
-                html += '<div class="insight-box" style="margin-top:0.75rem;">';
-                html += '<strong>Top Careers for ' + MONTH_NAMES[month] + ':</strong> ' + d.top_careers.slice(0, 3).join(', ') + ' lead student interest this month.';
-                html += '</div>';
-            }
-
-            html += '</div>';
-            return html;
-        }
-
-        function switchSectionMonth(pageId, month, btn) {
-            // Update tab active states within this section
-            var tabBar = btn.parentElement;
-            tabBar.querySelectorAll('.month-tab').forEach(function(t) { t.classList.remove('active'); });
-            btn.classList.add('active');
-
-            var allContent = document.getElementById('sectionAllContent-' + pageId);
-            var monthDetail = document.getElementById('sectionMonthDetail-' + pageId);
-
-            if (month === 'all') {
-                // Show the cumulative all-months view (original content)
-                if (allContent) allContent.style.display = '';
-                if (monthDetail) { monthDetail.style.display = 'none'; monthDetail.innerHTML = ''; }
-                // Trigger chart resize for newly visible canvases
-                setTimeout(function() {
-                    if (allContent) {
-                        allContent.querySelectorAll('canvas').forEach(function(c) {
-                            var chart = Chart.getChart(c);
-                            if (chart) chart.resize();
-                        });
-                    }
-                }, 50);
-                return;
-            }
-
-            // Hide all-months content, show month detail
-            if (allContent) allContent.style.display = 'none';
-            if (monthDetail) {
-                monthDetail.style.display = '';
-                monthDetail.innerHTML = renderSectionMonthView(pageId, month);
-            }
         }
 
         function initDashboard() {
