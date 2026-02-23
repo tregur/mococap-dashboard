@@ -1755,7 +1755,7 @@
             border-radius: 4px;
             letter-spacing: 0.05em;
         }
-        .ic-severity--positive { background: #dcfce7; color: #1e40af; }
+        .ic-severity--positive { background: #dbeafe; color: #1e40af; }
         .ic-severity--negative { background: #fee2e2; color: #991b1b; }
         .ic-severity--neutral  { background: #fef3c7; color: #92400e; }
         .ic-severity--info     { background: #dbeafe; color: #1e40af; }
@@ -2213,6 +2213,14 @@
                 </div>
 
                 <div class="global-pivot-bar" id="globalPivotBar">
+                    <div class="seg-pills" id="timeRangePills">
+                        <span class="seg-pill" data-range="1M" onclick="switchTimeRange('1M', this)">1M</span>
+                        <span class="seg-pill" data-range="3M" onclick="switchTimeRange('3M', this)">3M</span>
+                        <span class="seg-pill active" data-range="6M" onclick="switchTimeRange('6M', this)">6M</span>
+                        <span class="seg-pill" data-range="YTD" onclick="switchTimeRange('YTD', this)">YTD</span>
+                        <span class="seg-pill" data-range="ALL" onclick="switchTimeRange('ALL', this)">ALL</span>
+                    </div>
+                    <div style="width:1px;height:20px;background:var(--bdr);margin:0 0.75rem;"></div>
                     <div class="seg-pills" id="globalPivotPills">
                         <span class="seg-pill active" data-pivot="overall" onclick="switchGlobalPivot('overall', this)">Overall</span>
                         <span class="seg-pill" data-pivot="school" onclick="switchGlobalPivot('school', this)">By School</span>
@@ -4243,6 +4251,34 @@
             "Computer Programmers": {riasec: "Investigative", certainty: 3.98, congruence: 88.1, n: 280}
         };
 
+        // ===== Time Range System =====
+        var currentTimeRange = '6M';
+        var TIME_RANGE_MONTHS = {
+            '1M': ['Dec'],
+            '3M': ['Oct', 'Nov', 'Dec'],
+            '6M': ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'YTD': ['Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'ALL': ['Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        };
+
+        function switchTimeRange(range, btn) {
+            currentTimeRange = range;
+            document.querySelectorAll('#timeRangePills .seg-pill').forEach(function(p) { p.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+            // Re-render all charts with new time range
+            try { renderOverviewScoresChart(); } catch(e) { console.error('time range overview:', e); }
+            try { renderHeroChart(); } catch(e) { console.error('time range hero:', e); }
+            try { renderEngagementTrendChart(); } catch(e) {}
+            try { renderAlignmentTrendChart(); } catch(e) {}
+            try { renderMonthlyTrendChart(); } catch(e) {}
+            try { renderReachChart(); } catch(e) {}
+            try { renderYoYChart(); } catch(e) {}
+        }
+
+        function getActiveMonths() {
+            return TIME_RANGE_MONTHS[currentTimeRange] || TIME_RANGE_MONTHS['6M'];
+        }
+
         // Keep backward compat for old calls
         var currentTrendSegment = 'overall';
         function switchTrendSegment(seg, btn) { switchGlobalPivot(seg, btn); }
@@ -4305,7 +4341,7 @@
             if (existing) existing.destroy();
             if (overviewScoresChartInstance) { try { overviewScoresChartInstance.destroy(); } catch(e) {} overviewScoresChartInstance = null; }
             var ctx = canvas.getContext('2d');
-            var months = Object.keys(DATA.alignment_trajectory);
+            var months = getActiveMonths();
             var seg = currentPivot;
 
             // Compute congruence + certainty + clear plan for all months (for tooltip + table)
@@ -4482,7 +4518,7 @@
             var container = document.getElementById('congruenceCertaintyScorecard');
             if (!container) return;
             var traj = DATA.alignment_trajectory;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
 
             // Congruence from HEATMAP_DATA (average across types per month)
             var types = Object.keys(HEATMAP_DATA.riasec_monthly);
@@ -5108,20 +5144,20 @@
 
         function renderHeroChart() {
             var c = destroyAndGet('heroChart'); if (!c) return;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
             var sessions = months.map(function(m){return DATA.sessions_trend[m];});
             var clarity = months.map(function(m){return DATA.alignment_trajectory[m].pct_clear;});
             new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Sessions',data:sessions,borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.1)',fill:true,tension:0.3,yAxisID:'y'},{label:'Clear Plan %',data:clarity,borderColor:'#1e40af',backgroundColor:'transparent',borderDash:[5,5],tension:0.3,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'Sessions'},beginAtZero:true},y1:{position:'right',title:{display:true,text:'Clear Plan %'},min:15,max:30}}}});
             var totalSessions = sessions.reduce(function(a,b){return a+b;},0);
-            var lastClarity = clarity[clarity.length-1];
-            var prevClarity = clarity[clarity.length-2];
+            var lastClarity = clarity[clarity.length-1] || 0;
+            var prevClarity = clarity.length > 1 ? clarity[clarity.length-2] : lastClarity;
             var parent = c.closest('.hero-chart');
-            if (parent) renderWidgetInsight(parent, {trend: lastClarity > prevClarity ? 'up' : 'down', soWhat: totalSessions.toLocaleString() + ' total sessions this semester. Clear plan rate at ' + lastClarity + '%, ' + (lastClarity > prevClarity ? 'trending up.' : 'needs attention.'), action: 'Target ' + Math.round(sessions[sessions.length-1] * 1.1).toLocaleString() + ' sessions next month to maintain growth trajectory.'});
+            if (parent) renderWidgetInsight(parent, {trend: lastClarity > prevClarity ? 'up' : lastClarity < prevClarity ? 'down' : 'steady', soWhat: totalSessions.toLocaleString() + ' total sessions (' + currentTimeRange + '). Clear plan rate at ' + lastClarity + '%, ' + (lastClarity >= prevClarity ? 'trending up.' : 'needs attention.'), action: 'Target ' + Math.round(sessions[sessions.length-1] * 1.1).toLocaleString() + ' sessions next month to maintain growth trajectory.'});
         }
 
         function renderEngagementTrendChart() {
             var c = destroyAndGet('engagementTrendChart'); if (!c) return;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
             var sessions = months.map(function(m){return DATA.sessions_trend[m];});
             new Chart(c, {type:'bar',data:{labels:months,datasets:[{label:'Sessions',data:sessions,backgroundColor:'#2563eb',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
             var peak = Math.max.apply(null, sessions);
@@ -5161,12 +5197,15 @@
 
         function renderAlignmentTrendChart() {
             var c = destroyAndGet('alignmentTrendChart'); if (!c) return;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
             var traj = DATA.alignment_trajectory;
-            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Clear Plan %',data:months.map(function(m){return traj[m].pct_clear;}),borderColor:'#1e40af',backgroundColor:'rgba(22,101,52,0.1)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:'#1e40af',borderWidth:3},{label:'Avg Certainty (scaled)',data:months.map(function(m){return (traj[m].avg_certainty/5)*30;}),borderColor:'#6366f1',backgroundColor:'transparent',borderDash:[5,5],tension:0.3,pointRadius:4,pointBackgroundColor:'#6366f1',borderWidth:2,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'Clear Plan %'},min:15,max:30},y1:{position:'right',display:false,min:15,max:30}}}});
-            var lastClear = traj['Dec'].pct_clear;
+            new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Clear Plan %',data:months.map(function(m){return traj[m].pct_clear;}),borderColor:'#1e40af',backgroundColor:'rgba(30,64,175,0.1)',fill:true,tension:0.3,pointRadius:5,pointBackgroundColor:'#1e40af',borderWidth:3},{label:'Avg Certainty (scaled)',data:months.map(function(m){return (traj[m].avg_certainty/5)*30;}),borderColor:'#6366f1',backgroundColor:'transparent',borderDash:[5,5],tension:0.3,pointRadius:4,pointBackgroundColor:'#6366f1',borderWidth:2,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},plugins:{legend:{position:'top'}},scales:{y:{title:{display:true,text:'Clear Plan %'},min:15,max:30},y1:{position:'right',display:false,min:15,max:30}}}});
+            var lastM = months[months.length-1];
+            var firstM = months[0];
+            var lastClear = traj[lastM].pct_clear;
+            var firstClear = traj[firstM].pct_clear;
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: lastClear > traj['Aug'].pct_clear ? 'up' : 'down', soWhat: 'Clear plan % grew from ' + traj['Aug'].pct_clear + '% to ' + lastClear + '% over the semester (+' + (lastClear - traj['Aug'].pct_clear).toFixed(1) + 'pp).', action: 'Sustain gains by maintaining coaching frequency and follow-up scheduling.'});
+            if (card) renderWidgetInsight(card, {trend: lastClear > firstClear ? 'up' : 'down', soWhat: 'Clear plan % went from ' + firstClear + '% (' + firstM + ') to ' + lastClear + '% (' + lastM + ') — ' + (lastClear >= firstClear ? '+' : '') + (lastClear - firstClear).toFixed(1) + 'pp.', action: 'Sustain gains by maintaining coaching frequency and follow-up scheduling.'});
         }
 
         function renderCertaintyByRiasecChart() {
@@ -5210,7 +5249,7 @@
 
         function renderMonthlyTrendChart() {
             var c = destroyAndGet('monthlyTrendChart'); if (!c) return;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
             var sessions = months.map(function(m){return DATA.sessions_trend[m];});
             new Chart(c, {type:'bar',data:{labels:months,datasets:[{label:'Sessions',data:sessions,backgroundColor:'#2563eb',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
             var peak = Math.max.apply(null, sessions);
@@ -5221,7 +5260,7 @@
 
         function renderReachChart() {
             var c = destroyAndGet('reachChart'); if (!c) return;
-            var months = ['Aug','Sep','Oct','Nov','Dec'];
+            var months = getActiveMonths();
             new Chart(c, {type:'line',data:{labels:months,datasets:[{label:'Sessions',data:months.map(function(m){return DATA.sessions_trend[m];}),borderColor:'#2563eb',backgroundColor:'rgba(37,99,235,0.1)',borderWidth:3,fill:true,tension:0.3},{label:'Unique Students',data:months.map(function(m){return DATA.unique_trend[m];}),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.1)',borderWidth:3,fill:true,tension:0.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true}}}});
         }
 
