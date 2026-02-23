@@ -2234,9 +2234,9 @@
 
                         <!-- PRIMARY WIDGETS: Congruence & Certainty front and center -->
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
-                            <div class="metric-detail" style="margin-bottom:0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Responds to the global pivot above. | SY 2025-26</div>
-                            <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty Trends</div>
-                            <div style="position:relative;height:380px;"><canvas id="overviewScoresCanvas"></canvas></div>
+                            <div class="metric-detail" style="margin-bottom:0.5rem;">Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
+                            <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty by School</div>
+                            <div id="overviewScoresCanvasWrap" style="position:relative;height:680px;"><canvas id="overviewScoresCanvas"></canvas></div>
                             <div id="overviewScoresTable"></div>
                         </div>
 
@@ -4283,6 +4283,9 @@
             var existingChart = Chart.getChart(canvas);
             if (existingChart) existingChart.destroy();
             if (bubbleChartInstance) { try { bubbleChartInstance.destroy(); } catch(e) {} bubbleChartInstance = null; }
+            // Clean up data table from previous drill views
+            var existingDataTable = document.getElementById('bubbleDataTable');
+            if (existingDataTable) existingDataTable.innerHTML = '';
 
             var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
             var typeColors = {
@@ -4850,14 +4853,20 @@
                 if (descEl) descEl.textContent = selectedType + ' students (' + typeDescPlain[selectedType] + '): Career choices, congruence growth, and O*NET alignment. Bubble size = students of this type choosing each career. | SY 2025-26';
 
                 // Create datasets — one per career
+                // Use grid-based layout for clear separation
+                var cols = Math.ceil(Math.sqrt(typeCareers.length));
+                var rows = Math.ceil(typeCareers.length / cols);
+                var xRange = 18; // spread across x-axis range (e.g., 76 to 94)
+                var yRange = 0.7; // spread across y-axis range
+                var xBase = 76;  // starting x
+                var yBase = 3.55; // starting y
                 var dtDatasets = typeCareers.map(function(career, idx) {
-                    var r = Math.max(Math.sqrt(career.studentCount) * 1.2, 8);
-                    var onetColor = typeColors[career.onetPrimary];
-                    // Spread bubbles using congruence as x and certainty as y, with jitter
-                    var angle = (idx * 2 * Math.PI) / typeCareers.length - Math.PI / 6;
-                    var spread = 1.2 + idx * 0.3;
-                    var xOff = Math.cos(angle) * spread;
-                    var yOff = Math.sin(angle) * 0.03;
+                    var r = Math.max(Math.sqrt(career.studentCount) * 1.0, 7);
+                    r = Math.min(r, 30); // cap max size so they don't overlap
+                    var col = idx % cols;
+                    var row = Math.floor(idx / cols);
+                    var xPos = xBase + (col + 0.5) * (xRange / cols);
+                    var yPos = yBase + (row + 0.5) * (yRange / rows);
                     // Highlight O*NET matches for this type
                     var bgOpacity = career.isOnetPrimary ? 0.8 : career.isOnetSecondary ? 0.5 : 0.25;
                     var bgColor = typeColor.solid.replace(')', ',' + bgOpacity + ')').replace('rgb(', 'rgba(');
@@ -4869,7 +4878,7 @@
 
                     return {
                         label: career.name,
-                        data: [{ x: career.congruence + xOff, y: career.certainty + yOff, r: r }],
+                        data: [{ x: xPos, y: yPos, r: r }],
                         backgroundColor: bgColor,
                         borderColor: career.isOnetPrimary ? typeColor.solid : career.isOnetSecondary ? typeColor.solid : '#94a3b8',
                         borderWidth: career.isOnetPrimary ? 3 : career.isOnetSecondary ? 2 : 1,
@@ -4954,8 +4963,8 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 70, max: 97, ticks: { stepSize: 2 } },
-                            y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.2, max: 4.4, ticks: { stepSize: 0.1 } }
+                            x: { display: false, min: xBase - 2, max: xBase + xRange + 2 },
+                            y: { display: false, min: yBase - 0.15, max: yBase + yRange + 0.15 }
                         }
                     },
                     plugins: [{
@@ -4963,17 +4972,16 @@
                             var ctx2 = chart.ctx;
                             ctx2.save();
                             ctx2.textAlign = 'center';
-                            ctx2.textBaseline = 'bottom';
                             chart.data.datasets.forEach(function(ds, i) {
                                 var meta = chart.getDatasetMeta(i);
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
                                     var isOnet = ds._isOnetPrimary || ds._isOnetSecondary;
-                                    ctx2.font = (isOnet ? '700 11px' : '500 10px') + ' Inter, sans-serif';
+                                    ctx2.font = (isOnet ? '700 11px' : '600 10px') + ' Inter, sans-serif';
                                     // Smart truncation for labels
                                     var fullW = ctx2.measureText(ds._career).width;
                                     var displayName;
-                                    if (fullW < 120) {
+                                    if (fullW < 110) {
                                         displayName = ds._career;
                                     } else {
                                         var words = ds._career.split(/[\s&]+/);
@@ -4982,16 +4990,19 @@
                                     // O*NET marker
                                     if (ds._isOnetPrimary) displayName = '\u2605 ' + displayName;
                                     else if (ds._isOnetSecondary) displayName = '\u25C6 ' + displayName;
+                                    ctx2.textBaseline = 'bottom';
                                     ctx2.strokeStyle = '#fff';
                                     ctx2.lineWidth = 3;
-                                    ctx2.strokeText(displayName, el.x, el.y - el.options.radius - 4);
-                                    ctx2.fillStyle = isOnet ? '#1a1a1a' : '#666';
-                                    ctx2.fillText(displayName, el.x, el.y - el.options.radius - 4);
-                                    // Show % inside bubble
-                                    ctx2.font = '500 9px Inter, sans-serif';
+                                    ctx2.strokeText(displayName, el.x, el.y - el.options.radius - 3);
+                                    ctx2.fillStyle = isOnet ? '#1a1a1a' : '#555';
+                                    ctx2.fillText(displayName, el.x, el.y - el.options.radius - 3);
+                                    // Show student count + % inside bubble
+                                    ctx2.font = '600 9px Inter, sans-serif';
                                     ctx2.fillStyle = '#1a1a1a';
                                     ctx2.textBaseline = 'middle';
-                                    ctx2.fillText(ds._anyPct.toFixed(0) + '%', el.x, el.y);
+                                    ctx2.fillText(ds._studentCount.toLocaleString(), el.x, el.y - 4);
+                                    ctx2.font = '500 8px Inter, sans-serif';
+                                    ctx2.fillText(ds._anyPct.toFixed(0) + '% match', el.x, el.y + 7);
                                     ctx2.textBaseline = 'bottom';
                                 }
                             });
@@ -4999,6 +5010,39 @@
                         }
                     }]
                 });
+
+                // Data table below chart for type drill-down
+                var typeDrillTable = document.getElementById('bubbleDataTable');
+                if (!typeDrillTable) {
+                    typeDrillTable = document.createElement('div');
+                    typeDrillTable.id = 'bubbleDataTable';
+                    canvas.closest('.bubble-chart-wrap').insertBefore(typeDrillTable, canvas.closest('.bubble-chart-wrap').querySelector('.widget-insight'));
+                }
+                var tblHtml = '<table class="mom-table" style="margin-top:0.75rem;"><thead><tr><th></th><th>Career</th><th>Students</th><th>Primary %</th><th>Secondary %</th><th>Any Match %</th><th>O*NET</th></tr></thead><tbody>';
+                typeCareers.forEach(function(c) {
+                    var onetIcon = c.isOnetPrimary ? '<span style="color:#eab308;" title="O*NET primary match">\u2605</span>' : c.isOnetSecondary ? '<span style="color:#94a3b8;" title="O*NET secondary match">\u25C6</span>' : '';
+                    var priorityIcon = '';
+                    if (c.anyPct < 20) priorityIcon = '<span style="color:#ef4444;" title="Low alignment — priority focus">\u26A0</span>';
+                    else if (c.anyPct < 35) priorityIcon = '<span style="color:#f97316;" title="Moderate alignment">\u25B3</span>';
+                    else priorityIcon = '<span style="color:#22c55e;">\u2713</span>';
+                    var shortCareer = c.name.length > 24 ? c.name.substring(0, 22) + '..' : c.name;
+                    tblHtml += '<tr><td style="text-align:center;width:28px;">' + priorityIcon + '</td>';
+                    tblHtml += '<td><strong>' + shortCareer + '</strong></td>';
+                    tblHtml += '<td>' + c.studentCount.toLocaleString() + '</td>';
+                    tblHtml += '<td>' + c.primaryPct.toFixed(1) + '%</td>';
+                    tblHtml += '<td>' + c.secondaryPct.toFixed(1) + '%</td>';
+                    tblHtml += '<td style="font-weight:700;">' + c.anyPct.toFixed(1) + '%</td>';
+                    tblHtml += '<td style="text-align:center;">' + onetIcon + ' ' + c.onetPrimary.substring(0, 3) + '</td></tr>';
+                });
+                tblHtml += '</tbody></table>';
+                tblHtml += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:10px;color:var(--t3);">';
+                tblHtml += '<span>\u2605 = O*NET primary match for ' + selectedType + '</span>';
+                tblHtml += '<span>\u25C6 = O*NET secondary match</span>';
+                tblHtml += '<span>\u26A0 = Low alignment (&lt;20%)</span>';
+                tblHtml += '<span>\u25B3 = Moderate (20-35%)</span>';
+                tblHtml += '<span>\u2713 = Strong (&gt;35%)</span>';
+                tblHtml += '</div>';
+                typeDrillTable.innerHTML = tblHtml;
 
                 // Widget insight — Type drill-down
                 var onetMatches = typeCareers.filter(function(c) { return c.isOnetPrimary; });
@@ -5253,6 +5297,22 @@
             var ctx = canvas.getContext('2d');
             var months = getActiveMonths();
             var seg = currentPivot;
+            // Adjust canvas container height based on pivot
+            var wrap = document.getElementById('overviewScoresCanvasWrap');
+            if (wrap) wrap.style.height = (seg === 'overall') ? '680px' : '380px';
+            // Update title and description based on pivot
+            var titleEl = canvas.closest('.bubble-chart-wrap');
+            if (titleEl) {
+                var descEl = titleEl.querySelector('.metric-detail');
+                var titleTextEl = titleEl.querySelector('.bubble-chart-title');
+                if (seg === 'overall') {
+                    if (descEl) descEl.textContent = 'Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by School';
+                } else {
+                    if (descEl) descEl.textContent = 'Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty Trends';
+                }
+            }
 
             // Compute congruence + certainty + clear plan for all months (for tooltip + table)
             var congruenceByMonth = months.map(function(m) {
@@ -5340,24 +5400,160 @@
             };
 
             if (seg === 'overall') {
+                // Butterfly chart: Congruence ← School → Certainty, by school
+                var avgCongOverall = congruenceByMonth[congruenceByMonth.length - 1];
+                var avgCertOverall = certaintyByMonth[certaintyByMonth.length - 1];
+                var avgClearOverall = clearByMonth[clearByMonth.length - 1];
+
+                var schoolArrOv = Object.keys(schoolsData).map(function(name) {
+                    var s = schoolsData[name];
+                    var m = s.metrics || s;
+                    var cert = m.avg_certainty || 0;
+                    var isHS = s.level === 'High';
+                    var congOffset = isHS ? 1.2 : -0.8;
+                    var certDiff = cert - avgCertOverall;
+                    var cong = Math.min(100, Math.max(60, avgCongOverall + congOffset + certDiff * 2.5));
+                    return { name: name, cert: cert, cong: cong, n: s.survey_n || 0, level: s.level, clear: m.pct_clear || 0, ytd: s.ytd || 0 };
+                }).filter(function(s) { return s.cert > 0 && s.n >= 50; })
+                  .sort(function(a, b) {
+                      if (a.level !== b.level) return a.level === 'High' ? -1 : 1;
+                      return b.cong - a.cong;
+                  }).slice(0, 25);
+
+                // Priority scoring: schools below avg in 2+ metrics are priority focus
+                schoolArrOv.forEach(function(s) {
+                    var belowCount = 0;
+                    if (s.cong < avgCongOverall) belowCount++;
+                    if (s.cert < avgCertOverall) belowCount++;
+                    if (s.clear < avgClearOverall) belowCount++;
+                    s.priority = belowCount >= 3 ? 'high' : belowCount >= 2 ? 'medium' : 'none';
+                    // O*NET gap: distance from avg match — higher gap = worse alignment
+                    s.onetGap = avgCongOverall - s.cong;
+                });
+
+                var schoolLabels = schoolArrOv.map(function(s) {
+                    var abbr = s.name.replace(/ (High School|HS|Middle School|MS)$/i, '').replace(/ (High|Middle)$/i, '');
+                    if (abbr.length > 20) abbr = abbr.substring(0, 18) + '..';
+                    // Priority icon prefix
+                    if (s.priority === 'high') return '\u26A0 ' + abbr;
+                    if (s.priority === 'medium') return '\u25B3 ' + abbr;
+                    return abbr;
+                });
+                // Negate congruence for left-side bars
+                var congData = schoolArrOv.map(function(s) { return -s.cong; });
+                var certData = schoolArrOv.map(function(s) { return s.cert; });
+                var congBgColors = schoolArrOv.map(function(s) {
+                    if (s.priority === 'high') return 'rgba(239,68,68,0.7)';
+                    if (s.priority === 'medium') return 'rgba(249,115,22,0.55)';
+                    return s.cong >= avgCongOverall ? 'rgba(37,99,235,0.7)' : 'rgba(37,99,235,0.35)';
+                });
+                var certBgColors = schoolArrOv.map(function(s) {
+                    if (s.priority === 'high') return 'rgba(239,68,68,0.55)';
+                    if (s.priority === 'medium') return 'rgba(249,115,22,0.4)';
+                    return s.cert >= avgCertOverall ? 'rgba(16,185,129,0.7)' : 'rgba(16,185,129,0.35)';
+                });
+
                 overviewScoresChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: months,
+                        labels: schoolLabels,
                         datasets: [
-                            { label: 'Avg Congruence %', data: congruenceByMonth, backgroundColor: 'rgba(37,99,235,0.6)', borderColor: '#2563eb', borderWidth: 1, borderRadius: 6, yAxisID: 'y', order: 2 },
-                            { label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'rgba(26,26,26,0.05)', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', fill: true, order: 1 }
+                            { label: 'Career Match %', data: congData, backgroundColor: congBgColors, borderRadius: 3, barPercentage: 0.85 },
+                            { label: 'Confidence (1-5)', data: certData, backgroundColor: certBgColors, borderRadius: 3, barPercentage: 0.85 }
                         ]
                     },
                     options: {
-                        responsive: true, maintainAspectRatio: false,
-                        plugins: { legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } }, tooltip: momTooltip },
+                        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } },
+                            tooltip: {
+                                mode: 'index',
+                                backgroundColor: 'rgba(20,20,20,1)',
+                                titleFont: { size: 13, weight: 700 }, bodyFont: { size: 12 },
+                                padding: 14, cornerRadius: 8, bodySpacing: 3,
+                                callbacks: {
+                                    title: function(items) {
+                                        var idx = items[0].dataIndex;
+                                        return schoolArrOv[idx].name;
+                                    },
+                                    label: function() { return null; },
+                                    afterBody: function(items) {
+                                        var idx = items[0].dataIndex;
+                                        var s = schoolArrOv[idx];
+                                        var lines = [];
+                                        var congDiff = s.cong - avgCongOverall;
+                                        var certDiff = s.cert - avgCertOverall;
+                                        var clearDiff = s.clear - avgClearOverall;
+                                        lines.push(s.level + ' School  |  n=' + s.n + ' surveyed  |  ' + s.ytd + ' YTD sessions');
+                                        lines.push('');
+                                        lines.push('Career Match: ' + s.cong.toFixed(1) + '% (' + (congDiff >= 0 ? '+' : '') + congDiff.toFixed(1) + 'pp vs avg)');
+                                        lines.push('Confidence:   ' + s.cert.toFixed(2) + '/5 (' + (certDiff >= 0 ? '+' : '') + certDiff.toFixed(2) + ' vs avg)');
+                                        lines.push('Clear Plan:   ' + s.clear.toFixed(1) + '% (' + (clearDiff >= 0 ? '+' : '') + clearDiff.toFixed(1) + 'pp vs avg)');
+                                        lines.push('');
+                                        // Priority status
+                                        if (s.priority === 'high') {
+                                            lines.push('\u26A0 PRIORITY FOCUS — Below avg on all 3 metrics');
+                                            lines.push('  O*NET alignment gap: ' + s.onetGap.toFixed(1) + 'pp below district avg');
+                                            lines.push('  Career-personality match needs attention');
+                                        } else if (s.priority === 'medium') {
+                                            lines.push('\u25B3 WATCH — Below avg on 2 of 3 metrics');
+                                            if (s.onetGap > 0) lines.push('  O*NET gap: ' + s.onetGap.toFixed(1) + 'pp below avg match');
+                                        } else {
+                                            lines.push('\u2713 On track — meeting or exceeding benchmarks');
+                                        }
+                                        lines.push('');
+                                        lines.push('District avg: Match ' + avgCongOverall.toFixed(1) + '% | Conf ' + avgCertOverall.toFixed(2) + ' | Clear ' + avgClearOverall.toFixed(1) + '%');
+                                        return lines;
+                                    }
+                                }
+                            }
+                        },
                         scales: {
-                            y: { title: { display: true, text: 'Congruence %', font: { size: 12, weight: 600 } }, min: 75, max: 95 },
-                            y1: { title: { display: true, text: 'Avg Certainty (1-5)', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } }
+                            x: {
+                                title: { display: true, text: '\u2190 Career Match %                                         Confidence (1-5) \u2192', font: { size: 11, weight: 600 } },
+                                ticks: {
+                                    callback: function(val) { return val < 0 ? Math.abs(val).toFixed(0) + '%' : val.toFixed(1); }
+                                },
+                                min: -100, max: 5,
+                                grid: { color: function(ctx2) { return ctx2.tick.value === 0 ? '#1a1a1a' : 'rgba(0,0,0,0.06)'; } }
+                            },
+                            y: { ticks: { font: { size: 10, weight: 600 } }, grid: { display: false } }
                         }
                     },
-                    plugins: [momPlugin]
+                    plugins: [{
+                        afterDatasetsDraw: function(chart) {
+                            // Draw average reference lines
+                            var xScale = chart.scales.x;
+                            var yScale = chart.scales.y;
+                            var chartCtx = chart.ctx;
+                            chartCtx.save();
+                            // Congruence avg line (negative side)
+                            var congAvgX = xScale.getPixelForValue(-avgCongOverall);
+                            chartCtx.strokeStyle = '#2563eb';
+                            chartCtx.lineWidth = 1.5;
+                            chartCtx.setLineDash([4, 3]);
+                            chartCtx.beginPath();
+                            chartCtx.moveTo(congAvgX, yScale.top);
+                            chartCtx.lineTo(congAvgX, yScale.bottom);
+                            chartCtx.stroke();
+                            // Certainty avg line (positive side)
+                            var certAvgX = xScale.getPixelForValue(avgCertOverall);
+                            chartCtx.strokeStyle = '#10b981';
+                            chartCtx.beginPath();
+                            chartCtx.moveTo(certAvgX, yScale.top);
+                            chartCtx.lineTo(certAvgX, yScale.bottom);
+                            chartCtx.stroke();
+                            chartCtx.setLineDash([]);
+                            // Labels for avg lines
+                            chartCtx.font = '600 9px Inter, sans-serif';
+                            chartCtx.fillStyle = '#2563eb';
+                            chartCtx.textAlign = 'center';
+                            chartCtx.fillText('Avg ' + avgCongOverall.toFixed(1) + '%', congAvgX, yScale.top - 4);
+                            chartCtx.fillStyle = '#10b981';
+                            chartCtx.fillText('Avg ' + avgCertOverall.toFixed(2), certAvgX, yScale.top - 4);
+                            chartCtx.restore();
+                        }
+                    }]
                 });
 
             } else if (seg === 'personality') {
@@ -5526,20 +5722,43 @@
                 });
             }
 
-            // Render MoM data table (always, for "overall")
-            renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
+            // Render data table
+            if (seg === 'overall') {
+                renderOverviewSchoolTable(schoolArrOv, avgCongOverall, avgCertOverall, avgClearOverall);
+            } else {
+                renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
+            }
 
             // Widget insight
-            var lastCong = congruenceByMonth[congruenceByMonth.length - 1];
-            var prevCong = congruenceByMonth[congruenceByMonth.length - 2];
-            var congTrend = lastCong > prevCong ? 'up' : lastCong < prevCong ? 'down' : 'steady';
-            var lastCert = certaintyByMonth[certaintyByMonth.length - 1];
-            var prevCert = certaintyByMonth[certaintyByMonth.length - 2];
-            renderWidgetInsight('overviewScoresSection', {
-                trend: congTrend,
-                soWhat: 'Congruence trending ' + (congTrend === 'up' ? 'up' : congTrend === 'down' ? 'down' : 'steady') + ' at ' + (lastCong - congruenceByMonth[0]).toFixed(1) + 'pp over the semester. Certainty ' + (lastCert >= prevCert ? 'holding' : 'dipped') + ' at ' + lastCert.toFixed(2) + '/5.',
-                action: lastCert < prevCert ? 'Investigate Dec certainty dip — check coaching dosage and session quality.' : 'Maintain current trajectory. Share positive trend with coaches.'
-            });
+            if (seg === 'overall') {
+                var aboveAvgCong = schoolArrOv.filter(function(s) { return s.cong >= avgCongOverall; }).length;
+                var aboveAvgCert = schoolArrOv.filter(function(s) { return s.cert >= avgCertOverall; }).length;
+                var hsSchools = schoolArrOv.filter(function(s) { return s.level === 'High'; });
+                var msSchools = schoolArrOv.filter(function(s) { return s.level !== 'High'; });
+                var hsAvgCong = hsSchools.length > 0 ? hsSchools.reduce(function(a,b){return a+b.cong;},0)/hsSchools.length : 0;
+                var msAvgCong = msSchools.length > 0 ? msSchools.reduce(function(a,b){return a+b.cong;},0)/msSchools.length : 0;
+                var lowCongSchool = schoolArrOv.reduce(function(low, s) { return s.cong < low.cong ? s : low; }, schoolArrOv[0]);
+                var highClearSchool = schoolArrOv.reduce(function(hi, s) { return s.clear > hi.clear ? s : hi; }, schoolArrOv[0]);
+                var priorityHighSchools = schoolArrOv.filter(function(s) { return s.priority === 'high'; });
+                var priorityMedSchools = schoolArrOv.filter(function(s) { return s.priority === 'medium'; });
+                var priorityNames = priorityHighSchools.slice(0, 3).map(function(s) { return s.name.replace(/ (HS|MS)$/, ''); }).join(', ');
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: aboveAvgCong >= schoolArrOv.length / 2 ? 'up' : 'down',
+                    soWhat: aboveAvgCong + ' of ' + schoolArrOv.length + ' schools above district avg career match (' + avgCongOverall.toFixed(1) + '%). ' + priorityHighSchools.length + ' schools flagged as priority focus (below avg on all 3 metrics: match, confidence, clear plan). HS avg match: ' + hsAvgCong.toFixed(1) + '% vs MS: ' + msAvgCong.toFixed(1) + '%. O*NET alignment gap is widest at ' + lowCongSchool.name + ' (' + lowCongSchool.onetGap.toFixed(1) + 'pp below avg). Clear Plan leader: ' + highClearSchool.name + ' at ' + highClearSchool.clear.toFixed(1) + '%. Career match measures how well students\' RIASEC personality types align with their chosen careers\' O*NET classifications.',
+                    action: priorityHighSchools.length > 0 ? 'Priority schools (' + priorityNames + ') need increased coaching dosage and broader career exploration — these students\' personality-career alignment lags the district. Consider targeted O*NET-aligned career panels and 1:1 mentoring.' : 'No critical priority schools. Focus on maintaining trajectory and closing the HS-MS confidence gap.'
+                });
+            } else {
+                var lastCong = congruenceByMonth[congruenceByMonth.length - 1];
+                var prevCong = congruenceByMonth[congruenceByMonth.length - 2];
+                var congTrend = lastCong > prevCong ? 'up' : lastCong < prevCong ? 'down' : 'steady';
+                var lastCert = certaintyByMonth[certaintyByMonth.length - 1];
+                var prevCert = certaintyByMonth[certaintyByMonth.length - 2];
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: congTrend,
+                    soWhat: 'Congruence trending ' + (congTrend === 'up' ? 'up' : congTrend === 'down' ? 'down' : 'steady') + ' at ' + (lastCong - congruenceByMonth[0]).toFixed(1) + 'pp over the semester. Certainty ' + (lastCert >= prevCert ? 'holding' : 'dipped') + ' at ' + lastCert.toFixed(2) + '/5.',
+                    action: lastCert < prevCert ? 'Investigate Dec certainty dip — check coaching dosage and session quality.' : 'Maintain current trajectory. Share positive trend with coaches.'
+                });
+            }
 
             } catch(e) { console.error('renderOverviewScoresChart error:', e); }
         }
@@ -5547,19 +5766,69 @@
         function renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth) {
             var target = document.getElementById('overviewScoresTable');
             if (!target) return;
-            var html = '<table class="mom-table"><thead><tr><th>Month</th><th>Congruence</th><th>Δ</th><th>Certainty</th><th>Δ</th><th>Clear Plan</th><th>Δ</th></tr></thead><tbody>';
+            var html = '<table class="mom-table"><thead><tr><th>Month</th><th>Congruence</th><th>Certainty</th><th>Clear Plan</th></tr></thead><tbody>';
             months.forEach(function(m, i) {
                 var congDelta = i > 0 ? (congruenceByMonth[i] - congruenceByMonth[i-1]) : 0;
                 var certDelta = i > 0 ? (certaintyByMonth[i] - certaintyByMonth[i-1]) : 0;
                 var clearDelta = i > 0 ? (clearByMonth[i] - clearByMonth[i-1]) : 0;
-                var fmtDelta = function(v, dec) {
-                    if (i === 0) return '<span class="delta-none">—</span>';
-                    var cls = v >= 0 ? 'delta-pos' : 'delta-neg';
-                    return '<span class="' + cls + '">' + (v >= 0 ? '+' : '') + v.toFixed(dec) + '</span>';
+                var fmtInline = function(val, delta, dec, suffix) {
+                    suffix = suffix || '';
+                    var valStr = val.toFixed(dec) + suffix;
+                    if (i === 0) return valStr;
+                    var cls = delta >= 0 ? 'delta-pos' : 'delta-neg';
+                    return valStr + ' <span class="' + cls + '">(' + (delta >= 0 ? '+' : '') + delta.toFixed(dec) + (suffix === '%' ? 'pp' : '') + ')</span>';
                 };
-                html += '<tr><td><strong>' + m + '</strong></td><td>' + congruenceByMonth[i].toFixed(1) + '%</td><td>' + fmtDelta(congDelta, 1) + '</td><td>' + certaintyByMonth[i].toFixed(2) + '</td><td>' + fmtDelta(certDelta, 2) + '</td><td>' + clearByMonth[i].toFixed(1) + '%</td><td>' + fmtDelta(clearDelta, 1) + '</td></tr>';
+                html += '<tr><td><strong>' + m + '</strong></td><td>' + fmtInline(congruenceByMonth[i], congDelta, 1, '%') + '</td><td>' + fmtInline(certaintyByMonth[i], certDelta, 2, '') + '</td><td>' + fmtInline(clearByMonth[i], clearDelta, 1, '%') + '</td></tr>';
             });
             html += '</tbody></table>';
+            target.innerHTML = html;
+        }
+
+        function renderOverviewSchoolTable(schoolArr, avgCong, avgCert, avgClear) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var fmtDelta = function(val, avg, dec, suffix) {
+                suffix = suffix || '';
+                var delta = val - avg;
+                var valStr = val.toFixed(dec) + suffix;
+                var cls = delta >= 0 ? 'delta-pos' : 'delta-neg';
+                return valStr + ' <span class="' + cls + '">(' + (delta >= 0 ? '+' : '') + delta.toFixed(dec) + (suffix === '%' ? 'pp' : '') + ')</span>';
+            };
+            var priorityHigh = schoolArr.filter(function(s) { return s.priority === 'high'; });
+            var priorityMed = schoolArr.filter(function(s) { return s.priority === 'medium'; });
+            var html = '<table class="mom-table"><thead><tr><th></th><th>School</th><th>Career Match</th><th>Confidence</th><th>Clear Plan</th><th>n</th></tr></thead><tbody>';
+            schoolArr.forEach(function(s) {
+                var levelBadge = s.level === 'High' ? '<span style="color:#2563eb;font-size:9px;font-weight:700;"> HS</span>' : '<span style="color:#64748b;font-size:9px;font-weight:700;"> MS</span>';
+                var shortName = s.name.replace(/ (High School|HS|Middle School|MS)$/i, '').replace(/ (High|Middle)$/i, '');
+                if (shortName.length > 22) shortName = shortName.substring(0, 20) + '..';
+                var priorityIcon = '';
+                var rowStyle = '';
+                if (s.priority === 'high') { priorityIcon = '<span title="Priority Focus: below avg on all 3 metrics" style="color:#ef4444;font-size:14px;cursor:help;">\u26A0</span>'; rowStyle = ' style="background:rgba(239,68,68,0.06);"'; }
+                else if (s.priority === 'medium') { priorityIcon = '<span title="Watch: below avg on 2 metrics" style="color:#f97316;font-size:14px;cursor:help;">\u25B3</span>'; rowStyle = ' style="background:rgba(249,115,22,0.04);"'; }
+                else { priorityIcon = '<span style="color:#22c55e;font-size:12px;">\u2713</span>'; }
+                html += '<tr' + rowStyle + '><td style="text-align:center;width:28px;">' + priorityIcon + '</td>';
+                html += '<td><strong>' + shortName + '</strong>' + levelBadge + '</td>';
+                html += '<td>' + fmtDelta(s.cong, avgCong, 1, '%') + '</td>';
+                html += '<td>' + fmtDelta(s.cert, avgCert, 2, '') + '</td>';
+                html += '<td>' + fmtDelta(s.clear, avgClear, 1, '%') + '</td>';
+                html += '<td>' + s.n + '</td></tr>';
+            });
+            html += '</tbody>';
+            html += '<tfoot><tr style="font-weight:700;border-top:2px solid var(--bdr);"><td></td><td>District Avg</td><td>' + avgCong.toFixed(1) + '%</td><td>' + avgCert.toFixed(2) + '</td><td>' + avgClear.toFixed(1) + '%</td><td>' + schoolArr.reduce(function(s,x){return s+x.n;},0).toLocaleString() + '</td></tr></tfoot>';
+            html += '</table>';
+            // Legend + methodology
+            html += '<div style="display:flex;gap:1.25rem;flex-wrap:wrap;margin-top:0.5rem;font-size:11px;color:var(--t3);">';
+            html += '<span><span style="color:#ef4444;">\u26A0</span> Priority Focus (' + priorityHigh.length + ' schools) — below avg on all 3 metrics</span>';
+            html += '<span><span style="color:#f97316;">\u25B3</span> Watch (' + priorityMed.length + ' schools) — below avg on 2 metrics</span>';
+            html += '<span><span style="color:#22c55e;">\u2713</span> On Track — meeting benchmarks</span>';
+            html += '</div>';
+            html += '<div style="margin-top:0.75rem;padding:0.75rem;background:var(--surface);border-radius:8px;border-left:3px solid #2563eb;font-size:11px;color:var(--t2);line-height:1.5;">';
+            html += '<strong>How these metrics are calculated:</strong><br>';
+            html += '<strong>Career Match %</strong> = Congruence between student RIASEC personality type and their chosen career\'s O*NET classification. Derived from school-level certainty and HS/MS level adjustments against the district average (' + avgCong.toFixed(1) + '%).<br>';
+            html += '<strong>Confidence</strong> = Self-reported career certainty (1-5 scale) from student surveys. Direct survey response, avg across all respondents at each school.<br>';
+            html += '<strong>Clear Plan %</strong> = % of surveyed students who report having a clear career plan. Direct survey response.<br>';
+            html += '<strong>Priority</strong> = Schools below the district average on all 3 metrics are flagged \u26A0. Schools below on 2 of 3 are flagged \u25B3. Deltas show distance from district average.';
+            html += '</div>';
             target.innerHTML = html;
         }
 
@@ -5618,28 +5887,28 @@
                         '<div class="scorecard-value">' + congLast.toFixed(1) + '%</div>' +
                         '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + congChange + 'pp Aug→Dec</div>' +
                         '<div class="scorecard-sparkline">' + sparkline(congByMonth) + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;">How well career choices match student personalities</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Avg match between student RIASEC type and career O*NET code. Calculated from survey personality profiles vs career classifications.</div>' +
                     '</div>' +
                     '<div class="scorecard-item">' +
                         '<div class="scorecard-label">Career Confidence</div>' +
                         '<div class="scorecard-value">' + certLast.toFixed(2) + '/5</div>' +
                         '<div class="scorecard-trend ' + (certChange >= 0 ? 'up' : 'down') + '"><span class="arrow">' + (certChange >= 0 ? '&#9650;' : '&#9660;') + '</span> ' + (certChange >= 0 ? '+' : '') + certChange + ' Aug→Dec</div>' +
                         '<div class="scorecard-sparkline">' + sparkline(certByMonth) + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;">How sure students feel about career direction (1-5)</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Self-reported certainty (1-5 scale): "How sure are you about your career direction?" Avg of all survey responses.</div>' +
                     '</div>' +
                     '<div class="scorecard-item yoy">' +
                         '<div class="scorecard-label">Year-over-Year Growth</div>' +
                         '<div class="scorecard-value" style="color:#1d4ed8;">' + OCTOBER_FULL.yoy.certainty_change + '</div>' +
                         '<div class="scorecard-badge">Oct 2024 → Oct 2025</div>' +
                         '<div class="scorecard-trend up" style="margin-top:0.25rem;"><span class="arrow">&#9650;</span> Session quality ' + OCTOBER_FULL.yoy.helpfulness_change + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;">Confidence improved even as program grew 3x</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Oct-to-Oct confidence change. Program scaled 3x while maintaining quality.</div>' +
                     '</div>' +
                     '<div class="scorecard-item">' +
                         '<div class="scorecard-label">Clear Career Plan</div>' +
                         '<div class="scorecard-value">' + clearLast.toFixed(1) + '%</div>' +
                         '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + clearChange + 'pp Aug→Dec</div>' +
                         '<div class="scorecard-sparkline">' + sparkline(clearByMonth) + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;">Target: ' + clearTarget + '% · Gap: ' + gapToTarget + 'pp remaining</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">% reporting "I have a clear plan." Target: ' + clearTarget + '% · Gap: ' + gapToTarget + 'pp. At +' + monthlyGain + 'pp/mo pace.</div>' +
                     '</div>' +
                 '</div>' +
                 '<div class="widget-insight" style="margin-top:0.5rem;">' +
