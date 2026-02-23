@@ -4297,10 +4297,7 @@
                                     ctx2.font = '700 11px Inter, sans-serif';
                                     ctx2.textAlign = 'center';
                                     ctx2.textBaseline = 'middle';
-                                    ctx2.fillText(ds.label, el.x, el.y - 8);
-                                    ctx2.font = '500 9px Inter, sans-serif';
-                                    ctx2.fillStyle = '#4a4a4a';
-                                    ctx2.fillText(ds._n.toLocaleString() + ' students', el.x, el.y + 7);
+                                    ctx2.fillText(ds.label, el.x, el.y);
                                 }
                             });
                             ctx2.restore();
@@ -4308,13 +4305,17 @@
                     }]
                 });
 
-                // Widget insight for all types view
+                // Widget insight — specific to All Types view
                 var highType = types.reduce(function(best, t) { return congruenceData[t][useMonth] > congruenceData[best][useMonth] ? t : best; }, types[0]);
                 var lowCertType = types.reduce(function(worst, t) { return certaintyData[t][useMonth] < certaintyData[worst][useMonth] ? t : worst; }, types[0]);
+                var highCong = congruenceData[highType][useMonth];
+                var lowCert = certaintyData[lowCertType][useMonth];
+                var lowCertMoM = certaintyData[lowCertType][useMonth] - certaintyData[lowCertType].Nov;
+                var gap = highCong - congruenceData[lowCertType][useMonth];
                 renderWidgetInsight('correlationSpotlight', {
-                    trend: 'up',
-                    soWhat: highType + ' has the strongest match (' + congruenceData[highType][useMonth].toFixed(1) + '%). ' + lowCertType + ' has the lowest certainty (' + certaintyData[lowCertType][useMonth].toFixed(2) + '/5) — these students need more career awareness.',
-                    action: 'Click any bubble to explore careers under that personality type.'
+                    trend: lowCertMoM < 0 ? 'down' : 'up',
+                    soWhat: highType + ' students have the strongest career-personality match (' + highCong.toFixed(1) + '%), while ' + lowCertType + ' students report the lowest confidence (' + lowCert.toFixed(2) + '/5' + (lowCertMoM < 0 ? ', down ' + Math.abs(lowCertMoM).toFixed(2) + ' from Nov' : '') + '). The ' + gap.toFixed(1) + 'pp congruence gap between top and bottom types suggests uneven career exposure.',
+                    action: 'Focus career exploration activities on ' + lowCertType + ' students — they have interest but low confidence. Pair with mentors in ' + lowCertType + '-aligned careers.'
                 });
                 return;
             }
@@ -4440,14 +4441,11 @@
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
                                     var shortName = ds._career.length > 18 ? ds._career.substring(0, 16) + '...' : ds._career;
-                                    ctx2.fillStyle = '#1a1a1a';
+                                    ctx2.fillStyle = ds._isPrimary ? '#1a1a1a' : '#888';
                                     ctx2.font = (ds._isPrimary ? '600' : '400') + ' 10px Inter, sans-serif';
                                     ctx2.textAlign = 'center';
                                     ctx2.textBaseline = 'middle';
-                                    ctx2.fillText(shortName, el.x, el.y - 6);
-                                    ctx2.font = '500 9px Inter, sans-serif';
-                                    ctx2.fillStyle = '#666';
-                                    ctx2.fillText(ds._n.toLocaleString(), el.x, el.y + 6);
+                                    ctx2.fillText(shortName, el.x, el.y);
                                 }
                             });
                             ctx2.restore();
@@ -4455,13 +4453,18 @@
                     }]
                 });
 
-                var primaryCount = careers.length;
-                var secondaryCount = secondaryCareers.length;
-                var totalN = careers.reduce(function(s, c) { return s + c.data.n; }, 0);
+                // Widget insight — specific to RIASEC type drill-down
+                var typeCong = congruenceData[selectedType][useMonth];
+                var typeCert = certaintyData[selectedType][useMonth];
+                var typeCongMoM = congruenceData[selectedType][useMonth] - congruenceData[selectedType].Nov;
+                var typeCertMoM = certaintyData[selectedType][useMonth] - certaintyData[selectedType].Nov;
+                var topCareer = careers.sort(function(a,b) { return b.data.n - a.data.n; })[0];
+                var topBls = topCareer ? BLS_CAREERS[topCareer.name] : null;
+                var certTrend = typeCertMoM >= 0 ? 'up' : 'down';
                 renderWidgetInsight('correlationSpotlight', {
-                    trend: 'up',
-                    soWhat: selectedType + ' type has ' + primaryCount + ' primary careers (' + totalN.toLocaleString() + ' interested students)' + (secondaryCount > 0 ? ' plus ' + secondaryCount + ' secondary matches.' : '.') + ' Congruence: ' + congruenceData[selectedType][useMonth].toFixed(1) + '%.',
-                    action: 'Click any career bubble to see how it maps across all personality types.'
+                    trend: certTrend,
+                    soWhat: selectedType + ' students have ' + typeCong.toFixed(1) + '% career match (' + (typeCongMoM >= 0 ? '+' : '') + typeCongMoM.toFixed(1) + 'pp MoM) and ' + typeCert.toFixed(2) + '/5 confidence (' + (typeCertMoM >= 0 ? '+' : '') + typeCertMoM.toFixed(2) + ' MoM). ' + (topCareer ? topCareer.name + ' is the top choice' + (topBls ? ' — median salary ' + topBls.salary + ', outlook: ' + topBls.outlook_text : '') + '.' : ''),
+                    action: typeCertMoM < 0 ? 'Confidence dipped this month. Increase coaching touchpoints for ' + selectedType + ' students and verify career pathway clarity.' : 'Match and confidence both trending positive. Expand career panels and job-shadow opportunities for ' + selectedType + '-aligned fields.'
                 });
                 return;
             }
@@ -4569,15 +4572,10 @@
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
                                     ctx2.fillStyle = ds._isPrimary ? '#1a1a1a' : ds._isSecondary ? '#444' : '#999';
-                                    ctx2.font = (ds._isPrimary ? '700 12px' : '500 10px') + ' Inter, sans-serif';
+                                    ctx2.font = (ds._isPrimary ? '700 11px' : '500 10px') + ' Inter, sans-serif';
                                     ctx2.textAlign = 'center';
                                     ctx2.textBaseline = 'middle';
-                                    ctx2.fillText(ds.label, el.x, el.y - (ds._isPrimary ? 8 : 5));
-                                    if (ds._isPrimary || ds._isSecondary) {
-                                        ctx2.font = '500 9px Inter, sans-serif';
-                                        ctx2.fillStyle = '#666';
-                                        ctx2.fillText(ds._matchLevel, el.x, el.y + (ds._isPrimary ? 7 : 5));
-                                    }
+                                    ctx2.fillText(ds.label, el.x, el.y);
                                 }
                             });
                             ctx2.restore();
@@ -4585,12 +4583,18 @@
                     }]
                 });
 
+                // Widget insight — specific to single career view
                 var bls = BLS_CAREERS[selectedCareer];
-                var salaryInfo = bls ? ' Median salary: ' + bls.salary + '. Outlook: ' + bls.outlook + ' (' + bls.outlook_text + ').' : '';
+                var primaryCong = congruenceData[careerData.primary][useMonth];
+                var primaryCert = certaintyData[careerData.primary][useMonth];
+                var secondaryCong = congruenceData[careerData.secondary][useMonth];
+                var secondaryCert = certaintyData[careerData.secondary][useMonth];
+                var primaryCertMoM = certaintyData[careerData.primary][useMonth] - certaintyData[careerData.primary].Nov;
+                var isHighDemand = bls && (bls.outlook === 'Much faster than average' || bls.outlook === 'Faster than average');
                 renderWidgetInsight('correlationSpotlight', {
-                    trend: 'up',
-                    soWhat: selectedCareer + ' is primarily a ' + careerData.primary + ' career (secondary: ' + careerData.secondary + '). ' + careerData.n.toLocaleString() + ' students (' + careerData.pct + '%) chose this career.' + salaryInfo,
-                    action: careerData.pct >= 3 ? 'High-interest career. Ensure students understand education requirements and realistic pathways.' : 'Niche interest. Connect these students with professionals in this field for mentoring.'
+                    trend: primaryCertMoM >= 0 ? 'up' : 'down',
+                    soWhat: selectedCareer + ' aligns strongest with ' + careerData.primary + ' (' + primaryCong.toFixed(1) + '% match, ' + primaryCert.toFixed(2) + '/5 confidence) and secondarily ' + careerData.secondary + ' (' + secondaryCong.toFixed(1) + '% match).' + (bls ? ' Median salary: ' + bls.salary + '. Job outlook: ' + bls.outlook_text + '.' : ''),
+                    action: isHighDemand ? 'High-growth career — connect interested students with internships and CTE pathways early. ' + (primaryCertMoM < 0 ? 'Confidence dipping — increase exposure to professionals in this field.' : 'Confidence is solid — maintain momentum with job shadows.') : (careerData.pct >= 3 ? 'Popular choice — ensure students have realistic expectations about education requirements and earnings.' : 'Niche interest — pair these students with industry mentors for informational interviews and pathway planning.')
                 });
                 return;
             }
