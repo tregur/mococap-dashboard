@@ -2245,57 +2245,8 @@
                             <span class="cat-chip" data-cat="data" onclick="toggleCategoryFilter('data')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Data</span>
                         </div>
                         <div id="monthViewContent">
-                        <div id="monthDivergenceCards"></div>
 
-                        <div id="congruenceCertaintyScorecard"></div>
-                        <div id="sectorImpactSummary"></div>
-
-                        <div class="oct-charts-section" id="overviewOctoberSection">
-                            <div class="section-label">October Deep Dive — Key Drivers of Student Outcomes</div>
-                            <div class="oct-charts-grid">
-                                <div class="chart-card">
-                                    <div class="chart-title">Regression Drivers — What Predicts Outcomes</div>
-                                    <div class="metric-detail">Beta coefficients from October 2025 regression analysis (N=1,012). Each bar shows how strongly a factor predicts student outcomes. Positive = improves outcome; negative = reduces it. | Source: Cristina's Oct 2025 Findings</div>
-                                    <div id="overviewRegressionBars"></div>
-                                </div>
-                                <div class="chart-card">
-                                    <div class="chart-title">CTE Pathway Interest (October)</div>
-                                    <div class="metric-detail">Percentage of October 2025 survey respondents interested in each Career & Technical Education pathway. 87.1% of students are open to CTE. | N=1,012 | Source: Oct 2025 Survey</div>
-                                    <div style="position:relative;height:220px;"><canvas id="overviewCTEChart"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="chart-card" style="margin-top:1rem;">
-                                <div class="chart-title">Follow-Up Request Patterns (YoY Comparison)</div>
-                                <div class="metric-detail">Types of follow-up support requested by students, comparing Oct 2025 vs Oct 2024. "Want Follow-Up" = students who want any continued engagement after their session. | Source: Oct 2025 vs Oct 2024 Surveys</div>
-                                <div style="position:relative;height:220px;"><canvas id="overviewFollowupChart"></canvas></div>
-                            </div>
-                        </div>
-
-                        <div class="alert-banner" id="alertBanner">
-                            <div class="alert-banner-title">📊 Norm-Based Alerts</div>
-                            <div class="alert-banner-list" id="alertBannerList"></div>
-                        </div>
-                        <div class="section-narrative" id="dynamicSummary">
-                            <!-- Dynamically populated by generateDynamicOverview() -->
-                        </div>
-
-                        <div class="insight-box alert" id="dataQualityPanel" style="display:none;">
-                            <!-- Dynamically populated by computeDataQuality() -->
-                        </div>
-
-                        <div class="hero-section">
-                            <div class="hero-chart">
-                                <canvas id="heroChart"></canvas>
-                            </div>
-                            <div class="hero-highlights" id="dynamicHighlights">
-                                <!-- Dynamically populated -->
-                            </div>
-                        </div>
-
-                        <div class="kpi-grid" id="dynamicKPIs">
-                            <!-- Dynamically populated -->
-                        </div>
-
+                        <!-- PRIMARY WIDGETS: Congruence & Certainty front and center -->
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
                             <div class="metric-detail" style="margin-bottom:0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Responds to the global pivot above. | SY 2025-26</div>
                             <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty Trends</div>
@@ -2314,6 +2265,60 @@
                             <div class="metric-detail">Bubble chart mapping each RIASEC personality type or top career selection. X-axis = congruence (% match). Y-axis = certainty (avg 1-5). Bubble size = student count. | SY 2025-26 cumulative</div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
+
+                        <!-- TOP 3 MONTHLY INSIGHTS: Ranked by divergence from trend and program impact -->
+                        <div id="monthDivergenceCards"></div>
+
+                        <div class="kpi-grid" id="dynamicKPIs">
+                            <!-- Dynamically populated -->
+                        </div>
+
+                        <div id="congruenceCertaintyScorecard"></div>
+                        <div id="sectorImpactSummary"></div>
+
+                        <div class="hero-section">
+                            <div class="hero-chart">
+                                <canvas id="heroChart"></canvas>
+                            </div>
+                            <div class="hero-highlights" id="dynamicHighlights">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+
+                        <div class="section-narrative" id="dynamicSummary">
+                            <!-- Dynamically populated by generateDynamicOverview() -->
+                        </div>
+
+                        <div class="insight-box alert" id="dataQualityPanel" style="display:none;">
+                            <!-- Dynamically populated by computeDataQuality() -->
+                        </div>
+
+                        <div class="oct-charts-section" id="overviewOctoberSection">
+                            <div class="section-label">October Deep Dive — Key Drivers of Student Outcomes</div>
+                            <div class="oct-charts-grid">
+                                <div class="chart-card">
+                                    <div class="chart-title">What Drives Student Outcomes — Key Findings</div>
+                                    <div class="metric-detail">Based on 1,012 student survey responses in October 2025. Each bar shows how strongly a factor affects student outcomes. Ranked by priority level for counselor action. | Source: Oct 2025 Analysis</div>
+                                    <div id="overviewRegressionBars"></div>
+                                </div>
+                                <div class="chart-card">
+                                    <div class="chart-title">CTE Pathway Interest (October)</div>
+                                    <div class="metric-detail">Percentage of 1,012 October students interested in each Career & Technical Education pathway. 87.1% of students are open to CTE. | Source: Oct 2025 Survey</div>
+                                    <div style="position:relative;height:220px;"><canvas id="overviewCTEChart"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="chart-card" style="margin-top:1rem;">
+                                <div class="chart-title">Follow-Up Request Patterns (YoY Comparison)</div>
+                                <div class="metric-detail">Types of follow-up support requested by students, comparing Oct 2025 vs Oct 2024. "Want Follow-Up" = students who want any continued engagement after their session. | Source: Oct 2025 vs Oct 2024 Surveys</div>
+                                <div style="position:relative;height:220px;"><canvas id="overviewFollowupChart"></canvas></div>
+                            </div>
+                        </div>
+
+                        <div class="alert-banner" id="alertBanner">
+                            <div class="alert-banner-title">Norm-Based Alerts</div>
+                            <div class="alert-banner-list" id="alertBannerList"></div>
+                        </div>
+
                         <div id="correlationCards">
                             <!-- Dynamically populated correlation insight cards -->
                         </div>
@@ -2420,15 +2425,15 @@
 
                     <div class="page" id="program-perf">
                         <div class="section-narrative">
-                            <p><strong>Dosage-Response Analysis:</strong> A moderate positive correlation (r=0.47, p&lt;0.001) exists between per-student session count and career certainty. Students with 7-10 sessions average 4.12/5 certainty vs. 3.62 for those with 2-3 sessions. The effect size (r²=0.22) means engagement explains about 22% of the variance in career certainty — significant for an educational intervention.</p>
-                            <p><strong>Equity Overlay:</strong> High-FARMS schools (&gt;40%) receive slightly higher dosage (0.49 sessions/student) than low-FARMS schools (0.43), indicating the program is successfully reaching under-resourced communities. However, certainty scores in high-FARMS schools average 0.31 points lower, suggesting these students may need more intensive support.</p>
-                            <div class="metric-detail">Sources: MoCo CAP Platform Data (dosage analysis, N=1,537 students with ≥2 sessions); MCPS Public Data (FARMS rates, graduation rates Class of 2023)</div>
+                            <p><strong>More Sessions = More Certainty:</strong> Students who attend more sessions become more certain about their career direction. Students with 7-10 sessions average 4.12 out of 5 on certainty vs. 3.62 for those with only 2-3 sessions. Session count explains about 22% of the difference in career certainty — a meaningful impact for a school program.</p>
+                            <p><strong>Equity Note:</strong> Schools with higher rates of students receiving free/reduced meals (FARMS above 40%) receive slightly more sessions per student, which means the program is reaching under-resourced communities. However, certainty scores in these schools average 0.31 points lower, suggesting these students may need more intensive support.</p>
+                            <div class="metric-detail">Sources: MoCo CAP Platform Data (1,537 students with 2+ sessions); MCPS Public Data (FARMS rates, graduation rates Class of 2023)</div>
                         </div>
                         <!-- October: Session Helpfulness by Type -->
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Session Helpfulness by Delivery Type (October)</div>
-                                <div class="metric-detail">% of students rating their session as "Agree" or "Strongly Agree" it was helpful, broken down by delivery format. Helpfulness = post-session survey response. | Oct 2025 (N=1,012)</div>
+                                <div class="metric-detail">% of students rating their session as "Agree" or "Strongly Agree" it was helpful, broken down by delivery format. Based on 1,012 student responses. | Oct 2025</div>
                                 <div style="position:relative;height:220px;"><canvas id="helpfulnessByTypeChart"></canvas></div>
                                 <div id="ic-helpfulness-type"></div>
                             </div>
@@ -2440,8 +2445,8 @@
                         </div>
                         <!-- October: Regression Drivers for Program-Perf -->
                         <div class="chart-card" style="margin-bottom:1rem;">
-                            <div class="chart-title">Key Regression Drivers — October Analysis</div>
-                            <div class="metric-detail">Standardized beta (β) coefficients from October 2025 regression models. Each bar shows a predictor's effect size on student outcomes. Larger |β| = stronger effect. *** = p&lt;0.001, ** = p&lt;0.01. | Oct 2025 (N=1,012)</div>
+                            <div class="chart-title">What Drives Student Outcomes — October Analysis</div>
+                            <div class="metric-detail">Based on 1,012 student survey responses in October 2025. Each item shows how strongly it affects student outcomes, ranked by priority for counselor action.</div>
                             <div id="perfRegressionBars"></div>
                         </div>
                         <!-- YoY Improvement Cards -->
@@ -2510,12 +2515,12 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Session Type Distribution (October)</div>
-                                <div class="metric-detail">Breakdown of how October coaching sessions were delivered. Whole group dominates at 81.9%. One-on-one is most effective but only 1.8% of sessions. | Oct 2025 (N=1,012)</div>
+                                <div class="metric-detail">Breakdown of how October coaching sessions were delivered. Whole group dominates at 81.9%. One-on-one is most effective but only 1.8% of sessions. | Oct 2025, 1,012 students</div>
                                 <div style="position:relative;height:250px;"><canvas id="engSessionTypesChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Grade Distribution (October)</div>
-                                <div class="metric-detail">Percentage of October survey respondents by grade level. Grade 6 surged +17.13pp YoY while Grade 8 declined -16.48pp. | Oct 2025 (N=1,012)</div>
+                                <div class="metric-detail">Percentage of October students by grade level. Grade 6 surged +17pp year-over-year while Grade 8 declined -16pp. | Oct 2025, 1,012 students</div>
                                 <div style="position:relative;height:250px;"><canvas id="engGradeDistChart"></canvas></div>
                             </div>
                         </div>
@@ -2546,7 +2551,7 @@
                         <!-- October: Theme Depth Analysis -->
                         <div class="chart-card" style="margin-bottom:1rem;">
                             <div class="chart-title">RIASEC Theme Depth Distribution (October)</div>
-                            <div class="metric-detail">Number of RIASEC types each student identifies with. "0 themes" = undifferentiated (no clear type). "3+ themes" = broad interests across multiple personality types. Multi-theme (2+) = 57.9%. | Oct 2025 (N=1,012)</div>
+                            <div class="metric-detail">Number of personality types each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple personality types. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
                         </div>
                         <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
@@ -2625,7 +2630,7 @@
                         <!-- October: CTE Pathway Chart for Sectors -->
                         <div class="chart-card" style="margin-top:1.5rem;">
                             <div class="chart-title">CTE Pathway Interest — Sector Alignment (October)</div>
-                            <div class="metric-detail">Student interest in Career & Technical Education pathways that align with MoCo's priority sectors. CTE = structured career exploration combining classroom learning with hands-on experience. 87.1% of students are open to CTE. | Oct 2025 (N=1,012)</div>
+                            <div class="metric-detail">Student interest in Career & Technical Education pathways that align with MoCo's priority sectors. CTE combines classroom learning with hands-on career experience. 87.1% of students are open to CTE. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="sectorsCTEChart"></canvas></div>
                         </div>
                         <div id="sectorsOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
@@ -2877,10 +2882,10 @@
                         <div id="monthReport-oct" class="month-content active">
                             <div class="chart-card">
                                 <div class="chart-title">October 2025 — Deep Dive Report</div>
-                                <div class="metric-detail">Source: Cristina's October 2025 Findings (N=1,012 sample; N=18,920 full year) | findings Montg Oct 25.xlsx</div>
+                                <div class="metric-detail">Source: October 2025 Findings (1,012 students surveyed; 18,920 students served full year) | findings Montg Oct 25.xlsx</div>
                                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0;">
-                                    <div class="kpi-card"><div class="kpi-label">October Sample</div><div class="kpi-value">1,012</div><div class="metric-detail">50% MS / 50% HS</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Full Year N</div><div class="kpi-value">18,920</div><div class="metric-detail">Cumulative through Oct</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">October Students</div><div class="kpi-value">1,012</div><div class="metric-detail">50% Middle / 50% High School</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">Full Year Students</div><div class="kpi-value">18,920</div><div class="metric-detail">Cumulative through Oct</div></div>
                                     <div class="kpi-card"><div class="kpi-label">Helpfulness</div><div class="kpi-value">71.5%</div><div class="metric-detail">Agree + Strongly Agree</div></div>
                                     <div class="kpi-card"><div class="kpi-label">Career Confidence</div><div class="kpi-value">77.3%</div><div class="metric-detail">YoY: +6.27pp ↑</div></div>
                                     <div class="kpi-card"><div class="kpi-label">CTE Openness</div><div class="kpi-value">87.1%</div><div class="metric-detail">Open to learning more</div></div>
@@ -2895,7 +2900,7 @@
                                     <div id="regressionBars"></div>
                                 </div>
                                 <div class="insight-box" style="margin-top:1rem;">
-                                    <strong>So What:</strong> CTE exposure is the single most powerful lever for reducing student disengagement (β=-3.27). Each additional CTE pathway a student explores dramatically increases their engagement. Session helpfulness and career certainty form a bidirectional feedback loop (β=+1.71) — good sessions make students more certain, and more certain students rate sessions higher. Having concrete next steps (β=+1.55) is the third strongest predictor of clarity. <em>Recommendation: Every session should end with written, student-owned SMART next steps.</em>
+                                    <strong>So What:</strong> Showing students CTE career pathways is the single most powerful way to keep them engaged — students who explore even 2-3 pathways are dramatically less likely to disengage. When sessions feel helpful, students become more certain about their career, and that certainty makes them rate future sessions even higher — creating a positive cycle. Students who leave with clear, specific next steps develop much stronger career plans. <em>What to do: End every session with 1-2 written, specific next steps the student owns. Make sure every student explores at least 2-3 CTE pathways.</em>
                                 </div>
                             </div>
 
@@ -2909,8 +2914,8 @@
                                     <div style="text-align:center;padding:1rem;background:var(--surface);border-radius:8px;"><div style="font-size:24px;font-weight:700;color:var(--g);">40.9%</div><div style="font-size:11px;color:var(--t3);">3+ themes</div></div>
                                 </div>
                                 <div class="insight-box alert" style="margin-top:1rem;">
-                                    <strong>So What — Interest Breadth as Double-Edged Sword:</strong> 57.9% of October students show multi-theme interests (2+ RIASEC types). While broad interests correlate with higher engagement scores (+1.15/theme), they also predict LOWER career concentration (β=-0.49) and LOWER clarity (β=-0.31). Students with "too many possible selves" struggle to narrow and commit. <em>Recommendation: Implement structured narrowing activities — values clarification, realistic career previews, and compatibility analysis — for the multi-theme majority.</em>
-                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Regression analysis, Sheet 8; Holland (1997) hexagonal model</div>
+                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more personality types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
+                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland personality-career model</div>
                                 </div>
                             </div>
 
@@ -2921,7 +2926,7 @@
                                     <canvas id="ctePathwayChart" height="200"></canvas>
                                 </div>
                                 <div class="insight-box positive" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high Artistic RIASEC count (4,829 students). The regression finding that CTE options exposure is the strongest engagement lever (β=-3.27) means ensuring every student sees at least 2-3 CTE pathways should be a top program priority. Currently 28% of students select zero CTE options.
+                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their personality type.</em>
                                 </div>
                             </div>
 
@@ -2949,7 +2954,7 @@
                                     <canvas id="followupChart" height="180"></canvas>
                                 </div>
                                 <div class="insight-box" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Mentoring connections are the #1 requested follow-up (34.1%). Research shows access to knowledgeable adults predicts greater clarity (β=+0.34). Yet all follow-up types are declining year-over-year. <em>Recommendation: Build mentoring infrastructure — alumni mentors, professional connections, peer mentoring. Formalize job shadowing and guest speaker programs.</em>
+                                    <strong>So What:</strong> Mentoring connections are the #1 requested follow-up (34.1%). Students who have access to knowledgeable adults in career fields develop greater career clarity. Yet all follow-up types are declining year-over-year. <em>What to do: Build mentoring infrastructure — alumni mentors, professional connections, peer mentoring. Formalize job shadowing and guest speaker programs to give students the adult career connections they're asking for.</em>
                                 </div>
                             </div>
                         </div>
@@ -2966,7 +2971,7 @@
                                 </div>
                                 <div class="insight-box">
                                     <strong>So What:</strong> November represents the post-peak plateau. Sessions dropped 56% from October's college-application-driven surge, but certainty PEAKED at 3.95/5 — the highest monthly average. This suggests the Oct→Nov transition includes the most engaged students who continued into the program. <em>The Change: -56% sessions, +0.10 certainty. Why: Self-selection effect. Next Steps: Track whether these "sticky" students show higher long-term outcomes.</em>
-                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, November 2025 (N=8,270)</div>
+                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, November 2025 (8,270 sessions)</div>
                                 </div>
                             </div>
                         </div>
@@ -3267,7 +3272,7 @@
                 {career: "Computer Programmers", rank: 10}
             ],
             popular_career_interest: {zero_popular: 55.2, one_popular: 29.6, two_plus: 15.1},
-            source: "Cristina's October 2025 Findings (N=1,012 sample; N=18,920 full year)"
+            source: "October 2025 Findings (1,012 students surveyed; 18,920 students served full year)"
         };
 
         const DATA_QUALITY_RULES = {
@@ -3640,17 +3645,19 @@
                 sources: [{label: 'Methodology', action: 'modal:clear_plan'}]
             });
 
-            // Add October-specific regression insights
+            // Add October-specific regression insights in plain English
             if (month === 'Oct') {
-                var regs = OCTOBER_FULL.regressions;
-                Object.keys(regs).forEach(function(key) {
-                    var r = regs[key];
+                REGRESSION_DRIVERS.slice(0, 5).forEach(function(r) {
                     cards += buildInsightCard({
-                        id: 'month-oct-reg-' + key, category: r.label.includes('CTE') ? 'career' : r.label.includes('Theme') ? 'personality' : 'program',
+                        id: 'month-oct-reg-' + r.key,
+                        category: r.key.includes('cte') ? 'career' : r.key.includes('theme') ? 'personality' : 'program',
                         severity: r.beta > 0 ? 'positive' : 'negative',
-                        title: r.label, value: 'β = ' + (r.beta > 0 ? '+' : '') + r.beta.toFixed(2),
-                        detail: r.p + '. From October 2025 regression analysis (N=1,012).',
-                        sources: [{label: 'Oct 2025 Regression', action: 'page:sources'}]
+                        title: r.title,
+                        value: r.priority,
+                        detail: r.plain + ' Based on 1,012 student responses in October 2025.',
+                        soWhat: r.impact,
+                        nextStep: r.counselorAction,
+                        sources: [{label: 'Oct 2025 Analysis', action: 'page:sources'}]
                     });
                 });
             }
@@ -3659,59 +3666,121 @@
         }
 
         function renderMonthDivergenceCards() {
-            // This adds divergence insight cards at the top of the default overview
+            // Top 3 insights per month, ranked by divergence from trend and program impact
             var target = document.getElementById('monthDivergenceCards');
             if (!target) return;
-            var months = Object.keys(DATA.alignment_trajectory);
-            var lasting = identifyLastingImpacts();
-            var allChanges = [];
+            var allMonths = Object.keys(DATA.alignment_trajectory);
+            var activeMonths = getActiveMonths();
+            var months = allMonths.filter(function(m) { return activeMonths.indexOf(m) >= 0; });
+            if (months.length < 2) { target.innerHTML = ''; return; }
 
+            // Impact weights: congruence/certainty changes weigh more since they're program priorities
+            var IMPACT_WEIGHTS = {
+                'Congruence': 3.0,  // Career-personality match is the primary metric
+                'Career Certainty': 2.5,  // Confidence is a key outcome
+                'Clear Plan %': 2.0,  // Career clarity tracks program effectiveness
+                'Sessions': 1.0  // Volume matters but less than outcomes
+            };
+
+            // Next step generators keyed by metric and direction
+            function getNextStep(metric, delta, curr, month) {
+                if (metric === 'Congruence') {
+                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their personality type. Focus on the ' + DATA.congruence.no_match.toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
+                    return 'Congruence dipped in ' + month + '. Review which personality types are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
+                }
+                if (metric === 'Career Certainty') {
+                    if (delta >= 0) return 'Certainty is rising — the program is building student confidence. Keep sessions focused on helping students discover and confirm their direction.';
+                    return 'Certainty dropped in ' + month + '. Check coaching dosage at schools with the biggest dips. Ensure sessions feel helpful — session quality is the top driver of certainty.';
+                }
+                if (metric === 'Clear Plan %') {
+                    if (delta >= 0) return 'More students have a clear plan. Target the "Some Idea" group with CTE pathway exposure — they\'re closest to converting to "Clear Plan."';
+                    return 'Fewer students report a clear plan in ' + month + '. Prioritize giving the "Some Idea" students concrete next steps and CTE career pathway exposure.';
+                }
+                if (metric === 'Sessions') {
+                    if (delta >= 0) return 'Session volume is up. Monitor whether quality keeps pace — watch helpfulness scores at high-volume schools.';
+                    return 'Session volume declined in ' + month + '. Schedule outreach at schools with the biggest drops. Students need at least 6 sessions for meaningful certainty gains.';
+                }
+                return '';
+            }
+
+            // Compute per-month congruence from RIASEC heatmap data
+            function getMonthCongruence(m) {
+                if (typeof HEATMAP_DATA !== 'undefined' && HEATMAP_DATA.riasec_monthly) {
+                    var types = Object.keys(HEATMAP_DATA.riasec_monthly);
+                    var vals = types.map(function(t) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; });
+                    return vals.reduce(function(a,b){return a+b;},0) / vals.length;
+                }
+                return DATA.congruence.match_rate;
+            }
+
+            // Gather all month-over-month changes with impact scoring
+            var allByMonth = {};
             for (var i = 1; i < months.length; i++) {
                 var m = months[i]; var pm = months[i-1];
-                var curr = DATA.alignment_trajectory[m]; var prev = DATA.alignment_trajectory[m-1] || DATA.alignment_trajectory[pm];
+                var curr = DATA.alignment_trajectory[m]; var prev = DATA.alignment_trajectory[pm];
                 var sessCurr = DATA.sessions_trend[m]||0; var sessPrev = DATA.sessions_trend[pm]||0;
 
                 var items = [
-                    {metric:'Avg Certainty', curr: curr.avg_certainty, prev: prev.avg_certainty, fmt: function(v){return v.toFixed(2)}, cat:'program', month:m, prevMonth:pm},
-                    {metric:'Clear Plan %', curr: curr.pct_clear, prev: prev.pct_clear, fmt: function(v){return v+'%'}, cat:'career', month:m, prevMonth:pm},
-                    {metric:'Sessions', curr: sessCurr, prev: sessPrev, fmt: function(v){return v.toLocaleString()}, cat:'engagement', month:m, prevMonth:pm}
+                    {metric:'Congruence', curr: getMonthCongruence(m), prev: getMonthCongruence(pm), fmt: function(v){return v.toFixed(1)+'%'}, unit:'%', cat:'personality', month:m, prevMonth:pm},
+                    {metric:'Career Certainty', curr: curr.avg_certainty, prev: prev.avg_certainty, fmt: function(v){return v.toFixed(2)+'/5'}, unit:' pts', cat:'program', month:m, prevMonth:pm},
+                    {metric:'Clear Plan %', curr: curr.pct_clear, prev: prev.pct_clear, fmt: function(v){return v+'%'}, unit:'pp', cat:'career', month:m, prevMonth:pm},
+                    {metric:'Sessions', curr: sessCurr, prev: sessPrev, fmt: function(v){return v.toLocaleString()}, unit:'', cat:'engagement', month:m, prevMonth:pm}
                 ];
+
+                if (!allByMonth[m]) allByMonth[m] = [];
                 items.forEach(function(it) {
-                    var delta = it.prev !== 0 ? ((it.curr - it.prev) / it.prev * 100) : 0;
-                    allChanges.push({metric:it.metric, month:it.month, prevMonth:it.prevMonth, curr:it.curr, prev:it.prev, delta:delta, fmt:it.fmt, cat:it.cat});
+                    var rawDelta = it.curr - it.prev;
+                    var pctDelta = it.prev !== 0 ? ((it.curr - it.prev) / it.prev * 100) : 0;
+                    var weight = IMPACT_WEIGHTS[it.metric] || 1;
+                    var impactScore = Math.abs(pctDelta) * weight;
+                    allByMonth[m].push({
+                        metric: it.metric, curr: it.curr, prev: it.prev, rawDelta: rawDelta,
+                        pctDelta: pctDelta, impactScore: impactScore,
+                        fmt: it.fmt, unit: it.unit, cat: it.cat, month: m, prevMonth: it.prevMonth
+                    });
                 });
             }
 
-            // Sort by recency first (most recent month first), then by absolute divergence
-            var lastMonth = months[months.length - 1];
-            var monthIndex = {};
-            months.forEach(function(m, i) { monthIndex[m] = i; });
-
-            allChanges.sort(function(a,b) {
-                var ageA = months.length - 1 - monthIndex[a.month];
-                var ageB = months.length - 1 - monthIndex[b.month];
-                if (ageA !== ageB) return ageA - ageB;
-                return Math.abs(b.delta) - Math.abs(a.delta);
+            // Build HTML: top 3 per month, most recent first
+            var sortedMonths = Object.keys(allByMonth).sort(function(a,b) {
+                return months.indexOf(b) - months.indexOf(a);
             });
 
-            var html = allChanges.slice(0, 8).map(function(c) {
-                var arrow = c.delta >= 0 ? '▲' : '▼';
-                var isLasting = (c.metric === 'Avg Certainty' && lasting.avg_certainty) || (c.metric === 'Clear Plan %' && lasting.pct_clear);
-                var age = months.length - 1 - monthIndex[c.month];
-                var ageClass = age >= 3 ? 'insight-age-3' : 'insight-age-' + age;
-                return '<div class="' + ageClass + '">' + buildInsightCard({
-                    id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
-                    category: c.cat,
-                    severity: c.delta >= 0 ? 'positive' : 'negative',
-                    title: c.metric + ': ' + c.prevMonth + ' → ' + c.month,
-                    value: arrow + ' ' + (c.delta >= 0 ? '+' : '') + c.delta.toFixed(1) + '%',
-                    detail: c.fmt(c.prev) + ' → ' + c.fmt(c.curr),
-                    lasting: isLasting,
-                    sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
-                }) + '</div>';
-            }).join('');
+            var html = '';
+            sortedMonths.forEach(function(month) {
+                var items = allByMonth[month];
+                // Sort by impact score descending and take top 3
+                items.sort(function(a,b) { return b.impactScore - a.impactScore; });
+                var top3 = items.slice(0, 3);
 
-            target.innerHTML = '<div class="ic-grid">' + html + '</div>';
+                html += '<div style="margin-bottom:0.75rem;">';
+                html += '<div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:0.4rem;padding-left:2px;">' + month + ' — Top Changes (ranked by program impact)</div>';
+                html += '<div class="ic-grid">';
+                top3.forEach(function(c, idx) {
+                    var arrow = c.rawDelta >= 0 ? '▲' : '▼';
+                    var sign = c.rawDelta >= 0 ? '+' : '';
+                    var deltaDisplay = c.metric === 'Sessions' ?
+                        (sign + c.pctDelta.toFixed(0) + '%') :
+                        (sign + c.rawDelta.toFixed(c.metric === 'Career Certainty' ? 2 : 1) + (c.unit || ''));
+                    var nextStep = getNextStep(c.metric, c.rawDelta, c.curr, c.month);
+                    html += buildInsightCard({
+                        id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
+                        category: c.cat,
+                        severity: c.rawDelta >= 0 ? 'positive' : 'negative',
+                        title: c.metric + ': ' + c.prevMonth + ' → ' + c.month,
+                        value: arrow + ' ' + deltaDisplay + ' (' + c.fmt(c.prev) + ' → ' + c.fmt(c.curr) + ')',
+                        detail: (idx === 0 ? 'Biggest change this month. ' : '') + 'Impact rank: #' + (idx + 1) + ' of ' + items.length + ' metrics tracked.',
+                        soWhat: c.rawDelta >= 0 ?
+                            c.metric + ' improved — the program is moving in the right direction.' :
+                            c.metric + ' declined — this needs attention to stay on track.',
+                        nextStep: nextStep,
+                        sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
+                    });
+                });
+                html += '</div></div>';
+            });
+
+            target.innerHTML = html;
         }
 
         function computeNorms() {
@@ -3845,10 +3914,10 @@
                 const clarityIcon = parseFloat(clarityDelta) >= 0 ? '▲' : '▼';
                 const clarityColor = parseFloat(clarityDelta) >= 0 ? '#1e40af' : '#dc2626';
 
-                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-personality congruence rate</strong> indicates strong alignment between student interests and career selections, validated against O*NET RIASEC codes.</p>' +
-                '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" cohort (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) remains the highest-impact intervention opportunity. Regression data shows CTE pathway exposure (beta=-3.27, p&lt;0.001) is the single strongest lever.</p>' +
-                '<p><strong>So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' YoY). The top 3 actions to accelerate impact: <strong>(1)</strong> Give the "Some Idea" group CTE exposure, <strong>(2)</strong> End every session with SMART next steps (beta=+1.55), <strong>(3)</strong> Connect students with mentors (70.6% want follow-up). These three levers explain the majority of positive outcome variance.</p>' +
-                '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Cristina\'s Oct 2025 Findings (N=' + OCTOBER_FULL.n_sample.toLocaleString() + ' sample, N=' + OCTOBER_FULL.n_full_year.toLocaleString() + ' full); O*NET 28.1; Holland (1997)</div>';
+                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-personality match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
+                '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" group (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) is the highest-impact group to focus on — these students are closest to having a clear plan.</p>' +
+                '<p><strong>So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year). The top 3 actions to accelerate impact: <strong>(1)</strong> Show the "Some Idea" group CTE career pathways — this is the single most powerful way to move students toward clarity, <strong>(2)</strong> End every session with specific, written next steps the student owns, <strong>(3)</strong> Connect students with mentors (70.6% want follow-up support).</p>' +
+                '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Oct 2025 Analysis (' + OCTOBER_FULL.n_sample.toLocaleString() + ' students surveyed, ' + OCTOBER_FULL.n_full_year.toLocaleString() + ' total served)</div>';
             }
 
             // Highlight/Lowlight insight cards
@@ -3863,7 +3932,7 @@
                     cards += buildInsightCard({ id:'hl-clear-plan', category:'career', severity:'negative', title:'Clear Career Plan below target', value: latest.pct_clear + '%', detail: 'Target is 30%. The "Some Idea" cohort (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students) is the highest-impact intervention opportunity.', sources:[{label:'Methodology',action:'modal:clear_plan'}] });
                 }
                 if (DATA.benchmarks.avg_helpful < 3.75) {
-                    cards += buildInsightCard({ id:'hl-helpfulness', category:'program', severity:'negative', title:'Program Helpfulness Rating below 3.75 target', value: DATA.benchmarks.avg_helpful.toFixed(2) + '/5', detail: 'Session helpfulness is a key predictor of certainty (beta=+1.71).', sources:[{label:'Oct 2025 Regression',action:'page:sources'}] });
+                    cards += buildInsightCard({ id:'hl-helpfulness', category:'program', severity:'negative', title:'Program Helpfulness Rating below 3.75 target', value: DATA.benchmarks.avg_helpful.toFixed(2) + '/5', detail: 'Session helpfulness is one of the strongest drivers of career certainty — when students find sessions helpful, they become significantly more confident in their career direction.', soWhat: 'Improving session quality is a high-priority lever for boosting student outcomes.', nextStep: 'Ask students what they need at the start of each session. Use "Was this helpful?" check-ins to continuously improve.', sources:[{label:'Oct 2025 Analysis',action:'page:sources'}] });
                 }
                 highlightsEl.innerHTML = '<div class="ic-grid">' + cards + '</div>';
             }
@@ -3968,11 +4037,11 @@
             }
 
             const correlations = [
-                { id:'corr-dosage-certainty', cat:'engagement', sev:'positive', label:'Dosage → Certainty', value:'r = '+computedR.toFixed(2), explain:'Each additional session per student correlates with higher career certainty. Schools with 7+ sessions/student average 4.12/5 certainty vs. 3.62 for 2-3 sessions.', source:'MoCo CAP dosage analysis (N=1,537)' },
-                { id:'corr-cte-engagement', cat:'career', sev:'positive', label:'CTE Exposure → Engagement', value:'β = -3.27', explain:'The strongest regression predictor: each CTE pathway explored dramatically reduces disengagement. 28% of students explore zero CTE options — highest-risk group.', source:'Oct 2025 regression (N=1,012)' },
-                { id:'corr-helpful-certainty', cat:'program', sev:'positive', label:'Helpfulness → Certainty', value:'β = +1.71', explain:'Session helpfulness and career certainty form a bidirectional reinforcing loop. Good sessions build certainty; certain students rate sessions higher.', source:'Oct 2025 regression (N=1,012)' },
-                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Multi-Theme → Lower Clarity', value:'β = -0.31', explain:'Students with 3+ RIASEC themes (40.9%) show lower career clarity. Having "too many possible selves" makes narrowing harder.', source:'Oct 2025 regression (p=0.009)' },
-                { id:'corr-farms-gap', cat:'equity', sev:'neutral', label:'FARMS % → Certainty Gap', value:'-0.31 pts', explain:'High-FARMS schools (>40%) average 0.31 points lower on certainty despite higher dosage. Economic disadvantage creates additional barriers.', source:'MCPS equity analysis' }
+                { id:'corr-dosage-certainty', cat:'engagement', sev:'positive', label:'More Sessions = More Certainty', value:'Strong connection', explain:'Students who attend more sessions become more certain about their career direction. Schools averaging 7+ sessions per student see certainty scores of 4.12 out of 5, compared to just 3.62 for schools with only 2-3 sessions. Based on 1,537 students across all schools.', source:'MoCo CAP dosage analysis' },
+                { id:'corr-cte-engagement', cat:'career', sev:'positive', label:'CTE Exposure Prevents Disengagement', value:'HIGHEST PRIORITY', explain:'Showing students CTE career pathways is the single most powerful way to keep them engaged. However, 28% of students haven\'t explored any CTE options yet — they are the highest-risk group for checking out. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
+                { id:'corr-helpful-certainty', cat:'program', sev:'positive', label:'Helpful Sessions Build Certainty', value:'HIGH PRIORITY', explain:'When students find sessions genuinely helpful, they become more certain about their career path — and more certain students rate future sessions even higher. This creates a positive cycle. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
+                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Many Interests Can Lower Clarity', value:'WATCH', explain:'Students who identify with 3 or more personality types (40.9% of students) tend to have lower career clarity. Having "too many possible selves" makes it hard to commit to a direction. These students need guided narrowing activities.', source:'Oct 2025 student survey' },
+                { id:'corr-farms-gap', cat:'equity', sev:'neutral', label:'Economic Disadvantage Creates Barriers', value:'Equity gap: -0.31 pts', explain:'Schools with higher rates of students receiving free/reduced meals (FARMS > 40%) average 0.31 points lower on career certainty, even when they get more sessions. Economic disadvantage creates additional barriers that sessions alone can\'t fully overcome.', source:'MCPS equity analysis' }
             ];
 
             container.innerHTML = '<div class="ic-grid">' + correlations.map(function(c) {
@@ -4087,13 +4156,26 @@
                 }]
             });
 
-            // Widget insight
+            // Widget insight — education & awareness recommendations
             var highType = types.reduce(function(best, t) { return DATA.congruence_by_riasec[t].match_pct > DATA.congruence_by_riasec[best].match_pct ? t : best; }, types[0]);
             var lowType = types.reduce(function(worst, t) { return DATA.congruence_by_riasec[t].match_pct < DATA.congruence_by_riasec[worst].match_pct ? t : worst; }, types[0]);
+            var lowCertType = types.reduce(function(worst, t) { return DATA.congruence_by_riasec[t].avg_certainty < DATA.congruence_by_riasec[worst].avg_certainty ? t : worst; }, types[0]);
+            var lowCertVal = DATA.congruence_by_riasec[lowCertType].avg_certainty.toFixed(2);
+            var highCertType = types.reduce(function(best, t) { return DATA.congruence_by_riasec[t].avg_certainty > DATA.congruence_by_riasec[best].avg_certainty ? t : best; }, types[0]);
+            var insightText, actionText;
+            if (currentBubblePivot === 'career') {
+                var topCareer = Object.keys(CAREER_RIASEC_MAP).reduce(function(best, c) { return CAREER_RIASEC_MAP[c].n > CAREER_RIASEC_MAP[best].n ? c : best; }, Object.keys(CAREER_RIASEC_MAP)[0]);
+                var lowCertCareer = Object.keys(CAREER_RIASEC_MAP).reduce(function(worst, c) { return CAREER_RIASEC_MAP[c].certainty < CAREER_RIASEC_MAP[worst].certainty ? c : worst; }, Object.keys(CAREER_RIASEC_MAP)[0]);
+                insightText = topCareer + ' is the most popular career choice (' + CAREER_RIASEC_MAP[topCareer].n.toLocaleString() + ' students). ' + lowCertCareer + ' students show the lowest certainty (' + CAREER_RIASEC_MAP[lowCertCareer].certainty.toFixed(2) + '/5) — they may need more career education and awareness about what this career actually involves.';
+                actionText = 'Prioritize career education for ' + lowCertCareer + ': invite guest speakers, arrange job shadows, and share real salary/outlook data. For high-interest careers like ' + topCareer + ', ensure students understand the realistic pathway (education, timeline, competition).';
+            } else {
+                insightText = highType + ' students have the strongest career-personality match (' + DATA.congruence_by_riasec[highType].match_pct + '%). ' + lowCertType + ' students have the lowest certainty (' + lowCertVal + '/5) — indicating low awareness of careers that fit their personality type.';
+                actionText = 'Focus career education and awareness on ' + lowCertType + ' students first — they need exposure to careers matching their strengths. For ' + lowType + ' students (lowest match at ' + DATA.congruence_by_riasec[lowType].match_pct + '%), broaden career options through cross-domain exploration and guest speakers from ' + lowType + '-aligned fields.';
+            }
             renderWidgetInsight('correlationSpotlight', {
-                trend: 'up',
-                soWhat: highType + ' students show strongest alignment (' + DATA.congruence_by_riasec[highType].match_pct + '% congruence). ' + lowType + ' is lowest at ' + DATA.congruence_by_riasec[lowType].match_pct + '%.',
-                action: 'Prioritize cross-domain career exposure for ' + lowType + ' students to broaden their options.'
+                trend: lowCertVal >= 3.85 ? 'up' : 'down',
+                soWhat: insightText,
+                action: actionText
             });
         }
 
@@ -4217,14 +4299,14 @@
 
         function initStaticInsightCards() {
             var cards = [
-                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'High Match students (3.90) are slightly less certain than Medium (4.03). This is healthy: deeply aligned students understand career complexity rather than being naively certain.', soWhat:'Do not treat lower certainty in high-match students as a problem.', nextStep:'Focus interventions on the 14.9% with No Match — they need 1:1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Holland (1997)',action:'page:sources'},{label:'N=2,962',action:'modal:congruence'}] }},
-                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Trajectory', detail:'18.2% → 22.1% clarity shows steady program impact. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the highest-leverage cohort.', soWhat:'Accelerate CTE exposure and 1:1 follow-ups for the "Some Idea" group.', nextStep:'Regression data shows CTE pathway exposure (beta=-3.27) is the single strongest lever for converting exploration into clarity.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Regression',action:'modal:clear_plan'}] }},
-                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty by RIASEC Type', detail:'Investigative types (3.97) lead certainty; Conventional types (3.71) lag by 0.26 points. C-type students may not see themselves in traditional "conventional" careers.', soWhat:'Showcase modern Conventional careers (data analytics, UX research, project management) to C-type students.', nextStep:'These roles offer strong salary/outlook and align with C-type strengths.', sources:[{label:'O*NET 28.1',action:'page:sources'}] }},
-                { el:'ic-dosage-response', cfg:{ id:'ac-dosage-response', category:'engagement', severity:'positive', title:'Dosage-Response Relationship', detail:'r=0.47 dose-response means each additional session adds measurable certainty. Students with 7+ sessions average 4.12/5 vs 3.62 for 2-3 sessions — a 14% lift.', soWhat:'Target 6+ sessions per student at high-need schools.', nextStep:'Prioritize Watkins Mill HS (3.81 dosage, 3.64 certainty) and Paint Branch HS (5.46 dosage, 3.70 certainty) for quality improvement.', sources:[{label:'Dosage analysis (N=1,537)',action:'modal:dosage'}] }},
-                { el:'ic-graduation-rates', cfg:{ id:'ac-graduation-rates', category:'school', severity:'negative', title:'Graduation Rate Correlation', detail:'Lower-graduation-rate schools (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be a leading indicator for academic persistence.', soWhat:'Double dosage at schools below 85% graduation rate.', nextStep:'Track whether increased career clarity correlates with improved graduation outcomes over time.', sources:[{label:'MCPS Public Data',action:'page:sources'}] }},
-                { el:'ic-coach-performance', cfg:{ id:'ac-coach-performance', category:'program', severity:'info', title:'Coach Volume vs Quality', detail:'Volume and quality don\'t always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.', soWhat:'Study top-certainty coaches\' methods for peer learning.', nextStep:'Pair lowest-certainty coaches with mentors. Set minimum quality thresholds alongside volume targets.', sources:[{label:'Coach performance data',action:'page:sources'}] }},
-                { el:'ic-yoy-growth', cfg:{ id:'ac-yoy-growth', category:'program', severity:'neutral', title:'Year-over-Year Growth', detail:'3x YoY growth validates the scaling strategy. But rapid scale can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.', soWhat:'Monitor helpfulness alongside volume.', nextStep:'Set a quality floor: if helpfulness drops below 3.50/5, pause expansion at that school and invest in coach training.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'}] }},
-                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'RIASEC Type Distribution', detail:'R and A types dominate (21.2% and 20.4%). Conventional under-representation (9.9%) is developmental. 40.9% of October students had 3+ themes, correlating with lower clarity (beta=-0.31).', soWhat:'For multi-theme students (40.9%), use structured decision-making activities rather than more exploration.', nextStep:'For C-type students, showcase "hidden gem" careers like data analytics, UX research, and project management.', sources:[{label:'Holland (1997)',action:'page:sources'},{label:'Oct regression',action:'page:sources'}] }}
+                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'Students with the strongest career-personality match (3.90 certainty) are slightly less certain than medium-match students (4.03). This is actually healthy — deeply aligned students understand how complex careers really are, rather than being overconfident.', soWhat:'Don\'t worry if high-match students seem slightly less certain. This shows mature career thinking.', nextStep:'Focus attention on the 14.9% with No Match — they need 1-on-1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'2,962 students analyzed',action:'modal:congruence'}] }},
+                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Is Growing', detail:'Clarity grew from 18.2% to 22.1% — steady progress. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the best group to focus on — they\'re closest to having a clear plan.', soWhat:'The "Some Idea" students are your highest-leverage group. They just need a nudge.', nextStep:'Show these students CTE career pathways — this is the single most powerful way to move them from "Some Idea" to "Clear Plan." Focus on matching pathways to their personality type.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Oct Analysis',action:'modal:clear_plan'}] }},
+                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty Varies by Personality Type', detail:'Investigative-type students (3.97 out of 5) feel most certain about their careers. Conventional-type students (3.71) feel least certain — a 0.26 point gap. Conventional students may not see themselves in traditional "organized/structured" careers.', soWhat:'Conventional-type students need exposure to modern careers that match their strengths.', nextStep:'Showcase careers like data analytics, UX research, and project management to Conventional-type students — these roles offer strong salary and growth.', sources:[{label:'Career-Personality Data',action:'page:sources'}] }},
+                { el:'ic-dosage-response', cfg:{ id:'ac-dosage-response', category:'engagement', severity:'positive', title:'More Sessions = More Certainty', detail:'Each additional session adds measurable career certainty. Students with 7+ sessions average 4.12 out of 5 on certainty vs. 3.62 for students with only 2-3 sessions — that\'s a 14% improvement. Based on 1,537 students with 2+ sessions.', soWhat:'Session count matters. Aim for 6+ sessions per student, especially at schools with the lowest certainty.', nextStep:'Prioritize Watkins Mill HS (3.81 sessions/student, 3.64 certainty) and Paint Branch HS (5.46 sessions/student, 3.70 certainty) for quality improvement.', sources:[{label:'Dosage analysis, 1,537 students',action:'modal:dosage'}] }},
+                { el:'ic-graduation-rates', cfg:{ id:'ac-graduation-rates', category:'school', severity:'negative', title:'Low Graduation Schools Need More Support', detail:'Schools with lower graduation rates (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be an early indicator of academic persistence.', soWhat:'These schools need more intensive career coaching. Increased clarity may help keep students on track to graduate.', nextStep:'Increase session frequency at schools below 85% graduation rate. Track whether improved career clarity correlates with better graduation outcomes over time.', sources:[{label:'MCPS Public Data',action:'page:sources'}] }},
+                { el:'ic-coach-performance', cfg:{ id:'ac-coach-performance', category:'program', severity:'info', title:'Coach Quality Varies — Learn from the Best', detail:'Volume and quality don\'t always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms other high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.', soWhat:'Study what top coaches do differently. Their methods should be shared across the team.', nextStep:'Pair coaches with the lowest certainty scores with mentors. Set minimum quality benchmarks alongside session volume targets.', sources:[{label:'Coach performance data',action:'page:sources'}] }},
+                { el:'ic-yoy-growth', cfg:{ id:'ac-yoy-growth', category:'program', severity:'neutral', title:'3x Growth — Watch Quality Closely', detail:'The program has grown 3x year-over-year, which validates the scaling strategy. But rapid growth can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.', soWhat:'Keep monitoring how helpful students find sessions as the program grows.', nextStep:'Set a quality floor: if helpfulness drops below 3.50 out of 5 at any school, pause expansion there and invest in coach training first.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'}] }},
+                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'Personality Type Distribution', detail:'Realistic (21.2%) and Artistic (20.4%) types are most common. Conventional (9.9%) is underrepresented, which is normal for this age group. 40.9% of October students identified with 3+ personality types, which makes narrowing harder.', soWhat:'Students with many interests (40.9%) need structured decision-making help, not just more exploration.', nextStep:'For Conventional-type students, showcase careers like data analytics, UX research, and project management. For multi-interest students, use values exercises to help them prioritize.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'Oct 2025 Analysis',action:'page:sources'}] }}
             ];
             cards.forEach(function(c) {
                 var el = document.getElementById(c.el);
@@ -4627,37 +4709,145 @@
             container.innerHTML = html;
         }
 
-        function renderOverviewOctoberCharts() {
-            // Regression bars for Overview
-            var regContainer = document.getElementById('overviewRegressionBars');
-            if (regContainer && regContainer.innerHTML.trim() === '') {
-                var regs = [
-                    {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
-                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
-                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
-                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
-                    {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
-                    {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
-                ];
-                var maxAbs = Math.max.apply(null, regs.map(function(r) { return Math.abs(r.beta); }));
-                regContainer.innerHTML = regs.map(function(r) {
-                    var width = Math.abs(r.beta) / maxAbs * 100;
-                    var isNeg = r.beta < 0;
-                    return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">' +
-                        '<div style="width:180px;font-size:11px;text-align:right;color:var(--t2);">' + r.label + '</div>' +
-                        '<div style="flex:1;display:flex;align-items:center;' + (isNeg ? 'flex-direction:row-reverse;' : '') + '">' +
-                        '<div style="width:' + width + '%;height:18px;background:' + r.color + ';border-radius:3px;min-width:4px;"></div>' +
-                        '</div>' +
-                        '<div style="width:60px;font-size:12px;font-weight:700;color:' + r.color + ';">\u03B2=' + r.beta.toFixed(2) + r.sig + '</div>' +
-                        '</div>';
-                }).join('');
+        // Plain-English regression drivers for counselors
+        var REGRESSION_DRIVERS = [
+            {
+                key: 'cte_disengagement',
+                beta: -3.27,
+                priority: 'HIGHEST PRIORITY',
+                priorityColor: '#dc2626',
+                barColor: '#dc2626',
+                title: 'Show students real career pathways (CTE)',
+                plain: 'When students explore Career & Technical Education options, they are far less likely to disengage. This is the single most impactful thing counselors can do.',
+                counselorAction: 'Make sure every student explores at least 2-3 CTE pathways during sessions. Students who see zero options are the most at-risk for checking out.',
+                impact: 'Very strong effect — reduces disengagement dramatically'
+            },
+            {
+                key: 'helpful_certainty',
+                beta: 1.71,
+                priority: 'HIGH PRIORITY',
+                priorityColor: '#1e40af',
+                barColor: '#1e40af',
+                title: 'Make sessions feel helpful and relevant',
+                plain: 'Students who rate sessions as helpful become significantly more certain about their career direction. Quality matters more than quantity.',
+                counselorAction: 'Ask students what they need at the start of each session. End with "Was this helpful?" check-ins. Adjust delivery to match student needs.',
+                impact: 'Strong positive effect on career certainty'
+            },
+            {
+                key: 'nextsteps_clarity',
+                beta: 1.55,
+                priority: 'HIGH PRIORITY',
+                priorityColor: '#1e40af',
+                barColor: '#1e40af',
+                title: 'Give students clear next steps',
+                plain: 'Students who leave sessions with concrete action items develop much clearer career plans. Vague advice doesn\'t stick — specific steps do.',
+                counselorAction: 'End every session with 1-2 written, specific next steps the student owns. Example: "Research 3 colleges with nursing programs by next Friday."',
+                impact: 'Strong positive effect on career clarity'
+            },
+            {
+                key: 'themes_score',
+                beta: 1.15,
+                priority: 'MODERATE',
+                priorityColor: '#2563eb',
+                barColor: '#3b82f6',
+                title: 'Explore personality-career connections (RIASEC)',
+                plain: 'When students discover their RIASEC personality themes (e.g., Artistic, Social, Investigative), their overall engagement scores improve.',
+                counselorAction: 'Use RIASEC assessments early in the process. Help students connect their personality type to matching career fields.',
+                impact: 'Positive effect on overall engagement scores'
+            },
+            {
+                key: 'certainty_clarity',
+                beta: 1.15,
+                priority: 'MODERATE',
+                priorityColor: '#2563eb',
+                barColor: '#3b82f6',
+                title: 'Build certainty early — it compounds',
+                plain: 'Students who feel certain about their direction develop clearer long-term plans. Early wins in certainty create a positive cycle where students become more engaged over time.',
+                counselorAction: 'Celebrate small clarity wins. Even narrowing from 10 careers to 5 is progress. Help students see they\'re making headway.',
+                impact: 'Positive effect on long-term career clarity'
+            },
+            {
+                key: 'future_certainty',
+                beta: 0.92,
+                priority: 'MODERATE',
+                priorityColor: '#2563eb',
+                barColor: '#3b82f6',
+                title: 'Help students think about their future',
+                plain: 'Students who engage in future-oriented thinking — imagining themselves in careers, setting goals — become more certain about their path.',
+                counselorAction: 'Use "future self" exercises: "Picture yourself 5 years from now. What does your day look like?" Visualization builds commitment.',
+                impact: 'Moderate positive effect on certainty'
+            },
+            {
+                key: 'helpful_concentration',
+                beta: 0.80,
+                priority: 'MODERATE',
+                priorityColor: '#2563eb',
+                barColor: '#3b82f6',
+                title: 'Helpful sessions improve focus',
+                plain: 'When students find sessions genuinely helpful, they become more focused in their career interests rather than scattered across many options.',
+                counselorAction: 'Quality sessions naturally help students narrow their focus. Prioritize depth over breadth in career conversations.',
+                impact: 'Moderate positive effect on career focus'
+            },
+            {
+                key: 'themes_concentration',
+                beta: -0.49,
+                priority: 'WATCH',
+                priorityColor: '#f59e0b',
+                barColor: '#f59e0b',
+                title: 'Too many interests can scatter focus',
+                plain: 'Students who identify with many personality types (3+) tend to have less focused career plans. Broad interests are normal but need guided narrowing.',
+                counselorAction: 'For students with 3+ RIASEC themes: help them find careers that blend their interests rather than picking just one. Example: "You\'re Artistic AND Social — consider art therapy or teaching."',
+                impact: 'Mild negative effect — more themes = less career focus'
+            },
+            {
+                key: 'themes_clarity',
+                beta: -0.31,
+                priority: 'WATCH',
+                priorityColor: '#f59e0b',
+                barColor: '#f59e0b',
+                title: 'Multiple interests can lower clarity',
+                plain: 'Having many personality interests slightly reduces career clarity. Students with "too many possible selves" struggle to commit to a direction.',
+                counselorAction: 'Use values clarification activities to help multi-interest students prioritize. Ask: "If you could only do one of these for 5 years, which would it be?"',
+                impact: 'Mild negative effect — too many options = less clarity'
             }
+        ];
 
-            // CTE chart for Overview
+        function renderRegressionBarsPlainEnglish(containerId, showExtended) {
+            var container = document.getElementById(containerId);
+            if (!container || container.innerHTML.trim() !== '') return;
+            var regs = showExtended ? REGRESSION_DRIVERS : REGRESSION_DRIVERS.filter(function(r) {
+                return r.key !== 'future_certainty' && r.key !== 'helpful_concentration';
+            });
+            var maxAbs = Math.max.apply(null, regs.map(function(r) { return Math.abs(r.beta); }));
+            container.innerHTML = regs.map(function(r) {
+                var width = Math.abs(r.beta) / maxAbs * 100;
+                var isNeg = r.beta < 0;
+                return '<div style="margin-bottom:0.75rem;padding:0.6rem 0.75rem;background:var(--surface);border-radius:8px;border-left:3px solid ' + r.priorityColor + ';">' +
+                    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.25rem;">' +
+                        '<div style="font-size:13px;font-weight:700;color:var(--t1);">' + r.title + '</div>' +
+                        '<span style="font-size:10px;font-weight:700;color:' + r.priorityColor + ';background:' + r.priorityColor + '15;padding:2px 6px;border-radius:4px;">' + r.priority + '</span>' +
+                    '</div>' +
+                    '<div style="font-size:11px;color:var(--t2);margin-bottom:0.4rem;line-height:1.4;">' + r.plain + '</div>' +
+                    '<div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">' +
+                        '<div style="flex:1;background:var(--bdr);border-radius:3px;height:14px;overflow:hidden;' + (isNeg ? 'direction:rtl;' : '') + '">' +
+                            '<div style="width:' + width + '%;height:100%;background:' + r.barColor + ';border-radius:3px;"></div>' +
+                        '</div>' +
+                        '<div style="font-size:10px;color:var(--t3);width:90px;text-align:right;">' + r.impact.split('—')[0] + '</div>' +
+                    '</div>' +
+                    '<div style="font-size:11px;color:var(--t1);font-style:italic;line-height:1.3;"><strong>What to do:</strong> ' + r.counselorAction + '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function renderOverviewOctoberCharts() {
+            // Regression bars for Overview — plain English for counselors
+            renderRegressionBarsPlainEnglish('overviewRegressionBars', false);
+
+            // CTE chart for Overview — destroy existing first
             var cteCtx = document.getElementById('overviewCTEChart');
-            if (cteCtx && !cteCtx.dataset.rendered) {
-                cteCtx.dataset.rendered = 'true';
+            if (cteCtx) {
+                var existingCte = Chart.getChart(cteCtx);
+                if (existingCte) existingCte.destroy();
                 new Chart(cteCtx, {
                     type: 'bar',
                     data: {
@@ -4668,10 +4858,11 @@
                 });
             }
 
-            // Follow-up chart for Overview
+            // Follow-up chart for Overview — destroy existing first
             var fuCtx = document.getElementById('overviewFollowupChart');
-            if (fuCtx && !fuCtx.dataset.rendered) {
-                fuCtx.dataset.rendered = 'true';
+            if (fuCtx) {
+                var existingFu = Chart.getChart(fuCtx);
+                if (existingFu) existingFu.destroy();
                 new Chart(fuCtx, {
                     type: 'bar',
                     data: {
@@ -4735,33 +4926,8 @@
                 });
             }
 
-            // Regression bars for Program-Perf
-            var perfRegContainer = document.getElementById('perfRegressionBars');
-            if (perfRegContainer && perfRegContainer.innerHTML.trim() === '') {
-                var regs = [
-                    {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
-                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
-                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
-                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
-                    {label: 'Future Thinking → Certainty', beta: 0.92, color: '#3b82f6', sig: '***'},
-                    {label: 'Helpful → Concentration', beta: 0.80, color: '#3b82f6', sig: '***'},
-                    {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
-                    {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
-                ];
-                var maxAbs = Math.max.apply(null, regs.map(function(r) { return Math.abs(r.beta); }));
-                perfRegContainer.innerHTML = regs.map(function(r) {
-                    var width = Math.abs(r.beta) / maxAbs * 100;
-                    var isNeg = r.beta < 0;
-                    return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">' +
-                        '<div style="width:200px;font-size:11px;text-align:right;color:var(--t2);">' + r.label + '</div>' +
-                        '<div style="flex:1;display:flex;align-items:center;' + (isNeg ? 'flex-direction:row-reverse;' : '') + '">' +
-                        '<div style="width:' + width + '%;height:18px;background:' + r.color + ';border-radius:3px;min-width:4px;"></div>' +
-                        '</div>' +
-                        '<div style="width:60px;font-size:12px;font-weight:700;color:' + r.color + ';">\u03B2=' + r.beta.toFixed(2) + r.sig + '</div>' +
-                        '</div>';
-                }).join('');
-            }
+            // Regression bars for Program-Perf — plain English for counselors
+            renderRegressionBarsPlainEnglish('perfRegressionBars', true);
 
             // YoY cards
             var yoyEl = document.getElementById('perfYoYCards');
@@ -4862,34 +5028,35 @@
 
             cardsEl.innerHTML = buildInsightCard({
                 id: 'oct-nextsteps-clarity', category: 'career', severity: 'positive',
-                title: 'Next Steps Strongly Predict Clarity',
-                value: '\u03B2 = +1.55 (p<0.001)',
-                detail: 'Having concrete next steps is the third strongest predictor of career clarity. Students who leave sessions with written action items show significantly higher clarity scores.',
-                soWhat: 'Every coaching session should end with student-owned, specific next steps.',
-                nextStep: 'Implement SMART next-step templates for coaches. Track next-step completion rates.',
-                sources: [{label: 'Regression Analysis', action: 'page:monthly-report'}, {label: 'Career Plan', action: 'page:career-plan'}]
+                title: 'Clear Next Steps Make a Big Difference',
+                value: 'HIGH PRIORITY',
+                detail: 'Students who leave sessions with specific, written action items develop much clearer career plans. This is one of the top 3 drivers of career clarity across all 1,012 students surveyed in October.',
+                soWhat: 'Every coaching session should end with student-owned, specific next steps — not vague advice.',
+                nextStep: 'End every session with 1-2 written action items. Example: "Research 3 colleges with nursing programs by next Friday." Track completion at the next session.',
+                sources: [{label: 'Oct 2025 Analysis', action: 'page:monthly-report'}, {label: 'Career Plan', action: 'page:career-plan'}]
             }) + buildInsightCard({
                 id: 'oct-certainty-clarity', category: 'career', severity: 'positive',
-                title: 'Certainty Drives Future Clarity',
-                value: '\u03B2 = +1.15 (p<0.001)',
-                detail: 'Career certainty is a strong predictor of future career clarity. This bidirectional relationship with session helpfulness (\u03B2=+1.71) creates a positive feedback loop.',
-                soWhat: 'Boosting certainty early creates compounding benefits for long-term clarity.',
-                sources: [{label: 'Regression Analysis', action: 'page:monthly-report'}]
+                title: 'Early Certainty Wins Create a Positive Cycle',
+                value: 'MODERATE PRIORITY',
+                detail: 'Students who feel more certain about their career direction develop clearer long-term plans. When sessions feel helpful, students gain certainty, which leads to more clarity — a positive cycle that builds on itself.',
+                soWhat: 'Helping students feel even slightly more certain early on creates compounding benefits over time.',
+                nextStep: 'Celebrate small clarity wins with students. Even narrowing from 10 possible careers to 5 is real progress worth acknowledging.',
+                sources: [{label: 'Oct 2025 Analysis', action: 'page:monthly-report'}]
             }) + buildInsightCard({
                 id: 'oct-multitheme-clarity', category: 'personality', severity: 'neutral',
-                title: 'Multi-Theme Interests Lower Clarity',
-                value: '\u03B2 = -0.31 (p=0.009)',
-                detail: '57.9% of October students show multi-theme RIASEC interests (2+ types). While broad interests boost engagement scores (+1.15/theme), they predict LOWER clarity. Mean score for multi-theme: 3.33.',
-                soWhat: 'Students with "too many possible selves" need structured narrowing activities.',
-                nextStep: 'Implement values clarification and realistic career previews for the multi-theme majority.',
-                sources: [{label: 'RIASEC Analysis', action: 'page:riasec'}, {label: 'Regression', action: 'page:monthly-report'}]
+                title: 'Students with Many Interests Need Help Narrowing',
+                value: 'WATCH — 57.9% of students affected',
+                detail: '57.9% of October students identify with multiple personality types (2+ RIASEC themes). While having broad interests boosts engagement, it also makes it harder for students to commit to a clear career direction.',
+                soWhat: 'Having "too many possible selves" is developmentally normal — but these students need structured help narrowing down, not just more exploration.',
+                nextStep: 'Use values clarification activities: "If you could only do one of these for 5 years, which would it be?" Help students find careers that blend their interests.',
+                sources: [{label: 'RIASEC Analysis', action: 'page:riasec'}, {label: 'Oct Analysis', action: 'page:monthly-report'}]
             }) + buildInsightCard({
                 id: 'oct-followup-career', category: 'career', severity: 'info',
-                title: '70.6% Want Follow-Up Support',
-                value: 'Mentoring #1 at 34.1%',
-                detail: 'The majority of students want continued support after sessions. Mentoring connections are the top request, followed by advisor meetings (25.8%) and exploration activities (25.4%).',
-                soWhat: 'Access to knowledgeable adults predicts greater clarity (\u03B2=+0.34). Mentoring infrastructure is a high-leverage investment.',
-                nextStep: 'Build alumni mentor database and formalize job shadowing programs.',
+                title: '70.6% of Students Want Follow-Up Support',
+                value: 'Mentoring is #1 at 34.1%',
+                detail: 'The majority of students want continued support after sessions. Mentoring connections are the top request, followed by advisor meetings (25.8%) and career exploration activities (25.4%).',
+                soWhat: 'Students who have access to knowledgeable adults in career fields develop greater clarity. Mentoring infrastructure is one of the highest-impact investments the program can make.',
+                nextStep: 'Build an alumni mentor database and formalize job shadowing programs. Connect students with professionals in their areas of interest.',
                 sources: [{label: 'Follow-Up Data', action: 'page:monthly-report'}]
             });
         }
@@ -4919,11 +5086,12 @@
             if (cardsEl && cardsEl.innerHTML.trim() === '') {
                 cardsEl.innerHTML = buildInsightCard({
                     id: 'oct-theme-concentration', category: 'personality', severity: 'neutral',
-                    title: 'More Themes = Less Career Focus',
-                    value: '\u03B2 = -0.49 (p<0.001)',
-                    detail: 'Each additional RIASEC theme a student identifies with reduces their career concentration score. Students with 3+ themes (40.9%) have the broadest but least focused interests.',
-                    soWhat: 'Broad interests are developmentally normal but require guided narrowing to translate into actionable plans.',
-                    sources: [{label: 'Regression', action: 'page:monthly-report'}, {label: 'Holland (1997)', action: 'external:https://doi.org/10.1037/0022-0167.44.4.368'}]
+                    title: 'More Personality Types = Less Career Focus',
+                    value: 'WATCH — 40.9% of students have 3+ types',
+                    detail: 'Students who identify with many RIASEC personality types tend to have the broadest but least focused career interests. Having 3 or more types (40.9% of students) makes it harder to narrow down a direction.',
+                    soWhat: 'Broad interests are developmentally normal, especially for younger students. But without guided narrowing, these students struggle to make concrete career plans.',
+                    nextStep: 'Help multi-type students find careers that blend their interests. Example: A student who is both Artistic AND Social might thrive in art therapy, teaching, or UX design.',
+                    sources: [{label: 'Oct Analysis', action: 'page:monthly-report'}, {label: 'RIASEC Research', action: 'page:sources'}]
                 }) + buildInsightCard({
                     id: 'oct-zero-themes-yoy', category: 'personality', severity: 'negative',
                     title: 'Zero-Theme Students Rising',
@@ -4956,11 +5124,11 @@
             if (cardsEl && cardsEl.innerHTML.trim() === '') {
                 cardsEl.innerHTML = buildInsightCard({
                     id: 'oct-cte-gap', category: 'career', severity: 'neutral',
-                    title: 'CTE Exposure Is the Strongest Engagement Lever',
-                    value: '\u03B2 = -3.27 (disengagement)',
-                    detail: '87.1% of students are open to CTE, but 28% selected zero options. CTE pathway exploration is the single most powerful predictor of reducing student disengagement (\u03B2=-3.27, p<0.001).',
-                    soWhat: 'Ensuring every student sees at least 2-3 CTE pathways aligned with priority sectors should be a top program priority.',
-                    nextStep: 'Map CTE pathway options directly to MoCo\'s 8 priority sectors. Auto-suggest pathways based on RIASEC type.',
+                    title: 'Showing Students CTE Pathways Is the #1 Way to Keep Them Engaged',
+                    value: 'HIGHEST PRIORITY',
+                    detail: '87.1% of students are open to Career & Technical Education, but 28% haven\'t explored any CTE options yet. Among 1,012 October students, CTE exploration was the single most powerful factor in preventing students from checking out.',
+                    soWhat: 'The 28% of students who haven\'t seen any CTE options are the most at-risk for disengagement. Getting them to explore even 2-3 pathways can make a significant difference.',
+                    nextStep: 'Map CTE pathway options directly to MoCo\'s 8 priority sectors. When you know a student\'s RIASEC type, suggest matching CTE pathways. Example: "Realistic" students → Manufacturing, Engineering, Tech pathways.',
                     sources: [{label: 'CTE Data', action: 'page:monthly-report'}, {label: 'Sectors', action: 'page:sectors'}]
                 });
             }
@@ -5380,7 +5548,7 @@
                 // Clear Plan
                 if (school.survey_n >= 30 && school.metrics.pct_clear >= 0) {
                     if (school.metrics.pct_clear < activeThresholds.clearPlan_low) {
-                        currentAlerts.push({school: school.school, type: 'Below-Norm Clear Plan', value: school.metrics.pct_clear.toFixed(1) + '%', norm: `Mean: ${dataNorms.clearPlan.mean.toFixed(1)}%`, direction: 'negative', insight: 'Follow-up sessions with next-steps planning improve clarity (β=+1.55)'});
+                        currentAlerts.push({school: school.school, type: 'Below-Norm Clear Plan', value: school.metrics.pct_clear.toFixed(1) + '%', norm: `Mean: ${dataNorms.clearPlan.mean.toFixed(1)}%`, direction: 'negative', insight: 'Students who leave sessions with clear next steps develop much stronger career plans. Focus on ending each session with specific action items.'});
                     } else if (school.metrics.pct_clear > activeThresholds.clearPlan_high) {
                         currentAlerts.push({school: school.school, type: 'Above-Norm Clear Plan', value: school.metrics.pct_clear.toFixed(1) + '%', norm: `Mean: ${dataNorms.clearPlan.mean.toFixed(1)}%`, direction: 'positive', insight: 'Strong plan formation — check if linked to high CTE enrollment'});
                     }
@@ -5394,7 +5562,7 @@
                 // Helpful rating
                 if (school.metrics.avg_helpful > 0 && school.survey_n >= 30) {
                     if (school.metrics.avg_helpful < activeThresholds.helpful_low) {
-                        currentAlerts.push({school: school.school, type: 'Below-Norm Helpfulness', value: school.metrics.avg_helpful.toFixed(2), norm: `Mean: ${dataNorms.helpful.mean.toFixed(2)}`, direction: 'negative', insight: 'Low helpfulness correlates with certainty stagnation (β=+1.71)'});
+                        currentAlerts.push({school: school.school, type: 'Below-Norm Helpfulness', value: school.metrics.avg_helpful.toFixed(2), norm: `Mean: ${dataNorms.helpful.mean.toFixed(2)}`, direction: 'negative', insight: 'When students don\'t find sessions helpful, their career certainty stalls. Ask students what they need and adjust session delivery.'});
                     } else if (school.metrics.avg_helpful > activeThresholds.helpful_high) {
                         currentAlerts.push({school: school.school, type: 'Above-Norm Helpfulness', value: school.metrics.avg_helpful.toFixed(2), norm: `Mean: ${dataNorms.helpful.mean.toFixed(2)}`, direction: 'positive', insight: 'High perceived value — students see coaching as impactful'});
                     }
@@ -5638,31 +5806,7 @@
         }
 
         function renderRegressionBars() {
-            const container = document.getElementById('regressionBars');
-            if(!container || container.innerHTML.trim() !== '') return;
-            const regs = [
-                {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
-                {label: 'Session Helpful → Certainty', beta: 1.71, color: '#1e40af', sig: '***'},
-                {label: 'Next Steps → Clarity', beta: 1.55, color: '#1e40af', sig: '***'},
-                {label: 'RIASEC Themes → Score', beta: 1.15, color: '#1e40af', sig: '***'},
-                {label: 'Certainty → Future Clarity', beta: 1.15, color: '#1e40af', sig: '***'},
-                {label: 'Future Thinking → Certainty', beta: 0.92, color: '#3b82f6', sig: '***'},
-                {label: 'Helpful → Concentration', beta: 0.80, color: '#3b82f6', sig: '***'},
-                {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
-                {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
-            ];
-            const maxAbs = Math.max(...regs.map(r => Math.abs(r.beta)));
-            container.innerHTML = regs.map(r => {
-                const width = Math.abs(r.beta) / maxAbs * 100;
-                const isNeg = r.beta < 0;
-                return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">' +
-                    '<div style="width:200px;font-size:11px;text-align:right;color:var(--t2);">' + r.label + '</div>' +
-                    '<div style="flex:1;display:flex;align-items:center;' + (isNeg ? 'flex-direction:row-reverse;' : '') + '">' +
-                    '<div style="width:' + width + '%;height:18px;background:' + r.color + ';border-radius:3px;min-width:4px;"></div>' +
-                    '</div>' +
-                    '<div style="width:60px;font-size:12px;font-weight:700;color:' + r.color + ';">β=' + r.beta.toFixed(2) + r.sig + '</div>' +
-                    '</div>';
-            }).join('');
+            renderRegressionBarsPlainEnglish('regressionBars', true);
         }
 
         function renderCTEChart() {
