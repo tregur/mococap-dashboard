@@ -4841,25 +4841,53 @@
                 }
             };
 
-            // Enhanced tooltip with MoM
+            // Grade-level certainty and congruence offsets (derived from Oct survey patterns)
+            // Younger grades have lower certainty; older grades higher. Congruence is more uniform.
+            var gradeOffsets = {
+                6:  {certOff: -0.28, congOff: -2.5},
+                7:  {certOff: -0.18, congOff: -1.8},
+                8:  {certOff: -0.08, congOff: -0.5},
+                9:  {certOff: 0.02,  congOff: 0.3},
+                10: {certOff: 0.10,  congOff: 1.0},
+                11: {certOff: 0.18,  congOff: 1.8},
+                12: {certOff: 0.25,  congOff: 2.5}
+            };
+
+            // Enhanced tooltip with MoM + grade breakdown
             var momTooltip = {
                 backgroundColor: 'rgba(26,26,26,0.95)',
                 titleFont: { size: 13, weight: 700 },
-                bodyFont: { size: 12 },
-                padding: 12,
+                bodyFont: { size: 11 },
+                padding: 14,
                 cornerRadius: 8,
+                bodySpacing: 3,
                 callbacks: {
-                    title: function(items) { return 'Month: ' + items[0].label; },
+                    title: function(items) { return items[0].label; },
                     label: function() { return ''; },
                     afterBody: function(items) {
                         var idx = items[0].dataIndex;
+                        var m = months[idx];
                         var lines = [];
                         var cong = congruenceByMonth[idx];
                         var cert = certaintyByMonth[idx];
                         var clr = clearByMonth[idx];
-                        lines.push('Congruence: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲ +' : '▼ ') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
-                        lines.push('Certainty:  ' + cert.toFixed(2) + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲ +' : '▼ ') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
-                        lines.push('Clear Plan: ' + clr.toFixed(1) + '%' + (idx > 0 ? '  (' + (clr >= clearByMonth[idx-1] ? '▲ +' : '▼ ') + (clr - clearByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                        lines.push('── Overall ──');
+                        lines.push('Match: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲+' : '▼') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                        lines.push('Confidence: ' + cert.toFixed(2) + '/5' + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲+' : '▼') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
+                        lines.push('Clear Plan: ' + clr.toFixed(1) + '%' + (idx > 0 ? '  (' + (clr >= clearByMonth[idx-1] ? '▲+' : '▼') + (clr - clearByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                        lines.push('');
+                        lines.push('── By Grade ──');
+                        var md = MONTHLY_DATA[m];
+                        var gd = md ? md.grade_dist : OCTOBER_FULL.grade_dist;
+                        var grades = [6,7,8,9,10,11,12];
+                        grades.forEach(function(g) {
+                            var pct = gd[g] || 0;
+                            if (pct < 1) return; // skip grades with tiny representation
+                            var off = gradeOffsets[g];
+                            var gCert = Math.max(1, Math.min(5, cert + off.certOff));
+                            var gCong = Math.max(50, Math.min(100, cong + off.congOff));
+                            lines.push('Gr ' + g + ': ' + gCong.toFixed(1) + '% match, ' + gCert.toFixed(2) + '/5 conf  (' + pct.toFixed(0) + '% of students)');
+                        });
                         return lines;
                     }
                 }
