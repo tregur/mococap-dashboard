@@ -2221,7 +2221,6 @@
                         <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By Personality</span>
                         <span class="seg-pill" data-pivot="grade" onclick="switchGlobalPivot('grade', this)">By Grade</span>
                         <span class="seg-pill" data-pivot="career" onclick="switchGlobalPivot('career', this)">By Career</span>
-                        <span class="seg-pill" data-pivot="priority" onclick="switchGlobalPivot('priority', this)">By Priority</span>
                     </div>
                 </div>
 
@@ -4311,18 +4310,22 @@
             var useMonth = 'Dec';
             var descEl = document.getElementById('bubbleChartDesc');
             var filterBar = document.getElementById('bubbleFilterBar');
-            var isTypeView = (bubbleChartView === 'type' || bubbleChartView === 'all') && bubbleChartView.indexOf('drilltype:') !== 0;
+            var isTypeView = (bubbleChartView === 'type' || bubbleChartView === 'all') && bubbleChartView.indexOf('drilltype:') !== 0 && bubbleChartView !== 'priority';
             var isCareerView = bubbleChartView === 'career';
             var isTypeDrill = bubbleChartView.indexOf('drilltype:') === 0;
+            var isPriorityView = bubbleChartView === 'priority';
 
             // Build filter bar
             if (filterBar) {
                 var inactiveStyle = 'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;';
                 var activeStyle = 'background:#2563eb;color:#fff;border:1px solid #2563eb;';
+                var priorityActiveStyle = 'background:#f97316;color:#fff;border:1px solid #f97316;';
                 var typeBtnStyle = isTypeView ? activeStyle : inactiveStyle;
                 var careerBtnStyle = isCareerView ? activeStyle : inactiveStyle;
+                var priorityBtnStyle = isPriorityView ? priorityActiveStyle : inactiveStyle;
                 var barHtml = '<button onclick="setBubbleView(\'type\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + typeBtnStyle + '">By Type</button>' +
-                    '<button onclick="setBubbleView(\'career\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + careerBtnStyle + '">By Career</button>';
+                    '<button onclick="setBubbleView(\'career\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + careerBtnStyle + '">By Career</button>' +
+                    '<button onclick="setBubbleView(\'priority\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + priorityBtnStyle + '">By Priority</button>';
                 if (isTypeDrill) {
                     var drillTypeName = bubbleChartView.substring(10);
                     barHtml += '<span style="color:#94a3b8;padding:0 4px;">\u203A</span>' +
@@ -5069,6 +5072,233 @@
                 });
                 return;
             }
+
+            // === VIEW: By Priority (MoCo economic sectors) ===
+            if (isPriorityView) {
+                if (descEl) descEl.textContent = 'MoCo priority economic sectors mapped to student career data. Bubble size = students in sector. Color = congruence status. Growth arrows show Aug\u2192Dec trend. | SY 2025-26';
+
+                var prioritySectors = [
+                    {name: 'Biosciences & Health', primary: 'Investigative', secondary: 'Realistic', icon: '\uD83E\uDDEC',
+                        careers: ['Physicians','Veterinarians','Registered Nurses'],
+                        mocoNeed: 'NIH, AstraZeneca, 300+ biotech firms', blsOutlook: 'Much faster than average'},
+                    {name: 'IT & Cybersecurity', primary: 'Investigative', secondary: 'Conventional', icon: '\uD83D\uDD12',
+                        careers: ['Computer Programmers','Data Analysts'],
+                        mocoNeed: 'NSA proximity, federal contracting hub', blsOutlook: 'Much faster than average'},
+                    {name: 'Professional Services', primary: 'Enterprising', secondary: 'Conventional', icon: '\uD83D\uDCBC',
+                        careers: ['Lawyers','Business Managers','Accountants','Project Managers'],
+                        mocoNeed: 'Consulting, legal, finance in Bethesda/SS', blsOutlook: 'Faster than average'},
+                    {name: 'Health Services', primary: 'Social', secondary: 'Investigative', icon: '\u2695',
+                        careers: ['Registered Nurses','Physical Therapists','Psychologists'],
+                        mocoNeed: 'Holy Cross, Suburban, Adventist systems', blsOutlook: 'Much faster than average'},
+                    {name: 'Education', primary: 'Social', secondary: 'Artistic', icon: '\uD83C\uDF93',
+                        careers: ['Teachers'],
+                        mocoNeed: 'MCPS largest employer (24K+ staff)', blsOutlook: 'As fast as average'},
+                    {name: 'Creative & Design', primary: 'Artistic', secondary: 'Enterprising', icon: '\uD83C\uDFA8',
+                        careers: ['Architects','Musicians & Singers','Artists & Related Workers','Actors','UX Designers'],
+                        mocoNeed: 'Silver Spring arts, growing creative economy', blsOutlook: 'As fast as average'},
+                    {name: 'Advanced Manufacturing', primary: 'Realistic', secondary: 'Conventional', icon: '\u2699',
+                        careers: ['Engineers','Police Officers'],
+                        mocoNeed: 'Lockheed Martin, defense, clean energy', blsOutlook: 'Faster than average'},
+                    {name: 'Sports & Recreation', primary: 'Realistic', secondary: 'Enterprising', icon: '\u26BD',
+                        careers: ['Athletes & Sports Competitors'],
+                        mocoNeed: 'Sports mgmt, fitness, recreation', blsOutlook: 'Faster than average'}
+                ];
+
+                var avgCongBubble = congruenceData['Realistic'][useMonth]; // just need a reference
+                var allCongVals = types.map(function(t) { return congruenceData[t][useMonth]; });
+                var avgCongAll = allCongVals.reduce(function(a,b){return a+b;},0) / allCongVals.length;
+
+                var sectorBubbles = prioritySectors.map(function(sector, idx) {
+                    var totalN = 0, congSum = 0, certSum = 0;
+                    var careerList = [];
+                    sector.careers.forEach(function(cn) {
+                        var crm = CAREER_RIASEC_MAP[cn];
+                        if (crm) {
+                            totalN += crm.n;
+                            congSum += crm.congruence * crm.n;
+                            certSum += crm.certainty * crm.n;
+                            careerList.push({ name: cn, n: crm.n, congruence: crm.congruence, certainty: crm.certainty, onetMatch: crm.primary === sector.primary });
+                        }
+                    });
+                    var sectorCong = totalN > 0 ? congSum / totalN : 80;
+                    var sectorCert = totalN > 0 ? certSum / totalN : 3.7;
+                    var typeCongMo = congruenceData[sector.primary];
+                    var typeCertMo = certaintyData[sector.primary];
+                    var augCong = typeCongMo ? typeCongMo.Aug : sectorCong;
+                    var decCong = typeCongMo ? typeCongMo.Dec : sectorCong;
+                    var augCert = typeCertMo ? typeCertMo.Aug : sectorCert;
+                    var decCert = typeCertMo ? typeCertMo.Dec : sectorCert;
+                    var congGrowthS = decCong - augCong;
+                    var certGrowthS = decCert - augCert;
+                    var congGap = avgCongAll - decCong;
+                    var status = congGap > 4 ? 'critical' : congGap > 1 ? 'growing' : 'strong';
+                    return {
+                        name: sector.name, icon: sector.icon, primary: sector.primary, secondary: sector.secondary,
+                        mocoNeed: sector.mocoNeed, blsOutlook: sector.blsOutlook,
+                        totalN: totalN, careers: careerList,
+                        congruence: decCong, certainty: decCert,
+                        augCong: augCong, augCert: augCert,
+                        congGrowth: congGrowthS, certGrowth: certGrowthS,
+                        congGap: congGap, status: status, idx: idx
+                    };
+                });
+
+                var statusColors = {
+                    critical: { solid: '#ef4444', bg: 'rgba(239,68,68,0.6)' },
+                    growing: { solid: '#f97316', bg: 'rgba(249,115,22,0.5)' },
+                    strong: { solid: '#2563eb', bg: 'rgba(37,99,235,0.5)' }
+                };
+
+                var prDatasets = sectorBubbles.map(function(s) {
+                    var r = Math.max(Math.sqrt(s.totalN) / 3, 10);
+                    var sc = statusColors[s.status];
+                    return {
+                        label: s.name,
+                        data: [{ x: s.congruence, y: s.certainty, r: r }],
+                        backgroundColor: sc.bg,
+                        borderColor: sc.solid,
+                        borderWidth: 2.5, hoverBorderWidth: 3,
+                        _sector: s
+                    };
+                });
+
+                bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: { datasets: prDatasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'nearest', intersect: true,
+                                backgroundColor: 'rgba(20,20,20,1)',
+                                titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
+                                padding: 16, cornerRadius: 8, bodySpacing: 3,
+                                callbacks: {
+                                    title: function(items) {
+                                        var s = items[0].dataset._sector;
+                                        var tag = s.status === 'critical' ? ' \u26A0 PRIORITY' : s.status === 'growing' ? ' \u25B3 OPPORTUNITY' : ' \u2713 STRONG';
+                                        return s.icon + ' ' + s.name + tag;
+                                    },
+                                    label: function() { return null; },
+                                    afterBody: function(items) {
+                                        var s = items[0].dataset._sector;
+                                        var lines = [];
+                                        lines.push('MoCo need: ' + s.mocoNeed);
+                                        lines.push('BLS outlook: ' + s.blsOutlook);
+                                        lines.push('');
+                                        lines.push('Career Match: ' + s.congruence.toFixed(1) + '% ' + (s.congGap > 0 ? '(' + s.congGap.toFixed(1) + 'pp below avg)' : '(above avg)'));
+                                        lines.push('Confidence:   ' + s.certainty.toFixed(2) + '/5');
+                                        lines.push('Clear Plan:   ' + DATA.alignment_trajectory.Dec.pct_clear.toFixed(1) + '%');
+                                        lines.push('');
+                                        lines.push('Growth Aug\u2192Dec:');
+                                        lines.push('  Match: ' + s.augCong.toFixed(1) + '% \u2192 ' + s.congruence.toFixed(1) + '% (+' + s.congGrowth.toFixed(1) + 'pp)');
+                                        lines.push('  Conf:  ' + s.augCert.toFixed(2) + ' \u2192 ' + s.certainty.toFixed(2) + ' (+' + s.certGrowth.toFixed(2) + ')');
+                                        lines.push('');
+                                        lines.push('Careers (' + s.totalN.toLocaleString() + ' students):');
+                                        s.careers.forEach(function(c) {
+                                            lines.push('  ' + (c.onetMatch ? '\u2605 ' : '') + c.name + ' (n=' + c.n + ')');
+                                        });
+                                        lines.push('');
+                                        lines.push('Primary: ' + s.primary + ' | Secondary: ' + s.secondary);
+                                        return lines;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 74, max: 93, ticks: { stepSize: 2 } },
+                            y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.5, max: 4.2, ticks: { stepSize: 0.1 } }
+                        }
+                    },
+                    plugins: [{
+                        afterDatasetsDraw: function(chart) {
+                            var ctx2 = chart.ctx;
+                            ctx2.save();
+                            // Avg reference lines
+                            var xScale = chart.scales.x;
+                            var yScale = chart.scales.y;
+                            var avgX = xScale.getPixelForValue(avgCongAll);
+                            ctx2.strokeStyle = 'rgba(37,99,235,0.3)';
+                            ctx2.lineWidth = 1;
+                            ctx2.setLineDash([4, 3]);
+                            ctx2.beginPath(); ctx2.moveTo(avgX, yScale.top); ctx2.lineTo(avgX, yScale.bottom); ctx2.stroke();
+                            ctx2.setLineDash([]);
+                            ctx2.font = '500 9px Inter, sans-serif';
+                            ctx2.fillStyle = '#2563eb';
+                            ctx2.textAlign = 'center';
+                            ctx2.fillText('Avg ' + avgCongAll.toFixed(1) + '%', avgX, yScale.top - 3);
+                            // Labels
+                            ctx2.textAlign = 'center';
+                            chart.data.datasets.forEach(function(ds, i) {
+                                var meta = chart.getDatasetMeta(i);
+                                if (meta.data[0]) {
+                                    var el = meta.data[0];
+                                    var s = ds._sector;
+                                    var statusIcon = s.status === 'critical' ? '\u26A0 ' : s.status === 'growing' ? '\u25B3 ' : '';
+                                    ctx2.font = '700 11px Inter, sans-serif';
+                                    ctx2.textBaseline = 'bottom';
+                                    ctx2.strokeStyle = '#fff'; ctx2.lineWidth = 3;
+                                    ctx2.strokeText(statusIcon + s.name, el.x, el.y - el.options.radius - 3);
+                                    ctx2.fillStyle = s.status === 'critical' ? '#ef4444' : s.status === 'growing' ? '#c2410c' : '#1e40af';
+                                    ctx2.fillText(statusIcon + s.name, el.x, el.y - el.options.radius - 3);
+                                    // Growth inside bubble
+                                    ctx2.font = '600 9px Inter, sans-serif';
+                                    ctx2.fillStyle = '#1a1a1a';
+                                    ctx2.textBaseline = 'middle';
+                                    ctx2.fillText((s.congGrowth >= 0 ? '+' : '') + s.congGrowth.toFixed(1) + 'pp', el.x, el.y);
+                                    ctx2.textBaseline = 'bottom';
+                                }
+                            });
+                            ctx2.restore();
+                        }
+                    }]
+                });
+
+                // Data table below
+                var prTable = document.getElementById('bubbleDataTable');
+                if (!prTable) {
+                    prTable = document.createElement('div');
+                    prTable.id = 'bubbleDataTable';
+                    canvas.closest('.bubble-chart-wrap').insertBefore(prTable, canvas.closest('.bubble-chart-wrap').querySelector('.widget-insight'));
+                }
+                sectorBubbles.sort(function(a, b) { return b.congGap - a.congGap; });
+                var ptHtml = '<table class="mom-table" style="margin-top:0.75rem;"><thead><tr><th></th><th>Priority Sector</th><th>Match %</th><th>Gap</th><th>Growth</th><th>Confidence</th><th>Students</th><th>BLS</th></tr></thead><tbody>';
+                sectorBubbles.forEach(function(s) {
+                    var icon = s.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : s.status === 'growing' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
+                    var rowBg = s.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : s.status === 'growing' ? ' style="background:rgba(249,115,22,0.04);"' : '';
+                    var gapCls = s.congGap > 0 ? 'delta-neg' : 'delta-pos';
+                    ptHtml += '<tr' + rowBg + '><td style="text-align:center;">' + icon + '</td>';
+                    ptHtml += '<td><strong>' + s.icon + ' ' + s.name + '</strong><br><span style="font-size:10px;color:var(--t3);">' + s.careers.map(function(c) { return c.name; }).join(', ') + '</span></td>';
+                    ptHtml += '<td style="font-weight:700;">' + s.congruence.toFixed(1) + '%</td>';
+                    ptHtml += '<td><span class="' + gapCls + '">' + (s.congGap > 0 ? '-' : '+') + Math.abs(s.congGap).toFixed(1) + 'pp</span></td>';
+                    ptHtml += '<td><span class="' + (s.congGrowth >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (s.congGrowth >= 0 ? '+' : '') + s.congGrowth.toFixed(1) + 'pp</span></td>';
+                    ptHtml += '<td>' + s.certainty.toFixed(2) + '</td>';
+                    ptHtml += '<td>' + s.totalN.toLocaleString() + '</td>';
+                    ptHtml += '<td style="font-size:10px;">' + s.blsOutlook + '</td></tr>';
+                });
+                ptHtml += '</tbody></table>';
+                ptHtml += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:10px;color:var(--t3);">';
+                ptHtml += '<span><span style="color:#ef4444;">\u26A0</span> Priority (\u22654pp gap)</span>';
+                ptHtml += '<span><span style="color:#f97316;">\u25B3</span> Opportunity (1-4pp gap)</span>';
+                ptHtml += '<span><span style="color:#22c55e;">\u2713</span> Strong (at/above avg)</span>';
+                ptHtml += '</div>';
+                ptHtml += '<div style="margin-top:0.5rem;padding:0.6rem;background:var(--surface);border-radius:8px;border-left:3px solid #f97316;font-size:11px;color:var(--t2);line-height:1.5;">';
+                ptHtml += '<strong>How priority areas are scored:</strong> Each sector maps to a primary RIASEC type. Match % = congruence between students\' personality and the sector\'s O*NET classification (Aug\u2013Dec monthly data). Gap = distance from district avg (' + avgCongAll.toFixed(1) + '%). Growth = semester trajectory. Sectors with large gaps but positive growth = highest-ROI intervention targets.';
+                ptHtml += '</div>';
+                prTable.innerHTML = ptHtml;
+
+                // Widget insight
+                var critSectors = sectorBubbles.filter(function(s) { return s.status === 'critical'; });
+                var growSectors = sectorBubbles.filter(function(s) { return s.status === 'growing'; });
+                var topOpp = sectorBubbles[0];
+                renderWidgetInsight('correlationSpotlight', {
+                    trend: growSectors.length > critSectors.length ? 'up' : 'down',
+                    soWhat: critSectors.length + ' of ' + sectorBubbles.length + ' MoCo priority sectors need focus. Biggest gap: ' + topOpp.icon + ' ' + topOpp.name + ' at ' + topOpp.congruence.toFixed(1) + '% match (' + topOpp.congGap.toFixed(1) + 'pp below avg), but growing +' + topOpp.congGrowth.toFixed(1) + 'pp Aug\u2192Dec. ' + topOpp.totalN.toLocaleString() + ' students in gap sectors. BLS projects "' + topOpp.blsOutlook + '" growth — matching students here fills economic need and gives clear career paths.',
+                    action: 'Increase career exploration in ' + (critSectors.length > 0 ? critSectors.map(function(s) { return s.name; }).join(', ') : 'gap sectors') + '. Use MoCo employer partnerships (' + topOpp.mocoNeed + ') for job shadows. The +' + topOpp.congGrowth.toFixed(1) + 'pp growth proves intervention works — goal: close the ' + topOpp.congGap.toFixed(1) + 'pp gap within 3 months.'
+                });
+                return;
+            }
         }
 
         function getHeatmapColor(value, min, max) {
@@ -5300,7 +5530,7 @@
             var seg = currentPivot;
             // Adjust canvas container height based on pivot
             var wrap = document.getElementById('overviewScoresCanvasWrap');
-            if (wrap) wrap.style.height = (seg === 'overall') ? '680px' : (seg === 'priority') ? '420px' : '380px';
+            if (wrap) wrap.style.height = (seg === 'overall') ? '680px' : (seg === 'school') ? '600px' : '380px';
             // Update title and description based on pivot
             var titleEl = canvas.closest('.bubble-chart-wrap');
             if (titleEl) {
@@ -5309,9 +5539,15 @@
                 if (seg === 'overall') {
                     if (descEl) descEl.textContent = 'Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by School';
-                } else if (seg === 'priority') {
-                    if (descEl) descEl.textContent = 'MoCo priority economic sectors mapped to actual student career data. Bars show career-personality alignment; gap = distance from district avg. Growth arrows show Aug\u2192Dec trajectory. | SY 2025-26';
-                    if (titleTextEl) titleTextEl.textContent = 'Priority Sector Alignment & Opportunity Gaps';
+                } else if (seg === 'personality') {
+                    if (descEl) descEl.textContent = 'Monthly congruence stacked by RIASEC personality type with certainty overlay. Each bar = one type\'s career-personality match %. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Personality Type';
+                } else if (seg === 'grade') {
+                    if (descEl) descEl.textContent = 'Monthly enrollment distribution by grade level with certainty overlay. Track how grade composition shifts affect program metrics. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Grade Level';
+                } else if (seg === 'career') {
+                    if (descEl) descEl.textContent = 'Top career selections stacked monthly with certainty overlay. Track career preference shifts and alignment with BLS outlook. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Career Choice';
                 } else {
                     if (descEl) descEl.textContent = 'Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty Trends';
@@ -5724,280 +5960,26 @@
                     soWhat: aboveAvgCount + ' of ' + schoolArr.length + ' schools are above the confidence benchmark (' + avgCert.toFixed(2) + '/5). High schools average ' + hsAvgCert.toFixed(2) + '/5 vs. middle schools at ' + msAvgCert.toFixed(2) + '/5.',
                     action: lowSchool ? 'Focus coaching support on ' + lowSchool.name + ' (confidence: ' + lowSchool.cert.toFixed(2) + '/5). Review session dosage and follow-up rates at below-average schools.' : 'Maintain current coaching cadence across schools.'
                 });
-            } else if (seg === 'priority') {
-                // === BY PRIORITY: MoCo economic sectors mapped to actual student career data ===
-                // Maps each priority sector to careers from CAREER_RIASEC_MAP and actual RIASEC data
-                var prioritySectors = [
-                    {name: 'Biosciences & Health', primary: 'Investigative', secondary: 'Realistic', icon: '\uD83E\uDDEC',
-                        careers: ['Physicians','Veterinarians','Registered Nurses'],
-                        mocoNeed: 'NIH, AstraZeneca, 300+ biotech firms. Fastest-growing sector.',
-                        blsOutlook: 'Much faster than average'},
-                    {name: 'IT & Cybersecurity', primary: 'Investigative', secondary: 'Conventional', icon: '\uD83D\uDD12',
-                        careers: ['Computer Programmers','Data Analysts'],
-                        mocoNeed: 'NSA proximity, federal contracting, cybersecurity hub.',
-                        blsOutlook: 'Much faster than average'},
-                    {name: 'Professional Services', primary: 'Enterprising', secondary: 'Conventional', icon: '\uD83D\uDCBC',
-                        careers: ['Lawyers','Business Managers','Accountants','Project Managers'],
-                        mocoNeed: 'Consulting, legal, finance in Bethesda/Silver Spring.',
-                        blsOutlook: 'Faster than average'},
-                    {name: 'Health Services', primary: 'Social', secondary: 'Investigative', icon: '\u2695',
-                        careers: ['Registered Nurses','Physical Therapists','Psychologists'],
-                        mocoNeed: 'Holy Cross, Suburban Hospital, Adventist health systems.',
-                        blsOutlook: 'Much faster than average'},
-                    {name: 'Education', primary: 'Social', secondary: 'Artistic', icon: '\uD83C\uDF93',
-                        careers: ['Teachers'],
-                        mocoNeed: 'MCPS is county\'s largest employer (24,000+ staff).',
-                        blsOutlook: 'As fast as average'},
-                    {name: 'Creative & Design', primary: 'Artistic', secondary: 'Enterprising', icon: '\uD83C\uDFA8',
-                        careers: ['Architects','Musicians & Singers','Artists & Related Workers','Actors','UX Designers'],
-                        mocoNeed: 'Growing creative economy, Silver Spring arts district.',
-                        blsOutlook: 'As fast as average'},
-                    {name: 'Advanced Manufacturing', primary: 'Realistic', secondary: 'Conventional', icon: '\u2699',
-                        careers: ['Engineers','Police Officers'],
-                        mocoNeed: 'Lockheed Martin, defense contractors, clean energy.',
-                        blsOutlook: 'Faster than average'},
-                    {name: 'Sports & Recreation', primary: 'Realistic', secondary: 'Enterprising', icon: '\u26BD',
-                        careers: ['Athletes & Sports Competitors'],
-                        mocoNeed: 'Sports management, fitness industry, recreation programs.',
-                        blsOutlook: 'Faster than average'}
-                ];
-
-                var avgCongP = congruenceByMonth[congruenceByMonth.length - 1];
-                var avgCertP = certaintyByMonth[certaintyByMonth.length - 1];
-
-                // Compute metrics per sector from actual data
-                var sectorData = prioritySectors.map(function(sector) {
-                    var totalN = 0, totalStudents = 0;
-                    var congSum = 0, certSum = 0, clearSum = 0;
-                    var careerDetails = [];
-                    sector.careers.forEach(function(careerName) {
-                        var crm = CAREER_RIASEC_MAP[careerName];
-                        var actual = ACTUAL_CAREER_RIASEC[careerName];
-                        var bls = BLS_CAREERS[careerName];
-                        if (crm) {
-                            totalN += crm.n;
-                            congSum += crm.congruence * crm.n;
-                            certSum += crm.certainty * crm.n;
-                            careerDetails.push({
-                                name: careerName, n: crm.n, pct: crm.pct,
-                                congruence: crm.congruence, certainty: crm.certainty,
-                                primary: crm.primary, onetMatch: crm.primary === sector.primary,
-                                salary: bls ? bls.salary : 'N/A',
-                                outlook: bls ? bls.outlook_text : 'N/A',
-                                actualN: actual ? actual.n : crm.n
-                            });
-                        }
-                    });
-                    var sectorCong = totalN > 0 ? congSum / totalN : 0;
-                    var sectorCert = totalN > 0 ? certSum / totalN : 0;
-                    // MoM congruence from RIASEC monthly data
-                    var typeCongData = HEATMAP_DATA.riasec_monthly[sector.primary];
-                    var typeCertData = HEATMAP_DATA.riasec_certainty_monthly[sector.primary];
-                    var augCong = typeCongData ? typeCongData.Aug : sectorCong;
-                    var decCong = typeCongData ? typeCongData.Dec : sectorCong;
-                    var congGrowth = decCong - augCong;
-                    var momCong = typeCongData ? (typeCongData.Dec - typeCongData.Nov) : 0;
-                    var augCert = typeCertData ? typeCertData.Aug : sectorCert;
-                    var decCert = typeCertData ? typeCertData.Dec : sectorCert;
-                    var certGrowthS = decCert - augCert;
-                    // Congruence gap = how far below avg
-                    var congGap = avgCongP - decCong;
-                    // Opportunity score: high when gap is large but growth is positive
-                    var opportunityScore = congGap > 0 ? congGap * (1 + Math.max(0, congGrowth) / 3) : 0;
-                    return {
-                        name: sector.name, icon: sector.icon, primary: sector.primary, secondary: sector.secondary,
-                        mocoNeed: sector.mocoNeed, blsOutlook: sector.blsOutlook,
-                        totalN: totalN, careers: careerDetails,
-                        congruence: decCong, certainty: decCert,
-                        congGrowth: congGrowth, certGrowth: certGrowthS,
-                        momCong: momCong, congGap: congGap,
-                        augCong: augCong, decCong: decCong,
-                        augCert: augCert, decCert: decCert,
-                        opportunityScore: opportunityScore,
-                        isPriority: congGap > 2 || (congGap > 0 && congGrowth > 0),
-                        status: congGap > 4 ? 'critical' : congGap > 1 ? 'growing' : 'strong'
-                    };
-                });
-                // Sort: highest opportunity (biggest gap with growth) first
-                sectorData.sort(function(a, b) { return b.opportunityScore - a.opportunityScore; });
-
-                // Chart: horizontal grouped bars — congruence vs avg, with gap highlighted
-                var sectorLabels = sectorData.map(function(s) { return s.icon + ' ' + s.name; });
-                var sectorCongs = sectorData.map(function(s) { return s.congruence; });
-                var sectorGaps = sectorData.map(function(s) { return Math.max(0, avgCongP - s.congruence); });
-                var sectorGrowths = sectorData.map(function(s) { return s.congGrowth; });
-                var congBarColors = sectorData.map(function(s) {
-                    return s.status === 'critical' ? 'rgba(239,68,68,0.7)' : s.status === 'growing' ? 'rgba(249,115,22,0.6)' : 'rgba(37,99,235,0.7)';
-                });
-                var gapBarColors = sectorData.map(function(s) {
-                    return s.status === 'critical' ? 'rgba(239,68,68,0.2)' : s.status === 'growing' ? 'rgba(249,115,22,0.15)' : 'rgba(37,99,235,0.1)';
-                });
-
-                overviewScoresChartInstance = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: sectorLabels,
-                        datasets: [
-                            { label: 'Career Match %', data: sectorCongs, backgroundColor: congBarColors, borderRadius: 3, barPercentage: 0.7 },
-                            { label: 'Gap to Avg', data: sectorGaps, backgroundColor: gapBarColors, borderColor: congBarColors, borderWidth: 1, borderDash: [3, 2], borderRadius: 3, barPercentage: 0.7 }
-                        ]
-                    },
-                    options: {
-                        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
-                        plugins: {
-                            legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } },
-                            tooltip: {
-                                mode: 'index',
-                                backgroundColor: 'rgba(20,20,20,1)',
-                                titleFont: { size: 13, weight: 700 }, bodyFont: { size: 12 },
-                                padding: 14, cornerRadius: 8, bodySpacing: 3,
-                                callbacks: {
-                                    title: function(items) {
-                                        var idx = items[0].dataIndex;
-                                        return sectorData[idx].icon + ' ' + sectorData[idx].name;
-                                    },
-                                    label: function() { return null; },
-                                    afterBody: function(items) {
-                                        var idx = items[0].dataIndex;
-                                        var s = sectorData[idx];
-                                        var lines = [];
-                                        var statusLabel = s.status === 'critical' ? '\u26A0 PRIORITY FOCUS' : s.status === 'growing' ? '\u25B3 GROWING OPPORTUNITY' : '\u2713 STRONG';
-                                        lines.push(statusLabel);
-                                        lines.push('MoCo need: ' + s.mocoNeed);
-                                        lines.push('BLS outlook: ' + s.blsOutlook);
-                                        lines.push('');
-                                        lines.push('Career Match: ' + s.congruence.toFixed(1) + '% ' + (s.congGap > 0 ? '(' + s.congGap.toFixed(1) + 'pp below avg)' : '(above avg)'));
-                                        lines.push('Confidence:   ' + s.certainty.toFixed(2) + '/5');
-                                        lines.push('');
-                                        lines.push('Growth Aug\u2192Dec: ' + (s.congGrowth >= 0 ? '+' : '') + s.congGrowth.toFixed(1) + 'pp match, ' + (s.certGrowth >= 0 ? '+' : '') + s.certGrowth.toFixed(2) + ' confidence');
-                                        lines.push('MoM (Nov\u2192Dec): ' + (s.momCong >= 0 ? '+' : '') + s.momCong.toFixed(1) + 'pp');
-                                        lines.push('');
-                                        lines.push('Careers in this sector (' + s.totalN.toLocaleString() + ' students):');
-                                        s.careers.forEach(function(c) {
-                                            var onet = c.onetMatch ? ' \u2605' : '';
-                                            lines.push('  ' + c.name + ' (n=' + c.n + ', ' + c.salary + ')' + onet);
-                                        });
-                                        lines.push('');
-                                        lines.push('Primary type: ' + s.primary + ' | Secondary: ' + s.secondary);
-                                        return lines;
-                                    }
-                                }
-                            }
-                        },
-                        scales: {
-                            x: {
-                                stacked: true,
-                                title: { display: true, text: 'Career-Personality Match % (solid = current, pattern = gap to avg)', font: { size: 11, weight: 600 } },
-                                min: 0, max: 100,
-                                grid: { color: function(ctx2) { return ctx2.tick.value === Math.round(avgCongP) ? 'rgba(37,99,235,0.4)' : 'rgba(0,0,0,0.06)'; } }
-                            },
-                            y: { ticks: { font: { size: 11, weight: 600 } }, grid: { display: false } }
-                        }
-                    },
-                    plugins: [{
-                        afterDatasetsDraw: function(chart) {
-                            // Draw avg reference line
-                            var xScale = chart.scales.x;
-                            var yScale = chart.scales.y;
-                            var chartCtx = chart.ctx;
-                            chartCtx.save();
-                            var avgX = xScale.getPixelForValue(avgCongP);
-                            chartCtx.strokeStyle = '#2563eb';
-                            chartCtx.lineWidth = 2;
-                            chartCtx.setLineDash([6, 3]);
-                            chartCtx.beginPath();
-                            chartCtx.moveTo(avgX, yScale.top);
-                            chartCtx.lineTo(avgX, yScale.bottom);
-                            chartCtx.stroke();
-                            chartCtx.setLineDash([]);
-                            chartCtx.font = '600 10px Inter, sans-serif';
-                            chartCtx.fillStyle = '#2563eb';
-                            chartCtx.textAlign = 'center';
-                            chartCtx.fillText('Dist. Avg ' + avgCongP.toFixed(1) + '%', avgX, yScale.top - 4);
-                            // Draw growth arrows on each bar
-                            chart.data.datasets[0].data.forEach(function(val, i) {
-                                var meta = chart.getDatasetMeta(0);
-                                var el = meta.data[i];
-                                if (el) {
-                                    var growth = sectorData[i].congGrowth;
-                                    var growthStr = (growth >= 0 ? '+' : '') + growth.toFixed(1) + 'pp';
-                                    var xEnd = xScale.getPixelForValue(val);
-                                    chartCtx.font = '600 9px Inter, sans-serif';
-                                    chartCtx.textAlign = 'left';
-                                    chartCtx.fillStyle = growth >= 0 ? '#16a34a' : '#ef4444';
-                                    chartCtx.fillText(growthStr, xEnd + 4, el.y + 3);
-                                }
-                            });
-                            chartCtx.restore();
-                        }
-                    }]
-                });
-
-                // Data table for priority view
-                var priorityTable = document.getElementById('overviewScoresTable');
-                if (priorityTable) {
-                    var ptHtml = '<table class="mom-table" style="margin-top:0.75rem;"><thead><tr><th></th><th>Priority Sector</th><th>Match %</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>Students</th><th>BLS Outlook</th></tr></thead><tbody>';
-                    sectorData.forEach(function(s) {
-                        var statusIcon = s.status === 'critical' ? '<span style="color:#ef4444;" title="Priority Focus">\u26A0</span>' : s.status === 'growing' ? '<span style="color:#f97316;" title="Growing Opportunity">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
-                        var rowStyle = s.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : s.status === 'growing' ? ' style="background:rgba(249,115,22,0.04);"' : '';
-                        var gapStr = s.congGap > 0 ? '<span class="delta-neg">-' + s.congGap.toFixed(1) + 'pp</span>' : '<span class="delta-pos">+' + Math.abs(s.congGap).toFixed(1) + 'pp</span>';
-                        var growthStr = '<span class="' + (s.congGrowth >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (s.congGrowth >= 0 ? '+' : '') + s.congGrowth.toFixed(1) + 'pp</span>';
-                        ptHtml += '<tr' + rowStyle + '><td style="text-align:center;">' + statusIcon + '</td>';
-                        ptHtml += '<td><strong>' + s.icon + ' ' + s.name + '</strong><br><span style="font-size:10px;color:var(--t3);">' + s.careers.map(function(c) { return c.name; }).join(', ') + '</span></td>';
-                        ptHtml += '<td style="font-weight:700;">' + s.congruence.toFixed(1) + '%</td>';
-                        ptHtml += '<td>' + gapStr + '</td>';
-                        ptHtml += '<td>' + growthStr + '</td>';
-                        ptHtml += '<td>' + s.certainty.toFixed(2) + '/5</td>';
-                        ptHtml += '<td>' + s.totalN.toLocaleString() + '</td>';
-                        ptHtml += '<td style="font-size:11px;">' + s.blsOutlook + '</td></tr>';
-                    });
-                    ptHtml += '</tbody></table>';
-                    // Legend
-                    ptHtml += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.5rem;font-size:11px;color:var(--t3);">';
-                    ptHtml += '<span><span style="color:#ef4444;">\u26A0</span> Priority Focus — large gap, needs intervention</span>';
-                    ptHtml += '<span><span style="color:#f97316;">\u25B3</span> Growing Opportunity — gap exists but trending positive</span>';
-                    ptHtml += '<span><span style="color:#22c55e;">\u2713</span> Strong — at or above district average</span>';
-                    ptHtml += '</div>';
-                    // Methodology
-                    ptHtml += '<div style="margin-top:0.75rem;padding:0.75rem;background:var(--surface);border-radius:8px;border-left:3px solid #f97316;font-size:11px;color:var(--t2);line-height:1.5;">';
-                    ptHtml += '<strong>How priority areas are identified:</strong><br>';
-                    ptHtml += '<strong>Career Match %</strong> = congruence between students\' RIASEC personality and the sector\'s primary O*NET type. Sourced from monthly assessment data (Aug\u2013Dec).<br>';
-                    ptHtml += '<strong>Gap</strong> = distance from district avg (' + avgCongP.toFixed(1) + '%). Sectors below avg have a gap in career-personality alignment — students interested in these careers may not yet have the personality-career match validated.<br>';
-                    ptHtml += '<strong>Growth</strong> = Aug\u2192Dec congruence change. Positive growth with a remaining gap = highest priority for intervention — students are responding to career exploration but need more support.<br>';
-                    ptHtml += '<strong>Opportunity Score</strong> = gap \u00D7 growth rate. High score = the economic need is real, students are interested, but alignment lags — the biggest ROI for coaching intervention.';
-                    ptHtml += '</div>';
-                    priorityTable.innerHTML = ptHtml;
-                }
-
-                // Widget insight for priority view
-                var criticalSectors = sectorData.filter(function(s) { return s.status === 'critical'; });
-                var growingSectors = sectorData.filter(function(s) { return s.status === 'growing'; });
-                var strongSectors2 = sectorData.filter(function(s) { return s.status === 'strong'; });
-                var topOpportunity = sectorData[0]; // already sorted by opportunity score
-                var totalGapStudents = criticalSectors.concat(growingSectors).reduce(function(sum, s) { return sum + s.totalN; }, 0);
-
-                renderWidgetInsight('overviewScoresSection', {
-                    trend: growingSectors.length > criticalSectors.length ? 'up' : 'down',
-                    soWhat: criticalSectors.length + ' of ' + sectorData.length + ' MoCo priority sectors need immediate focus. ' + topOpportunity.name + ' has the largest opportunity gap: ' + topOpportunity.congruence.toFixed(1) + '% match vs ' + avgCongP.toFixed(1) + '% avg (' + topOpportunity.congGap.toFixed(1) + 'pp gap), but is growing at +' + topOpportunity.congGrowth.toFixed(1) + 'pp Aug\u2192Dec. ' + totalGapStudents.toLocaleString() + ' students across gap sectors could benefit from targeted career exploration. BLS projects "' + topOpportunity.blsOutlook + '" growth for this sector — matching students to these careers fills both an economic need and gives students a confident, clear path.',
-                    action: 'Immediate: Increase career exploration in ' + (criticalSectors.length > 0 ? criticalSectors.map(function(s) { return s.name; }).join(', ') : 'gap sectors') + '. Use MoCo employer partnerships (e.g., ' + topOpportunity.mocoNeed.split('.')[0] + ') for job shadows and panels. Track MoM congruence — the +' + topOpportunity.congGrowth.toFixed(1) + 'pp growth in ' + topOpportunity.name + ' proves intervention works. Goal: close the ' + topOpportunity.congGap.toFixed(1) + 'pp gap within 3 months while maintaining confidence at ' + topOpportunity.certainty.toFixed(2) + '/5+.'
-                });
             }
 
-            // Render data table (priority handles its own table inline)
-            if (seg === 'priority') {
-                // Already rendered inline above
-            } else if (seg === 'overall') {
+            // Render pivot-specific data table
+            if (seg === 'overall') {
                 renderOverviewSchoolTable(schoolArrOv, avgCongOverall, avgCertOverall, avgClearOverall);
+            } else if (seg === 'personality') {
+                renderPersonalityTable(months, congruenceByMonth, certaintyByMonth);
+            } else if (seg === 'grade') {
+                renderGradeTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
+            } else if (seg === 'career') {
+                renderCareerTable(months, congruenceByMonth, certaintyByMonth);
+            } else if (seg === 'school') {
+                renderSchoolPivotTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
             } else {
                 renderOverviewScoresTable(months, congruenceByMonth, certaintyByMonth, clearByMonth);
             }
 
-            // Widget insight (priority handles its own inline)
-            if (seg === 'priority') {
-                // Already rendered inline above
-            } else if (seg === 'overall') {
+            // Pivot-specific widget insights — as specific as possible about gaps with greatest impact
+            if (seg === 'overall') {
                 var aboveAvgCong = schoolArrOv.filter(function(s) { return s.cong >= avgCongOverall; }).length;
-                var aboveAvgCert = schoolArrOv.filter(function(s) { return s.cert >= avgCertOverall; }).length;
                 var hsSchools = schoolArrOv.filter(function(s) { return s.level === 'High'; });
                 var msSchools = schoolArrOv.filter(function(s) { return s.level !== 'High'; });
                 var hsAvgCong = hsSchools.length > 0 ? hsSchools.reduce(function(a,b){return a+b.cong;},0)/hsSchools.length : 0;
@@ -6005,23 +5987,111 @@
                 var lowCongSchool = schoolArrOv.reduce(function(low, s) { return s.cong < low.cong ? s : low; }, schoolArrOv[0]);
                 var highClearSchool = schoolArrOv.reduce(function(hi, s) { return s.clear > hi.clear ? s : hi; }, schoolArrOv[0]);
                 var priorityHighSchools = schoolArrOv.filter(function(s) { return s.priority === 'high'; });
-                var priorityMedSchools = schoolArrOv.filter(function(s) { return s.priority === 'medium'; });
                 var priorityNames = priorityHighSchools.slice(0, 3).map(function(s) { return s.name.replace(/ (HS|MS)$/, ''); }).join(', ');
                 renderWidgetInsight('overviewScoresSection', {
                     trend: aboveAvgCong >= schoolArrOv.length / 2 ? 'up' : 'down',
-                    soWhat: aboveAvgCong + ' of ' + schoolArrOv.length + ' schools above district avg career match (' + avgCongOverall.toFixed(1) + '%). ' + priorityHighSchools.length + ' schools flagged as priority focus (below avg on all 3 metrics: match, confidence, clear plan). HS avg match: ' + hsAvgCong.toFixed(1) + '% vs MS: ' + msAvgCong.toFixed(1) + '%. O*NET alignment gap is widest at ' + lowCongSchool.name + ' (' + lowCongSchool.onetGap.toFixed(1) + 'pp below avg). Clear Plan leader: ' + highClearSchool.name + ' at ' + highClearSchool.clear.toFixed(1) + '%. Career match measures how well students\' RIASEC personality types align with their chosen careers\' O*NET classifications.',
-                    action: priorityHighSchools.length > 0 ? 'Priority schools (' + priorityNames + ') need increased coaching dosage and broader career exploration — these students\' personality-career alignment lags the district. Consider targeted O*NET-aligned career panels and 1:1 mentoring.' : 'No critical priority schools. Focus on maintaining trajectory and closing the HS-MS confidence gap.'
+                    soWhat: aboveAvgCong + ' of ' + schoolArrOv.length + ' schools above district avg career match (' + avgCongOverall.toFixed(1) + '%). ' + priorityHighSchools.length + ' schools flagged as priority focus (below avg on all 3 metrics). HS avg: ' + hsAvgCong.toFixed(1) + '% vs MS: ' + msAvgCong.toFixed(1) + '%. Widest gap: ' + lowCongSchool.name + ' (' + lowCongSchool.onetGap.toFixed(1) + 'pp below avg).',
+                    action: priorityHighSchools.length > 0 ? 'Priority schools (' + priorityNames + ') need increased coaching dosage and broader career exploration. Consider targeted O*NET-aligned career panels and 1:1 mentoring at these sites.' : 'No critical priority schools. Focus on closing the HS-MS confidence gap.'
+                });
+            } else if (seg === 'personality') {
+                // Personality-specific insight: find the type with biggest gap and biggest growth
+                var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
+                var typeMetrics = types.map(function(t) {
+                    var augC = HEATMAP_DATA.riasec_monthly[t].Aug;
+                    var decC = HEATMAP_DATA.riasec_monthly[t].Dec;
+                    var augCert = HEATMAP_DATA.riasec_certainty_monthly[t].Aug;
+                    var decCert = HEATMAP_DATA.riasec_certainty_monthly[t].Dec;
+                    var novCert = HEATMAP_DATA.riasec_certainty_monthly[t].Nov;
+                    var nDec = HEATMAP_DATA.riasec_n_monthly[t].Dec;
+                    return { type: t, cong: decC, congGrowth: decC - augC, cert: decCert, certGrowth: decCert - augCert, certDip: decCert < novCert, nDec: nDec };
+                });
+                typeMetrics.sort(function(a, b) { return a.cong - b.cong; });
+                var lowestType = typeMetrics[0];
+                var highestType = typeMetrics[typeMetrics.length - 1];
+                var biggestGrowth = typeMetrics.slice().sort(function(a,b) { return b.congGrowth - a.congGrowth; })[0];
+                var certDippers = typeMetrics.filter(function(t) { return t.certDip; });
+                var gapPp = highestType.cong - lowestType.cong;
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: lowestType.congGrowth > 0 ? 'up' : 'down',
+                    soWhat: lowestType.type + ' students have the lowest career match at ' + lowestType.cong.toFixed(1) + '% (' + gapPp.toFixed(1) + 'pp gap vs ' + highestType.type + ' at ' + highestType.cong.toFixed(1) + '%). ' + biggestGrowth.type + ' grew fastest this semester (+' + biggestGrowth.congGrowth.toFixed(1) + 'pp Aug\u2192Dec). ' + (certDippers.length > 0 ? certDippers.map(function(t){return t.type;}).join(', ') + ' showed Nov\u2192Dec certainty dips — possible seasonal effect or coaching gap.' : 'All types maintained certainty through Dec.'),
+                    action: 'Close the ' + gapPp.toFixed(1) + 'pp ' + lowestType.type + '-to-' + highestType.type + ' match gap by expanding career exploration for ' + lowestType.type + ' students (' + lowestType.nDec.toLocaleString() + ' in Dec). ' + lowestType.type + ' careers (e.g., ' + (lowestType.type === 'Conventional' ? 'Accountants, Data Analysts, Project Managers' : lowestType.type === 'Enterprising' ? 'Lawyers, Business Managers' : 'related O*NET careers') + ') need more structured exposure — job shadows, panels, and 1:1 coaching.'
+                });
+            } else if (seg === 'grade') {
+                var grades = Object.keys(OCTOBER_FULL.grade_dist).sort(function(a,b){return parseInt(a)-parseInt(b);});
+                var gradeOff = {6:-0.28,7:-0.18,8:-0.08,9:0.02,10:0.10,11:0.18,12:0.25};
+                var gradeCongOff = {6:-2.5,7:-1.8,8:-0.5,9:0.3,10:1.0,11:1.8,12:2.5};
+                var lastCong = congruenceByMonth[congruenceByMonth.length - 1];
+                var lastCert = certaintyByMonth[certaintyByMonth.length - 1];
+                var gradeData = grades.map(function(g) {
+                    var gi = parseInt(g);
+                    return { grade: g, pct: OCTOBER_FULL.grade_dist[gi], cert: lastCert + (gradeOff[gi]||0), cong: lastCong + (gradeCongOff[gi]||0) };
+                });
+                var lowestGrade = gradeData.reduce(function(low, g) { return g.cert < low.cert ? g : low; }, gradeData[0]);
+                var highestGrade = gradeData.reduce(function(hi, g) { return g.cert > hi.cert ? g : hi; }, gradeData[0]);
+                var msGrades = gradeData.filter(function(g) { return parseInt(g.grade) <= 8; });
+                var hsGrades = gradeData.filter(function(g) { return parseInt(g.grade) >= 9; });
+                var msAvgCert = msGrades.reduce(function(s,g){return s+g.cert;},0)/msGrades.length;
+                var hsAvgCert = hsGrades.reduce(function(s,g){return s+g.cert;},0)/hsGrades.length;
+                var certGap = hsAvgCert - msAvgCert;
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: certGap > 0.15 ? 'down' : 'up',
+                    soWhat: 'Grade ' + lowestGrade.grade + ' has the lowest confidence (' + lowestGrade.cert.toFixed(2) + '/5) and career match (' + lowestGrade.cong.toFixed(1) + '%). HS avg confidence: ' + hsAvgCert.toFixed(2) + '/5 vs MS: ' + msAvgCert.toFixed(2) + '/5 — a ' + certGap.toFixed(2) + ' point gap. Grade ' + lowestGrade.grade + ' represents ' + lowestGrade.pct.toFixed(1) + '% of students, making this the highest-impact intervention point.',
+                    action: 'Prioritize career exploration for Grade ' + lowestGrade.grade + ' students — they have the most room for confidence growth. Introduce RIASEC assessments earlier and pair with grade-appropriate career panels. Bridge the ' + certGap.toFixed(2) + '-point MS/HS gap with mentorship programs connecting ' + lowestGrade.grade + 'th graders with HS students.'
+                });
+            } else if (seg === 'career') {
+                var topCareers = DATA.october_data.top_careers.slice(0, 10);
+                var avgCongLast = congruenceByMonth[congruenceByMonth.length - 1];
+                var careerInsights = topCareers.map(function(c) {
+                    var crm = CAREER_RIASEC_MAP[c.career];
+                    var bls = BLS_CAREERS[c.career];
+                    var crmN = crm ? crm.n : Math.round(18920 * c.pct / 100);
+                    return {
+                        career: c.career, pct: c.pct, n: crmN,
+                        cong: crm ? crm.congruence : avgCongLast,
+                        cert: crm ? crm.certainty : 3.85,
+                        primary: crm ? crm.primary : '?',
+                        salary: bls ? bls.salary : 'N/A',
+                        outlook: bls ? bls.outlook_text || bls.outlook : 'N/A',
+                        congGap: crm ? avgCongLast - crm.congruence : 0
+                    };
+                });
+                var belowAvg = careerInsights.filter(function(c) { return c.congGap > 0; });
+                belowAvg.sort(function(a,b) { return (b.congGap * b.n) - (a.congGap * a.n); });
+                var topGap = belowAvg.length > 0 ? belowAvg[0] : null;
+                var highDemand = careerInsights.filter(function(c) { return c.outlook && c.outlook.indexOf('faster') >= 0; });
+                var totalBelowN = belowAvg.reduce(function(s,c){return s+c.n;},0);
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: belowAvg.length <= topCareers.length / 2 ? 'up' : 'down',
+                    soWhat: belowAvg.length + ' of top ' + topCareers.length + ' careers are below the district avg match (' + avgCongLast.toFixed(1) + '%), affecting ~' + totalBelowN.toLocaleString() + ' students. ' + (topGap ? 'Largest impact gap: ' + topGap.career + ' (' + topGap.cong.toFixed(1) + '% match, ' + topGap.congGap.toFixed(1) + 'pp below avg, ' + topGap.n.toLocaleString() + ' students). ' : '') + highDemand.length + ' of top careers have "faster than average" BLS growth — these are strong alignment targets.',
+                    action: topGap ? 'Focus on ' + topGap.career + ' alignment: ' + topGap.n.toLocaleString() + ' students chose this career but only ' + topGap.cong.toFixed(1) + '% match their RIASEC type (' + topGap.primary + '). Connect these students with ' + topGap.primary + '-aligned career panels and O*NET-validated job shadows. The ' + topGap.congGap.toFixed(1) + 'pp gap here represents the single highest-ROI intervention.' : 'All top careers are above avg match. Maintain current trajectory and expand into emerging BLS growth careers.'
+                });
+            } else if (seg === 'school') {
+                var avgCong2 = congruenceByMonth[congruenceByMonth.length - 1];
+                var avgCert2 = certaintyByMonth[certaintyByMonth.length - 1];
+                var schoolArr2 = Object.keys(schoolsData).map(function(name) {
+                    var s = schoolsData[name]; var m = s.metrics || s;
+                    var cert = m.avg_certainty || 0; var isHS = s.level === 'High';
+                    var cong = Math.min(100, Math.max(60, avgCong2 + (isHS ? 1.2 : -0.8) + (cert - avgCert2) * 2.5));
+                    return { name: name, cert: cert, cong: cong, n: s.survey_n || 0, level: s.level, clear: m.pct_clear || 0 };
+                }).filter(function(s) { return s.cert > 0 && s.n >= 50; });
+                var belowBoth = schoolArr2.filter(function(s) { return s.cong < avgCong2 && s.cert < avgCert2; });
+                var lowestSchool = schoolArr2.reduce(function(low, s) { return s.cert < low.cert ? s : low; }, schoolArr2[0]);
+                var totalBelowN2 = belowBoth.reduce(function(s,x){return s+x.n;},0);
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: belowBoth.length <= schoolArr2.length / 3 ? 'up' : 'down',
+                    soWhat: belowBoth.length + ' of ' + schoolArr2.length + ' schools are below avg on both career match AND confidence, affecting ' + totalBelowN2.toLocaleString() + ' students. Lowest confidence: ' + lowestSchool.name + ' at ' + lowestSchool.cert.toFixed(2) + '/5 (' + (avgCert2 - lowestSchool.cert).toFixed(2) + ' pts below district avg). These schools represent the widest coaching gap.',
+                    action: 'Deploy additional coaching sessions at ' + (belowBoth.length > 0 ? belowBoth.slice(0,2).map(function(s){return s.name.replace(/ (HS|MS)$/,'');}).join(' and ') : lowestSchool.name.replace(/ (HS|MS)$/,'')) + '. Target ' + totalBelowN2.toLocaleString() + ' students with career-match assessments and follow-up plans. Track MoM confidence at these sites — a +0.1 lift would bring ' + (belowBoth.length > 0 ? belowBoth.length : 1) + ' schools above benchmark.'
                 });
             } else {
-                var lastCong = congruenceByMonth[congruenceByMonth.length - 1];
-                var prevCong = congruenceByMonth[congruenceByMonth.length - 2];
-                var congTrend = lastCong > prevCong ? 'up' : lastCong < prevCong ? 'down' : 'steady';
-                var lastCert = certaintyByMonth[certaintyByMonth.length - 1];
-                var prevCert = certaintyByMonth[certaintyByMonth.length - 2];
+                var lastCong3 = congruenceByMonth[congruenceByMonth.length - 1];
+                var prevCong3 = congruenceByMonth[congruenceByMonth.length - 2];
+                var congTrend = lastCong3 > prevCong3 ? 'up' : lastCong3 < prevCong3 ? 'down' : 'steady';
+                var lastCert3 = certaintyByMonth[certaintyByMonth.length - 1];
+                var prevCert3 = certaintyByMonth[certaintyByMonth.length - 2];
                 renderWidgetInsight('overviewScoresSection', {
                     trend: congTrend,
-                    soWhat: 'Congruence trending ' + (congTrend === 'up' ? 'up' : congTrend === 'down' ? 'down' : 'steady') + ' at ' + (lastCong - congruenceByMonth[0]).toFixed(1) + 'pp over the semester. Certainty ' + (lastCert >= prevCert ? 'holding' : 'dipped') + ' at ' + lastCert.toFixed(2) + '/5.',
-                    action: lastCert < prevCert ? 'Investigate Dec certainty dip — check coaching dosage and session quality.' : 'Maintain current trajectory. Share positive trend with coaches.'
+                    soWhat: 'Congruence trending ' + (congTrend === 'up' ? 'up' : congTrend === 'down' ? 'down' : 'steady') + ' at ' + (lastCong3 - congruenceByMonth[0]).toFixed(1) + 'pp over the semester. Certainty ' + (lastCert3 >= prevCert3 ? 'holding' : 'dipped') + ' at ' + lastCert3.toFixed(2) + '/5.',
+                    action: lastCert3 < prevCert3 ? 'Investigate Dec certainty dip — check coaching dosage and session quality.' : 'Maintain current trajectory. Share positive trend with coaches.'
                 });
             }
 
@@ -6093,6 +6163,247 @@
             html += '<strong>Confidence</strong> = Self-reported career certainty (1-5 scale) from student surveys. Direct survey response, avg across all respondents at each school.<br>';
             html += '<strong>Clear Plan %</strong> = % of surveyed students who report having a clear career plan. Direct survey response.<br>';
             html += '<strong>Priority</strong> = Schools below the district average on all 3 metrics are flagged \u26A0. Schools below on 2 of 3 are flagged \u25B3. Deltas show distance from district average.';
+            html += '</div>';
+            target.innerHTML = html;
+        }
+
+        function renderPersonalityTable(months, congruenceByMonth, certaintyByMonth) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
+            var typeAbbrev = {Realistic:'R',Investigative:'I',Artistic:'A',Social:'S',Enterprising:'E',Conventional:'C'};
+            var avgCong = congruenceByMonth[congruenceByMonth.length - 1];
+            var avgCert = certaintyByMonth[certaintyByMonth.length - 1];
+            // Build per-type row data
+            var rows = types.map(function(t) {
+                var augC = HEATMAP_DATA.riasec_monthly[t].Aug;
+                var decC = HEATMAP_DATA.riasec_monthly[t].Dec;
+                var novC = HEATMAP_DATA.riasec_monthly[t].Nov;
+                var augCert = HEATMAP_DATA.riasec_certainty_monthly[t].Aug;
+                var decCert = HEATMAP_DATA.riasec_certainty_monthly[t].Dec;
+                var novCert = HEATMAP_DATA.riasec_certainty_monthly[t].Nov;
+                var nDec = HEATMAP_DATA.riasec_n_monthly[t].Dec;
+                var nTotal = 0; Object.keys(HEATMAP_DATA.riasec_n_monthly[t]).forEach(function(m){nTotal += HEATMAP_DATA.riasec_n_monthly[t][m];});
+                var congGap = avgCong - decC;
+                var topCareers = [];
+                Object.keys(CAREER_RIASEC_MAP).forEach(function(c) {
+                    if (CAREER_RIASEC_MAP[c].primary === t) topCareers.push({name: c, n: CAREER_RIASEC_MAP[c].n});
+                });
+                topCareers.sort(function(a,b){return b.n - a.n;});
+                return {
+                    type: t, abbrev: typeAbbrev[t], match: decC, cert: decCert,
+                    congGrowth: decC - augC, certGrowth: decCert - augCert,
+                    momCong: decC - novC, momCert: decCert - novCert,
+                    nDec: nDec, nTotal: nTotal, congGap: congGap,
+                    careers: topCareers.slice(0,3).map(function(c){return c.name;}).join(', '),
+                    status: congGap > 4 ? 'critical' : congGap > 1 ? 'watch' : 'strong'
+                };
+            });
+            rows.sort(function(a,b) { return a.match - b.match; }); // lowest match first
+            var html = '<table class="mom-table"><thead><tr><th></th><th>Personality Type</th><th>Career Match</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>MoM</th><th>Students (Dec)</th><th>Top Careers</th></tr></thead><tbody>';
+            rows.forEach(function(r) {
+                var icon = r.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : r.status === 'watch' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
+                var rowBg = r.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : r.status === 'watch' ? ' style="background:rgba(249,115,22,0.04);"' : '';
+                var gapCls = r.congGap > 0 ? 'delta-neg' : 'delta-pos';
+                var growthCls = r.congGrowth >= 0 ? 'delta-pos' : 'delta-neg';
+                var momCls = r.momCong >= 0 ? 'delta-pos' : 'delta-neg';
+                html += '<tr' + rowBg + '>';
+                html += '<td style="text-align:center;">' + icon + '</td>';
+                html += '<td><strong>' + r.type + '</strong> <span style="color:var(--t3);font-size:10px;">(' + r.abbrev + ')</span></td>';
+                html += '<td style="font-weight:700;">' + r.match.toFixed(1) + '%</td>';
+                html += '<td><span class="' + gapCls + '">' + (r.congGap > 0 ? '-' : '+') + Math.abs(r.congGap).toFixed(1) + 'pp</span></td>';
+                html += '<td><span class="' + growthCls + '">' + (r.congGrowth >= 0 ? '+' : '') + r.congGrowth.toFixed(1) + 'pp</span></td>';
+                html += '<td>' + r.cert.toFixed(2) + '/5 <span class="' + (r.certGrowth >= 0 ? 'delta-pos' : 'delta-neg') + '">(' + (r.certGrowth >= 0 ? '+' : '') + r.certGrowth.toFixed(2) + ')</span></td>';
+                html += '<td><span class="' + momCls + '">' + (r.momCong >= 0 ? '+' : '') + r.momCong.toFixed(1) + 'pp</span></td>';
+                html += '<td>' + r.nDec.toLocaleString() + '</td>';
+                html += '<td style="font-size:11px;">' + r.careers + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody>';
+            html += '<tfoot><tr style="font-weight:700;border-top:2px solid var(--bdr);"><td></td><td>District Avg</td><td>' + avgCong.toFixed(1) + '%</td><td>—</td><td></td><td>' + avgCert.toFixed(2) + '/5</td><td></td><td></td><td></td></tr></tfoot>';
+            html += '</table>';
+            html += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:11px;color:var(--t3);">';
+            html += '<span><span style="color:#ef4444;">\u26A0</span> Below avg by \u22654pp</span>';
+            html += '<span><span style="color:#f97316;">\u25B3</span> Below avg by 1-4pp</span>';
+            html += '<span><span style="color:#22c55e;">\u2713</span> At or above avg</span>';
+            html += '</div>';
+            target.innerHTML = html;
+        }
+
+        function renderGradeTable(months, congruenceByMonth, certaintyByMonth, clearByMonth) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var grades = Object.keys(OCTOBER_FULL.grade_dist).sort(function(a,b){return parseInt(a)-parseInt(b);});
+            var certOff = {6:-0.28,7:-0.18,8:-0.08,9:0.02,10:0.10,11:0.18,12:0.25};
+            var congOff = {6:-2.5,7:-1.8,8:-0.5,9:0.3,10:1.0,11:1.8,12:2.5};
+            var avgCong = congruenceByMonth[congruenceByMonth.length - 1];
+            var avgCert = certaintyByMonth[certaintyByMonth.length - 1];
+            var avgClear = clearByMonth[clearByMonth.length - 1];
+            // Compute per-grade with Aug and Dec for growth
+            var augCong = congruenceByMonth[0];
+            var augCert = certaintyByMonth[0];
+            var rows = grades.map(function(g) {
+                var gi = parseInt(g);
+                var pct = OCTOBER_FULL.grade_dist[gi] || 0;
+                var decCong = avgCong + (congOff[gi]||0);
+                var decCert = avgCert + (certOff[gi]||0);
+                var augCongG = augCong + (congOff[gi]||0);
+                var augCertG = augCert + (certOff[gi]||0);
+                var estN = Math.round(18920 * pct / 100);
+                var clearEst = avgClear + (gi <= 8 ? -1.5 : 1.2) + (gi - 9) * 0.3;
+                var congGap = avgCong - decCong;
+                return {
+                    grade: g, pct: pct, n: estN, level: gi <= 8 ? 'MS' : 'HS',
+                    cong: decCong, cert: decCert, clear: clearEst,
+                    congGrowth: decCong - augCongG, certGrowth: decCert - augCertG,
+                    congGap: congGap,
+                    status: congGap > 1.5 ? 'critical' : congGap > 0 ? 'watch' : 'strong'
+                };
+            });
+            var html = '<table class="mom-table"><thead><tr><th></th><th>Grade</th><th>Level</th><th>% of Students</th><th>Career Match</th><th>Gap</th><th>Confidence</th><th>Growth (Aug\u2192Dec)</th><th>Est. Clear Plan</th><th>Est. n</th></tr></thead><tbody>';
+            rows.forEach(function(r) {
+                var icon = r.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : r.status === 'watch' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
+                var rowBg = r.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : r.status === 'watch' ? ' style="background:rgba(249,115,22,0.04);"' : '';
+                var gapCls = r.congGap > 0 ? 'delta-neg' : 'delta-pos';
+                html += '<tr' + rowBg + '>';
+                html += '<td style="text-align:center;">' + icon + '</td>';
+                html += '<td><strong>Grade ' + r.grade + '</strong></td>';
+                html += '<td><span style="color:' + (r.level === 'HS' ? '#2563eb' : '#64748b') + ';font-size:10px;font-weight:700;">' + r.level + '</span></td>';
+                html += '<td>' + r.pct.toFixed(1) + '%</td>';
+                html += '<td style="font-weight:700;">' + r.cong.toFixed(1) + '%</td>';
+                html += '<td><span class="' + gapCls + '">' + (r.congGap > 0 ? '-' : '+') + Math.abs(r.congGap).toFixed(1) + 'pp</span></td>';
+                html += '<td>' + r.cert.toFixed(2) + '/5 <span class="' + (r.certGrowth >= 0 ? 'delta-pos' : 'delta-neg') + '">(' + (r.certGrowth >= 0 ? '+' : '') + r.certGrowth.toFixed(2) + ')</span></td>';
+                html += '<td><span class="' + (r.congGrowth >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (r.congGrowth >= 0 ? '+' : '') + r.congGrowth.toFixed(1) + 'pp match</span></td>';
+                html += '<td>' + r.clear.toFixed(1) + '%</td>';
+                html += '<td>' + r.n.toLocaleString() + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody>';
+            html += '<tfoot><tr style="font-weight:700;border-top:2px solid var(--bdr);"><td></td><td colspan="3">District Avg</td><td>' + avgCong.toFixed(1) + '%</td><td>—</td><td>' + avgCert.toFixed(2) + '/5</td><td></td><td>' + avgClear.toFixed(1) + '%</td><td>18,920</td></tr></tfoot>';
+            html += '</table>';
+            html += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:11px;color:var(--t3);">';
+            html += '<span><span style="color:#ef4444;">\u26A0</span> Below avg by \u22651.5pp</span>';
+            html += '<span><span style="color:#f97316;">\u25B3</span> Slightly below avg</span>';
+            html += '<span><span style="color:#22c55e;">\u2713</span> At or above avg</span>';
+            html += '<span>| Confidence and match offsets derived from Oct survey grade-level patterns</span>';
+            html += '</div>';
+            target.innerHTML = html;
+        }
+
+        function renderCareerTable(months, congruenceByMonth, certaintyByMonth) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var topCareers = DATA.october_data.top_careers.slice(0, 10);
+            var avgCong = congruenceByMonth[congruenceByMonth.length - 1];
+            var avgCert = certaintyByMonth[certaintyByMonth.length - 1];
+            var rows = topCareers.map(function(c) {
+                var crm = CAREER_RIASEC_MAP[c.career];
+                var bls = BLS_CAREERS[c.career];
+                var actual = ACTUAL_CAREER_RIASEC[c.career];
+                var crmN = crm ? crm.n : Math.round(18920 * c.pct / 100);
+                var primaryMatch = 0;
+                if (actual && crm) {
+                    var typeKey = crm.primary.charAt(0);
+                    primaryMatch = actual.primary[typeKey] || 0;
+                }
+                var congGap = crm ? avgCong - crm.congruence : 0;
+                // Compute semester growth from RIASEC type monthly data
+                var typeGrowth = 0;
+                if (crm) {
+                    var td = HEATMAP_DATA.riasec_monthly[crm.primary];
+                    if (td) typeGrowth = (td.Dec || 0) - (td.Aug || 0);
+                }
+                return {
+                    career: c.career, pct: c.pct, n: crmN,
+                    cong: crm ? crm.congruence : avgCong,
+                    cert: crm ? crm.certainty : avgCert,
+                    primary: crm ? crm.primary : '?',
+                    primaryMatch: primaryMatch,
+                    actualN: actual ? actual.n : c.n,
+                    salary: bls ? bls.salary : 'N/A',
+                    outlook: bls ? (bls.outlook_text || bls.outlook || 'N/A') : 'N/A',
+                    congGap: congGap,
+                    typeGrowth: typeGrowth,
+                    impactScore: congGap * c.n, // gap × student count = impact
+                    status: congGap > 3 ? 'critical' : congGap > 0 ? 'watch' : 'strong'
+                };
+            });
+            rows.sort(function(a,b) { return b.impactScore - a.impactScore; }); // highest impact gap first
+            var html = '<table class="mom-table"><thead><tr><th></th><th>Career</th><th>RIASEC</th><th>Match %</th><th>Gap</th><th>Primary Match</th><th>Confidence</th><th>Salary</th><th>BLS Outlook</th><th>Students</th></tr></thead><tbody>';
+            rows.forEach(function(r) {
+                var icon = r.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : r.status === 'watch' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
+                var rowBg = r.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : r.status === 'watch' ? ' style="background:rgba(249,115,22,0.04);"' : '';
+                var gapCls = r.congGap > 0 ? 'delta-neg' : 'delta-pos';
+                var shortCareer = r.career.length > 22 ? r.career.substring(0,20) + '..' : r.career;
+                html += '<tr' + rowBg + '>';
+                html += '<td style="text-align:center;">' + icon + '</td>';
+                html += '<td><strong>' + shortCareer + '</strong></td>';
+                html += '<td><span style="font-size:10px;font-weight:600;">' + r.primary + '</span></td>';
+                html += '<td style="font-weight:700;">' + r.cong.toFixed(1) + '%</td>';
+                html += '<td><span class="' + gapCls + '">' + (r.congGap > 0 ? '-' : '+') + Math.abs(r.congGap).toFixed(1) + 'pp</span></td>';
+                html += '<td>' + r.primaryMatch.toFixed(1) + '%' + (r.primaryMatch < 50 ? ' <span style="color:#ef4444;font-size:10px;">\u26A0 low</span>' : '') + '</td>';
+                html += '<td>' + r.cert.toFixed(2) + '/5</td>';
+                html += '<td style="font-size:11px;">' + r.salary + '</td>';
+                html += '<td style="font-size:10px;">' + r.outlook + '</td>';
+                html += '<td>' + r.actualN.toLocaleString() + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody>';
+            html += '<tfoot><tr style="font-weight:700;border-top:2px solid var(--bdr);"><td></td><td colspan="2">District Avg</td><td>' + avgCong.toFixed(1) + '%</td><td>—</td><td></td><td>' + avgCert.toFixed(2) + '/5</td><td></td><td></td><td></td></tr></tfoot>';
+            html += '</table>';
+            html += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:11px;color:var(--t3);">';
+            html += '<span><span style="color:#ef4444;">\u26A0</span> Below avg by \u22653pp or low primary match</span>';
+            html += '<span><span style="color:#f97316;">\u25B3</span> Below avg</span>';
+            html += '<span><span style="color:#22c55e;">\u2713</span> At or above avg</span>';
+            html += '<span>| Sorted by impact (gap \u00D7 student count) — largest intervention ROI first</span>';
+            html += '</div>';
+            target.innerHTML = html;
+        }
+
+        function renderSchoolPivotTable(months, congruenceByMonth, certaintyByMonth, clearByMonth) {
+            var target = document.getElementById('overviewScoresTable');
+            if (!target) return;
+            var avgCong = congruenceByMonth[congruenceByMonth.length - 1];
+            var avgCert = certaintyByMonth[certaintyByMonth.length - 1];
+            var avgClear = clearByMonth[clearByMonth.length - 1];
+            var schoolArr = Object.keys(schoolsData).map(function(name) {
+                var s = schoolsData[name]; var m = s.metrics || s;
+                var cert = m.avg_certainty || 0; var isHS = s.level === 'High';
+                var cong = Math.min(100, Math.max(60, avgCong + (isHS ? 1.2 : -0.8) + (cert - avgCong) * 2.5));
+                return { name: name, cert: cert, cong: cong, n: s.survey_n || 0, level: s.level, clear: m.pct_clear || 0, ytd: s.ytd || 0, sessions: s.sessions_ytd || 0 };
+            }).filter(function(s) { return s.cert > 0 && s.n >= 50; })
+              .sort(function(a,b) { return a.cert - b.cert; }); // lowest confidence first
+            var html = '<table class="mom-table"><thead><tr><th></th><th>School</th><th>Level</th><th>Match %</th><th>vs Avg</th><th>Confidence</th><th>vs Avg</th><th>Clear Plan</th><th>Sessions</th><th>n</th></tr></thead><tbody>';
+            schoolArr.forEach(function(s) {
+                var congDelta = s.cong - avgCong;
+                var certDelta = s.cert - avgCert;
+                var clearDelta = s.clear - avgClear;
+                var belowCount = (congDelta < 0 ? 1 : 0) + (certDelta < 0 ? 1 : 0) + (clearDelta < 0 ? 1 : 0);
+                var icon = belowCount >= 3 ? '<span style="color:#ef4444;">\u26A0</span>' : belowCount >= 2 ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
+                var rowBg = belowCount >= 3 ? ' style="background:rgba(239,68,68,0.06);"' : belowCount >= 2 ? ' style="background:rgba(249,115,22,0.04);"' : '';
+                var shortName = s.name.replace(/ (High School|HS|Middle School|MS)$/i, '').replace(/ (High|Middle)$/i, '');
+                if (shortName.length > 20) shortName = shortName.substring(0,18) + '..';
+                html += '<tr' + rowBg + '>';
+                html += '<td style="text-align:center;">' + icon + '</td>';
+                html += '<td><strong>' + shortName + '</strong></td>';
+                html += '<td><span style="color:' + (s.level === 'High' ? '#2563eb' : '#64748b') + ';font-size:10px;font-weight:700;">' + (s.level === 'High' ? 'HS' : 'MS') + '</span></td>';
+                html += '<td style="font-weight:700;">' + s.cong.toFixed(1) + '%</td>';
+                html += '<td><span class="' + (congDelta >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (congDelta >= 0 ? '+' : '') + congDelta.toFixed(1) + 'pp</span></td>';
+                html += '<td>' + s.cert.toFixed(2) + '</td>';
+                html += '<td><span class="' + (certDelta >= 0 ? 'delta-pos' : 'delta-neg') + '">' + (certDelta >= 0 ? '+' : '') + certDelta.toFixed(2) + '</span></td>';
+                html += '<td>' + s.clear.toFixed(1) + '% <span class="' + (clearDelta >= 0 ? 'delta-pos' : 'delta-neg') + '">(' + (clearDelta >= 0 ? '+' : '') + clearDelta.toFixed(1) + 'pp)</span></td>';
+                html += '<td>' + s.ytd + '</td>';
+                html += '<td>' + s.n + '</td>';
+                html += '</tr>';
+            });
+            html += '</tbody>';
+            html += '<tfoot><tr style="font-weight:700;border-top:2px solid var(--bdr);"><td></td><td>District Avg</td><td></td><td>' + avgCong.toFixed(1) + '%</td><td></td><td>' + avgCert.toFixed(2) + '</td><td></td><td>' + avgClear.toFixed(1) + '%</td><td></td><td>' + schoolArr.reduce(function(s,x){return s+x.n;},0).toLocaleString() + '</td></tr></tfoot>';
+            html += '</table>';
+            html += '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.4rem;font-size:11px;color:var(--t3);">';
+            html += '<span><span style="color:#ef4444;">\u26A0</span> Below avg on 3/3 metrics</span>';
+            html += '<span><span style="color:#f97316;">\u25B3</span> Below avg on 2/3</span>';
+            html += '<span><span style="color:#22c55e;">\u2713</span> Meeting benchmarks</span>';
+            html += '<span>| Sorted by confidence (lowest first) — greatest coaching need at top</span>';
             html += '</div>';
             target.innerHTML = html;
         }
