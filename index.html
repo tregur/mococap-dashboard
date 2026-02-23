@@ -7118,22 +7118,13 @@
             try { applyGlobalFilters(); } catch(e) { console.error('applyGlobalFilters error:', e); }
             try { generatePatternFlags(); } catch(e) { console.error('generatePatternFlags error:', e); }
             try { populateCoachTable(); } catch(e) { console.error('populateCoachTable error:', e); }
-            try { renderRegressionBars(); } catch(e) { console.error('renderRegressionBars error:', e); }
-            try { renderCTEChart(); } catch(e) { console.error('renderCTEChart error:', e); }
-            try { renderFollowupChart(); } catch(e) { console.error('renderFollowupChart error:', e); }
-            try { populateBLSTable(); } catch(e) { console.error('populateBLSTable error:', e); }
             try { initStaticInsightCards(); } catch(e) { console.error('initStaticInsightCards error:', e); }
+            // Overview page charts (the only visible page at init)
             try { renderOverviewScoresChart(); } catch(e) { console.error('renderOverviewScoresChart error:', e); }
-            // October data distribution
             try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('Scorecard error:', e); }
             try { renderSectorImpactSummary(); } catch(e) { console.error('Sector summary error:', e); }
             try { renderOverviewOctoberCharts(); } catch(e) { console.error('Overview Oct charts error:', e); }
-            try { renderProgramPerfOctober(); } catch(e) { console.error('ProgramPerf Oct error:', e); }
-            try { renderEngagementOctober(); } catch(e) { console.error('Engagement Oct error:', e); }
-            try { renderCareerPlanOctober(); } catch(e) { console.error('CareerPlan Oct error:', e); }
-            try { renderRiasecOctober(); } catch(e) { console.error('RIASEC Oct error:', e); }
-            try { renderSectorsOctober(); } catch(e) { console.error('Sectors Oct error:', e); }
-            try { renderDistributionOctober(); } catch(e) { console.error('Distribution Oct error:', e); }
+            // Hidden-page charts are deferred to showPage() — Chart.js needs display:block to render properly
         }
 
         function showPage(pageId) {
@@ -7155,28 +7146,47 @@
                 if (mc) mc.style.display = '';
                 if (md) { md.style.display = 'none'; md.innerHTML = ''; }
             }
-            // Re-render charts on the newly visible page (Chart.js can't render properly on hidden elements)
+            // Re-render ALL charts on the newly visible page (Chart.js can't render on display:none elements)
             setTimeout(function() {
-                if (pageId === 'program-perf') { try { renderProgramPerfOctober(); } catch(e) {} }
-                if (pageId === 'engagement') { try { renderEngagementOctober(); } catch(e) {} }
-                if (pageId === 'riasec') { try { renderRiasecOctober(); } catch(e) {} }
-                if (pageId === 'sectors') { try { renderSectorsOctober(); } catch(e) {} }
-                if (pageId === 'monthly-report') { try { renderRegressionBars(); renderCTEChart(); renderFollowupChart(); } catch(e) {} }
-                if (pageId === 'congruence' || pageId === 'distribution') {
-                    if (target) {
-                        target.querySelectorAll('canvas').forEach(function(c) {
-                            var chartInstance = Chart.getChart(c);
-                            if (chartInstance) chartInstance.resize();
-                        });
-                    }
-                }
+                try {
                 if (pageId === 'overview') {
-                    try { initCharts(); } catch(e) {}
-                    try { renderOverviewOctoberCharts(); } catch(e) {}
-                    try { renderOverviewScoresChart(); } catch(e) {}
-                    try { renderRiasecBubbleChart(); } catch(e) {}
+                    initCharts();
+                    renderOverviewOctoberCharts();
+                    renderOverviewScoresChart();
+                    renderRiasecBubbleChart();
+                } else if (pageId === 'congruence') {
+                    renderCongruenceDonutChart();
+                    renderCongruenceVsCertaintyChart();
+                } else if (pageId === 'career-plan') {
+                    renderAlignmentTrendChart();
+                    renderCertaintyByRiasecChart();
+                    renderCareerPlanOctober();
+                } else if (pageId === 'program-perf') {
+                    renderDosageChart();
+                    renderGradChart();
+                    renderFarmsChart();
+                    renderProgramPerfOctober();
+                } else if (pageId === 'engagement') {
+                    renderMonthlyTrendChart();
+                    renderReachChart();
+                    renderYoYChart();
+                    renderEngagementOctober();
+                } else if (pageId === 'riasec') {
+                    renderRiasecDistChart();
+                    renderRiasecOctober();
+                } else if (pageId === 'sectors') {
+                    renderSectorsOctober();
+                } else if (pageId === 'distribution') {
+                    renderDistributionChart();
+                    populateBLSTable();
+                    renderDistributionOctober();
+                } else if (pageId === 'monthly-report') {
+                    renderRegressionBars();
+                    renderCTEChart();
+                    renderFollowupChart();
                 }
-            }, 50);
+                } catch(e) { console.error('showPage render error (' + pageId + '):', e); }
+            }, 100);
         }
 
         function toggleSidebar() {
@@ -7253,22 +7263,12 @@
         }
 
         function initCharts() {
+            // Only render overview page charts here; other pages render via showPage()
             renderHeroChart();
             renderEngagementTrendChart();
             renderClarityDistChart();
-            renderCongruenceDonutChart();
+            // Non-canvas HTML bars (safe to render on hidden pages)
             renderRiasecCongruenceBarsChart();
-            renderAlignmentTrendChart();
-            renderCertaintyByRiasecChart();
-            renderCongruenceVsCertaintyChart();
-            renderDistributionChart();
-            renderRiasecDistChart();
-            renderMonthlyTrendChart();
-            renderReachChart();
-            renderYoYChart();
-            renderDosageChart();
-            renderGradChart();
-            renderFarmsChart();
         }
 
         function destroyAndGet(canvasId) {
