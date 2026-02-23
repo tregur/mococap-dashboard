@@ -7295,12 +7295,54 @@
         function renderEngagementTrendChart() {
             var c = destroyAndGet('engagementTrendChart'); if (!c) return;
             var months = getActiveMonths();
-            var sessions = months.map(function(m){return DATA.sessions_trend[m];});
-            new Chart(c, {type:'bar',data:{labels:months,datasets:[{label:'Sessions',data:sessions,backgroundColor:'#2563eb',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}});
+            var sessions = months.map(function(m){return DATA.sessions_trend[m] || 0;});
+            var unique = months.map(function(m){return DATA.unique_trend[m] || 0;});
+            new Chart(c, {
+                type:'bar',
+                data:{
+                    labels:months,
+                    datasets:[
+                        {label:'Total Sessions', data:sessions, backgroundColor:'rgba(37,99,235,0.75)', borderRadius:4, order:2},
+                        {label:'Unique Students', data:unique, type:'line', borderColor:'#f97316', backgroundColor:'rgba(249,115,22,0.1)', borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#f97316', pointBorderColor:'#fff', pointBorderWidth:2, tension:0.3, fill:true, order:1}
+                    ]
+                },
+                options:{
+                    responsive:true, maintainAspectRatio:false,
+                    plugins:{
+                        legend:{position:'bottom', labels:{padding:12, font:{size:11, weight:600}, usePointStyle:true}},
+                        tooltip:{
+                            mode:'index', intersect:false,
+                            backgroundColor:'rgba(20,20,20,0.95)',
+                            titleFont:{size:13, weight:700}, bodyFont:{size:12},
+                            padding:12, cornerRadius:8, bodySpacing:3,
+                            callbacks:{
+                                afterBody: function(items) {
+                                    var idx = items[0].dataIndex;
+                                    if (idx === 0) return [];
+                                    var sDelta = sessions[idx] - sessions[idx-1];
+                                    var uDelta = unique[idx] - unique[idx-1];
+                                    return [
+                                        '',
+                                        'Sessions: ' + (sDelta >= 0 ? '+' : '') + sDelta.toLocaleString() + ' vs ' + months[idx-1],
+                                        'Students: ' + (uDelta >= 0 ? '+' : '') + uDelta.toLocaleString() + ' vs ' + months[idx-1]
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales:{y:{beginAtZero:true, ticks:{callback:function(v){return v >= 1000 ? (v/1000).toFixed(0)+'k' : v;}}}}
+                }
+            });
             var peak = Math.max.apply(null, sessions);
             var peakMonth = months[sessions.indexOf(peak)];
+            var lastSessions = sessions[sessions.length-1];
+            var lastUnique = unique[unique.length-1];
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: sessions[sessions.length-1] >= sessions[sessions.length-2] ? 'up' : 'down', soWhat: 'Engagement peaked in ' + peakMonth + ' (' + peak.toLocaleString() + ' sessions). Current month is ' + Math.round(sessions[sessions.length-1]/peak*100) + '% of peak.', action: 'Plan outreach campaigns before seasonal dips to sustain engagement.'});
+            if (card) renderWidgetInsight(card, {
+                trend: sessions.length >= 2 && sessions[sessions.length-1] >= sessions[sessions.length-2] ? 'up' : 'down',
+                soWhat: 'Engagement peaked in ' + peakMonth + ' (' + peak.toLocaleString() + ' sessions). Dec: ' + lastSessions.toLocaleString() + ' sessions reaching ' + lastUnique.toLocaleString() + ' unique students (' + Math.round(lastSessions/peak*100) + '% of peak).',
+                action: 'Plan outreach campaigns before seasonal dips to sustain engagement. ' + (lastUnique < peak ? 'Dec drop is typical (winter break). Track Jan recovery.' : 'Strong momentum — maintain.')
+            });
         }
 
         function renderClarityDistChart() {
