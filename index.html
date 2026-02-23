@@ -5693,21 +5693,32 @@
                     return s.cert >= avgCertOverall ? 'rgba(16,185,129,0.7)' : 'rgba(16,185,129,0.35)';
                 });
 
+                // Grouped horizontal bar: Career Match and Confidence side by side per school
+                // Both normalized to 0-100 range so bars are visually comparable
+                var normCertData = schoolArrOv.map(function(s) { return (s.cert / 5) * 100; }); // normalize cert to 0-100%
+                var congDataPos = schoolArrOv.map(function(s) { return s.cong; });
+
                 overviewScoresChartInstance = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: schoolLabels,
                         datasets: [
-                            { label: 'Career Match %', data: congData, backgroundColor: congBgColors, borderRadius: 3, barPercentage: 0.85 },
-                            { label: 'Confidence (1-5)', data: certData, backgroundColor: certBgColors, borderRadius: 3, barPercentage: 0.85 }
+                            { label: 'Career Match %', data: congDataPos, backgroundColor: congBgColors, borderRadius: 3, barPercentage: 0.8, categoryPercentage: 0.85 },
+                            { label: 'Confidence (scaled)', data: normCertData, backgroundColor: certBgColors, borderRadius: 3, barPercentage: 0.8, categoryPercentage: 0.85 }
                         ]
                     },
                     options: {
                         responsive: true, maintainAspectRatio: false, indexAxis: 'y',
                         plugins: {
-                            legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true } },
+                            legend: { position: 'bottom', labels: { padding: 16, font: { size: 12, weight: 600 }, usePointStyle: true,
+                                generateLabels: function(chart) {
+                                    return [
+                                        { text: 'Career Match %', fillStyle: 'rgba(37,99,235,0.7)', strokeStyle: 'rgba(37,99,235,0.7)', pointStyle: 'circle' },
+                                        { text: 'Confidence (1-5)', fillStyle: 'rgba(16,185,129,0.7)', strokeStyle: 'rgba(16,185,129,0.7)', pointStyle: 'circle' }
+                                    ];
+                                }
+                            } },
                             tooltip: {
-                                mode: 'index',
                                 backgroundColor: 'rgba(20,20,20,1)',
                                 titleFont: { size: 13, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 14, cornerRadius: 8, bodySpacing: 3,
@@ -5730,11 +5741,9 @@
                                         lines.push('Confidence:   ' + s.cert.toFixed(2) + '/5 (' + (certDiff >= 0 ? '+' : '') + certDiff.toFixed(2) + ' vs avg)');
                                         lines.push('Clear Plan:   ' + s.clear.toFixed(1) + '% (' + (clearDiff >= 0 ? '+' : '') + clearDiff.toFixed(1) + 'pp vs avg)');
                                         lines.push('');
-                                        // Priority status
                                         if (s.priority === 'high') {
                                             lines.push('\u26A0 PRIORITY FOCUS — Below avg on all 3 metrics');
                                             lines.push('  O*NET alignment gap: ' + s.onetGap.toFixed(1) + 'pp below district avg');
-                                            lines.push('  Career-personality match needs attention');
                                         } else if (s.priority === 'medium') {
                                             lines.push('\u25B3 WATCH — Below avg on 2 of 3 metrics');
                                             if (s.onetGap > 0) lines.push('  O*NET gap: ' + s.onetGap.toFixed(1) + 'pp below avg match');
@@ -5750,25 +5759,22 @@
                         },
                         scales: {
                             x: {
-                                title: { display: true, text: '\u2190 Career Match %                                         Confidence (1-5) \u2192', font: { size: 11, weight: 600 } },
-                                ticks: {
-                                    callback: function(val) { return val < 0 ? Math.abs(val).toFixed(0) + '%' : val.toFixed(1); }
-                                },
-                                min: -100, max: 5,
-                                grid: { color: function(ctx2) { return ctx2.tick.value === 0 ? '#1a1a1a' : 'rgba(0,0,0,0.06)'; } }
+                                title: { display: true, text: 'Career Match % (blue) and Confidence scaled to % (green). Dashed = district avg.', font: { size: 10, weight: 600 } },
+                                min: 60, max: 100,
+                                ticks: { callback: function(val) { return val + '%'; }, font: { size: 10 } },
+                                grid: { color: 'rgba(0,0,0,0.06)' }
                             },
                             y: { ticks: { font: { size: 10, weight: 600 } }, grid: { display: false } }
                         }
                     },
                     plugins: [{
                         afterDatasetsDraw: function(chart) {
-                            // Draw average reference lines
                             var xScale = chart.scales.x;
                             var yScale = chart.scales.y;
                             var chartCtx = chart.ctx;
                             chartCtx.save();
-                            // Congruence avg line (negative side)
-                            var congAvgX = xScale.getPixelForValue(-avgCongOverall);
+                            // Career Match avg line
+                            var congAvgX = xScale.getPixelForValue(avgCongOverall);
                             chartCtx.strokeStyle = '#2563eb';
                             chartCtx.lineWidth = 1.5;
                             chartCtx.setLineDash([4, 3]);
@@ -5776,21 +5782,22 @@
                             chartCtx.moveTo(congAvgX, yScale.top);
                             chartCtx.lineTo(congAvgX, yScale.bottom);
                             chartCtx.stroke();
-                            // Certainty avg line (positive side)
-                            var certAvgX = xScale.getPixelForValue(avgCertOverall);
+                            // Confidence avg line (normalized to %)
+                            var certAvgNorm = (avgCertOverall / 5) * 100;
+                            var certAvgX = xScale.getPixelForValue(certAvgNorm);
                             chartCtx.strokeStyle = '#10b981';
                             chartCtx.beginPath();
                             chartCtx.moveTo(certAvgX, yScale.top);
                             chartCtx.lineTo(certAvgX, yScale.bottom);
                             chartCtx.stroke();
                             chartCtx.setLineDash([]);
-                            // Labels for avg lines
+                            // Labels
                             chartCtx.font = '600 9px Inter, sans-serif';
-                            chartCtx.fillStyle = '#2563eb';
                             chartCtx.textAlign = 'center';
-                            chartCtx.fillText('Avg ' + avgCongOverall.toFixed(1) + '%', congAvgX, yScale.top - 4);
+                            chartCtx.fillStyle = '#2563eb';
+                            chartCtx.fillText('Match Avg ' + avgCongOverall.toFixed(1) + '%', congAvgX, yScale.top - 4);
                             chartCtx.fillStyle = '#10b981';
-                            chartCtx.fillText('Avg ' + avgCertOverall.toFixed(2), certAvgX, yScale.top - 4);
+                            chartCtx.fillText('Conf Avg ' + avgCertOverall.toFixed(2) + ' (' + certAvgNorm.toFixed(0) + '%)', certAvgX, yScale.top - 12);
                             chartCtx.restore();
                         }
                     }]
