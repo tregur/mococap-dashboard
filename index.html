@@ -4277,26 +4277,28 @@
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                mode: 'nearest',
+                                intersect: true,
+                                backgroundColor: 'rgba(20,20,20,1)',
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
-                                padding: 14, cornerRadius: 8, bodySpacing: 3,
+                                padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
                                     title: function(items) { return items[0].dataset.label + ' (' + items[0].dataset._desc + ')'; },
-                                    label: function() { return ''; },
+                                    label: function() { return null; },
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
                                         lines.push(ds._n.toLocaleString() + ' students identify as ' + ds.label);
                                         lines.push('');
-                                        lines.push('Career-Personality Match: ' + ds._congruence.toFixed(1) + '%');
-                                        if (ds._congMoM !== 0) lines.push('  ' + (ds._congMoM >= 0 ? '▲ Up ' : '▼ Down ') + Math.abs(ds._congMoM).toFixed(1) + 'pp from last month');
+                                        lines.push('Career Match: ' + ds._congruence.toFixed(1) + '%');
+                                        if (ds._congMoM !== 0) lines.push('  ' + (ds._congMoM >= 0 ? '▲ +' : '▼ ') + ds._congMoM.toFixed(1) + 'pp from last month');
                                         lines.push('');
-                                        lines.push('Career Confidence: ' + ds._certainty.toFixed(2) + ' out of 5');
-                                        if (ds._certMoM !== 0) lines.push('  ' + (ds._certMoM >= 0 ? '▲ Up ' : '▼ Down ') + Math.abs(ds._certMoM).toFixed(2) + ' from last month');
+                                        lines.push('Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        if (ds._certMoM !== 0) lines.push('  ' + (ds._certMoM >= 0 ? '▲ +' : '▼ ') + ds._certMoM.toFixed(2) + ' from last month');
                                         lines.push('');
-                                        lines.push('Top careers chosen by ' + ds.label + ' students:');
+                                        lines.push('Top careers chosen:');
                                         ds._topCareers.forEach(function(c) {
-                                            lines.push('  • ' + c.name + ' (' + c.n.toLocaleString() + ')');
+                                            lines.push('  ' + c.name + ' (' + c.n.toLocaleString() + ')');
                                         });
                                         return lines;
                                     }
@@ -4415,12 +4417,14 @@
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                mode: 'nearest',
+                                intersect: true,
+                                backgroundColor: 'rgba(20,20,20,1)',
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
-                                padding: 14, cornerRadius: 8, bodySpacing: 3,
+                                padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
                                     title: function(items) { return items[0].dataset._career; },
-                                    label: function() { return ''; },
+                                    label: function() { return null; },
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
@@ -4431,19 +4435,17 @@
                                         var sortedTypes = types.slice().sort(function(a, b) { return ds._typeBreakdown[b] - ds._typeBreakdown[a]; });
                                         sortedTypes.forEach(function(t) {
                                             var pct = ds._typeBreakdown[t];
-                                            var bar = '';
-                                            for (var b = 0; b < Math.round(pct / 5); b++) bar += '█';
-                                            lines.push('  ' + t + ': ' + pct + '%  ' + bar);
+                                            lines.push('  ' + t + ': ' + pct + '%');
                                         });
                                         lines.push('');
-                                        lines.push('Career-Personality Match: ' + ds._congruence.toFixed(1) + '%');
-                                        lines.push('Career Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        lines.push('Career Match: ' + ds._congruence.toFixed(1) + '%');
+                                        lines.push('Confidence: ' + ds._certainty.toFixed(2) + '/5');
                                         if (ds._salary !== 'N/A') {
-                                            lines.push('Median salary: ' + ds._salary);
-                                            lines.push('Job outlook: ' + ds._outlook);
+                                            lines.push('Salary: ' + ds._salary);
+                                            lines.push('Outlook: ' + ds._outlook);
                                         }
                                         lines.push('');
-                                        lines.push('Click to deep-dive into ' + ds._career);
+                                        lines.push('Click to deep-dive \u2192');
                                         return lines;
                                     }
                                 }
@@ -4558,15 +4560,17 @@
                         plugins: {
                             legend: { display: false },
                             tooltip: {
-                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                mode: 'nearest',
+                                intersect: true,
+                                backgroundColor: 'rgba(20,20,20,1)',
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
-                                padding: 14, cornerRadius: 8, bodySpacing: 3,
+                                padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
                                     title: function(items) {
                                         var ds = items[0].dataset;
                                         return ds.label + ' (' + ds._desc + ')';
                                     },
-                                    label: function() { return ''; },
+                                    label: function() { return null; },
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
