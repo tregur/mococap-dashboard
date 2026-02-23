@@ -3728,12 +3728,12 @@
                 // Generate month-to-month divergence cards (most recent month)
                 renderMonthDivergenceCards._selectedMonth = null;
                 try { renderMonthDivergenceCards(); } catch(e) { console.error('Divergence cards error:', e); }
-                // Re-render charts that may need refresh
+                // Re-render all overview charts (resize alone doesn't fix charts hidden then shown)
                 setTimeout(function() {
-                    content.querySelectorAll('canvas').forEach(function(c) {
-                        var chart = Chart.getChart(c);
-                        if (chart) chart.resize();
-                    });
+                    try { initCharts(); } catch(e) {}
+                    try { renderOverviewOctoberCharts(); } catch(e) {}
+                    try { renderOverviewScoresChart(); } catch(e) {}
+                    try { renderRiasecBubbleChart(); } catch(e) {}
                 }, 50);
                 return;
             }
@@ -5022,9 +5022,8 @@
 
         function renderProgramPerfOctober() {
             // Helpfulness by delivery type (horizontal bar)
-            var helpCtx = document.getElementById('helpfulnessByTypeChart');
-            if (helpCtx && !helpCtx.dataset.rendered) {
-                helpCtx.dataset.rendered = 'true';
+            var helpCtx = destroyAndGet('helpfulnessByTypeChart');
+            if (helpCtx) {
                 var hbt = OCTOBER_FULL.helpfulness_by_type;
                 new Chart(helpCtx, {
                     type: 'bar',
@@ -5041,9 +5040,8 @@
             }
 
             // Session type mix doughnut
-            var stCtx = document.getElementById('sessionTypeMixChart');
-            if (stCtx && !stCtx.dataset.rendered) {
-                stCtx.dataset.rendered = 'true';
+            var stCtx = destroyAndGet('sessionTypeMixChart');
+            if (stCtx) {
                 var st = OCTOBER_FULL.session_types;
                 new Chart(stCtx, {
                     type: 'doughnut',
@@ -5096,9 +5094,8 @@
 
         function renderEngagementOctober() {
             // Session type doughnut
-            var stCtx = document.getElementById('engSessionTypesChart');
-            if (stCtx && !stCtx.dataset.rendered) {
-                stCtx.dataset.rendered = 'true';
+            var stCtx = destroyAndGet('engSessionTypesChart');
+            if (stCtx) {
                 var st = OCTOBER_FULL.session_types;
                 new Chart(stCtx, {
                     type: 'doughnut',
@@ -5111,9 +5108,8 @@
             }
 
             // Grade distribution bar
-            var gdCtx = document.getElementById('engGradeDistChart');
-            if (gdCtx && !gdCtx.dataset.rendered) {
-                gdCtx.dataset.rendered = 'true';
+            var gdCtx = destroyAndGet('engGradeDistChart');
+            if (gdCtx) {
                 var gd = OCTOBER_FULL.grade_dist;
                 new Chart(gdCtx, {
                     type: 'bar',
@@ -5126,9 +5122,8 @@
             }
 
             // Follow-up chart
-            var fuCtx = document.getElementById('engFollowupChart');
-            if (fuCtx && !fuCtx.dataset.rendered) {
-                fuCtx.dataset.rendered = 'true';
+            var fuCtx = destroyAndGet('engFollowupChart');
+            if (fuCtx) {
                 new Chart(fuCtx, {
                     type: 'bar',
                     data: {
@@ -5206,9 +5201,8 @@
 
         function renderRiasecOctober() {
             // Theme depth bar chart
-            var tdCtx = document.getElementById('themeDepthChart');
-            if (tdCtx && !tdCtx.dataset.rendered) {
-                tdCtx.dataset.rendered = 'true';
+            var tdCtx = destroyAndGet('themeDepthChart');
+            if (tdCtx) {
                 var rt = OCTOBER_FULL.riasec_themes;
                 new Chart(tdCtx, {
                     type: 'bar',
@@ -5249,9 +5243,8 @@
 
         function renderSectorsOctober() {
             // CTE chart for sectors page
-            var cteCtx = document.getElementById('sectorsCTEChart');
-            if (cteCtx && !cteCtx.dataset.rendered) {
-                cteCtx.dataset.rendered = 'true';
+            var cteCtx = destroyAndGet('sectorsCTEChart');
+            if (cteCtx) {
                 new Chart(cteCtx, {
                     type: 'bar',
                     data: {
@@ -5344,13 +5337,26 @@
                 if (mc) mc.style.display = '';
                 if (md) { md.style.display = 'none'; md.innerHTML = ''; }
             }
-            // Trigger Chart.js resize for charts on the newly visible page
+            // Re-render charts on the newly visible page (Chart.js can't render properly on hidden elements)
             setTimeout(function() {
-                if (target) {
-                    target.querySelectorAll('canvas').forEach(function(c) {
-                        var chartInstance = Chart.getChart(c);
-                        if (chartInstance) chartInstance.resize();
-                    });
+                if (pageId === 'program-perf') { try { renderProgramPerfOctober(); } catch(e) {} }
+                if (pageId === 'engagement') { try { renderEngagementOctober(); } catch(e) {} }
+                if (pageId === 'riasec') { try { renderRiasecOctober(); } catch(e) {} }
+                if (pageId === 'sectors') { try { renderSectorsOctober(); } catch(e) {} }
+                if (pageId === 'monthly-report') { try { renderRegressionBars(); renderCTEChart(); renderFollowupChart(); } catch(e) {} }
+                if (pageId === 'congruence' || pageId === 'distribution') {
+                    if (target) {
+                        target.querySelectorAll('canvas').forEach(function(c) {
+                            var chartInstance = Chart.getChart(c);
+                            if (chartInstance) chartInstance.resize();
+                        });
+                    }
+                }
+                if (pageId === 'overview') {
+                    try { initCharts(); } catch(e) {}
+                    try { renderOverviewOctoberCharts(); } catch(e) {}
+                    try { renderOverviewScoresChart(); } catch(e) {}
+                    try { renderRiasecBubbleChart(); } catch(e) {}
                 }
             }, 50);
         }
@@ -5955,9 +5961,8 @@
         }
 
         function renderCTEChart() {
-            const ctx = document.getElementById('ctePathwayChart');
-            if(!ctx || ctx.dataset.rendered) return;
-            ctx.dataset.rendered = 'true';
+            var ctx = destroyAndGet('ctePathwayChart');
+            if (!ctx) return;
             new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -5969,9 +5974,8 @@
         }
 
         function renderFollowupChart() {
-            const ctx = document.getElementById('followupChart');
-            if(!ctx || ctx.dataset.rendered) return;
-            ctx.dataset.rendered = 'true';
+            var ctx = destroyAndGet('followupChart');
+            if (!ctx) return;
             new Chart(ctx, {
                 type: 'bar',
                 data: {
