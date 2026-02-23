@@ -2138,15 +2138,18 @@
                             <div class="oct-charts-grid">
                                 <div class="chart-card">
                                     <div class="chart-title">Regression Drivers — What Predicts Outcomes</div>
+                                    <div class="metric-detail">Beta coefficients from October 2025 regression analysis (N=1,012). Each bar shows how strongly a factor predicts student outcomes. Positive = improves outcome; negative = reduces it. | Source: Cristina's Oct 2025 Findings</div>
                                     <div id="overviewRegressionBars"></div>
                                 </div>
                                 <div class="chart-card">
                                     <div class="chart-title">CTE Pathway Interest (October)</div>
+                                    <div class="metric-detail">Percentage of October 2025 survey respondents interested in each Career & Technical Education pathway. 87.1% of students are open to CTE. | N=1,012 | Source: Oct 2025 Survey</div>
                                     <div style="position:relative;height:220px;"><canvas id="overviewCTEChart"></canvas></div>
                                 </div>
                             </div>
                             <div class="chart-card" style="margin-top:1rem;">
                                 <div class="chart-title">Follow-Up Request Patterns (YoY Comparison)</div>
+                                <div class="metric-detail">Types of follow-up support requested by students, comparing Oct 2025 vs Oct 2024. "Want Follow-Up" = students who want any continued engagement after their session. | Source: Oct 2025 vs Oct 2024 Surveys</div>
                                 <div style="position:relative;height:220px;"><canvas id="overviewFollowupChart"></canvas></div>
                             </div>
                         </div>
@@ -2179,6 +2182,7 @@
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
                             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                                 <div class="bubble-chart-title" style="margin-bottom:0;">Congruence & Certainty Trends</div>
+                                <div class="metric-detail" style="flex-basis:100%;margin-top:-0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Use pills to pivot by personality type, grade level, or career selection. | SY 2025-26</div>
                                 <div class="seg-pills" id="trendSegPills">
                                     <span class="seg-pill active" data-seg="overall" onclick="switchTrendSegment('overall', this)">Overall</span>
                                     <span class="seg-pill" data-seg="personality" onclick="switchTrendSegment('personality', this)">By Personality</span>
@@ -2191,6 +2195,7 @@
 
                         <div class="bubble-chart-wrap" id="correlationSpotlight">
                             <div class="bubble-chart-title">Career-Personality Landscape: Congruence vs. Certainty by RIASEC Type</div>
+                            <div class="metric-detail">Bubble chart mapping each RIASEC personality type. X-axis = congruence (% of students whose career interest matches their personality type). Y-axis = certainty (avg 1-5 self-rated confidence). Bubble size = number of students. | SY 2025-26 cumulative</div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
                         <div id="correlationCards">
@@ -2212,10 +2217,12 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Engagement Trend (Aug-Dec)</div>
+                                <div class="metric-detail">Total coaching sessions and unique students reached each month, Aug–Dec 2025. Tracks program scale and student participation over the school year. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="engagementTrendChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Career Clarity Distribution</div>
+                                <div class="metric-detail">Student self-reported career clarity: "Unsure" (no direction), "Some Idea" (exploring options), or "Clear Plan" (specific career goal). Based on post-session surveys. | SY 2025-26 cumulative (N=10,006)</div>
                                 <div class="chart-container"><canvas id="clarityDistChart"></canvas></div>
                             </div>
                         </div>
@@ -2234,16 +2241,19 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Career-Personality Match Distribution</div>
+                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC personality type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (N=2,962)</div>
                                 <div class="chart-container"><canvas id="congruenceDonutChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Congruence by RIASEC Type</div>
+                                <div class="metric-detail">Match percentage for each of the 6 Holland personality types: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-personality fit for that type. | SY 2025-26</div>
                                 <div class="chart-container" style="height: auto; min-height: 400px;"><div id="riasecCongruenceBars"></div></div>
                             </div>
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by Match Level</div>
+                                <div class="metric-detail">Average self-reported career certainty (1-5 scale: 1="Very Unlikely" to 5="Very Likely" to pursue chosen career) grouped by congruence level. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="congruenceVsCertaintyChart"></canvas></div>
                                 <div id="ic-congruence-paradox"></div>
                             </div>
@@ -2277,11 +2287,13 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Career Clarity Trajectory (SY 2025-26)</div>
+                                <div class="metric-detail">Monthly % of students with a "Clear Plan" and average certainty score (1-5). Clarity = student self-identifies a specific career goal. Certainty = confidence they will pursue it. | Aug–Dec 2025</div>
                                 <div class="chart-container"><canvas id="alignmentTrendChart"></canvas></div>
                                 <div id="ic-clarity-trajectory"></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by RIASEC Type</div>
+                                <div class="metric-detail">Average career certainty (1-5 scale) for students of each Holland personality type. Compares how confident each personality group feels about their chosen career path. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="certaintyByRiasecChart"></canvas></div>
                                 <div id="ic-certainty-riasec"></div>
                             </div>
@@ -2300,17 +2312,20 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Session Helpfulness by Delivery Type (October)</div>
+                                <div class="metric-detail">% of students rating their session as "Agree" or "Strongly Agree" it was helpful, broken down by delivery format. Helpfulness = post-session survey response. | Oct 2025 (N=1,012)</div>
                                 <div style="position:relative;height:220px;"><canvas id="helpfulnessByTypeChart"></canvas></div>
                                 <div id="ic-helpfulness-type"></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Session Type Mix (October)</div>
+                                <div class="metric-detail">Distribution of coaching session formats: whole group (classroom), small group, one-on-one, exploration activity, or other. Shows how program time is allocated. | Oct 2025</div>
                                 <div style="position:relative;height:220px;"><canvas id="sessionTypeMixChart"></canvas></div>
                             </div>
                         </div>
                         <!-- October: Regression Drivers for Program-Perf -->
                         <div class="chart-card" style="margin-bottom:1rem;">
                             <div class="chart-title">Key Regression Drivers — October Analysis</div>
+                            <div class="metric-detail">Standardized beta (β) coefficients from October 2025 regression models. Each bar shows a predictor's effect size on student outcomes. Larger |β| = stronger effect. *** = p&lt;0.001, ** = p&lt;0.01. | Oct 2025 (N=1,012)</div>
                             <div id="perfRegressionBars"></div>
                         </div>
                         <!-- YoY Improvement Cards -->
@@ -2319,11 +2334,13 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Dosage-Response: Sessions vs Certainty</div>
+                                <div class="metric-detail">Scatter plot: X = sessions per student (dosage), Y = average career certainty (1-5). Each dot is a school. Dosage = total sessions ÷ unique students. Higher dosage correlates with higher certainty (r=0.47). | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="dosageChart"></canvas></div>
                                 <div id="ic-dosage-response"></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Graduation Rates (MCPS High Schools)</div>
+                                <div class="metric-detail">4-year cohort graduation rate for MCPS high schools (Class of 2023). Context for career readiness — schools with lower grad rates may benefit most from career coaching. | MCPS Public Data 2023</div>
                                 <div class="chart-container"><canvas id="gradChart"></canvas></div>
                                 <div id="ic-graduation-rates"></div>
                             </div>
@@ -2331,6 +2348,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">FARMS % vs Graduation Rate</div>
+                                <div class="metric-detail">FARMS = Free and Reduced-Price Meals (proxy for economic disadvantage). Higher FARMS % correlates with lower graduation rates. Shows equity context for targeting coaching resources. | MCPS Data 2023</div>
                                 <div class="chart-container"><canvas id="farmsChart"></canvas></div>
                             </div>
                         </div>
@@ -2355,16 +2373,19 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Monthly Session Trend</div>
+                                <div class="metric-detail">Total coaching sessions delivered each month. Peak in October reflects college application season. Nov-Dec decline is seasonal (winter break, finals). | Aug–Dec 2025</div>
                                 <div class="chart-container"><canvas id="monthlyTrendChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Program Reach by Month</div>
+                                <div class="metric-detail">Unique students reached each month (deduplicated). Measures breadth of program coverage across the student body. | Aug–Dec 2025</div>
                                 <div class="chart-container"><canvas id="reachChart"></canvas></div>
                             </div>
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Year-over-Year Comparison</div>
+                                <div class="metric-detail">Unique students per month across SY 2023-24, SY 2024-25, and SY 2025-26. Shows program scaling trajectory — current year is 3x prior years. | Jul–Feb by school year</div>
                                 <div class="chart-container"><canvas id="yoyChart"></canvas></div>
                                 <div id="ic-yoy-growth"></div>
                             </div>
@@ -2373,16 +2394,19 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Session Type Distribution (October)</div>
+                                <div class="metric-detail">Breakdown of how October coaching sessions were delivered. Whole group dominates at 81.9%. One-on-one is most effective but only 1.8% of sessions. | Oct 2025 (N=1,012)</div>
                                 <div style="position:relative;height:250px;"><canvas id="engSessionTypesChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Grade Distribution (October)</div>
+                                <div class="metric-detail">Percentage of October survey respondents by grade level. Grade 6 surged +17.13pp YoY while Grade 8 declined -16.48pp. | Oct 2025 (N=1,012)</div>
                                 <div style="position:relative;height:250px;"><canvas id="engGradeDistChart"></canvas></div>
                             </div>
                         </div>
                         <!-- October: Follow-Up Patterns -->
                         <div class="chart-card" style="margin-top:1rem;">
                             <div class="chart-title">Follow-Up Request Patterns (October YoY)</div>
+                            <div class="metric-detail">Types of follow-up support students requested after their session. Compared Oct 2025 vs Oct 2024. All categories declining YoY despite improved core outcomes. | Oct 2025 vs Oct 2024</div>
                             <div style="position:relative;height:220px;"><canvas id="engFollowupChart"></canvas></div>
                         </div>
                         <div id="engOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
@@ -2397,6 +2421,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">RIASEC Type Distribution (N=10,006)</div>
+                                <div class="metric-detail">Count of students identified with each Holland personality type: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
                                 <div class="chart-container"><canvas id="riasecDistChart"></canvas></div>
                                 <div id="ic-riasec-distribution"></div>
                             </div>
@@ -2405,6 +2430,7 @@
                         <!-- October: Theme Depth Analysis -->
                         <div class="chart-card" style="margin-bottom:1rem;">
                             <div class="chart-title">RIASEC Theme Depth Distribution (October)</div>
+                            <div class="metric-detail">Number of RIASEC types each student identifies with. "0 themes" = undifferentiated (no clear type). "3+ themes" = broad interests across multiple personality types. Multi-theme (2+) = 57.9%. | Oct 2025 (N=1,012)</div>
                             <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
                         </div>
                         <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
@@ -2483,6 +2509,7 @@
                         <!-- October: CTE Pathway Chart for Sectors -->
                         <div class="chart-card" style="margin-top:1.5rem;">
                             <div class="chart-title">CTE Pathway Interest — Sector Alignment (October)</div>
+                            <div class="metric-detail">Student interest in Career & Technical Education pathways that align with MoCo's priority sectors. CTE = structured career exploration combining classroom learning with hands-on experience. 87.1% of students are open to CTE. | Oct 2025 (N=1,012)</div>
                             <div style="position:relative;height:250px;"><canvas id="sectorsCTEChart"></canvas></div>
                         </div>
                         <div id="sectorsOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
@@ -2498,6 +2525,7 @@
                         <div class="chart-grid" style="grid-template-columns: 1fr;">
                             <div class="chart-card">
                                 <div class="chart-title">Top 10 Career Selections</div>
+                                <div class="metric-detail">Most frequently selected career interests among all students. % = share of total career selections. The top 10 account for only 28.7% of selections, indicating diverse interests across 200+ career codes. | SY 2025-26 (N=18,920)</div>
                                 <div class="chart-container"><canvas id="distributionChart"></canvas></div>
                             </div>
                         </div>
@@ -4765,6 +4793,15 @@
                 var mc = document.getElementById('monthViewContent');
                 if (mc) mc.style.display = '';
             }
+            // Trigger Chart.js resize for charts on the newly visible page
+            setTimeout(function() {
+                if (target) {
+                    target.querySelectorAll('canvas').forEach(function(c) {
+                        var chartInstance = Chart.getChart(c);
+                        if (chartInstance) chartInstance.resize();
+                    });
+                }
+            }, 50);
         }
 
         function toggleSidebar() {
