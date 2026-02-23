@@ -3685,7 +3685,7 @@
             // Next step generators keyed by metric and direction
             function getNextStep(metric, delta, curr, month) {
                 if (metric === 'Congruence') {
-                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their personality type. Focus on the ' + DATA.congruence.no_match.toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
+                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their personality type. Focus on the ' + (DATA.congruence.dist['No Match'] || 0).toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
                     return 'Congruence dipped in ' + month + '. Review which personality types are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
                 }
                 if (metric === 'Career Certainty') {
@@ -5150,26 +5150,26 @@
         }
 
         function initDashboard() {
-            computeDataQuality();
-            populateCoachFilter();
-            computeNorms();
-            renderMonthNav();
-            generateDynamicOverview();
-            renderCorrelationSpotlight();
-            renderMonthDivergenceCards();
-            renderRiasecMonthsHeatmap();
-            renderSchoolRiasecHeatmap();
-            populateSchoolTable();
-            initCharts();
-            applyGlobalFilters();
-            generatePatternFlags();
-            populateCoachTable();
-            renderRegressionBars();
-            renderCTEChart();
-            renderFollowupChart();
-            populateBLSTable();
-            initStaticInsightCards();
-            renderOverviewScoresChart();
+            try { computeDataQuality(); } catch(e) { console.error('computeDataQuality error:', e); }
+            try { populateCoachFilter(); } catch(e) { console.error('populateCoachFilter error:', e); }
+            try { computeNorms(); } catch(e) { console.error('computeNorms error:', e); }
+            try { renderMonthNav(); } catch(e) { console.error('renderMonthNav error:', e); }
+            try { generateDynamicOverview(); } catch(e) { console.error('generateDynamicOverview error:', e); }
+            try { renderCorrelationSpotlight(); } catch(e) { console.error('renderCorrelationSpotlight error:', e); }
+            try { renderMonthDivergenceCards(); } catch(e) { console.error('renderMonthDivergenceCards error:', e); }
+            try { renderRiasecMonthsHeatmap(); } catch(e) { console.error('renderRiasecMonthsHeatmap error:', e); }
+            try { renderSchoolRiasecHeatmap(); } catch(e) { console.error('renderSchoolRiasecHeatmap error:', e); }
+            try { populateSchoolTable(); } catch(e) { console.error('populateSchoolTable error:', e); }
+            try { initCharts(); } catch(e) { console.error('initCharts error:', e); }
+            try { applyGlobalFilters(); } catch(e) { console.error('applyGlobalFilters error:', e); }
+            try { generatePatternFlags(); } catch(e) { console.error('generatePatternFlags error:', e); }
+            try { populateCoachTable(); } catch(e) { console.error('populateCoachTable error:', e); }
+            try { renderRegressionBars(); } catch(e) { console.error('renderRegressionBars error:', e); }
+            try { renderCTEChart(); } catch(e) { console.error('renderCTEChart error:', e); }
+            try { renderFollowupChart(); } catch(e) { console.error('renderFollowupChart error:', e); }
+            try { populateBLSTable(); } catch(e) { console.error('populateBLSTable error:', e); }
+            try { initStaticInsightCards(); } catch(e) { console.error('initStaticInsightCards error:', e); }
+            try { renderOverviewScoresChart(); } catch(e) { console.error('renderOverviewScoresChart error:', e); }
             // October data distribution
             try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('Scorecard error:', e); }
             try { renderSectorImpactSummary(); } catch(e) { console.error('Sector summary error:', e); }
