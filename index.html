@@ -2180,9 +2180,9 @@
                         </div>
 
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
+                            <div class="metric-detail" style="margin-bottom:0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Use pills to pivot by personality type, grade level, or career selection. | SY 2025-26</div>
                             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
                                 <div class="bubble-chart-title" style="margin-bottom:0;">Congruence & Certainty Trends</div>
-                                <div class="metric-detail" style="flex-basis:100%;margin-top:-0.5rem;">Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug–Dec 2025. Use pills to pivot by personality type, grade level, or career selection. | SY 2025-26</div>
                                 <div class="seg-pills" id="trendSegPills">
                                     <span class="seg-pill active" data-seg="overall" onclick="switchTrendSegment('overall', this)">Overall</span>
                                     <span class="seg-pill" data-seg="personality" onclick="switchTrendSegment('personality', this)">By Personality</span>
@@ -4097,9 +4097,13 @@
         }
 
         function renderOverviewScoresChart() {
-            if (overviewScoresChartInstance) { overviewScoresChartInstance.destroy(); overviewScoresChartInstance = null; }
+            try {
             var canvas = document.getElementById('overviewScoresCanvas');
             if (!canvas) return;
+            // Destroy any existing chart on this canvas
+            var existing = Chart.getChart(canvas);
+            if (existing) existing.destroy();
+            if (overviewScoresChartInstance) { try { overviewScoresChartInstance.destroy(); } catch(e) {} overviewScoresChartInstance = null; }
             var ctx = canvas.getContext('2d');
             var months = Object.keys(DATA.alignment_trajectory);
             var seg = currentTrendSegment;
@@ -4176,7 +4180,7 @@
             } else if (seg === 'grade') {
                 // Stacked bar by grade distribution per month
                 // We only have October grade data, so simulate consistent proportions across months
-                var grades = Object.keys(OCTOBER_FULL.grade_dist).sort();
+                var grades = Object.keys(OCTOBER_FULL.grade_dist).sort(function(a,b) { return parseInt(a) - parseInt(b); });
                 var gradeColors = ['#dbeafe','#93c5fd','#3b82f6','#1d4ed8','#fbbf24','#f59e0b','#dc2626'];
                 var gradeBorders = ['#3b82f6','#2563eb','#1d4ed8','#1e40af','#d97706','#b45309','#991b1b'];
 
@@ -4255,8 +4259,9 @@
                             legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } },
                             tooltip: {
                                 callbacks: {
-                                    afterLabel: function(ctx) {
-                                        var fullName = topCareers[ctx.datasetIndex]?.career;
+                                    afterLabel: function(tooltipItem) {
+                                        var ci = topCareers[tooltipItem.datasetIndex];
+                                        var fullName = ci ? ci.career : null;
                                         var bls = fullName ? BLS_CAREERS[fullName] : null;
                                         if (!bls) return '';
                                         return ['Salary: ' + bls.salary, 'Outlook: ' + bls.outlook];
@@ -4272,6 +4277,7 @@
                     }
                 });
             }
+            } catch(e) { console.error('renderOverviewScoresChart error:', e); }
         }
 
         // ===== OCTOBER DATA DISTRIBUTION FUNCTIONS =====
@@ -4360,7 +4366,7 @@
                 {name: 'Real Estate & Development', primary: 'Enterprising', secondary: 'Realistic'}
             ];
 
-            var html = '<div style="margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:700;color:var(--t1);">Sector Impact — Steve\'s 8 Priority Areas</span><span style="font-size:11px;color:var(--t3);margin-left:0.75rem;">Congruence & certainty by primary RIASEC type</span></div>';
+            var html = '<div style="margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:700;color:var(--t1);">Sector Impact — MoCo Priority Areas</span><span style="font-size:11px;color:var(--t3);margin-left:0.75rem;">Congruence & certainty by primary RIASEC type</span></div>';
             html += '<div class="sector-grid">';
             sectorMap.forEach(function(s) {
                 var rd = DATA.congruence_by_riasec[s.primary];
@@ -4722,7 +4728,7 @@
                     value: '\u03B2 = -3.27 (disengagement)',
                     detail: '87.1% of students are open to CTE, but 28% selected zero options. CTE pathway exploration is the single most powerful predictor of reducing student disengagement (\u03B2=-3.27, p<0.001).',
                     soWhat: 'Ensuring every student sees at least 2-3 CTE pathways aligned with priority sectors should be a top program priority.',
-                    nextStep: 'Map CTE pathway options directly to Steve\'s 8 priority sectors. Auto-suggest pathways based on RIASEC type.',
+                    nextStep: 'Map CTE pathway options directly to MoCo\'s 8 priority sectors. Auto-suggest pathways based on RIASEC type.',
                     sources: [{label: 'CTE Data', action: 'page:monthly-report'}, {label: 'Sectors', action: 'page:sectors'}]
                 });
             }
@@ -4765,15 +4771,15 @@
             initStaticInsightCards();
             renderOverviewScoresChart();
             // October data distribution
-            renderCongruenceCertaintyScorecard();
-            renderSectorImpactSummary();
-            renderOverviewOctoberCharts();
-            renderProgramPerfOctober();
-            renderEngagementOctober();
-            renderCareerPlanOctober();
-            renderRiasecOctober();
-            renderSectorsOctober();
-            renderDistributionOctober();
+            try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('Scorecard error:', e); }
+            try { renderSectorImpactSummary(); } catch(e) { console.error('Sector summary error:', e); }
+            try { renderOverviewOctoberCharts(); } catch(e) { console.error('Overview Oct charts error:', e); }
+            try { renderProgramPerfOctober(); } catch(e) { console.error('ProgramPerf Oct error:', e); }
+            try { renderEngagementOctober(); } catch(e) { console.error('Engagement Oct error:', e); }
+            try { renderCareerPlanOctober(); } catch(e) { console.error('CareerPlan Oct error:', e); }
+            try { renderRiasecOctober(); } catch(e) { console.error('RIASEC Oct error:', e); }
+            try { renderSectorsOctober(); } catch(e) { console.error('Sectors Oct error:', e); }
+            try { renderDistributionOctober(); } catch(e) { console.error('Distribution Oct error:', e); }
         }
 
         function showPage(pageId) {
