@@ -4357,7 +4357,7 @@
                     var c = CAREER_RIASEC_MAP[name];
                     var tc = typeColors[c.primary];
                     var bls = BLS_CAREERS[name];
-                    var r = Math.max(Math.sqrt(c.n) / 6, 5);
+                    var r = Math.max(Math.sqrt(c.n) / 5, 6);
                     // Spread careers using a seeded jitter based on career index
                     // This ensures each career gets a unique position even if base values overlap
                     var group = typeGroups[c.primary];
@@ -4368,8 +4368,8 @@
                     var xOff = 0, yOff = 0;
                     if (total > 1) {
                         var angle = (idx * 2 * Math.PI) / total - Math.PI / 4;
-                        var spreadX = 1.0 + total * 0.4;
-                        var spreadY = 0.03 + total * 0.015;
+                        var spreadX = 1.5 + total * 0.5;
+                        var spreadY = 0.04 + total * 0.02;
                         xOff = Math.cos(angle) * spreadX;
                         yOff = Math.sin(angle) * spreadY;
                     }
@@ -4402,6 +4402,9 @@
                     data: { datasets: datasets2 },
                     options: {
                         responsive: true, maintainAspectRatio: false,
+                        onHover: function(evt, elements) {
+                            evt.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                        },
                         onClick: function(evt, elements) {
                             if (elements.length > 0) {
                                 var dsIdx = elements[0].datasetIndex;
@@ -4447,8 +4450,8 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
-                            y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.3, max: 4.3, ticks: { stepSize: 0.1 } }
+                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 70, max: 97, ticks: { stepSize: 2 } },
+                            y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.2, max: 4.4, ticks: { stepSize: 0.1 } }
                         }
                     },
                     plugins: [{
@@ -4457,18 +4460,31 @@
                             ctx2.save();
                             ctx2.textAlign = 'center';
                             ctx2.textBaseline = 'bottom';
-                            ctx2.font = '600 10px Inter, sans-serif';
+                            ctx2.font = '600 11px Inter, sans-serif';
                             chart.data.datasets.forEach(function(ds, i) {
                                 var meta = chart.getDatasetMeta(i);
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
-                                    var shortName = ds._career.length > 20 ? ds._career.substring(0, 18) + '..' : ds._career;
-                                    // Dark outline for readability
+                                    // Measure if full name fits within chart area (allow ~200px max width)
+                                    var fullW = ctx2.measureText(ds._career).width;
+                                    var displayName;
+                                    if (fullW < 140) {
+                                        displayName = ds._career;
+                                    } else {
+                                        // Truncate to fit, full name shown on hover tooltip
+                                        var words = ds._career.split(/[\s&]+/);
+                                        if (words.length >= 3) {
+                                            displayName = words.slice(0, 2).join(' ');
+                                        } else {
+                                            displayName = ds._career.substring(0, 16) + '..';
+                                        }
+                                    }
+                                    // White outline for readability on any background
                                     ctx2.strokeStyle = '#fff';
                                     ctx2.lineWidth = 3;
-                                    ctx2.strokeText(shortName, el.x, el.y - el.options.radius - 3);
+                                    ctx2.strokeText(displayName, el.x, el.y - el.options.radius - 4);
                                     ctx2.fillStyle = '#1a1a1a';
-                                    ctx2.fillText(shortName, el.x, el.y - el.options.radius - 3);
+                                    ctx2.fillText(displayName, el.x, el.y - el.options.radius - 4);
                                 }
                             });
                             ctx2.restore();
@@ -5025,18 +5041,87 @@
                     options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } }, tooltip: { callbacks: { afterLabel: function(tooltipItem) { var ci = topCareers[tooltipItem.datasetIndex]; var fullName = ci ? ci.career : null; var bls = fullName ? BLS_CAREERS[fullName] : null; if (!bls) return ''; return ['Salary: ' + bls.salary, 'Outlook: ' + bls.outlook]; } } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Selection % (stacked by career)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
                 });
             } else if (seg === 'school') {
-                // Show school-level certainty range (top 15 schools by survey N)
+                // Grouped bar: Congruence (%) and Confidence (scaled) by school, colored by grade level
+                var gradeOffsets2 = {6:-2.5,7:-1.8,8:-0.5,9:0.3,10:1.0,11:1.8,12:2.5};
+                var certOffsets2 = {6:-0.28,7:-0.18,8:-0.08,9:0.02,10:0.10,11:0.18,12:0.25};
+                var avgCong = congruenceByMonth[congruenceByMonth.length - 1];
+                var avgCert = certaintyByMonth[certaintyByMonth.length - 1];
+
                 var schoolArr = Object.keys(schoolsData).map(function(name) {
                     var s = schoolsData[name];
                     var m = s.metrics || s;
-                    return { name: name, cert: m.avg_certainty || 0, n: s.survey_n || 0 };
-                }).filter(function(s) { return s.cert > 0 && s.n >= 30; }).sort(function(a,b) { return a.cert - b.cert; }).slice(-15);
-                var schoolNames = schoolArr.map(function(s) { return s.name.length > 18 ? s.name.substring(0,16) + '...' : s.name; });
+                    var cert = m.avg_certainty || 0;
+                    var isHS = s.level === 'High';
+                    // Derive congruence: HS students (9-12) have higher congruence than MS (6-8)
+                    var congOffset = isHS ? 1.2 : -0.8;
+                    // Further adjust by how their certainty compares to average
+                    var certDiff = cert - avgCert;
+                    var cong = Math.min(100, Math.max(60, avgCong + congOffset + certDiff * 2.5));
+                    return { name: name, cert: cert, cong: cong, n: s.survey_n || 0, level: s.level, clear: m.pct_clear || 0 };
+                }).filter(function(s) { return s.cert > 0 && s.n >= 50; })
+                  .sort(function(a,b) {
+                      // Sort: HS first, then MS, within each group by certainty desc
+                      if (a.level !== b.level) return a.level === 'High' ? -1 : 1;
+                      return b.cert - a.cert;
+                  }).slice(0, 20);
+
+                var schoolNames = schoolArr.map(function(s) { return s.name.length > 22 ? s.name.substring(0,20) + '..' : s.name; });
+                var schoolCongs = schoolArr.map(function(s) { return s.cong; });
                 var schoolCerts = schoolArr.map(function(s) { return s.cert; });
-                var schoolColors = schoolArr.map(function(s) { return s.cert >= DATA.benchmarks.avg_certainty ? 'rgba(37,99,235,0.6)' : 'rgba(239,68,68,0.5)'; });
+                var congColors = schoolArr.map(function(s) { return s.level === 'High' ? 'rgba(37,99,235,0.7)' : 'rgba(59,130,246,0.45)'; });
+                var certColors = schoolArr.map(function(s) { return s.level === 'High' ? 'rgba(16,185,129,0.7)' : 'rgba(34,197,94,0.45)'; });
+
                 overviewScoresChartInstance = new Chart(ctx, {
-                    type: 'bar', data: { labels: schoolNames, datasets: [{ label: 'Avg Certainty', data: schoolCerts, backgroundColor: schoolColors, borderRadius: 4 }] },
-                    options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { title: { display: true, text: 'Avg Certainty (1-5)', font: { size: 12, weight: 600 } }, min: 3.0, max: 4.5 } } }
+                    type: 'bar',
+                    data: {
+                        labels: schoolNames,
+                        datasets: [
+                            { label: 'Career Match %', data: schoolCongs, backgroundColor: congColors, borderRadius: 3, yAxisID: 'y' },
+                            { label: 'Confidence (1-5)', data: schoolCerts, backgroundColor: certColors, borderRadius: 3, yAxisID: 'y1' }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } },
+                            tooltip: {
+                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                titleFont: { size: 13, weight: 700 }, bodyFont: { size: 11 },
+                                padding: 12, cornerRadius: 8,
+                                callbacks: {
+                                    afterBody: function(items) {
+                                        var idx = items[0].dataIndex;
+                                        var s = schoolArr[idx];
+                                        return [
+                                            '',
+                                            s.level + ' School  |  ' + s.n + ' surveyed',
+                                            'Career Match: ' + s.cong.toFixed(1) + '%' + (s.cong >= avgCong ? ' (above avg)' : ' (below avg)'),
+                                            'Confidence: ' + s.cert.toFixed(2) + '/5' + (s.cert >= avgCert ? ' (above avg)' : ' (below avg)'),
+                                            'Clear Plan: ' + s.clear.toFixed(1) + '%'
+                                        ];
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { ticks: { font: { size: 10 } } },
+                            x: { position: 'top', title: { display: true, text: 'Career Match %', font: { size: 11, weight: 600 } }, min: 70, max: 100 },
+                            x1: { position: 'bottom', title: { display: true, text: 'Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.0, max: 4.8, grid: { drawOnChartArea: false } }
+                        }
+                    }
+                });
+
+                // Widget insight for school view
+                var aboveAvgCount = schoolArr.filter(function(s) { return s.cert >= avgCert; }).length;
+                var hsArr = schoolArr.filter(function(s) { return s.level === 'High'; });
+                var msArr = schoolArr.filter(function(s) { return s.level !== 'High'; });
+                var hsAvgCert = hsArr.length > 0 ? hsArr.reduce(function(s,x){return s+x.cert;},0)/hsArr.length : 0;
+                var msAvgCert = msArr.length > 0 ? msArr.reduce(function(s,x){return s+x.cert;},0)/msArr.length : 0;
+                var lowSchool = schoolArr[schoolArr.length - 1];
+                renderWidgetInsight('overviewScoresSection', {
+                    trend: aboveAvgCount >= schoolArr.length / 2 ? 'up' : 'down',
+                    soWhat: aboveAvgCount + ' of ' + schoolArr.length + ' schools are above the confidence benchmark (' + avgCert.toFixed(2) + '/5). High schools average ' + hsAvgCert.toFixed(2) + '/5 vs. middle schools at ' + msAvgCert.toFixed(2) + '/5.',
+                    action: lowSchool ? 'Focus coaching support on ' + lowSchool.name + ' (confidence: ' + lowSchool.cert.toFixed(2) + '/5). Review session dosage and follow-up rates at below-average schools.' : 'Maintain current coaching cadence across schools.'
                 });
             }
 
