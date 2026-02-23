@@ -2343,7 +2343,7 @@
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Career Clarity Distribution</div>
-                                <div class="metric-detail">Student self-reported career clarity: "Unsure" (no direction), "Some Idea" (exploring options), or "Clear Plan" (specific career goal). Based on post-session surveys. | SY 2025-26 cumulative (N=10,006)</div>
+                                <div class="metric-detail">Student self-reported career clarity: "Unsure" (no direction), "Some Idea" (exploring options), or "Clear Plan" (specific career goal). Based on post-session surveys. | SY 2025-26 cumulative (10,006 students)</div>
                                 <div class="chart-container"><canvas id="clarityDistChart"></canvas></div>
                             </div>
                         </div>
@@ -2354,7 +2354,7 @@
                         <div class="section-narrative">
                             <p><strong>Career-Personality Congruence (Holland Code Analysis):</strong> Using Holland's (1997) hexagonal model and O*NET 28.1 RIASEC mappings, <span class="clickable-metric" onclick="showModal('congruence')">85.1% of students</span> show High or Medium career-personality match. The breakdown: High Match (≥2 matching codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%.</p>
                             <p><strong>Key Insight — The Congruence Paradox:</strong> Students with "High" congruence actually report <em>lower</em> certainty (3.90) than "Medium" matches (4.03). This counterintuitive finding suggests that the most aligned students are also the most reflective — they understand career complexity rather than being naively certain.</p>
-                            <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (N=2,962); O*NET 28.1 Database; Holland, J.L. (1997) Making vocational choices, 3rd ed.</div>
+                            <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (2,962 students); O*NET 28.1 Database; Holland, J.L. (1997) Making vocational choices, 3rd ed.</div>
                         </div>
                         <div class="insight-box positive">
                             <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest personality-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
@@ -2362,7 +2362,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Career-Personality Match Distribution</div>
-                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC personality type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (N=2,962)</div>
+                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC personality type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
                                 <div class="chart-container"><canvas id="congruenceDonutChart"></canvas></div>
                             </div>
                             <div class="chart-card">
@@ -2398,12 +2398,12 @@
 
                     <div class="page" id="career-plan">
                         <div class="section-narrative">
-                            <p><strong>Career Clarity Trajectory:</strong> Clear Plan % has risen from <span class="clickable-metric" onclick="showModal('clear_plan')">18.2% → 22.1%</span> over Aug-Dec, a statistically significant 3.9pp gain (p&lt;0.001). Average certainty peaked in November (3.95/5) before dipping slightly to 3.87 in December — likely seasonal, as end-of-semester fatigue and winter break approach.</p>
-                            <p>The program currently has <strong>2,172 students with clear career plans</strong>, 6,329 with "some idea," and 1,505 who remain unsure. The "Some Idea" cohort (63.3%) is the program's most actionable group — targeted interventions could convert many toward clarity.</p>
-                            <div class="metric-detail">Sources: MoCo CAP Score Cards Aug-Dec 2025; Cristina's Oct 2025 Regression Analysis (β coefficients); Super's (1957) Career Development Theory</div>
+                            <p><strong>Career Clarity Trajectory:</strong> Clear Plan % has risen from <span class="clickable-metric" onclick="showModal('clear_plan')">18.2% to 22.1%</span> over Aug-Dec, a meaningful 3.9 percentage point gain. Average certainty peaked in November (3.95 out of 5) before dipping slightly to 3.87 in December — likely seasonal, as end-of-semester fatigue and winter break approach.</p>
+                            <p>The program currently has <strong>2,172 students with clear career plans</strong>, 6,329 with "some idea," and 1,505 who remain unsure. The "Some Idea" group (63.3%) is the most actionable — targeted interventions could convert many toward clarity.</p>
+                            <div class="metric-detail">Sources: MoCo CAP Score Cards Aug-Dec 2025; Oct 2025 Analysis; Career Development Theory</div>
                         </div>
                         <div class="insight-box">
-                            <strong>Dosage Matters:</strong> Schools with higher per-student session counts show stronger certainty outcomes. Poolesville HS (6.88 sessions/student, certainty 4.54) and Richard Montgomery HS (5.26, certainty 4.38) demonstrate that deeper engagement drives better results. The correlation (r=0.47, p&lt;0.001) accounts for 22% of variance in certainty.
+                            <strong>More Sessions = Better Outcomes:</strong> Schools with higher per-student session counts show stronger certainty outcomes. Poolesville HS (6.88 sessions/student, certainty 4.54) and Richard Montgomery HS (5.26 sessions/student, certainty 4.38) demonstrate that deeper engagement drives better results. Session count explains about 22% of the difference in career certainty.
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
@@ -2455,7 +2455,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Dosage-Response: Sessions vs Certainty</div>
-                                <div class="metric-detail">Scatter plot: X = sessions per student (dosage), Y = average career certainty (1-5). Each dot is a school. Dosage = total sessions ÷ unique students. Higher dosage correlates with higher certainty (r=0.47). | SY 2025-26</div>
+                                <div class="metric-detail">Scatter plot: X = sessions per student (dosage), Y = average career certainty (1-5). Each dot is a school. Dosage = total sessions ÷ unique students. More sessions per student correlates with higher certainty. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="dosageChart"></canvas></div>
                                 <div id="ic-dosage-response"></div>
                             </div>
@@ -2535,13 +2535,13 @@
 
                     <div class="page" id="riasec">
                         <div class="section-narrative">
-                            <p><strong>RIASEC Type Distribution (N=23,695):</strong> Realistic (5,011) and Artistic (4,829) types lead the distribution, consistent with national adolescent norms. The Conventional type's lower count (2,357, 9.9%) aligns with developmental psychology — abstract organizational interests emerge later in career maturity.</p>
+                            <p><strong>RIASEC Type Distribution (23,695 students):</strong> Realistic (5,011) and Artistic (4,829) types lead the distribution, consistent with national adolescent norms. The Conventional type's lower count (2,357, 9.9%) aligns with developmental psychology — abstract organizational interests emerge later in career maturity.</p>
                             <p><strong>Cross-Reference Insight:</strong> Comparing against O*NET national workforce data, MoCo CAP students show higher Artistic representation (+4.2pp) and lower Conventional (-3.1pp) than the adult workforce. This gap represents both a developmental norm and a guidance opportunity — helping students see how their creative interests map to real careers.</p>
-                            <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (N=23,695 assessed); O*NET National Workforce RIASEC Distribution; Holland (1997); Nye et al. (2012) meta-analysis</div>
+                            <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (23,695 students assessed); O*NET National Workforce RIASEC Distribution; Holland (1997); Nye et al. (2012) meta-analysis</div>
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
-                                <div class="chart-title">RIASEC Type Distribution (N=10,006)</div>
+                                <div class="chart-title">RIASEC Type Distribution (10,006 students)</div>
                                 <div class="metric-detail">Count of students identified with each Holland personality type: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
                                 <div class="chart-container"><canvas id="riasecDistChart"></canvas></div>
                                 <div id="ic-riasec-distribution"></div>
@@ -2638,7 +2638,7 @@
 
                     <div class="page" id="distribution">
                         <div class="section-narrative">
-                            <p><strong>Top 10 Career Selections (October N=18,920):</strong> Athletes & Sports Competitors lead at 7.1%, followed by Lawyers (4.0%) and Physicians (3.7%). The top 10 careers account for only 28.7% of all selections, indicating a healthy long tail of diverse interests across 200+ career codes.</p>
+                            <p><strong>Top 10 Career Selections (October, 18,920 students):</strong> Athletes & Sports Competitors lead at 7.1%, followed by Lawyers (4.0%) and Physicians (3.7%). The top 10 careers account for only 28.7% of all selections, indicating a healthy long tail of diverse interests across 200+ career codes.</p>
                         </div>
                         <div class="insight-box alert">
                             <strong>Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (7.1%) + "Actors" (1.5%) = 8.6% pursuing glamour careers with very limited labor market capacity (~16,500 national positions, -3% growth). The program should add a "Career Reality Check" module that pairs aspiration data with BLS outlook data. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
@@ -2646,7 +2646,7 @@
                         <div class="chart-grid" style="grid-template-columns: 1fr;">
                             <div class="chart-card">
                                 <div class="chart-title">Top 10 Career Selections</div>
-                                <div class="metric-detail">Most frequently selected career interests among all students. % = share of total career selections. The top 10 account for only 28.7% of selections, indicating diverse interests across 200+ career codes. | SY 2025-26 (N=18,920)</div>
+                                <div class="metric-detail">Most frequently selected career interests among all students. % = share of total career selections. The top 10 account for only 28.7% of selections, indicating diverse interests across 200+ career codes. | SY 2025-26 (18,920 students)</div>
                                 <div class="chart-container"><canvas id="distributionChart"></canvas></div>
                             </div>
                         </div>
@@ -2690,15 +2690,15 @@
                                     <div class="expert-section">
                                         <div class="expert-section-title green">✓ Key Findings</div>
                                         <div class="expert-text">
-                                            With <span class="expert-metric">N=10,006</span> survey responses across 65 schools, this dataset has strong statistical power — margins of error range from ±0.03 to ±0.81pp at 95% confidence. The <span class="expert-metric">85.1%</span> congruence rate is remarkably high and statistically significant. Investigative types show the highest match at <span class="expert-metric">88.1%</span> while Conventional types lag at <span class="expert-metric">78.9%</span> — a 9.2pp gap warranting investigation.
+                                            With <span class="expert-metric">10,006</span> survey responses across 65 schools, this dataset has strong statistical power — margins of error range from ±0.03 to ±0.81pp at 95% confidence. The <span class="expert-metric">85.1%</span> congruence rate is remarkably high and statistically significant. Investigative types show the highest match at <span class="expert-metric">88.1%</span> while Conventional types lag at <span class="expert-metric">78.9%</span> — a 9.2pp gap warranting investigation.
                                             <br><br>
-                                            Month-over-month, the Clear Plan metric shows a positive trajectory: <span class="expert-metric">18.2% → 22.1%</span> (Aug→Dec), representing a statistically significant 3.9pp gain (p&lt;0.001). However, the Dec helpfulness dip from 3.78→3.66 needs monitoring — while within natural variance, two consecutive months of decline would signal a real issue.
+                                            Month-over-month, the Clear Plan metric shows a positive trajectory: <span class="expert-metric">18.2% → 22.1%</span> (Aug→Dec), a meaningful 3.9 percentage point gain. However, the Dec helpfulness dip from 3.78→3.66 needs monitoring — while within natural variance, two consecutive months of decline would signal a real issue.
                                         </div>
                                     </div>
                                     <div class="expert-section">
                                         <div class="expert-section-title red">⚠ Data Quality Flags</div>
                                         <div class="expert-text">
-                                            Seven schools have survey N&lt;25 (Benjamin Banneker, Cabin John, Gaithersburg MS, James Hubert Blake, Rocky Hill, Takoma Park, William H. Farquhar), making their metrics unreliable. Col. Zadok Magruder shows <span class="expert-metric">0% clear plan</span> with N=170 — this is an outlier that suggests a data collection issue rather than a true signal. Wheaton HS reports <span class="expert-metric">certainty=2.0</span> with N=21 — likely assessment fatigue or incomplete surveys. Recommend excluding schools with N&lt;30 from aggregate comparisons.
+                                            Seven schools have fewer than 25 survey responses (Benjamin Banneker, Cabin John, Gaithersburg MS, James Hubert Blake, Rocky Hill, Takoma Park, William H. Farquhar), making their metrics unreliable. Col. Zadok Magruder shows <span class="expert-metric">0% clear plan</span> with 170 responses — this is an outlier that suggests a data collection issue rather than a true signal. Wheaton HS reports <span class="expert-metric">certainty=2.0</span> with only 21 responses — likely assessment fatigue or incomplete surveys. Recommend excluding schools with fewer than 30 responses from aggregate comparisons.
                                         </div>
                                     </div>
                                     <div class="expert-section">
@@ -2852,7 +2852,7 @@
                                     <div class="expert-section">
                                         <div class="expert-section-title red">⚠ Schools Needing Immediate Attention</div>
                                         <div class="expert-text">
-                                            Priority intervention schools: <span class="expert-metric">Watkins Mill HS</span> — only 11.1% clear plan despite 1,185 sessions (high volume, low impact suggests program delivery issues, not access issues). <span class="expert-metric">Col. Zadok Magruder HS</span> — 0% clear plan, 2.50 certainty with N=170 responses. This isn't a data gap; something is fundamentally not connecting. <span class="expert-metric">Wheaton HS</span> — 0% clear plan, certainty of 2.0 (lowest in program). <span class="expert-metric">James Hubert Blake HS</span> — only 57 YTD sessions and 0% clear plan. These four schools need coach support visits and possibly different programming approaches.
+                                            Priority intervention schools: <span class="expert-metric">Watkins Mill HS</span> — only 11.1% clear plan despite 1,185 sessions (high volume, low impact suggests program delivery issues, not access issues). <span class="expert-metric">Col. Zadok Magruder HS</span> — 0% clear plan, 2.50 certainty with 170 responses. This isn't a data gap; something is fundamentally not connecting. <span class="expert-metric">Wheaton HS</span> — 0% clear plan, certainty of 2.0 (lowest in program). <span class="expert-metric">James Hubert Blake HS</span> — only 57 sessions year-to-date and 0% clear plan. These four schools need coach support visits and possibly different programming approaches.
                                         </div>
                                     </div>
                                     <div class="expert-section">
@@ -2988,7 +2988,7 @@
                                 </div>
                                 <div class="insight-box">
                                     <strong>So What:</strong> December shows seasonal effects (winter break Dec 22-Jan 2, final exams). Sessions stable at 8,169 (-1.2% from Nov). Certainty dipped from 3.95→3.87 — within natural variance but warrants monitoring. <strong>The bright spot: Clear Plan % hit its highest mark (22.1%, up from 21.4% in Nov)</strong>, meaning the program's cumulative impact on career clarity continues to build even as casual engagement softens. <em>The Change: -0.08 certainty, +0.7pp clarity. Why: Seasonal + end-of-semester fatigue. Next Steps: Plan "Career Kickstart" for January return; track whether Jan bounces back above 3.90.</em>
-                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, December 2025 (N=8,169)</div>
+                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, December 2025 (8,169 sessions)</div>
                                 </div>
                             </div>
                         </div>
@@ -3028,7 +3028,7 @@
                                     <p><strong>Sessions YTD (49,467):</strong> Count of all unique student interactions through MoCo CAP platform, July-December 2025.</p>
                                     <p><strong>Unique Students (47,163):</strong> De-duplicated student IDs. Est. 68% reach of MCPS high school population.</p>
                                     <p><strong>Congruence Rate (85.1%):</strong> Percentage of students with High or Medium career-personality match using Holland Code and O*NET-SOC mappings.</p>
-                                    <p><strong>Clear Career Plan (22.1%):</strong> Percentage of survey respondents reporting clear understanding of career direction (N=10,006).</p>
+                                    <p><strong>Clear Career Plan (22.1%):</strong> Percentage of survey respondents reporting clear understanding of career direction (10,006 students).</p>
                                     <p><strong>Helpful Rating (3.68/5):</strong> Average Likert scale response to 'How helpful was this program?'</p>
                                     <p><strong>Average Certainty (3.87/5):</strong> Mean response to 'How certain are you about your career?'</p>
                                 </div>
@@ -3036,8 +3036,8 @@
                             <div class="chart-card" style="margin-top: 1rem;">
                                 <div class="chart-title">Survey Design & Sampling</div>
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
-                                    <p>Sample Size: N=10,006 responses across 65 MCPS schools</p>
-                                    <p>Confidence Level: 95% (all metrics have N≥200)</p>
+                                    <p>Sample Size: 10,006 responses across 65 MCPS schools</p>
+                                    <p>Confidence Level: 95% (all metrics have 200+ responses)</p>
                                     <p>Survey Administration: Post-session anonymous Likert surveys + RIASEC assessments</p>
                                     <p>Margin of Error: ±0.03 to ±0.81 percentage points depending on metric</p>
                                 </div>
@@ -5531,7 +5531,7 @@
             schools.forEach(school => {
                 // Sessions - below norm (concern) and above norm (standout)
                 if (school.ytd < activeThresholds.sessions_low) {
-                    currentAlerts.push({school: school.school, type: 'Below-Norm Sessions', value: school.ytd, norm: `Mean: ${dataNorms.sessions.mean.toFixed(0)}`, direction: 'negative', insight: 'Low dosage reduces program impact on career certainty (r=0.47)'});
+                    currentAlerts.push({school: school.school, type: 'Below-Norm Sessions', value: school.ytd, norm: `Mean: ${dataNorms.sessions.mean.toFixed(0)}`, direction: 'negative', insight: 'Students with fewer sessions show lower career certainty. Aim for 6+ sessions per student for meaningful impact.'});
                 } else if (school.ytd > activeThresholds.sessions_high) {
                     currentAlerts.push({school: school.school, type: 'Above-Norm Sessions', value: school.ytd, norm: `Mean: ${dataNorms.sessions.mean.toFixed(0)}`, direction: 'positive', insight: 'High engagement — investigate what drives adoption at this school'});
                 }
@@ -5698,7 +5698,7 @@
                 title: "Clear Career Plan Details",
                 metrics: [{label:"Metric",value:"Students with Clear Plan"},{label:"Percentage",value:"22.1%"},{label:"Sample Size",value:"N = 10,006"},{label:"Margin of Error",value:"±0.81%"},{label:"Confidence",value:"HIGH"}],
                 methodology: "Survey: 'Do you have a clear plan for your career?' Responses: Unsure (15.0%), Some Idea (62.9%), Clear Plan (22.1%). MOE = 1.96 × √(0.221×0.779/10006).",
-                source: "MoCo CAP Score Card, December 2025 (N=10,006)"
+                source: "MoCo CAP Score Card, December 2025 (10,006 students)"
             },
             certainty: {
                 title: "Career Certainty Details",
