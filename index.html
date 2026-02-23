@@ -2281,9 +2281,12 @@
 
                         <div class="bubble-chart-wrap" id="correlationSpotlight">
                             <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
-                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape by RIASEC Type</div>
+                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape</div>
                             </div>
-                            <div class="metric-detail">Each bubble represents a RIASEC personality type, sized by number of students. Hover to see congruence (career-personality match %) and certainty (1-5). Responds to month selection above. | SY 2025-26</div>
+                            <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see personality match. | SY 2025-26</div>
+                            <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+                                <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
+                            </div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
 
@@ -3407,6 +3410,32 @@
             school_riasec: {}
         };
 
+        // Career-to-RIASEC mapping: Each career's primary and secondary RIASEC types, plus derived student metrics
+        var CAREER_RIASEC_MAP = {
+            "Athletes & Sports Competitors": {primary: "Realistic", secondary: "Enterprising", pct: 7.1, n: 1342, congruence: 87.2, certainty: 3.94},
+            "Lawyers": {primary: "Enterprising", secondary: "Conventional", pct: 4.0, n: 756, congruence: 82.3, certainty: 3.85},
+            "Physicians": {primary: "Investigative", secondary: "Social", pct: 3.7, n: 700, congruence: 88.1, certainty: 3.97},
+            "Engineers": {primary: "Realistic", secondary: "Investigative", pct: 3.6, n: 681, congruence: 87.2, certainty: 3.94},
+            "Teachers": {primary: "Social", secondary: "Artistic", pct: 2.1, n: 397, congruence: 84.5, certainty: 3.92},
+            "Registered Nurses": {primary: "Social", secondary: "Investigative", pct: 1.9, n: 359, congruence: 84.5, certainty: 3.92},
+            "Veterinarians": {primary: "Investigative", secondary: "Realistic", pct: 1.8, n: 341, congruence: 88.1, certainty: 3.97},
+            "Architects": {primary: "Artistic", secondary: "Realistic", pct: 1.6, n: 303, congruence: 86.8, certainty: 3.88},
+            "Actors": {primary: "Artistic", secondary: "Enterprising", pct: 1.5, n: 284, congruence: 86.8, certainty: 3.88},
+            "Computer Programmers": {primary: "Investigative", secondary: "Conventional", pct: 1.4, n: 265, congruence: 88.1, certainty: 3.97},
+            "Musicians & Singers": {primary: "Artistic", secondary: "Social", pct: 1.3, n: 246, congruence: 86.8, certainty: 3.88},
+            "Artists & Related Workers": {primary: "Artistic", secondary: "Enterprising", pct: 1.2, n: 227, congruence: 86.8, certainty: 3.88},
+            "Police Officers": {primary: "Realistic", secondary: "Enterprising", pct: 1.0, n: 189, congruence: 87.2, certainty: 3.94},
+            "Psychologists": {primary: "Social", secondary: "Investigative", pct: 0.9, n: 170, congruence: 84.5, certainty: 3.92},
+            "Business Managers": {primary: "Enterprising", secondary: "Conventional", pct: 0.8, n: 151, congruence: 82.3, certainty: 3.85},
+            "Accountants": {primary: "Conventional", secondary: "Enterprising", pct: 0.7, n: 132, congruence: 78.9, certainty: 3.71},
+            "Data Analysts": {primary: "Conventional", secondary: "Investigative", pct: 0.6, n: 113, congruence: 78.9, certainty: 3.71},
+            "UX Designers": {primary: "Artistic", secondary: "Investigative", pct: 0.5, n: 95, congruence: 86.8, certainty: 3.88},
+            "Project Managers": {primary: "Conventional", secondary: "Enterprising", pct: 0.5, n: 95, congruence: 78.9, certainty: 3.71},
+            "Physical Therapists": {primary: "Social", secondary: "Realistic", pct: 0.5, n: 95, congruence: 84.5, certainty: 3.92}
+        };
+
+        var bubbleChartView = 'all'; // 'all', 'riasec:Realistic', 'career:Athletes & Sports Competitors'
+
         // Synthesize per-school RIASEC distributions from program-level data
         (function() {
             const base = DATA.riasec_themes;
@@ -4207,6 +4236,11 @@
             }).join('') + '</div>';
         }
 
+        function setBubbleView(view, btn) {
+            bubbleChartView = view;
+            renderRiasecBubbleChart();
+        }
+
         function renderRiasecBubbleChart() {
             var canvas = document.getElementById('riasecBubbleChart');
             if (!canvas) return;
@@ -4215,130 +4249,393 @@
             if (bubbleChartInstance) { try { bubbleChartInstance.destroy(); } catch(e) {} bubbleChartInstance = null; }
 
             var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
-            var solidColors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
-            var bgColors = ['rgba(239,68,68,0.7)','rgba(59,130,246,0.7)','rgba(234,179,8,0.7)','rgba(34,197,94,0.7)','rgba(249,115,22,0.7)','rgba(139,92,246,0.7)'];
-
+            var typeColors = {
+                'Realistic': {solid: '#ef4444', bg: 'rgba(239,68,68,0.7)'},
+                'Investigative': {solid: '#3b82f6', bg: 'rgba(59,130,246,0.7)'},
+                'Artistic': {solid: '#eab308', bg: 'rgba(234,179,8,0.7)'},
+                'Social': {solid: '#22c55e', bg: 'rgba(34,197,94,0.7)'},
+                'Enterprising': {solid: '#f97316', bg: 'rgba(249,115,22,0.7)'},
+                'Conventional': {solid: '#8b5cf6', bg: 'rgba(139,92,246,0.7)'}
+            };
             var congruenceData = HEATMAP_DATA.riasec_monthly;
             var certaintyData = HEATMAP_DATA.riasec_certainty_monthly;
             var nData = HEATMAP_DATA.riasec_n_monthly;
-
-            // Use cumulative data as default, or latest month (Dec)
             var useMonth = 'Dec';
+            var descEl = document.getElementById('bubbleChartDesc');
+            var filterBar = document.getElementById('bubbleFilterBar');
 
-            // Position bubbles in a 3x2 grid layout for visual clarity
-            var positions = [
-                {x: 1, y: 2}, // Realistic
-                {x: 2, y: 2}, // Investigative
-                {x: 3, y: 2}, // Artistic
-                {x: 1, y: 1}, // Social
-                {x: 2, y: 1}, // Enterprising
-                {x: 3, y: 1}  // Conventional
-            ];
+            // === VIEW: All RIASEC Types (default) ===
+            if (bubbleChartView === 'all') {
+                // Build filter bar: All Types + individual type pills
+                if (filterBar) {
+                    filterBar.innerHTML = '<button class="seg-pill active" onclick="setBubbleView(\'all\', this);" style="font-size:11px;padding:4px 10px;">All Types</button>';
+                    types.forEach(function(t) {
+                        filterBar.innerHTML += '<button class="seg-pill" onclick="setBubbleView(\'riasec:' + t + '\', this);" style="font-size:11px;padding:4px 10px;border-left:3px solid ' + typeColors[t].solid + ';">' + t + '</button>';
+                    });
+                }
+                if (descEl) descEl.textContent = 'Each bubble = RIASEC type, sized by students. Click a type to see careers under it. Hover for congruence & certainty. | SY 2025-26';
 
-            var datasets = types.map(function(type, i) {
-                var n = DATA.riasec_themes[type] || nData[type][useMonth];
-                var congVal = congruenceData[type][useMonth];
-                var certVal = certaintyData[type][useMonth];
-                var bubbleRadius = Math.sqrt(n) / 3.5;
-                return {
-                    label: type,
-                    data: [{ x: positions[i].x, y: positions[i].y, r: Math.max(bubbleRadius, 12) }],
-                    backgroundColor: bgColors[i],
-                    borderColor: solidColors[i],
-                    borderWidth: 2,
-                    hoverBorderWidth: 3,
-                    _riasecType: type,
-                    _n: n,
-                    _congruence: congVal,
-                    _certainty: certVal,
-                    _congMoM: congruenceData[type][useMonth] - congruenceData[type].Nov,
-                    _certMoM: certaintyData[type][useMonth] - certaintyData[type].Nov
-                };
-            });
+                var positions = [
+                    {x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2},
+                    {x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}
+                ];
+                var datasets = types.map(function(type, i) {
+                    var n = DATA.riasec_themes[type] || nData[type][useMonth];
+                    var congVal = congruenceData[type][useMonth];
+                    var certVal = certaintyData[type][useMonth];
+                    var bubbleRadius = Math.sqrt(n) / 3.5;
+                    // Count careers under this type
+                    var careerCount = 0;
+                    Object.keys(CAREER_RIASEC_MAP).forEach(function(c) { if (CAREER_RIASEC_MAP[c].primary === type) careerCount++; });
+                    return {
+                        label: type,
+                        data: [{ x: positions[i].x, y: positions[i].y, r: Math.max(bubbleRadius, 12) }],
+                        backgroundColor: typeColors[type].bg,
+                        borderColor: typeColors[type].solid,
+                        borderWidth: 2, hoverBorderWidth: 3,
+                        _n: n, _congruence: congVal, _certainty: certVal,
+                        _congMoM: congruenceData[type][useMonth] - congruenceData[type].Nov,
+                        _certMoM: certaintyData[type][useMonth] - certaintyData[type].Nov,
+                        _careerCount: careerCount
+                    };
+                });
 
-            bubbleChartInstance = new Chart(canvas.getContext('2d'), {
-                type: 'bubble',
-                data: { datasets: datasets },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11, weight: 600 } } },
-                        tooltip: {
-                            backgroundColor: 'rgba(26,26,26,0.95)',
-                            titleFont: { size: 14, weight: 700 },
-                            bodyFont: { size: 12 },
-                            padding: 12, cornerRadius: 8,
-                            callbacks: {
-                                title: function(items) { return items[0].dataset.label + ' Type'; },
-                                label: function(tipCtx) {
-                                    var ds = tipCtx.dataset;
-                                    var lines = [
-                                        'Students: ' + ds._n.toLocaleString(),
-                                        '',
-                                        'Congruence: ' + ds._congruence.toFixed(1) + '%',
-                                        '  MoM: ' + (ds._congMoM >= 0 ? '+' : '') + ds._congMoM.toFixed(1) + 'pp',
-                                        '',
-                                        'Certainty: ' + ds._certainty.toFixed(2) + ' / 5',
-                                        '  MoM: ' + (ds._certMoM >= 0 ? '+' : '') + ds._certMoM.toFixed(2)
-                                    ];
-                                    return lines;
+                bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: { datasets: datasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        onClick: function(evt, elements) {
+                            if (elements.length > 0) {
+                                var dsIndex = elements[0].datasetIndex;
+                                var clickedType = datasets[dsIndex].label;
+                                setBubbleView('riasec:' + clickedType);
+                            }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11, weight: 600 } } },
+                            tooltip: {
+                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
+                                padding: 12, cornerRadius: 8,
+                                callbacks: {
+                                    title: function(items) { return items[0].dataset.label + ' Type'; },
+                                    label: function(tipCtx) {
+                                        var ds = tipCtx.dataset;
+                                        return [
+                                            'Students: ' + ds._n.toLocaleString(),
+                                            'Careers: ' + ds._careerCount + ' mapped',
+                                            '',
+                                            'Congruence: ' + ds._congruence.toFixed(1) + '%  (' + (ds._congMoM >= 0 ? '+' : '') + ds._congMoM.toFixed(1) + 'pp MoM)',
+                                            'Certainty: ' + ds._certainty.toFixed(2) + '/5  (' + (ds._certMoM >= 0 ? '+' : '') + ds._certMoM.toFixed(2) + ' MoM)',
+                                            '',
+                                            'Click to see careers under ' + ds.label
+                                        ];
+                                    }
                                 }
                             }
+                        },
+                        scales: {
+                            x: { display: false, min: 0.3, max: 3.7 },
+                            y: { display: false, min: 0.3, max: 2.7 }
                         }
                     },
-                    scales: {
-                        x: { display: false, min: 0.3, max: 3.7 },
-                        y: { display: false, min: 0.3, max: 2.7 }
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            var ctx2 = chart.ctx;
+                            ctx2.save();
+                            chart.data.datasets.forEach(function(ds, i) {
+                                var meta = chart.getDatasetMeta(i);
+                                if (meta.data[0]) {
+                                    var el = meta.data[0];
+                                    ctx2.fillStyle = '#1a1a1a';
+                                    ctx2.font = '700 12px Inter, sans-serif';
+                                    ctx2.textAlign = 'center';
+                                    ctx2.textBaseline = 'middle';
+                                    ctx2.fillText(ds.label, el.x, el.y - 8);
+                                    ctx2.font = '500 10px Inter, sans-serif';
+                                    ctx2.fillStyle = '#4a4a4a';
+                                    ctx2.fillText(ds._n.toLocaleString() + ' students', el.x, el.y + 7);
+                                }
+                            });
+                            ctx2.restore();
+                        }
+                    }]
+                });
+
+                // Widget insight for all types view
+                var highType = types.reduce(function(best, t) { return congruenceData[t][useMonth] > congruenceData[best][useMonth] ? t : best; }, types[0]);
+                var lowCertType = types.reduce(function(worst, t) { return certaintyData[t][useMonth] < certaintyData[worst][useMonth] ? t : worst; }, types[0]);
+                renderWidgetInsight('correlationSpotlight', {
+                    trend: 'up',
+                    soWhat: highType + ' has the strongest match (' + congruenceData[highType][useMonth].toFixed(1) + '%). ' + lowCertType + ' has the lowest certainty (' + certaintyData[lowCertType][useMonth].toFixed(2) + '/5) — these students need more career awareness.',
+                    action: 'Click any bubble to explore careers under that personality type.'
+                });
+                return;
+            }
+
+            // === VIEW: Careers under a specific RIASEC type ===
+            if (bubbleChartView.indexOf('riasec:') === 0) {
+                var selectedType = bubbleChartView.split(':')[1];
+                var color = typeColors[selectedType] || typeColors['Realistic'];
+
+                // Build filter bar: Back + type pills + career pills
+                if (filterBar) {
+                    var html = '<button class="seg-pill" onclick="setBubbleView(\'all\', this);" style="font-size:11px;padding:4px 10px;">&#8592; All Types</button>';
+                    types.forEach(function(t) {
+                        html += '<button class="seg-pill' + (t === selectedType ? ' active' : '') + '" onclick="setBubbleView(\'riasec:' + t + '\', this);" style="font-size:11px;padding:4px 10px;border-left:3px solid ' + typeColors[t].solid + ';">' + t + '</button>';
+                    });
+                    filterBar.innerHTML = html;
+                }
+                if (descEl) descEl.textContent = 'Careers primarily associated with ' + selectedType + ' personality type. Bubble size = student interest. Click a career for cross-type view.';
+
+                // Get careers for this type
+                var careers = [];
+                Object.keys(CAREER_RIASEC_MAP).forEach(function(name) {
+                    var c = CAREER_RIASEC_MAP[name];
+                    if (c.primary === selectedType) {
+                        careers.push({name: name, data: c});
                     }
-                },
-                plugins: [{
-                    // Draw type labels inside bubbles
-                    afterDraw: function(chart) {
-                        var ctx = chart.ctx;
-                        ctx.save();
-                        chart.data.datasets.forEach(function(ds, i) {
-                            var meta = chart.getDatasetMeta(i);
-                            if (meta.data[0]) {
-                                var el = meta.data[0];
-                                var x = el.x, y = el.y;
-                                ctx.fillStyle = '#1a1a1a';
-                                ctx.font = '700 12px Inter, sans-serif';
-                                ctx.textAlign = 'center';
-                                ctx.textBaseline = 'middle';
-                                ctx.fillText(ds.label, x, y - 8);
-                                ctx.font = '500 10px Inter, sans-serif';
-                                ctx.fillStyle = '#4a4a4a';
-                                ctx.fillText(ds._n.toLocaleString() + ' students', x, y + 7);
+                });
+                // Also include careers with this as secondary type (smaller, outlined)
+                var secondaryCareers = [];
+                Object.keys(CAREER_RIASEC_MAP).forEach(function(name) {
+                    var c = CAREER_RIASEC_MAP[name];
+                    if (c.secondary === selectedType && c.primary !== selectedType) {
+                        secondaryCareers.push({name: name, data: c});
+                    }
+                });
+
+                // Position in a dynamic grid
+                var allCareers = careers.concat(secondaryCareers);
+                var cols = Math.min(allCareers.length, 4);
+                var datasets2 = allCareers.map(function(c, i) {
+                    var row = Math.floor(i / cols);
+                    var col = i % cols;
+                    var isPrimary = c.data.primary === selectedType;
+                    var r = Math.sqrt(c.data.n) / 4;
+                    var bls = BLS_CAREERS[c.name];
+                    return {
+                        label: c.name,
+                        data: [{ x: col + 1, y: (Math.ceil(allCareers.length / cols) - row), r: Math.max(r, 10) }],
+                        backgroundColor: isPrimary ? color.bg : 'rgba(200,200,200,0.4)',
+                        borderColor: isPrimary ? color.solid : '#999',
+                        borderWidth: isPrimary ? 2 : 1,
+                        borderDash: isPrimary ? [] : [4, 2],
+                        hoverBorderWidth: 3,
+                        _career: c.name, _n: c.data.n, _pct: c.data.pct,
+                        _congruence: c.data.congruence, _certainty: c.data.certainty,
+                        _primary: c.data.primary, _secondary: c.data.secondary,
+                        _isPrimary: isPrimary,
+                        _salary: bls ? bls.salary : 'N/A',
+                        _outlook: bls ? bls.outlook + ' (' + bls.outlook_text + ')' : 'N/A'
+                    };
+                });
+
+                var maxRow = Math.ceil(allCareers.length / cols);
+                bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: { datasets: datasets2 },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        onClick: function(evt, elements) {
+                            if (elements.length > 0) {
+                                var dsIdx = elements[0].datasetIndex;
+                                var clickedCareer = datasets2[dsIdx]._career;
+                                setBubbleView('career:' + clickedCareer);
                             }
-                        });
-                        ctx.restore();
-                    }
-                }]
-            });
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                titleFont: { size: 13, weight: 700 }, bodyFont: { size: 11 },
+                                padding: 10, cornerRadius: 8,
+                                callbacks: {
+                                    title: function(items) { return items[0].dataset._career; },
+                                    label: function(tipCtx) {
+                                        var ds = tipCtx.dataset;
+                                        var lines = [
+                                            'Students interested: ' + ds._n.toLocaleString() + ' (' + ds._pct + '% of total)',
+                                            'Primary type: ' + ds._primary + (ds._isPrimary ? '' : ' (secondary: ' + selectedType + ')'),
+                                            '',
+                                            'Congruence: ' + ds._congruence.toFixed(1) + '%',
+                                            'Certainty: ' + ds._certainty.toFixed(2) + '/5',
+                                            '',
+                                            'Salary: ' + ds._salary,
+                                            'Outlook: ' + ds._outlook,
+                                            '',
+                                            'Click to see personality match across types'
+                                        ];
+                                        return lines;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { display: false, min: 0.2, max: cols + 0.8 },
+                            y: { display: false, min: 0.2, max: maxRow + 0.8 }
+                        }
+                    },
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            var ctx2 = chart.ctx;
+                            ctx2.save();
+                            chart.data.datasets.forEach(function(ds, i) {
+                                var meta = chart.getDatasetMeta(i);
+                                if (meta.data[0]) {
+                                    var el = meta.data[0];
+                                    var shortName = ds._career.length > 18 ? ds._career.substring(0, 16) + '...' : ds._career;
+                                    ctx2.fillStyle = '#1a1a1a';
+                                    ctx2.font = (ds._isPrimary ? '600' : '400') + ' 10px Inter, sans-serif';
+                                    ctx2.textAlign = 'center';
+                                    ctx2.textBaseline = 'middle';
+                                    ctx2.fillText(shortName, el.x, el.y - 6);
+                                    ctx2.font = '500 9px Inter, sans-serif';
+                                    ctx2.fillStyle = '#666';
+                                    ctx2.fillText(ds._n.toLocaleString(), el.x, el.y + 6);
+                                }
+                            });
+                            ctx2.restore();
+                        }
+                    }]
+                });
 
-            // Widget insight
-            var highType = types.reduce(function(best, t) {
-                return congruenceData[t][useMonth] > congruenceData[best][useMonth] ? t : best;
-            }, types[0]);
-            var lowType = types.reduce(function(worst, t) {
-                return congruenceData[t][useMonth] < congruenceData[worst][useMonth] ? t : worst;
-            }, types[0]);
-            var lowCertType = types.reduce(function(worst, t) {
-                return certaintyData[t][useMonth] < certaintyData[worst][useMonth] ? t : worst;
-            }, types[0]);
+                var primaryCount = careers.length;
+                var secondaryCount = secondaryCareers.length;
+                var totalN = careers.reduce(function(s, c) { return s + c.data.n; }, 0);
+                renderWidgetInsight('correlationSpotlight', {
+                    trend: 'up',
+                    soWhat: selectedType + ' type has ' + primaryCount + ' primary careers (' + totalN.toLocaleString() + ' interested students)' + (secondaryCount > 0 ? ' plus ' + secondaryCount + ' secondary matches.' : '.') + ' Congruence: ' + congruenceData[selectedType][useMonth].toFixed(1) + '%.',
+                    action: 'Click any career bubble to see how it maps across all personality types.'
+                });
+                return;
+            }
 
-            var avgGrowth = types.reduce(function(sum, t) {
-                return sum + (congruenceData[t].Dec - congruenceData[t].Aug);
-            }, 0) / types.length;
+            // === VIEW: Single career across all RIASEC types ===
+            if (bubbleChartView.indexOf('career:') === 0) {
+                var selectedCareer = bubbleChartView.substring(7);
+                var careerData = CAREER_RIASEC_MAP[selectedCareer];
+                if (!careerData) { setBubbleView('all'); return; }
 
-            var insightText = highType + ' has the strongest match (' + congruenceData[highType][useMonth].toFixed(1) + '%) with ' + DATA.riasec_themes[highType].toLocaleString() + ' students. ' + lowCertType + ' has the lowest certainty (' + certaintyData[lowCertType][useMonth].toFixed(2) + '/5) — these students need more career awareness and education.';
-            var actionText = 'Focus career education on ' + lowCertType + ' students: they have the personality profile but lack confidence in matching careers. For ' + lowType + ' students (' + congruenceData[lowType][useMonth].toFixed(1) + '% match), broaden career exposure through guest speakers and job shadows in ' + lowType + '-aligned fields.';
+                // Build filter bar: Back + career pills for current primary type
+                if (filterBar) {
+                    var html2 = '<button class="seg-pill" onclick="setBubbleView(\'riasec:' + careerData.primary + '\', this);" style="font-size:11px;padding:4px 10px;">&#8592; ' + careerData.primary + ' Careers</button>';
+                    html2 += '<button class="seg-pill" onclick="setBubbleView(\'all\', this);" style="font-size:11px;padding:4px 10px;">All Types</button>';
+                    // Add career pills for quick switching
+                    Object.keys(CAREER_RIASEC_MAP).forEach(function(name) {
+                        if (CAREER_RIASEC_MAP[name].primary === careerData.primary) {
+                            var safeName = name.replace(/&/g, '&amp;');
+                            html2 += '<button class="seg-pill' + (name === selectedCareer ? ' active' : '') + '" onclick="setBubbleView(\'career:' + safeName + '\', this);" style="font-size:10px;padding:3px 8px;">' + (name.length > 15 ? name.substring(0, 13) + '..' : name) + '</button>';
+                        }
+                    });
+                    filterBar.innerHTML = html2;
+                }
+                if (descEl) descEl.textContent = selectedCareer + ' — showing personality type alignment. Larger bubble = stronger match.';
 
-            renderWidgetInsight('correlationSpotlight', {
-                trend: avgGrowth > 0 ? 'up' : 'down',
-                soWhat: insightText,
-                action: actionText
-            });
+                // Show how this career maps to each RIASEC type
+                var positions3 = [
+                    {x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2},
+                    {x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}
+                ];
+                var datasets3 = types.map(function(type, i) {
+                    var isPrimary = careerData.primary === type;
+                    var isSecondary = careerData.secondary === type;
+                    var matchLevel = isPrimary ? 1.0 : isSecondary ? 0.6 : 0.15;
+                    var n = Math.round(careerData.n * matchLevel);
+                    var r = Math.sqrt(n) / 3;
+                    var tc = typeColors[type];
+                    return {
+                        label: type,
+                        data: [{ x: positions3[i].x, y: positions3[i].y, r: Math.max(r, isPrimary ? 20 : isSecondary ? 14 : 8) }],
+                        backgroundColor: isPrimary ? tc.bg : isSecondary ? tc.bg.replace('0.7', '0.4') : 'rgba(200,200,200,0.2)',
+                        borderColor: isPrimary ? tc.solid : isSecondary ? tc.solid : '#ccc',
+                        borderWidth: isPrimary ? 3 : isSecondary ? 2 : 1,
+                        hoverBorderWidth: 3,
+                        _type: type, _isPrimary: isPrimary, _isSecondary: isSecondary,
+                        _matchLevel: isPrimary ? 'Primary' : isSecondary ? 'Secondary' : 'Low',
+                        _matchPct: isPrimary ? careerData.congruence : isSecondary ? (careerData.congruence * 0.7).toFixed(1) : (careerData.congruence * 0.3).toFixed(1),
+                        _n: DATA.riasec_themes[type],
+                        _certainty: certaintyData[type][useMonth]
+                    };
+                });
+
+                bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: { datasets: datasets3 },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        onClick: function(evt, elements) {
+                            if (elements.length > 0) {
+                                var dsIdx = elements[0].datasetIndex;
+                                var clickedType = datasets3[dsIdx].label;
+                                setBubbleView('riasec:' + clickedType);
+                            }
+                        },
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11 } } },
+                            tooltip: {
+                                backgroundColor: 'rgba(26,26,26,0.95)',
+                                titleFont: { size: 13, weight: 700 }, bodyFont: { size: 11 },
+                                padding: 10, cornerRadius: 8,
+                                callbacks: {
+                                    title: function(items) {
+                                        var ds = items[0].dataset;
+                                        return ds.label + ' — ' + ds._matchLevel + ' Match';
+                                    },
+                                    label: function(tipCtx) {
+                                        var ds = tipCtx.dataset;
+                                        return [
+                                            'Match: ' + ds._matchLevel + (ds._isPrimary ? ' (best fit)' : ds._isSecondary ? ' (related)' : ' (weak)'),
+                                            'Type congruence: ' + ds._matchPct + '%',
+                                            'Type certainty: ' + ds._certainty.toFixed(2) + '/5',
+                                            ds._type + ' students: ' + ds._n.toLocaleString(),
+                                            '',
+                                            'Click to see all ' + ds._type + ' careers'
+                                        ];
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { display: false, min: 0.3, max: 3.7 },
+                            y: { display: false, min: 0.3, max: 2.7 }
+                        }
+                    },
+                    plugins: [{
+                        afterDraw: function(chart) {
+                            var ctx2 = chart.ctx;
+                            ctx2.save();
+                            chart.data.datasets.forEach(function(ds, i) {
+                                var meta = chart.getDatasetMeta(i);
+                                if (meta.data[0]) {
+                                    var el = meta.data[0];
+                                    ctx2.fillStyle = ds._isPrimary ? '#1a1a1a' : ds._isSecondary ? '#444' : '#999';
+                                    ctx2.font = (ds._isPrimary ? '700 12px' : '500 10px') + ' Inter, sans-serif';
+                                    ctx2.textAlign = 'center';
+                                    ctx2.textBaseline = 'middle';
+                                    ctx2.fillText(ds.label, el.x, el.y - (ds._isPrimary ? 8 : 5));
+                                    if (ds._isPrimary || ds._isSecondary) {
+                                        ctx2.font = '500 9px Inter, sans-serif';
+                                        ctx2.fillStyle = '#666';
+                                        ctx2.fillText(ds._matchLevel, el.x, el.y + (ds._isPrimary ? 7 : 5));
+                                    }
+                                }
+                            });
+                            ctx2.restore();
+                        }
+                    }]
+                });
+
+                var bls = BLS_CAREERS[selectedCareer];
+                var salaryInfo = bls ? ' Median salary: ' + bls.salary + '. Outlook: ' + bls.outlook + ' (' + bls.outlook_text + ').' : '';
+                renderWidgetInsight('correlationSpotlight', {
+                    trend: 'up',
+                    soWhat: selectedCareer + ' is primarily a ' + careerData.primary + ' career (secondary: ' + careerData.secondary + '). ' + careerData.n.toLocaleString() + ' students (' + careerData.pct + '%) chose this career.' + salaryInfo,
+                    action: careerData.pct >= 3 ? 'High-interest career. Ensure students understand education requirements and realistic pathways.' : 'Niche interest. Connect these students with professionals in this field for mentoring.'
+                });
+                return;
+            }
         }
 
         function getHeatmapColor(value, min, max) {
