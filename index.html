@@ -3384,6 +3384,31 @@
             "Physical Therapists": {primary: "Social", secondary: "Realistic", pct: 0.5, n: 95, congruence: 84.5, certainty: 3.92}
         };
 
+        // Actual student RIASEC breakdown per career (from Oct full dataset, N=18,920, keyword matching on career interests)
+        // Each value: n = students matched, R/I/A/S/E/C = % of those students with each primary RIASEC type
+        var ACTUAL_CAREER_RIASEC = {
+            "Athletes & Sports Competitors": {n: 2011, R: 69.7, I: 9.4, A: 8.6, S: 7.2, E: 3.7, C: 1.3},
+            "Lawyers": {n: 1790, R: 39.8, I: 30.1, A: 12.9, S: 10.3, E: 5.6, C: 1.3},
+            "Physicians": {n: 2195, R: 45.2, I: 27.0, A: 11.8, S: 11.5, E: 2.8, C: 1.7},
+            "Engineers": {n: 2155, R: 68.0, I: 19.7, A: 5.8, S: 2.8, E: 2.5, C: 1.2},
+            "Teachers": {n: 1252, R: 41.4, I: 22.0, A: 23.0, S: 11.7, E: 1.4, C: 0.6},
+            "Registered Nurses": {n: 1009, R: 40.5, I: 22.6, A: 14.6, S: 18.6, E: 1.8, C: 1.9},
+            "Veterinarians": {n: 517, R: 55.7, I: 14.5, A: 18.8, S: 8.1, E: 0.8, C: 2.1},
+            "Architects": {n: 603, R: 62.4, I: 17.7, A: 14.4, S: 3.2, E: 2.0, C: 0.3},
+            "Actors": {n: 391, R: 34.0, I: 18.7, A: 42.2, S: 4.6, E: 0.3, C: 0.3},
+            "Computer Programmers": {n: 676, R: 51.6, I: 29.1, A: 11.7, S: 3.7, E: 2.4, C: 1.5},
+            "Musicians & Singers": {n: 633, R: 35.1, I: 20.9, A: 39.7, S: 2.7, E: 1.3, C: 0.5},
+            "Artists & Related Workers": {n: 1440, R: 38.1, I: 19.1, A: 39.4, S: 1.9, E: 0.8, C: 0.6},
+            "Police Officers": {n: 489, R: 46.2, I: 31.9, A: 8.6, S: 9.2, E: 3.3, C: 0.8},
+            "Psychologists": {n: 813, R: 38.0, I: 28.0, A: 18.6, S: 14.3, E: 0.6, C: 0.5},
+            "Business Managers": {n: 1320, R: 48.7, I: 17.9, A: 15.5, S: 7.5, E: 9.0, C: 1.4},
+            "Accountants": {n: 175, R: 42.3, I: 21.7, A: 9.7, S: 9.7, E: 11.4, C: 5.1},
+            "Data Analysts": {n: 49, R: 53.1, I: 36.7, A: 4.1, S: 2.0, E: 2.0, C: 2.0},
+            "UX Designers": {n: 5, R: 80.0, I: 0.0, A: 20.0, S: 0.0, E: 0.0, C: 0.0},
+            "Project Managers": {n: 9, R: 33.3, I: 33.3, A: 11.1, S: 11.1, E: 11.1, C: 0.0},
+            "Physical Therapists": {n: 125, R: 61.6, I: 18.4, A: 5.6, S: 13.6, E: 0.8, C: 0.0}
+        };
+
         var bubbleChartView = 'type'; // 'type' or 'career'
 
         // Synthesize per-school RIASEC distributions from program-level data
@@ -4375,26 +4400,14 @@
                         xOff = Math.cos(angle) * spreadX;
                         yOff = Math.sin(angle) * spreadY;
                     }
-                    // Derive per-career RIASEC breakdown from actual data:
-                    // We know congruence rate (match_pct) tells us what % of students who chose
-                    // this career actually match its RIASEC type. Use that + population distribution.
-                    var totalRiasec = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
-                    var baseDist = {};
-                    types.forEach(function(t) { baseDist[t] = DATA.riasec_themes[t] / totalRiasec; });
-                    // Career match rate tells us how many match primary+secondary
-                    var matchRate = c.congruence / 100;
+                    // Use actual student data from ACTUAL_CAREER_RIASEC (Oct dataset, N=18,920)
+                    var actualData = ACTUAL_CAREER_RIASEC[name];
                     var typeBreakdown = {};
-                    var rawWeights = {};
+                    var typeLetterMap = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
                     types.forEach(function(t) {
-                        if (t === c.primary) rawWeights[t] = baseDist[t] * (1 + matchRate * 3.5);
-                        else if (t === c.secondary) rawWeights[t] = baseDist[t] * (1 + matchRate * 1.5);
-                        else rawWeights[t] = baseDist[t] * (1 - matchRate * 0.3);
+                        typeBreakdown[t] = actualData ? Math.round(actualData[typeLetterMap[t]]) : Math.round(DATA.riasec_themes[t] / Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0) * 100);
                     });
-                    var wTotal = Object.values(rawWeights).reduce(function(s,v){return s+v;},0);
-                    types.forEach(function(t) { typeBreakdown[t] = Math.round(rawWeights[t] / wTotal * 100); });
-                    // Ensure sums to 100
-                    var bSum = Object.values(typeBreakdown).reduce(function(s,v){return s+v;},0);
-                    if (bSum !== 100) typeBreakdown[c.primary] += (100 - bSum);
+                    var actualN = actualData ? actualData.n : c.n;
 
                     return {
                         label: name,
@@ -4441,20 +4454,26 @@
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
+                                        var ad = ACTUAL_CAREER_RIASEC[ds._career];
                                         lines.push(ds._n.toLocaleString() + ' students selected ' + ds._career);
                                         lines.push('as a top career choice.');
                                         lines.push('');
-                                        lines.push('Personality breakdown (derived from');
-                                        lines.push(ds._congruence.toFixed(0) + '% career-personality match rate):');
+                                        if (ad && ad.n >= 20) {
+                                            lines.push('Student personality data (n=' + ad.n + '):');
+                                        } else {
+                                            lines.push('Estimated personality data:');
+                                        }
                                         var sortedTypes = types.slice().sort(function(a, b) { return ds._typeBreakdown[b] - ds._typeBreakdown[a]; });
                                         sortedTypes.forEach(function(t) {
                                             var pct = ds._typeBreakdown[t];
-                                            var marker = (t === ds._primary) ? ' \u2605' : (t === ds._secondary) ? ' \u25C6' : '';
-                                            lines.push('  ' + t + ': ~' + pct + '%' + marker);
+                                            if (pct > 0) {
+                                                var marker = (t === ds._primary) ? ' \u2605' : (t === ds._secondary) ? ' \u25C6' : '';
+                                                lines.push('  ' + t + ': ' + pct + '%' + marker);
+                                            }
                                         });
-                                        lines.push('  \u2605 = O*NET primary fit  \u25C6 = secondary');
+                                        lines.push('  \u2605 = O*NET primary  \u25C6 = secondary');
                                         lines.push('');
-                                        lines.push('Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        lines.push('Career match: ' + ds._congruence.toFixed(1) + '% | Confidence: ' + ds._certainty.toFixed(2) + '/5');
                                         if (ds._salary !== 'N/A') {
                                             lines.push('Salary: ' + ds._salary + ' | ' + ds._outlook);
                                         }
@@ -4534,32 +4553,29 @@
                         '<span style="color:#94a3b8;padding:0 4px;">›</span>' +
                         '<button style="font-size:12px;padding:6px 16px;border-radius:6px;font-weight:600;' + drillStyle + '">' + (selectedCareer.length > 20 ? selectedCareer.substring(0, 18) + '..' : selectedCareer) + '</button>';
                 }
-                if (descEl) descEl.textContent = selectedCareer + ': Estimated personality breakdown based on ' + careerData.congruence.toFixed(0) + '% career-personality match rate and MoCo student data.';
+                var actualCareerData = ACTUAL_CAREER_RIASEC[selectedCareer];
+                var hasActualData = actualCareerData && actualCareerData.n >= 20;
+                if (descEl) descEl.textContent = selectedCareer + ': ' + (hasActualData ? 'Actual MoCo student personality data (n=' + actualCareerData.n + ')' : 'Estimated personality breakdown') + '. Bubble size = % of students with each type. \u2605 = O*NET career fit.';
 
                 var bls = BLS_CAREERS[selectedCareer];
-                var totalRiasec2 = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
-                // Derive per-career breakdown using same model as By Career view
-                var baseDist2 = {};
-                types.forEach(function(t) { baseDist2[t] = DATA.riasec_themes[t] / totalRiasec2; });
-                var matchRate2 = careerData.congruence / 100;
-                var drillWeights = {};
-                types.forEach(function(t) {
-                    if (t === careerData.primary) drillWeights[t] = baseDist2[t] * (1 + matchRate2 * 3.5);
-                    else if (t === careerData.secondary) drillWeights[t] = baseDist2[t] * (1 + matchRate2 * 1.5);
-                    else drillWeights[t] = baseDist2[t] * (1 - matchRate2 * 0.3);
-                });
-                var wTotal2 = Object.values(drillWeights).reduce(function(s,v){return s+v;},0);
+                var typeLetterMap2 = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
                 var drillPcts = {};
-                types.forEach(function(t) { drillPcts[t] = Math.round(drillWeights[t] / wTotal2 * 100); });
-                var bSum2 = Object.values(drillPcts).reduce(function(s,v){return s+v;},0);
-                if (bSum2 !== 100) drillPcts[careerData.primary] += (100 - bSum2);
+                types.forEach(function(t) {
+                    if (hasActualData) {
+                        drillPcts[t] = Math.round(actualCareerData[typeLetterMap2[t]]);
+                    } else {
+                        // Fallback: use overall RIASEC distribution
+                        var totalR = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
+                        drillPcts[t] = Math.round(DATA.riasec_themes[t] / totalR * 100);
+                    }
+                });
 
                 var datasets3 = types.map(function(type) {
                     var isPrimary = careerData.primary === type;
                     var isSecondary = careerData.secondary === type;
                     var derivedPct = drillPcts[type];
-                    var estimatedN = Math.round(careerData.n * derivedPct / 100);
-                    var r = Math.max(Math.sqrt(estimatedN) / 2, isPrimary ? 24 : isSecondary ? 18 : 10);
+                    var estimatedN = hasActualData ? Math.round(actualCareerData.n * derivedPct / 100) : Math.round(careerData.n * derivedPct / 100);
+                    var r = Math.max(Math.sqrt(Math.max(estimatedN, 1)) * 1.5, isPrimary ? 24 : isSecondary ? 18 : 8);
                     var tc = typeColors[type];
                     var typeCong = congruenceData[type][useMonth];
                     var typeCert = certaintyData[type][useMonth];
@@ -4603,22 +4619,20 @@
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
-                                        lines.push('~' + ds._matchPct + '% of ' + selectedCareer + ' students');
-                                        lines.push('are estimated to identify as ' + ds.label + '.');
-                                        lines.push('That\'s ~' + ds._studentsInType.toLocaleString() + ' of ' + careerData.n.toLocaleString() + ' students.');
+                                        var src = hasActualData ? 'Actual student data' : 'Estimated';
+                                        lines.push(src + ': ' + ds._matchPct + '% of ' + selectedCareer);
+                                        lines.push('students identify as ' + ds.label + '.');
+                                        lines.push('That\'s ' + (hasActualData ? '' : '~') + ds._studentsInType.toLocaleString() + ' students.');
                                         lines.push('');
                                         if (ds._isPrimary) {
-                                            lines.push('\u2605 Primary O*NET fit — this career');
+                                            lines.push('\u2605 O*NET primary fit — this career');
                                             lines.push('  best matches ' + ds.label + ' personality.');
                                         } else if (ds._isSecondary) {
-                                            lines.push('\u25C6 Secondary O*NET fit — strong');
+                                            lines.push('\u25C6 O*NET secondary fit — strong');
                                             lines.push('  alignment with ' + ds.label + ' traits.');
                                         } else {
-                                            lines.push('\u25CB Weaker fit — fewer ' + ds.label);
-                                            lines.push('  students typically choose this career.');
+                                            lines.push('Not a typical O*NET fit for this career.');
                                         }
-                                        lines.push('');
-                                        lines.push('Career congruence: ' + careerData.congruence.toFixed(1) + '% match rate');
                                         lines.push('');
                                         lines.push(ds.label + ' type outcomes (all careers):');
                                         lines.push('  Match rate: ' + ds._congruence.toFixed(1) + '%');
@@ -4663,10 +4677,12 @@
                 var isHighDemand = bls && (bls.outlook === 'Much faster than average' || bls.outlook === 'Faster than average');
                 var primaryPct3 = drillPcts[careerData.primary];
                 var secondaryPct3 = drillPcts[careerData.secondary];
+                var topActualType = types.reduce(function(best, t) { return drillPcts[t] > drillPcts[best] ? t : best; }, types[0]);
+                var matchesOnet = topActualType === careerData.primary;
                 renderWidgetInsight('correlationSpotlight', {
                     trend: primaryCertMoM >= 0 ? 'up' : 'down',
-                    soWhat: careerData.n.toLocaleString() + ' students chose ' + selectedCareer + ' (congruence: ' + careerData.congruence.toFixed(1) + '%). An estimated ~' + primaryPct3 + '% identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ') and ~' + secondaryPct3 + '% as ' + careerData.secondary + '.' + (bls ? ' Median salary: ' + bls.salary + '. Outlook: ' + bls.outlook_text + '.' : ''),
-                    action: isHighDemand ? 'High-growth career — connect ' + careerData.primary + ' students with internships and CTE pathways.' : (careerData.pct >= 3 ? 'Popular choice — ensure students understand education requirements and realistic pathways.' : 'Niche interest — pair students with industry mentors for informational interviews.')
+                    soWhat: (hasActualData ? 'Actual data (n=' + actualCareerData.n + '): ' : '') + primaryPct3 + '% of ' + selectedCareer + ' students identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ')' + (matchesOnet ? ', matching the O*NET expected profile.' : '. However, the most common type is actually ' + topActualType + ' (' + drillPcts[topActualType] + '%), which differs from the O*NET expected ' + careerData.primary + ' profile.') + ' Career congruence: ' + careerData.congruence.toFixed(1) + '%.' + (bls ? ' Salary: ' + bls.salary + '.' : ''),
+                    action: matchesOnet ? 'Strong alignment — students\' personalities match career expectations. Focus on building confidence and practical experience.' : 'Personality-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
                 });
                 return;
             }
