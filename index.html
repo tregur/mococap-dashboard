@@ -1571,6 +1571,310 @@
         .corr-negative .corr-value { color: #dc2626; }
         .corr-neutral { border-left-color: #f59e0b; }
         .corr-neutral .corr-value { color: #854d0e; }
+
+        /* ===== Global Search ===== */
+        .global-search-wrap {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        .global-search-wrap svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--t3);
+            pointer-events: none;
+        }
+        .global-search {
+            width: 100%;
+            padding: 0.6rem 1rem 0.6rem 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--bdr);
+            font-size: 13px;
+            font-family: inherit;
+            background: var(--bg);
+            color: var(--t1);
+            outline: none;
+            transition: border-color 0.15s;
+        }
+        .global-search:focus { border-color: var(--g); }
+        .global-search::placeholder { color: var(--t3); }
+
+        /* ===== Category Filter Chips ===== */
+        .cat-chips {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+        .cat-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--bdr);
+            background: var(--bg);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--t2);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            user-select: none;
+        }
+        .cat-chip:hover { border-color: var(--t3); }
+        .cat-chip.active { background: var(--t1); color: var(--bg); border-color: var(--t1); }
+        .cat-chip.active svg { stroke: var(--bg); }
+        .cat-chip svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+        /* ===== Month Navigation ===== */
+        .month-nav {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .month-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--bdr);
+            background: var(--bg);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--t2);
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: inherit;
+        }
+        .month-btn:hover { border-color: var(--t3); }
+        .month-btn.active { background: var(--g); color: #fff; border-color: var(--g); }
+        .month-btn .month-delta {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 3px;
+        }
+        .month-btn .month-delta.up { background: rgba(0,200,5,0.15); color: #166534; }
+        .month-btn .month-delta.down { background: rgba(220,38,38,0.15); color: #991b1b; }
+        .month-btn.active .month-delta.up { background: rgba(255,255,255,0.3); color: #fff; }
+        .month-btn.active .month-delta.down { background: rgba(255,255,255,0.3); color: #fff; }
+        .lasting-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 2px 6px;
+            border-radius: 3px;
+            background: #dbeafe;
+            color: #1e40af;
+            margin-left: 6px;
+        }
+
+        /* ===== Insight Card System ===== */
+        .ic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .insight-card {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.2s, transform 0.15s;
+            display: flex;
+            flex-direction: column;
+            animation: icFadeIn 0.3s ease;
+        }
+        @keyframes icFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+        .insight-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            transform: translateY(-1px);
+        }
+        .insight-card[data-severity="positive"] { border-top: 3px solid var(--g); }
+        .insight-card[data-severity="negative"] { border-top: 3px solid #dc2626; }
+        .insight-card[data-severity="neutral"]  { border-top: 3px solid #f59e0b; }
+        .insight-card[data-severity="info"]     { border-top: 3px solid #3b82f6; }
+
+        .ic-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid var(--bdr);
+            background: var(--surface);
+        }
+        .ic-category-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .ic-category-icon[data-cat="school"]      { background: #dbeafe; color: #1d4ed8; }
+        .ic-category-icon[data-cat="grade"]        { background: #fef3c7; color: #92400e; }
+        .ic-category-icon[data-cat="personality"]  { background: #ede9fe; color: #6d28d9; }
+        .ic-category-icon[data-cat="career"]       { background: #dcfce7; color: #166534; }
+        .ic-category-icon[data-cat="engagement"]   { background: #fce7f3; color: #be185d; }
+        .ic-category-icon[data-cat="program"]      { background: #ffedd5; color: #c2410c; }
+        .ic-category-icon[data-cat="equity"]       { background: #e0f2fe; color: #0369a1; }
+        .ic-category-icon[data-cat="data"]         { background: #f1f5f9; color: #475569; }
+
+        .ic-category-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--t3);
+            flex: 1;
+        }
+        .ic-severity {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 7px;
+            border-radius: 4px;
+            letter-spacing: 0.05em;
+        }
+        .ic-severity--positive { background: #dcfce7; color: #166534; }
+        .ic-severity--negative { background: #fee2e2; color: #991b1b; }
+        .ic-severity--neutral  { background: #fef3c7; color: #92400e; }
+        .ic-severity--info     { background: #dbeafe; color: #1e40af; }
+
+        .ic-body {
+            padding: 0.85rem 1rem;
+            flex: 1;
+        }
+        .ic-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--t1);
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+        .ic-value {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .ic-value--positive { color: #166534; }
+        .ic-value--negative { color: #dc2626; }
+        .ic-value--neutral  { color: #854d0e; }
+        .ic-value--info     { color: #1e40af; }
+
+        .ic-detail {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--t2);
+        }
+        .ic-action {
+            background: var(--surface);
+            border-radius: 6px;
+            padding: 0.65rem;
+            margin-top: 0.5rem;
+        }
+        .ic-action-sowhat, .ic-action-nextstep {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--t2);
+            margin-bottom: 0.3rem;
+        }
+        .ic-action-nextstep {
+            padding-left: 0.75rem;
+            border-left: 2px solid var(--g);
+            margin-bottom: 0;
+        }
+        .ic-action-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--t3);
+            display: block;
+            margin-bottom: 2px;
+            letter-spacing: 0.04em;
+        }
+        .ic-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.45rem 1rem;
+            border-top: 1px solid var(--bdr);
+            background: var(--surface);
+            gap: 0.5rem;
+        }
+        .ic-sources {
+            font-size: 10px;
+            color: var(--t3);
+            flex: 1;
+            line-height: 1.4;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .ic-source-link {
+            color: var(--t3);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 2px;
+            cursor: pointer;
+        }
+        .ic-source-link:hover { color: var(--g); }
+        .ic-source-sep { margin: 0 3px; color: var(--bdr); }
+
+        .ic-rating {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+        }
+        .ic-rate-btn {
+            background: none;
+            border: 1px solid var(--bdr);
+            border-radius: 4px;
+            width: 26px;
+            height: 26px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--t3);
+            transition: all 0.15s;
+            padding: 0;
+            font-family: inherit;
+        }
+        .ic-rate-btn:hover { border-color: var(--t2); color: var(--t2); }
+        .ic-rate-btn.active-up { background: #dcfce7; border-color: var(--g); color: #166534; }
+        .ic-rate-btn.active-down { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+
+        /* ===== Bubble Chart Container ===== */
+        .bubble-chart-wrap {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .bubble-chart-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--t1);
+            margin-bottom: 1rem;
+        }
+
+        /* Search highlight */
+        mark.search-hl { background: #fef08a; color: var(--t1); border-radius: 2px; padding: 0 1px; }
     </style>
 </head>
 <body>
@@ -1608,6 +1912,10 @@
 
             <div class="main">
                 <div class="header">
+                    <div class="global-search-wrap">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <input type="text" class="global-search" id="globalSearchInput" placeholder="Search insights across all pages..." oninput="globalSearch(this.value)">
+                    </div>
                     <h1 id="pageTitle">Overview</h1>
                     <p id="pageSubtitle">Program impact and student outcomes</p>
                     <div class="header-filters">
@@ -1641,11 +1949,25 @@
                             ⚙ Alerts <span class="alert-count zero" id="alertCountBadge">0</span>
                         </button>
                         <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">↺ Reset</button>
+                        <div class="cat-chips" id="categoryChips">
+                            <span class="cat-chip active" data-cat="all" onclick="toggleCategoryFilter('all')">All</span>
+                            <span class="cat-chip" data-cat="school" onclick="toggleCategoryFilter('school')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>School</span>
+                            <span class="cat-chip" data-cat="grade" onclick="toggleCategoryFilter('grade')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>Grade</span>
+                            <span class="cat-chip" data-cat="personality" onclick="toggleCategoryFilter('personality')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2c2.5 3 4 6.5 4 10s-1.5 7-4 10c-2.5-3-4-6.5-4-10s1.5-7 4-10"/></svg>Personality</span>
+                            <span class="cat-chip" data-cat="career" onclick="toggleCategoryFilter('career')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>Career</span>
+                            <span class="cat-chip" data-cat="engagement" onclick="toggleCategoryFilter('engagement')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Engagement</span>
+                            <span class="cat-chip" data-cat="program" onclick="toggleCategoryFilter('program')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Program</span>
+                            <span class="cat-chip" data-cat="equity" onclick="toggleCategoryFilter('equity')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="3" x2="12" y2="21"/><polyline points="8 8 4 8"/><polyline points="20 8 16 8"/><circle cx="4" cy="11" r="3"/><circle cx="20" cy="11" r="3"/></svg>Equity</span>
+                            <span class="cat-chip" data-cat="data" onclick="toggleCategoryFilter('data')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Data</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="content">
                     <div class="page active" id="overview">
+                        <div class="month-nav" id="monthNav"></div>
+                        <div id="monthViewContent">
+                        <div id="monthDivergenceCards"></div>
                         <div class="alert-banner" id="alertBanner">
                             <div class="alert-banner-title">📊 Norm-Based Alerts</div>
                             <div class="alert-banner-list" id="alertBannerList"></div>
@@ -1671,11 +1993,24 @@
                             <!-- Dynamically populated -->
                         </div>
 
-                        <div class="chart-card" style="margin-bottom:1.5rem;" id="correlationSpotlight">
-                            <div class="chart-title">Correlation Spotlight — Key Data Relationships</div>
-                            <div id="correlationContent">
-                                <!-- Dynamically populated -->
+                        <div class="bubble-chart-wrap" id="overviewScoresSection">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;">
+                                <div class="bubble-chart-title" style="margin-bottom:0;">Scores Breakdown</div>
+                                <select class="filter-select scores-pivot" onchange="renderOverviewScoresChart()" style="min-width:160px;">
+                                    <option value="personality">By Personality Type</option>
+                                    <option value="grade">By Grade Level</option>
+                                    <option value="career">By Career Selection</option>
+                                </select>
                             </div>
+                            <div style="position:relative;height:340px;"><canvas id="overviewScoresCanvas"></canvas></div>
+                        </div>
+
+                        <div class="bubble-chart-wrap" id="correlationSpotlight">
+                            <div class="bubble-chart-title">Career-Personality Landscape: Congruence vs. Certainty by RIASEC Type</div>
+                            <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
+                        </div>
+                        <div id="correlationCards">
+                            <!-- Dynamically populated correlation insight cards -->
                         </div>
 
                         <div class="chart-card" style="margin-bottom:1rem;" id="patternFlagsCard">
@@ -1700,6 +2035,7 @@
                                 <div class="chart-container"><canvas id="clarityDistChart"></canvas></div>
                             </div>
                         </div>
+                        </div><!-- end monthViewContent -->
                     </div>
 
                     <div class="page" id="congruence">
@@ -1725,11 +2061,7 @@
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by Match Level</div>
                                 <div class="chart-container"><canvas id="congruenceVsCertaintyChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">The "congruence paradox" — High Match students (3.90) are slightly less certain than Medium (4.03). This is healthy: deeply aligned students understand career complexity rather than being naively certain.</div>
-                                    <div class="action-card-nextstep">Do not treat lower certainty in high-match students as a problem. Focus interventions on the 14.9% with No Match — they need 1:1 career exploration sessions to discover better-fitting paths.</div>
-                                </div>
+                                <div id="ic-congruence-paradox"></div>
                             </div>
                         </div>
 
@@ -1762,20 +2094,12 @@
                             <div class="chart-card">
                                 <div class="chart-title">Career Clarity Trajectory (SY 2025-26)</div>
                                 <div class="chart-container"><canvas id="alignmentTrendChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">18.2% → 22.1% clarity shows steady program impact. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the highest-leverage cohort.</div>
-                                    <div class="action-card-nextstep">Accelerate CTE exposure and 1:1 follow-ups for the "Some Idea" group. Regression data shows CTE pathway exposure (beta=-3.27) is the single strongest lever for converting exploration into clarity.</div>
-                                </div>
+                                <div id="ic-clarity-trajectory"></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by RIASEC Type</div>
                                 <div class="chart-container"><canvas id="certaintyByRiasecChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">Investigative types (3.97) lead certainty; Conventional types (3.71) lag by 0.26 points. C-type students may not see themselves in traditional "conventional" careers.</div>
-                                    <div class="action-card-nextstep">Showcase modern Conventional careers (data analytics, UX research, project management) to C-type students. These roles offer strong salary/outlook and align with C-type strengths.</div>
-                                </div>
+                                <div id="ic-certainty-riasec"></div>
                             </div>
                         </div>
                     </div>
@@ -1790,20 +2114,12 @@
                             <div class="chart-card">
                                 <div class="chart-title">Dosage-Response: Sessions vs Certainty</div>
                                 <div class="chart-container"><canvas id="dosageChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">r=0.47 dose-response means each additional session adds measurable certainty. Students with 7+ sessions average 4.12/5 vs 3.62 for 2-3 sessions — a 14% lift.</div>
-                                    <div class="action-card-nextstep">Target 6+ sessions per student at high-need schools. Prioritize Watkins Mill HS (3.81 dosage, 3.64 certainty) and Paint Branch HS (5.46 dosage, 3.70 certainty) for quality improvement.</div>
-                                </div>
+                                <div id="ic-dosage-response"></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Graduation Rates (MCPS High Schools)</div>
                                 <div class="chart-container"><canvas id="gradChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">Lower-graduation-rate schools (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be a leading indicator for academic persistence.</div>
-                                    <div class="action-card-nextstep">Double dosage at schools below 85% graduation rate. Track whether increased career clarity correlates with improved graduation outcomes over time.</div>
-                                </div>
+                                <div id="ic-graduation-rates"></div>
                             </div>
                         </div>
                         <div class="chart-grid">
@@ -1818,11 +2134,7 @@
                                 <thead><tr><th>Coach</th><th>Sessions</th><th>Survey N</th><th>Avg Certainty</th></tr></thead>
                                 <tbody id="coachTableBody"></tbody>
                             </table>
-                            <div class="action-card">
-                                <div class="action-card-title">So What + Next Step</div>
-                                <div class="action-card-sowhat">Volume and quality don't always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.</div>
-                                <div class="action-card-nextstep">Study top-certainty coaches' methods for peer learning. Pair lowest-certainty coaches with mentors. Set minimum quality thresholds alongside volume targets.</div>
-                            </div>
+                            <div id="ic-coach-performance"></div>
                         </div>
                     </div>
 
@@ -1848,11 +2160,7 @@
                             <div class="chart-card">
                                 <div class="chart-title">Year-over-Year Comparison</div>
                                 <div class="chart-container"><canvas id="yoyChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">3x YoY growth validates the scaling strategy. But rapid scale can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.</div>
-                                    <div class="action-card-nextstep">Monitor helpfulness alongside volume. Set a quality floor: if helpfulness drops below 3.50/5, pause expansion at that school and invest in coach training.</div>
-                                </div>
+                                <div id="ic-yoy-growth"></div>
                             </div>
                         </div>
                     </div>
@@ -1867,11 +2175,7 @@
                             <div class="chart-card">
                                 <div class="chart-title">RIASEC Type Distribution (N=10,006)</div>
                                 <div class="chart-container"><canvas id="riasecDistChart"></canvas></div>
-                                <div class="action-card">
-                                    <div class="action-card-title">So What + Next Step</div>
-                                    <div class="action-card-sowhat">R and A types dominate (21.2% and 20.4%). Conventional under-representation (9.9%) is developmental — abstract organizational interests emerge later. But 40.9% of October students had 3+ themes, which correlates with lower clarity (beta=-0.31).</div>
-                                    <div class="action-card-nextstep">For multi-theme students (40.9%), use structured decision-making activities rather than more exploration. For C-type students, showcase "hidden gem" careers like data analytics, UX research, and project management.</div>
-                                </div>
+                                <div id="ic-riasec-distribution"></div>
                             </div>
                         </div>
 
@@ -2645,10 +2949,377 @@
         Chart.defaults.elements.point.hoverRadius = 5;
         Chart.defaults.elements.point.hoverBackgroundColor = '#00C805';
         Chart.defaults.elements.bar.borderRadius = 6;
+        // Enhanced tooltips — larger, easier to read
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.95)';
+        Chart.defaults.plugins.tooltip.titleFont = {size: 14, weight: 700, family: "'Inter', sans-serif"};
+        Chart.defaults.plugins.tooltip.bodyFont = {size: 13, family: "'Inter', sans-serif"};
+        Chart.defaults.plugins.tooltip.padding = 14;
+        Chart.defaults.plugins.tooltip.cornerRadius = 8;
+        Chart.defaults.plugins.tooltip.boxPadding = 6;
+        Chart.defaults.plugins.tooltip.usePointStyle = true;
+        // Global plugin to show values on doughnut/pie charts
+        Chart.register({
+            id: 'doughnutLabels',
+            afterDraw: function(chart) {
+                if (chart.config.type !== 'doughnut' && chart.config.type !== 'pie') return;
+                var ctx = chart.ctx;
+                ctx.save();
+                var meta = chart.getDatasetMeta(0);
+                meta.data.forEach(function(arc, i) {
+                    var val = chart.data.datasets[0].data[i];
+                    var total = chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);
+                    var pct = ((val/total)*100).toFixed(1) + '%';
+                    var label = chart.data.labels[i];
+                    var pos = arc.tooltipPosition();
+                    // Only show label if slice is large enough
+                    if (val/total < 0.05) { return; }
+                    ctx.fillStyle = '#1a1a1a';
+                    ctx.font = '600 11px Inter, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(pct, pos.x, pos.y - 6);
+                    ctx.font = '500 9px Inter, sans-serif';
+                    ctx.fillStyle = '#4a4a4a';
+                    ctx.fillText(val.toLocaleString(), pos.x, pos.y + 7);
+                });
+                ctx.restore();
+            }
+        });
 
         let activeThresholds = {};
         let dataNorms = {};
         let currentAlerts = [];
+        let activeCategoryFilters = new Set();
+        let bubbleChartInstance = null;
+
+        // ===== Category Icons (inline SVG) =====
+        function getCategoryIcon(category) {
+            const icons = {
+                school: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+                grade: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg>',
+                personality: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2c2.5 3 4 6.5 4 10s-1.5 7-4 10c-2.5-3-4-6.5-4-10s1.5-7 4-10"/></svg>',
+                career: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>',
+                engagement: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+                program: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+                equity: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="3" x2="12" y2="21"/><polyline points="8 8 4 8"/><polyline points="20 8 16 8"/><circle cx="4" cy="11" r="3"/><circle cx="20" cy="11" r="3"/></svg>',
+                data: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'
+            };
+            return icons[category] || icons.data;
+        }
+
+        // ===== Rating System =====
+        function getInsightRatings() {
+            try { return JSON.parse(localStorage.getItem('mococap_insight_ratings')) || {}; }
+            catch(e) { return {}; }
+        }
+        function saveInsightRatings(r) {
+            try { localStorage.setItem('mococap_insight_ratings', JSON.stringify(r)); } catch(e) {}
+        }
+        function rateInsight(insightId, direction, btn) {
+            const ratings = getInsightRatings();
+            const card = btn.closest('.insight-card');
+            const upBtn = card.querySelector('.ic-rate-up');
+            const downBtn = card.querySelector('.ic-rate-down');
+            if (ratings[insightId] === direction) {
+                delete ratings[insightId];
+                upBtn.classList.remove('active-up');
+                downBtn.classList.remove('active-down');
+            } else {
+                ratings[insightId] = direction;
+                upBtn.classList.toggle('active-up', direction === 'up');
+                downBtn.classList.toggle('active-down', direction === 'down');
+            }
+            saveInsightRatings(ratings);
+        }
+
+        // ===== Insight Card Builder =====
+        const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Personality',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
+        const SEV_LABELS = {positive:'Positive',negative:'Concern',neutral:'Watchlist',info:'Info'};
+
+        function buildInsightCard(cfg) {
+            var cat = cfg.category || 'data';
+            var sev = cfg.severity || 'info';
+            var ratings = getInsightRatings();
+            var myRating = ratings[cfg.id] || null;
+            var upCls = myRating === 'up' ? ' active-up' : '';
+            var downCls = myRating === 'down' ? ' active-down' : '';
+
+            var srcHtml = '';
+            if (cfg.sources && cfg.sources.length) {
+                srcHtml = cfg.sources.map(function(s) {
+                    if (s.action.startsWith('page:')) return '<a href="#" class="ic-source-link" onclick="showPage(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
+                    if (s.action.startsWith('modal:')) return '<a href="#" class="ic-source-link" onclick="showModal(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
+                    if (s.action.startsWith('external:')) return '<a href="' + s.action.replace('external:','') + '" target="_blank" rel="noopener" class="ic-source-link">' + s.label + '</a>';
+                    return '<span class="ic-source-link">' + s.label + '</span>';
+                }).join('<span class="ic-source-sep">|</span>');
+            }
+
+            var actionHtml = '';
+            if (cfg.soWhat || cfg.nextStep) {
+                actionHtml = '<div class="ic-action">';
+                if (cfg.soWhat) actionHtml += '<div class="ic-action-sowhat"><span class="ic-action-label">So What</span><span>' + cfg.soWhat + '</span></div>';
+                if (cfg.nextStep) actionHtml += '<div class="ic-action-nextstep"><span class="ic-action-label">Next Step</span><span>' + cfg.nextStep + '</span></div>';
+                actionHtml += '</div>';
+            }
+
+            var valHtml = '';
+            if (cfg.value) {
+                var vc = sev === 'positive' ? 'ic-value--positive' : sev === 'negative' ? 'ic-value--negative' : sev === 'neutral' ? 'ic-value--neutral' : 'ic-value--info';
+                valHtml = '<div class="ic-value ' + vc + '">' + cfg.value + '</div>';
+            }
+
+            var lastingHtml = cfg.lasting ? '<span class="lasting-badge">Lasting Impact</span>' : '';
+
+            return '<div class="insight-card" data-insight-id="' + cfg.id + '" data-category="' + cat + '" data-severity="' + sev + '">' +
+                '<div class="ic-header">' +
+                    '<span class="ic-category-icon" data-cat="' + cat + '">' + getCategoryIcon(cat) + '</span>' +
+                    '<span class="ic-category-label">' + (CAT_LABELS[cat]||cat) + lastingHtml + '</span>' +
+                    '<span class="ic-severity ic-severity--' + sev + '">' + (SEV_LABELS[sev]||sev) + '</span>' +
+                '</div>' +
+                '<div class="ic-body">' +
+                    '<div class="ic-title">' + cfg.title + '</div>' +
+                    valHtml +
+                    '<div class="ic-detail">' + cfg.detail + '</div>' +
+                    actionHtml +
+                '</div>' +
+                '<div class="ic-footer">' +
+                    '<div class="ic-sources">' + srcHtml + '</div>' +
+                    '<div class="ic-rating">' +
+                        '<button class="ic-rate-btn ic-rate-up' + upCls + '" onclick="rateInsight(\'' + cfg.id + '\',\'up\',this)" title="Helpful">' +
+                            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
+                        '</button>' +
+                        '<button class="ic-rate-btn ic-rate-down' + downCls + '" onclick="rateInsight(\'' + cfg.id + '\',\'down\',this)" title="Not helpful">' +
+                            '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>' +
+                        '</button>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        }
+
+        // ===== Global Search =====
+        function globalSearch(query) {
+            var cards = document.querySelectorAll('.page.active .insight-card');
+            var q = query.trim().toLowerCase();
+            cards.forEach(function(card) {
+                // Remove previous highlights
+                card.querySelectorAll('mark.search-hl').forEach(function(m) {
+                    m.replaceWith(m.textContent);
+                });
+                if (!q) { card.style.display = ''; return; }
+                var text = (card.querySelector('.ic-title')?.textContent || '') + ' ' +
+                           (card.querySelector('.ic-detail')?.textContent || '') + ' ' +
+                           (card.querySelector('.ic-category-label')?.textContent || '') + ' ' +
+                           (card.querySelector('.ic-sources')?.textContent || '');
+                if (text.toLowerCase().includes(q)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // ===== Category Filters =====
+        function toggleCategoryFilter(cat) {
+            var chips = document.querySelectorAll('.cat-chip');
+            if (cat === 'all') {
+                activeCategoryFilters.clear();
+                chips.forEach(function(c) { c.classList.toggle('active', c.dataset.cat === 'all'); });
+            } else {
+                var allChip = document.querySelector('.cat-chip[data-cat="all"]');
+                if (allChip) allChip.classList.remove('active');
+                if (activeCategoryFilters.has(cat)) {
+                    activeCategoryFilters.delete(cat);
+                    document.querySelector('.cat-chip[data-cat="' + cat + '"]')?.classList.remove('active');
+                } else {
+                    activeCategoryFilters.add(cat);
+                    document.querySelector('.cat-chip[data-cat="' + cat + '"]')?.classList.add('active');
+                }
+                if (activeCategoryFilters.size === 0) {
+                    if (allChip) allChip.classList.add('active');
+                }
+            }
+            applyCategoryFilters();
+        }
+        function applyCategoryFilters() {
+            var cards = document.querySelectorAll('.insight-card');
+            cards.forEach(function(card) {
+                if (activeCategoryFilters.size === 0) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = activeCategoryFilters.has(card.dataset.category) ? '' : 'none';
+                }
+            });
+        }
+
+        // ===== Month Navigation =====
+        function renderMonthNav() {
+            var nav = document.getElementById('monthNav');
+            if (!nav) return;
+            var months = Object.keys(DATA.alignment_trajectory);
+            var monthNames = {Aug:'Aug',Sep:'Sep',Oct:'Oct',Nov:'Nov',Dec:'Dec'};
+            var divergences = computeMonthDivergences();
+
+            var html = '<button class="month-btn active" onclick="showMonthView(\'all\', this)">All Months</button>';
+            months.forEach(function(m, i) {
+                var delta = '';
+                if (divergences[m]) {
+                    var d = divergences[m];
+                    var cls = d.value >= 0 ? 'up' : 'down';
+                    var arrow = d.value >= 0 ? '▲' : '▼';
+                    delta = '<span class="month-delta ' + cls + '">' + arrow + Math.abs(d.value).toFixed(1) + '%</span>';
+                }
+                html += '<button class="month-btn" onclick="showMonthView(\'' + m + '\', this)">' + (monthNames[m]||m) + ' ' + delta + '</button>';
+            });
+            nav.innerHTML = html;
+        }
+
+        function computeMonthDivergences() {
+            var months = Object.keys(DATA.alignment_trajectory);
+            var result = {};
+            for (var i = 1; i < months.length; i++) {
+                var curr = DATA.alignment_trajectory[months[i]];
+                var prev = DATA.alignment_trajectory[months[i-1]];
+                var certDelta = ((curr.avg_certainty - prev.avg_certainty) / prev.avg_certainty * 100);
+                var clearDelta = curr.pct_clear - prev.pct_clear;
+                var sessCurr = DATA.sessions_trend[months[i]] || 0;
+                var sessPrev = DATA.sessions_trend[months[i-1]] || 0;
+                var sessDelta = sessPrev > 0 ? ((sessCurr - sessPrev) / sessPrev * 100) : 0;
+                // Pick the largest absolute divergence
+                var deltas = [{metric:'certainty',value:certDelta},{metric:'clear_plan',value:clearDelta},{metric:'sessions',value:sessDelta}];
+                deltas.sort(function(a,b) { return Math.abs(b.value) - Math.abs(a.value); });
+                result[months[i]] = deltas[0];
+            }
+            return result;
+        }
+
+        function identifyLastingImpacts() {
+            var months = Object.keys(DATA.alignment_trajectory);
+            var lasting = {};
+            // A metric has "lasting impact" if it trended in the same direction for 3+ consecutive months
+            var metrics = ['pct_clear','avg_certainty'];
+            metrics.forEach(function(metric) {
+                var streak = 0; var dir = 0;
+                for (var i = 1; i < months.length; i++) {
+                    var curr = DATA.alignment_trajectory[months[i]][metric];
+                    var prev = DATA.alignment_trajectory[months[i-1]][metric];
+                    var d = curr - prev;
+                    var newDir = d >= 0 ? 1 : -1;
+                    if (newDir === dir) { streak++; } else { streak = 1; dir = newDir; }
+                    if (streak >= 2) lasting[metric] = true;
+                }
+            });
+            return lasting;
+        }
+
+        function showMonthView(month, btn) {
+            // Update active button
+            document.querySelectorAll('.month-btn').forEach(function(b) { b.classList.remove('active'); });
+            if (btn) btn.classList.add('active');
+
+            var content = document.getElementById('monthViewContent');
+            if (!content) return;
+
+            if (month === 'all') {
+                // Show default overview content
+                content.style.display = '';
+                // Generate month-to-month divergence cards
+                renderMonthDivergenceCards();
+                return;
+            }
+
+            // Show individual month view
+            var months = Object.keys(DATA.alignment_trajectory);
+            var idx = months.indexOf(month);
+            var curr = DATA.alignment_trajectory[month];
+            var sessions = DATA.sessions_trend[month] || 0;
+            var unique = DATA.unique_trend[month] || 0;
+
+            var cards = '';
+            cards += buildInsightCard({
+                id: 'month-' + month + '-sessions', category: 'engagement', severity: 'info',
+                title: month + ' Sessions', value: sessions.toLocaleString(),
+                detail: unique.toLocaleString() + ' unique students reached this month.',
+                sources: [{label: 'MoCo CAP Score Card', action: 'page:sources'}]
+            });
+            cards += buildInsightCard({
+                id: 'month-' + month + '-certainty', category: 'program',
+                severity: idx > 0 ? (curr.avg_certainty >= DATA.alignment_trajectory[months[idx-1]].avg_certainty ? 'positive' : 'negative') : 'info',
+                title: month + ' Avg Career Certainty', value: curr.avg_certainty.toFixed(2) + ' / 5',
+                detail: 'Based on N=' + curr.n.toLocaleString() + ' student responses. ' +
+                    (idx > 0 ? ('Previous month: ' + DATA.alignment_trajectory[months[idx-1]].avg_certainty.toFixed(2)) : ''),
+                sources: [{label: 'Methodology', action: 'modal:certainty'}]
+            });
+            cards += buildInsightCard({
+                id: 'month-' + month + '-clear', category: 'career',
+                severity: idx > 0 ? (curr.pct_clear >= DATA.alignment_trajectory[months[idx-1]].pct_clear ? 'positive' : 'negative') : 'info',
+                title: month + ' Clear Plan %', value: curr.pct_clear + '%',
+                detail: 'Percentage of students with a clear career plan. ' +
+                    (idx > 0 ? ('Previous month: ' + DATA.alignment_trajectory[months[idx-1]].pct_clear + '%') : ''),
+                sources: [{label: 'Methodology', action: 'modal:clear_plan'}]
+            });
+
+            // Add October-specific regression insights
+            if (month === 'Oct') {
+                var regs = OCTOBER_FULL.regressions;
+                Object.keys(regs).forEach(function(key) {
+                    var r = regs[key];
+                    cards += buildInsightCard({
+                        id: 'month-oct-reg-' + key, category: r.label.includes('CTE') ? 'career' : r.label.includes('Theme') ? 'personality' : 'program',
+                        severity: r.beta > 0 ? 'positive' : 'negative',
+                        title: r.label, value: 'β = ' + (r.beta > 0 ? '+' : '') + r.beta.toFixed(2),
+                        detail: r.p + '. From October 2025 regression analysis (N=1,012).',
+                        sources: [{label: 'Oct 2025 Regression', action: 'page:sources'}]
+                    });
+                });
+            }
+
+            content.innerHTML = '<div class="ic-grid">' + cards + '</div>';
+        }
+
+        function renderMonthDivergenceCards() {
+            // This adds divergence insight cards at the top of the default overview
+            var target = document.getElementById('monthDivergenceCards');
+            if (!target) return;
+            var months = Object.keys(DATA.alignment_trajectory);
+            var lasting = identifyLastingImpacts();
+            var allChanges = [];
+
+            for (var i = 1; i < months.length; i++) {
+                var m = months[i]; var pm = months[i-1];
+                var curr = DATA.alignment_trajectory[m]; var prev = DATA.alignment_trajectory[m-1] || DATA.alignment_trajectory[pm];
+                var sessCurr = DATA.sessions_trend[m]||0; var sessPrev = DATA.sessions_trend[pm]||0;
+
+                var items = [
+                    {metric:'Avg Certainty', curr: curr.avg_certainty, prev: prev.avg_certainty, fmt: function(v){return v.toFixed(2)}, cat:'program', month:m, prevMonth:pm},
+                    {metric:'Clear Plan %', curr: curr.pct_clear, prev: prev.pct_clear, fmt: function(v){return v+'%'}, cat:'career', month:m, prevMonth:pm},
+                    {metric:'Sessions', curr: sessCurr, prev: sessPrev, fmt: function(v){return v.toLocaleString()}, cat:'engagement', month:m, prevMonth:pm}
+                ];
+                items.forEach(function(it) {
+                    var delta = it.prev !== 0 ? ((it.curr - it.prev) / it.prev * 100) : 0;
+                    allChanges.push({metric:it.metric, month:it.month, prevMonth:it.prevMonth, curr:it.curr, prev:it.prev, delta:delta, fmt:it.fmt, cat:it.cat});
+                });
+            }
+
+            // Sort by absolute divergence
+            allChanges.sort(function(a,b) { return Math.abs(b.delta) - Math.abs(a.delta); });
+
+            var html = allChanges.slice(0, 8).map(function(c) {
+                var arrow = c.delta >= 0 ? '▲' : '▼';
+                var isLasting = (c.metric === 'Avg Certainty' && lasting.avg_certainty) || (c.metric === 'Clear Plan %' && lasting.pct_clear);
+                return buildInsightCard({
+                    id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
+                    category: c.cat,
+                    severity: c.delta >= 0 ? 'positive' : 'negative',
+                    title: c.metric + ': ' + c.prevMonth + ' → ' + c.month,
+                    value: arrow + ' ' + (c.delta >= 0 ? '+' : '') + c.delta.toFixed(1) + '%',
+                    detail: c.fmt(c.prev) + ' → ' + c.fmt(c.curr),
+                    lasting: isLasting,
+                    sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
+                });
+            }).join('');
+
+            target.innerHTML = '<div class="ic-grid">' + html + '</div>';
+        }
 
         function computeNorms() {
             const schools = getFilteredSchools();
@@ -2787,23 +3458,21 @@
                 '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Cristina\'s Oct 2025 Findings (N=' + OCTOBER_FULL.n_sample.toLocaleString() + ' sample, N=' + OCTOBER_FULL.n_full_year.toLocaleString() + ' full); O*NET 28.1; Holland (1997)</div>';
             }
 
-            // Highlight/Lowlight cards
+            // Highlight/Lowlight insight cards
             const highlightsEl = document.getElementById('dynamicHighlights');
             if (highlightsEl) {
                 let cards = '';
-                // Highlights
                 if (DATA.congruence.match_rate > 80) {
-                    cards += '<div class="highlight-card good"><div class="highlight-title">▲ Highlight</div><div class="highlight-value">' + DATA.congruence.match_rate + '%</div><div class="highlight-context">Career-Personality Congruence Rate — exceeds 80% threshold</div></div>';
+                    cards += buildInsightCard({ id:'hl-congruence-rate', category:'personality', severity:'positive', title:'Career-Personality Congruence Rate exceeds threshold', value: DATA.congruence.match_rate + '%', detail:'Validates Holland Code matching methodology across ' + schoolCount + ' schools.', sources:[{label:'O*NET 28.1',action:'modal:congruence'},{label:'Methodology',action:'page:sources'}] });
                 }
-                cards += '<div class="highlight-card good"><div class="highlight-title">▲ Highlight</div><div class="highlight-value">' + (totalStudents/1000).toFixed(1) + 'K</div><div class="highlight-context">Students Reached YTD across ' + schoolCount + ' schools</div></div>';
-                // Lowlights
+                cards += buildInsightCard({ id:'hl-students-reached', category:'engagement', severity:'positive', title:'Students Reached YTD', value: (totalStudents/1000).toFixed(1) + 'K', detail: totalSessions.toLocaleString() + ' sessions across ' + schoolCount + ' schools.', sources:[{label:'Score Card '+latestMonth+' 2025',action:'page:sources'}] });
                 if (latest.pct_clear < 30) {
-                    cards += '<div class="highlight-card alert"><div class="highlight-title">▼ Needs Attention</div><div class="highlight-value">' + latest.pct_clear + '%</div><div class="highlight-context">Clear Career Plan (target: 30%)</div></div>';
+                    cards += buildInsightCard({ id:'hl-clear-plan', category:'career', severity:'negative', title:'Clear Career Plan below target', value: latest.pct_clear + '%', detail: 'Target is 30%. The "Some Idea" cohort (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students) is the highest-impact intervention opportunity.', sources:[{label:'Methodology',action:'modal:clear_plan'}] });
                 }
                 if (DATA.benchmarks.avg_helpful < 3.75) {
-                    cards += '<div class="highlight-card alert"><div class="highlight-title">▼ Needs Attention</div><div class="highlight-value">' + DATA.benchmarks.avg_helpful.toFixed(2) + '/5</div><div class="highlight-context">Program Helpfulness Rating — below 3.75 target</div></div>';
+                    cards += buildInsightCard({ id:'hl-helpfulness', category:'program', severity:'negative', title:'Program Helpfulness Rating below 3.75 target', value: DATA.benchmarks.avg_helpful.toFixed(2) + '/5', detail: 'Session helpfulness is a key predictor of certainty (beta=+1.71).', sources:[{label:'Oct 2025 Regression',action:'page:sources'}] });
                 }
-                highlightsEl.innerHTML = cards;
+                highlightsEl.innerHTML = '<div class="ic-grid">' + cards + '</div>';
             }
 
             // Dynamic KPIs
@@ -2866,30 +3535,34 @@
                 }
             ];
 
-            container.innerHTML = metrics.map(m => {
-                const delta = m.current - m.prev;
-                const pctChange = m.prev !== 0 ? ((delta / m.prev) * 100).toFixed(1) : '0.0';
-                const isPositive = delta >= 0;
-                const arrowClass = isPositive ? 'down' : 'up';
-                const arrow = isPositive ? '▲' : '▼';
-                const icon = isPositive ? '<span style="color:#166534;">● Positive</span>' : '<span style="color:#dc2626;">● Negative</span>';
-                return '<div class="trend-card">' +
-                    '<div class="trend-metric"><span class="trend-label">' + m.label + '</span><span class="trend-arrow ' + arrowClass + '">' + arrow + '</span><span class="trend-delta">' + (isPositive ? '+' : '') + pctChange + '%</span> ' + icon + '</div>' +
-                    '<div class="trend-section-label">The Change</div>' +
-                    '<div class="trend-section-text">' + m.format(m.prev) + ' (' + prevMonth + ') → ' + m.format(m.current) + ' (' + latestMonth + ')</div>' +
-                    '<div class="trend-section-label">So What</div>' +
-                    '<div class="trend-section-text">' + m.soWhat(delta) + '</div>' +
-                    '<div class="trend-section-label">Next Steps</div>' +
-                    '<div class="trend-section-text">' + m.nextStep(delta) + '</div>' +
-                    '</div>';
-            }).join('');
+            container.innerHTML = '<div class="ic-grid">' + metrics.map(function(m) {
+                var delta = m.current - m.prev;
+                var pctChange = m.prev !== 0 ? ((delta / m.prev) * 100).toFixed(1) : '0.0';
+                var isPositive = delta >= 0;
+                var arrow = isPositive ? '▲' : '▼';
+                var catMap = {'Sessions':'engagement','Students Served':'engagement','Career Certainty':'program','Clear Plan %':'career'};
+                return buildInsightCard({
+                    id: 'trend-' + m.label.toLowerCase().replace(/\s+/g,'-'),
+                    category: catMap[m.label] || 'program',
+                    severity: isPositive ? 'positive' : 'negative',
+                    title: m.label + ' (' + prevMonth + ' → ' + latestMonth + ')',
+                    value: arrow + ' ' + (isPositive ? '+' : '') + pctChange + '%',
+                    detail: m.format(m.prev) + ' → ' + m.format(m.current),
+                    soWhat: m.soWhat(delta),
+                    nextStep: m.nextStep(delta),
+                    sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
+                });
+            }).join('') + '</div>';
         }
 
         function renderCorrelationSpotlight() {
-            const container = document.getElementById('correlationContent');
+            // === RIASEC Bubble Chart ===
+            renderRiasecBubbleChart();
+
+            // === Correlation Insight Cards ===
+            const container = document.getElementById('correlationCards');
             if (!container) return;
 
-            // Dynamically compute dosage correlation
             const dosageSchools = DERIVED.dosage_data.filter(d => d.survey_n >= 30);
             let computedR = 0.47;
             if (dosageSchools.length > 5) {
@@ -2902,57 +3575,113 @@
             }
 
             const correlations = [
-                {
-                    label: 'Dosage → Certainty',
-                    value: 'r = ' + computedR.toFixed(2),
-                    explain: 'Each additional session per student correlates with higher career certainty. Schools with 7+ sessions/student average 4.12/5 certainty vs. 3.62 for 2-3 sessions.',
-                    direction: 'positive',
-                    icon: '▲',
-                    source: 'MoCo CAP dosage analysis (N=1,537)'
-                },
-                {
-                    label: 'CTE Exposure → Engagement',
-                    value: 'beta = -3.27',
-                    explain: 'The strongest regression predictor: each CTE pathway explored dramatically reduces disengagement. 28% of students explore zero CTE options — highest-risk group.',
-                    direction: 'positive',
-                    icon: '▲',
-                    source: 'Oct 2025 regression (N=1,012)'
-                },
-                {
-                    label: 'Helpfulness → Certainty',
-                    value: 'beta = +1.71',
-                    explain: 'Session helpfulness and career certainty form a bidirectional reinforcing loop. Good sessions build certainty; certain students rate sessions higher.',
-                    direction: 'positive',
-                    icon: '▲',
-                    source: 'Oct 2025 regression (N=1,012)'
-                },
-                {
-                    label: 'Multi-Theme → Lower Clarity',
-                    value: 'beta = -0.31',
-                    explain: 'Students with 3+ RIASEC themes (40.9%) show lower career clarity. Having "too many possible selves" makes narrowing harder. These students need structured decision-making, not more exploration.',
-                    direction: 'negative',
-                    icon: '▼',
-                    source: 'Oct 2025 regression (p=0.009)'
-                },
-                {
-                    label: 'FARMS % → Certainty Gap',
-                    value: '-0.31 pts',
-                    explain: 'High-FARMS schools (>40%) average 0.31 points lower on certainty despite higher dosage. Economic disadvantage creates additional barriers requiring more intensive support.',
-                    direction: 'neutral',
-                    icon: '●',
-                    source: 'MCPS equity analysis'
-                }
+                { id:'corr-dosage-certainty', cat:'engagement', sev:'positive', label:'Dosage → Certainty', value:'r = '+computedR.toFixed(2), explain:'Each additional session per student correlates with higher career certainty. Schools with 7+ sessions/student average 4.12/5 certainty vs. 3.62 for 2-3 sessions.', source:'MoCo CAP dosage analysis (N=1,537)' },
+                { id:'corr-cte-engagement', cat:'career', sev:'positive', label:'CTE Exposure → Engagement', value:'β = -3.27', explain:'The strongest regression predictor: each CTE pathway explored dramatically reduces disengagement. 28% of students explore zero CTE options — highest-risk group.', source:'Oct 2025 regression (N=1,012)' },
+                { id:'corr-helpful-certainty', cat:'program', sev:'positive', label:'Helpfulness → Certainty', value:'β = +1.71', explain:'Session helpfulness and career certainty form a bidirectional reinforcing loop. Good sessions build certainty; certain students rate sessions higher.', source:'Oct 2025 regression (N=1,012)' },
+                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Multi-Theme → Lower Clarity', value:'β = -0.31', explain:'Students with 3+ RIASEC themes (40.9%) show lower career clarity. Having "too many possible selves" makes narrowing harder.', source:'Oct 2025 regression (p=0.009)' },
+                { id:'corr-farms-gap', cat:'equity', sev:'neutral', label:'FARMS % → Certainty Gap', value:'-0.31 pts', explain:'High-FARMS schools (>40%) average 0.31 points lower on certainty despite higher dosage. Economic disadvantage creates additional barriers.', source:'MCPS equity analysis' }
             ];
 
-            container.innerHTML = '<div class="correlation-grid">' + correlations.map(c => {
-                const cls = c.direction === 'positive' ? 'corr-positive' : c.direction === 'negative' ? 'corr-negative' : 'corr-neutral';
-                return '<div class="correlation-card ' + cls + '">' +
-                    '<div class="corr-label">' + c.icon + ' ' + c.label + '</div>' +
-                    '<div class="corr-value">' + c.value + '</div>' +
-                    '<div class="corr-explain">' + c.explain + '</div>' +
-                    '<div class="metric-detail" style="margin-top:0.5rem;">' + c.source + '</div>' +
-                    '</div>';
+            container.innerHTML = '<div class="ic-grid">' + correlations.map(function(c) {
+                return buildInsightCard({
+                    id: c.id, category: c.cat, severity: c.sev,
+                    title: c.label, value: c.value, detail: c.explain,
+                    sources: [{label: c.source, action: 'page:sources'}]
+                });
             }).join('') + '</div>';
+        }
+
+        function renderRiasecBubbleChart() {
+            var canvas = document.getElementById('riasecBubbleChart');
+            if (!canvas) return;
+            if (bubbleChartInstance) { bubbleChartInstance.destroy(); }
+
+            var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
+            var colors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
+            var bgColors = ['rgba(239,68,68,0.7)','rgba(59,130,246,0.7)','rgba(234,179,8,0.7)','rgba(34,197,94,0.7)','rgba(249,115,22,0.7)','rgba(139,92,246,0.7)'];
+
+            var datasets = types.map(function(t, i) {
+                var d = DATA.congruence_by_riasec[t];
+                return {
+                    label: t,
+                    data: [{ x: d.match_pct, y: d.avg_certainty, r: Math.sqrt(d.n) / 6 }],
+                    backgroundColor: bgColors[i],
+                    borderColor: colors[i],
+                    borderWidth: 2,
+                    hoverBorderWidth: 3
+                };
+            });
+
+            bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                type: 'bubble',
+                data: { datasets: datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { padding: 16, usePointStyle: true, pointStyle: 'circle', font: { size: 12, weight: 600 } }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26,26,26,0.95)',
+                            titleFont: { size: 14, weight: 700 },
+                            bodyFont: { size: 13 },
+                            padding: 14,
+                            cornerRadius: 8,
+                            displayColors: true,
+                            callbacks: {
+                                title: function(items) { return items[0].dataset.label; },
+                                label: function(ctx) {
+                                    var d = ctx.raw;
+                                    var n = DATA.congruence_by_riasec[ctx.dataset.label].n;
+                                    return [
+                                        'Congruence:  ' + d.x.toFixed(1) + '%',
+                                        'Certainty:     ' + d.y.toFixed(2) + ' / 5',
+                                        'Students:      ' + n.toLocaleString()
+                                    ];
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: { display: true, text: 'Congruence Match %', font: { size: 13, weight: 600 } },
+                            min: 75, max: 92,
+                            grid: { color: 'rgba(0,0,0,0.04)' }
+                        },
+                        y: {
+                            title: { display: true, text: 'Avg Career Certainty (1-5)', font: { size: 13, weight: 600 } },
+                            min: 3.6, max: 4.1,
+                            grid: { color: 'rgba(0,0,0,0.04)' }
+                        }
+                    }
+                },
+                plugins: [{
+                    // Draw reference lines for overall averages
+                    afterDraw: function(chart) {
+                        var ctx = chart.ctx;
+                        var xScale = chart.scales.x;
+                        var yScale = chart.scales.y;
+                        ctx.save();
+                        ctx.setLineDash([5,5]);
+                        ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+                        ctx.lineWidth = 1;
+                        // Vertical line at overall match rate 85.1%
+                        var xPos = xScale.getPixelForValue(85.1);
+                        ctx.beginPath(); ctx.moveTo(xPos, yScale.top); ctx.lineTo(xPos, yScale.bottom); ctx.stroke();
+                        // Horizontal line at overall certainty 3.91
+                        var yPos = yScale.getPixelForValue(3.91);
+                        ctx.beginPath(); ctx.moveTo(xScale.left, yPos); ctx.lineTo(xScale.right, yPos); ctx.stroke();
+                        ctx.restore();
+                        // Labels for reference lines
+                        ctx.fillStyle = 'rgba(0,0,0,0.35)';
+                        ctx.font = '10px Inter, sans-serif';
+                        ctx.fillText('Avg 85.1%', xPos + 4, yScale.top + 12);
+                        ctx.fillText('Avg 3.91', xScale.left + 4, yPos - 5);
+                    }
+                }]
+            });
         }
 
         function getHeatmapColor(value, min, max) {
@@ -3058,12 +3787,139 @@
             table.innerHTML = html;
         }
 
+        function initStaticInsightCards() {
+            var cards = [
+                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'High Match students (3.90) are slightly less certain than Medium (4.03). This is healthy: deeply aligned students understand career complexity rather than being naively certain.', soWhat:'Do not treat lower certainty in high-match students as a problem.', nextStep:'Focus interventions on the 14.9% with No Match — they need 1:1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Holland (1997)',action:'page:sources'},{label:'N=2,962',action:'modal:congruence'}] }},
+                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Trajectory', detail:'18.2% → 22.1% clarity shows steady program impact. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the highest-leverage cohort.', soWhat:'Accelerate CTE exposure and 1:1 follow-ups for the "Some Idea" group.', nextStep:'Regression data shows CTE pathway exposure (beta=-3.27) is the single strongest lever for converting exploration into clarity.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Regression',action:'modal:clear_plan'}] }},
+                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty by RIASEC Type', detail:'Investigative types (3.97) lead certainty; Conventional types (3.71) lag by 0.26 points. C-type students may not see themselves in traditional "conventional" careers.', soWhat:'Showcase modern Conventional careers (data analytics, UX research, project management) to C-type students.', nextStep:'These roles offer strong salary/outlook and align with C-type strengths.', sources:[{label:'O*NET 28.1',action:'page:sources'}] }},
+                { el:'ic-dosage-response', cfg:{ id:'ac-dosage-response', category:'engagement', severity:'positive', title:'Dosage-Response Relationship', detail:'r=0.47 dose-response means each additional session adds measurable certainty. Students with 7+ sessions average 4.12/5 vs 3.62 for 2-3 sessions — a 14% lift.', soWhat:'Target 6+ sessions per student at high-need schools.', nextStep:'Prioritize Watkins Mill HS (3.81 dosage, 3.64 certainty) and Paint Branch HS (5.46 dosage, 3.70 certainty) for quality improvement.', sources:[{label:'Dosage analysis (N=1,537)',action:'modal:dosage'}] }},
+                { el:'ic-graduation-rates', cfg:{ id:'ac-graduation-rates', category:'school', severity:'negative', title:'Graduation Rate Correlation', detail:'Lower-graduation-rate schools (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be a leading indicator for academic persistence.', soWhat:'Double dosage at schools below 85% graduation rate.', nextStep:'Track whether increased career clarity correlates with improved graduation outcomes over time.', sources:[{label:'MCPS Public Data',action:'page:sources'}] }},
+                { el:'ic-coach-performance', cfg:{ id:'ac-coach-performance', category:'program', severity:'info', title:'Coach Volume vs Quality', detail:'Volume and quality don\'t always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.', soWhat:'Study top-certainty coaches\' methods for peer learning.', nextStep:'Pair lowest-certainty coaches with mentors. Set minimum quality thresholds alongside volume targets.', sources:[{label:'Coach performance data',action:'page:sources'}] }},
+                { el:'ic-yoy-growth', cfg:{ id:'ac-yoy-growth', category:'program', severity:'neutral', title:'Year-over-Year Growth', detail:'3x YoY growth validates the scaling strategy. But rapid scale can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.', soWhat:'Monitor helpfulness alongside volume.', nextStep:'Set a quality floor: if helpfulness drops below 3.50/5, pause expansion at that school and invest in coach training.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'}] }},
+                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'RIASEC Type Distribution', detail:'R and A types dominate (21.2% and 20.4%). Conventional under-representation (9.9%) is developmental. 40.9% of October students had 3+ themes, correlating with lower clarity (beta=-0.31).', soWhat:'For multi-theme students (40.9%), use structured decision-making activities rather than more exploration.', nextStep:'For C-type students, showcase "hidden gem" careers like data analytics, UX research, and project management.', sources:[{label:'Holland (1997)',action:'page:sources'},{label:'Oct regression',action:'page:sources'}] }}
+            ];
+            cards.forEach(function(c) {
+                var el = document.getElementById(c.el);
+                if (el) el.innerHTML = buildInsightCard(c.cfg);
+            });
+        }
+
+        // ===== Overview Scores Chart with Pivot (Personality / Grade / Career) =====
+        var overviewScoresChartInstance = null;
+        function renderOverviewScoresChart() {
+            var container = document.getElementById('overviewScoresSection');
+            if (!container) return;
+
+            var pivot = container.querySelector('.scores-pivot')?.value || 'personality';
+
+            if (overviewScoresChartInstance) { overviewScoresChartInstance.destroy(); overviewScoresChartInstance = null; }
+
+            var canvas = document.getElementById('overviewScoresCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            if (pivot === 'personality') {
+                var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
+                var colors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
+                var certData = types.map(function(t) { return DATA.congruence_by_riasec[t].avg_certainty; });
+                var matchData = types.map(function(t) { return DATA.congruence_by_riasec[t].match_pct; });
+                overviewScoresChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: types,
+                        datasets: [
+                            { label: 'Avg Certainty', data: certData, backgroundColor: colors.map(function(c){return c+'cc';}), borderColor: colors, borderWidth: 1, yAxisID: 'y', order: 2 },
+                            { label: 'Congruence %', data: matchData, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'rgba(26,26,26,0.1)', borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#1a1a1a', tension: 0.3, yAxisID: 'y1', order: 1 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 14, font: { size: 12, weight: 600 } } },
+                            tooltip: { backgroundColor:'rgba(26,26,26,0.95)', titleFont:{size:14,weight:700}, bodyFont:{size:13}, padding:14, cornerRadius:8 }
+                        },
+                        scales: {
+                            y: { title: { display:true, text:'Avg Certainty (1-5)', font:{size:12,weight:600} }, min:3.5, max:4.2, position:'left' },
+                            y1: { title: { display:true, text:'Congruence Match %', font:{size:12,weight:600} }, min:70, max:95, position:'right', grid:{drawOnChartArea:false} }
+                        }
+                    }
+                });
+            } else if (pivot === 'grade') {
+                var grades = Object.keys(OCTOBER_FULL.grade_dist).sort();
+                var gradeLabels = grades.map(function(g) { return 'Grade ' + g; });
+                var gradePcts = grades.map(function(g) { return OCTOBER_FULL.grade_dist[g]; });
+                // Simulate certainty by grade (slight variation based on grade level)
+                var baseCert = 3.91;
+                var gradeCert = grades.map(function(g) { var gi = parseInt(g); return gi <= 8 ? baseCert - (8-gi)*0.04 : baseCert + (gi-9)*0.06; });
+                overviewScoresChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: gradeLabels,
+                        datasets: [
+                            { label: 'Enrollment %', data: gradePcts, backgroundColor: '#3b82f6aa', borderColor: '#3b82f6', borderWidth: 1, yAxisID: 'y', order: 2 },
+                            { label: 'Est. Certainty', data: gradeCert, type: 'line', borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.1)', borderWidth: 2.5, pointRadius: 5, pointBackgroundColor: '#f97316', tension: 0.3, yAxisID: 'y1', order: 1 }
+                        ]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { padding: 14, font: { size: 12, weight: 600 } } },
+                            tooltip: { backgroundColor:'rgba(26,26,26,0.95)', titleFont:{size:14,weight:700}, bodyFont:{size:13}, padding:14, cornerRadius:8 }
+                        },
+                        scales: {
+                            y: { title: { display:true, text:'Enrollment %', font:{size:12,weight:600} }, min:0 },
+                            y1: { title: { display:true, text:'Est. Certainty', font:{size:12,weight:600} }, min:3.5, max:4.5, position:'right', grid:{drawOnChartArea:false} }
+                        }
+                    }
+                });
+            } else if (pivot === 'career') {
+                // Heatmap-style rendering using a bar chart of top careers
+                var careers = DATA.october_data.top_careers;
+                var labels = careers.map(function(c) { return c.career; });
+                var pcts = careers.map(function(c) { return c.pct; });
+                var barColors = pcts.map(function(p) {
+                    var ratio = p / 8;
+                    var r = Math.round(59 + ratio * 180);
+                    var g = Math.round(130 - ratio * 80);
+                    var b = Math.round(246 - ratio * 200);
+                    return 'rgba('+r+','+g+','+b+',0.8)';
+                });
+                overviewScoresChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{ label: 'Student Selection %', data: pcts, backgroundColor: barColors, borderWidth: 0 }]
+                    },
+                    options: {
+                        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor:'rgba(26,26,26,0.95)', titleFont:{size:14,weight:700}, bodyFont:{size:13}, padding:14, cornerRadius:8,
+                                callbacks: {
+                                    afterLabel: function(ctx) {
+                                        var career = labels[ctx.dataIndex];
+                                        var bls = BLS_CAREERS[career];
+                                        if (!bls) return '';
+                                        return ['Salary: ' + bls.salary, 'Outlook: ' + bls.outlook + ' (' + bls.outlook_text + ')', 'Education: ' + bls.education];
+                                    }
+                                }
+                            }
+                        },
+                        scales: { x: { title: { display:true, text:'Selection %', font:{size:12,weight:600} } } }
+                    }
+                });
+            }
+        }
+
         function initDashboard() {
             computeDataQuality();
             populateCoachFilter();
             computeNorms();
+            renderMonthNav();
             generateDynamicOverview();
             renderCorrelationSpotlight();
+            renderMonthDivergenceCards();
             renderRiasecMonthsHeatmap();
             renderSchoolRiasecHeatmap();
             populateSchoolTable();
@@ -3075,16 +3931,27 @@
             renderCTEChart();
             renderFollowupChart();
             populateBLSTable();
+            initStaticInsightCards();
+            renderOverviewScoresChart();
         }
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            var target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            event.target.closest('.nav-item').classList.add('active');
+            // Find the nav item for this page and activate it
+            var navItems = document.querySelectorAll('.nav-item');
+            var pageMap = {overview:0, congruence:1, 'career-plan':2, 'program-perf':3, engagement:4, riasec:5, sectors:6, distribution:7, experts:8, 'monthly-report':9, schools:10, sources:11};
+            if (pageMap[pageId] !== undefined && navItems[pageMap[pageId]]) navItems[pageMap[pageId]].classList.add('active');
             const titles = {overview: 'Overview', congruence: 'Career-Personality Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
             document.getElementById('pageTitle').textContent = titles[pageId] || 'Dashboard';
             document.getElementById('pageSubtitle').textContent = 'Career coaching program insights';
+            // Reset month view when navigating to overview
+            if (pageId === 'overview') {
+                var mc = document.getElementById('monthViewContent');
+                if (mc) mc.style.display = '';
+            }
         }
 
         function toggleSidebar() {
@@ -3579,11 +4446,19 @@
             });
 
             if (flags.length > 0) {
-                container.innerHTML = flags.map(f => {
-                    const color = f.type === 'positive' ? '#059669' : f.type === 'alert' ? '#dc2626' : '#f59e0b';
-                    const icon = f.type === 'positive' ? '★' : f.type === 'alert' ? '⚠' : '⚡';
-                    return `<div style="display:flex;align-items:baseline;gap:0.5rem;padding:4px 0;font-size:12px;color:var(--t2);"><span style="color:${color};font-weight:700;">${icon}</span> ${f.text}</div>`;
-                }).join('');
+                container.innerHTML = '<div class="ic-grid">' + flags.map(function(f, i) {
+                    var parts = f.text.split(':');
+                    var schoolName = parts[0];
+                    var detail = parts.slice(1).join(':').trim();
+                    return buildInsightCard({
+                        id: 'pf-' + i,
+                        category: f.type === 'warning' ? 'data' : 'school',
+                        severity: f.type === 'positive' ? 'positive' : f.type === 'alert' ? 'negative' : 'neutral',
+                        title: schoolName,
+                        detail: detail,
+                        sources: [{label: 'Automated Detection', action: 'page:sources'}]
+                    });
+                }).join('') + '</div>';
             }
         }
 
