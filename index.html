@@ -235,19 +235,23 @@
         }
 
         .header {
-            padding: 1.5rem 2rem;
+            padding: 0.5rem 1.5rem;
             border-bottom: 1px solid var(--bdr);
             background: var(--bg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .header h1 {
-            font-size: 24px;
-            margin-bottom: 0.25rem;
+            font-size: 16px;
+            margin-bottom: 0;
+            white-space: nowrap;
         }
 
         .header p {
-            color: var(--t3);
-            font-size: 13px;
+            display: none;
         }
 
         .content {
@@ -763,10 +767,11 @@
 
         .header-filters {
             display: flex;
-            gap: 0.75rem;
-            margin-top: 0.75rem;
-            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0;
+            flex-wrap: nowrap;
             align-items: center;
+            margin-left: auto;
         }
 
         .filter-group {
@@ -784,16 +789,16 @@
         }
 
         .filter-select {
-            padding: 6px 10px;
+            padding: 4px 8px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
             font-family: 'Inter', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--t1);
             background: var(--bg);
             cursor: pointer;
             transition: border-color 0.2s;
-            min-width: 120px;
+            min-width: 90px;
         }
 
         .filter-select:focus {
@@ -804,25 +809,26 @@
 
         .filter-divider {
             width: 1px;
-            height: 24px;
+            height: 20px;
             background: var(--bdr);
-            margin: 0 0.25rem;
+            margin: 0 0.1rem;
         }
 
         .alerts-btn {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            padding: 6px 12px;
+            gap: 0.3rem;
+            padding: 4px 10px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
             background: var(--bg);
             font-family: 'Inter', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--t2);
             cursor: pointer;
             transition: all 0.2s;
+            white-space: nowrap;
         }
 
         .alerts-btn:hover {
@@ -1575,11 +1581,12 @@
         /* ===== Global Search ===== */
         .global-search-wrap {
             position: relative;
-            margin-bottom: 0.75rem;
+            flex: 0 1 220px;
+            min-width: 140px;
         }
         .global-search-wrap svg {
             position: absolute;
-            left: 12px;
+            left: 8px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--t3);
@@ -1587,10 +1594,10 @@
         }
         .global-search {
             width: 100%;
-            padding: 0.6rem 1rem 0.6rem 2.5rem;
-            border-radius: 8px;
+            padding: 5px 8px 5px 28px;
+            border-radius: 6px;
             border: 1px solid var(--bdr);
-            font-size: 13px;
+            font-size: 12px;
             font-family: inherit;
             background: var(--bg);
             color: var(--t1);
@@ -1899,6 +1906,136 @@
 
         /* Search highlight */
         mark.search-hl { background: #fef08a; color: var(--t1); border-radius: 2px; padding: 0 1px; }
+
+        /* ===== Congruence/Certainty Scorecard ===== */
+        .scorecard-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .scorecard-item {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            padding: 1.25rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .scorecard-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--g);
+        }
+        .scorecard-item.yoy::before { background: #3b82f6; }
+        .scorecard-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--t3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        .scorecard-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--t1);
+            line-height: 1.1;
+        }
+        .scorecard-trend {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 0.5rem;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .scorecard-trend.up { color: #166534; }
+        .scorecard-trend.down { color: #dc2626; }
+        .scorecard-trend .arrow { font-size: 14px; }
+        .scorecard-sparkline {
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            margin-top: 0.5rem;
+            height: 24px;
+        }
+        .scorecard-sparkline .spark-dot {
+            width: 6px;
+            border-radius: 2px;
+            background: var(--g);
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        .scorecard-sparkline .spark-dot:last-child { opacity: 1; }
+        .scorecard-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+            background: #dbeafe;
+            color: #1d4ed8;
+            margin-top: 0.5rem;
+        }
+
+        /* ===== Sector Impact Summary ===== */
+        .sector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        .sector-impact-card {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .sector-impact-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--t1);
+        }
+        .sector-impact-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 12px;
+            color: var(--t2);
+        }
+        .sector-impact-meta strong { color: var(--t1); }
+        .sector-impact-dir {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .sector-impact-dir.above { background: #dcfce7; color: #166534; }
+        .sector-impact-dir.below { background: #fee2e2; color: #991b1b; }
+
+        /* ===== October Overview Charts Section ===== */
+        .oct-charts-section {
+            margin-bottom: 1.5rem;
+        }
+        .oct-charts-section .section-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--t1);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--g);
+        }
+        .oct-charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -1936,12 +2073,12 @@
 
             <div class="main">
                 <div class="header">
-                    <div class="global-search-wrap">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                        <input type="text" class="global-search" id="globalSearchInput" placeholder="Search insights across all pages..." oninput="globalSearch(this.value)">
-                    </div>
                     <h1 id="pageTitle">Overview</h1>
                     <p id="pageSubtitle">Program impact and student outcomes</p>
+                    <div class="global-search-wrap">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <input type="text" class="global-search" id="globalSearchInput" placeholder="Search insights..." oninput="globalSearch(this.value)">
+                    </div>
                     <div class="header-filters">
                         <div class="filter-group">
                             <span class="filter-label">Level</span>
@@ -1959,8 +2096,8 @@
                             </select>
                         </div>
                         <div class="filter-group">
-                            <span class="filter-label">Min Survey N</span>
-                            <select class="filter-select" id="filterMinN" onchange="applyGlobalFilters()" style="min-width:80px;">
+                            <span class="filter-label">Min N</span>
+                            <select class="filter-select" id="filterMinN" onchange="applyGlobalFilters()" style="min-width:70px;">
                                 <option value="0">No Min</option>
                                 <option value="30" selected>N ≥ 30</option>
                                 <option value="50">N ≥ 50</option>
@@ -1970,9 +2107,9 @@
                         </div>
                         <div class="filter-divider"></div>
                         <button class="alerts-btn" onclick="openThresholds()">
-                            ⚙ Alerts <span class="alert-count zero" id="alertCountBadge">0</span>
+                            Alerts <span class="alert-count zero" id="alertCountBadge">0</span>
                         </button>
-                        <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">↺ Reset</button>
+                        <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">Reset</button>
                     </div>
                 </div>
 
@@ -1992,6 +2129,28 @@
                         </div>
                         <div id="monthViewContent">
                         <div id="monthDivergenceCards"></div>
+
+                        <div id="congruenceCertaintyScorecard"></div>
+                        <div id="sectorImpactSummary"></div>
+
+                        <div class="oct-charts-section" id="overviewOctoberSection">
+                            <div class="section-label">October Deep Dive — Key Drivers of Student Outcomes</div>
+                            <div class="oct-charts-grid">
+                                <div class="chart-card">
+                                    <div class="chart-title">Regression Drivers — What Predicts Outcomes</div>
+                                    <div id="overviewRegressionBars"></div>
+                                </div>
+                                <div class="chart-card">
+                                    <div class="chart-title">CTE Pathway Interest (October)</div>
+                                    <div style="position:relative;height:220px;"><canvas id="overviewCTEChart"></canvas></div>
+                                </div>
+                            </div>
+                            <div class="chart-card" style="margin-top:1rem;">
+                                <div class="chart-title">Follow-Up Request Patterns (YoY Comparison)</div>
+                                <div style="position:relative;height:220px;"><canvas id="overviewFollowupChart"></canvas></div>
+                            </div>
+                        </div>
+
                         <div class="alert-banner" id="alertBanner">
                             <div class="alert-banner-title">📊 Norm-Based Alerts</div>
                             <div class="alert-banner-list" id="alertBannerList"></div>
@@ -2127,6 +2286,8 @@
                                 <div id="ic-certainty-riasec"></div>
                             </div>
                         </div>
+                        <!-- October: Clarity Regression Insights & Follow-Up -->
+                        <div id="careerPlanOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
                     </div>
 
                     <div class="page" id="program-perf">
@@ -2135,6 +2296,26 @@
                             <p><strong>Equity Overlay:</strong> High-FARMS schools (&gt;40%) receive slightly higher dosage (0.49 sessions/student) than low-FARMS schools (0.43), indicating the program is successfully reaching under-resourced communities. However, certainty scores in high-FARMS schools average 0.31 points lower, suggesting these students may need more intensive support.</p>
                             <div class="metric-detail">Sources: MoCo CAP Platform Data (dosage analysis, N=1,537 students with ≥2 sessions); MCPS Public Data (FARMS rates, graduation rates Class of 2023)</div>
                         </div>
+                        <!-- October: Session Helpfulness by Type -->
+                        <div class="chart-grid">
+                            <div class="chart-card">
+                                <div class="chart-title">Session Helpfulness by Delivery Type (October)</div>
+                                <div style="position:relative;height:220px;"><canvas id="helpfulnessByTypeChart"></canvas></div>
+                                <div id="ic-helpfulness-type"></div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-title">Session Type Mix (October)</div>
+                                <div style="position:relative;height:220px;"><canvas id="sessionTypeMixChart"></canvas></div>
+                            </div>
+                        </div>
+                        <!-- October: Regression Drivers for Program-Perf -->
+                        <div class="chart-card" style="margin-bottom:1rem;">
+                            <div class="chart-title">Key Regression Drivers — October Analysis</div>
+                            <div id="perfRegressionBars"></div>
+                        </div>
+                        <!-- YoY Improvement Cards -->
+                        <div id="perfYoYCards" class="ic-grid" style="margin-bottom:1rem;"></div>
+
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">Dosage-Response: Sessions vs Certainty</div>
@@ -2188,6 +2369,23 @@
                                 <div id="ic-yoy-growth"></div>
                             </div>
                         </div>
+                        <!-- October: Session Type & Grade Distribution -->
+                        <div class="chart-grid">
+                            <div class="chart-card">
+                                <div class="chart-title">Session Type Distribution (October)</div>
+                                <div style="position:relative;height:250px;"><canvas id="engSessionTypesChart"></canvas></div>
+                            </div>
+                            <div class="chart-card">
+                                <div class="chart-title">Grade Distribution (October)</div>
+                                <div style="position:relative;height:250px;"><canvas id="engGradeDistChart"></canvas></div>
+                            </div>
+                        </div>
+                        <!-- October: Follow-Up Patterns -->
+                        <div class="chart-card" style="margin-top:1rem;">
+                            <div class="chart-title">Follow-Up Request Patterns (October YoY)</div>
+                            <div style="position:relative;height:220px;"><canvas id="engFollowupChart"></canvas></div>
+                        </div>
+                        <div id="engOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
                     </div>
 
                     <div class="page" id="riasec">
@@ -2203,6 +2401,13 @@
                                 <div id="ic-riasec-distribution"></div>
                             </div>
                         </div>
+
+                        <!-- October: Theme Depth Analysis -->
+                        <div class="chart-card" style="margin-bottom:1rem;">
+                            <div class="chart-title">RIASEC Theme Depth Distribution (October)</div>
+                            <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
+                        </div>
+                        <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
 
                         <div class="heatmap-container">
                             <div class="heatmap-title">School x RIASEC Type Distribution Heatmap</div>
@@ -2275,6 +2480,12 @@
                             <div class="sector-riasec"><span class="riasec-tag primary">Enterprising</span><span class="riasec-tag secondary">Realistic</span></div>
                             <div class="sector-detail">E+R types (3,050 + 5,011). Active MoCo development market. Career paths: real estate agent, property manager, urban planner, architect, construction project manager.</div>
                         </div>
+                        <!-- October: CTE Pathway Chart for Sectors -->
+                        <div class="chart-card" style="margin-top:1.5rem;">
+                            <div class="chart-title">CTE Pathway Interest — Sector Alignment (October)</div>
+                            <div style="position:relative;height:250px;"><canvas id="sectorsCTEChart"></canvas></div>
+                        </div>
+                        <div id="sectorsOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
                     </div>
 
                     <div class="page" id="distribution">
@@ -2304,6 +2515,8 @@
                                 <div class="metric-detail" style="margin-top:0.5rem;">Sources: BLS OOH May 2024; MoCo Economic Indicators 2025; FRED/Census 2023</div>
                             </div>
                         </div>
+                        <!-- October: Popular Career Concentration -->
+                        <div id="distributionOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
                     </div>
 
                     <div class="page" id="experts">
@@ -4033,6 +4246,475 @@
             }
         }
 
+        // ===== OCTOBER DATA DISTRIBUTION FUNCTIONS =====
+
+        function renderCongruenceCertaintyScorecard() {
+            var container = document.getElementById('congruenceCertaintyScorecard');
+            if (!container) return;
+            var traj = DATA.alignment_trajectory;
+            var months = ['Aug','Sep','Oct','Nov','Dec'];
+
+            // Congruence from HEATMAP_DATA (average across types per month)
+            var types = Object.keys(HEATMAP_DATA.riasec_monthly);
+            var congByMonth = months.map(function(m) {
+                var sum = 0, cnt = 0;
+                types.forEach(function(t) {
+                    if (HEATMAP_DATA.riasec_monthly[t][m] !== undefined) { sum += HEATMAP_DATA.riasec_monthly[t][m]; cnt++; }
+                });
+                return cnt ? (sum / cnt) : 0;
+            });
+            var congFirst = congByMonth[0], congLast = congByMonth[congByMonth.length - 1];
+            var congChange = (congLast - congFirst).toFixed(1);
+
+            // Certainty from alignment_trajectory
+            var certByMonth = months.map(function(m) { return traj[m] ? traj[m].avg_certainty : 0; });
+            var certFirst = certByMonth[0], certLast = certByMonth[certByMonth.length - 1];
+            var certChange = (certLast - certFirst).toFixed(2);
+
+            // Clear plan %
+            var clearByMonth = months.map(function(m) { return traj[m] ? traj[m].pct_clear : 0; });
+            var clearFirst = clearByMonth[0], clearLast = clearByMonth[clearByMonth.length - 1];
+            var clearChange = (clearLast - clearFirst).toFixed(1);
+
+            function sparkline(vals, maxVal) {
+                var minV = Math.min.apply(null, vals);
+                var maxV = Math.max.apply(null, vals);
+                var range = maxV - minV || 1;
+                return vals.map(function(v) {
+                    var h = Math.max(4, ((v - minV) / range) * 24);
+                    return '<div class="spark-dot" style="height:' + h + 'px;" title="' + v.toFixed(1) + '"></div>';
+                }).join('');
+            }
+
+            container.innerHTML =
+                '<div class="scorecard-row">' +
+                    '<div class="scorecard-item">' +
+                        '<div class="scorecard-label">Overall Congruence</div>' +
+                        '<div class="scorecard-value">' + congLast.toFixed(1) + '%</div>' +
+                        '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + congChange + 'pp Aug→Dec</div>' +
+                        '<div class="scorecard-sparkline">' + sparkline(congByMonth) + '</div>' +
+                    '</div>' +
+                    '<div class="scorecard-item">' +
+                        '<div class="scorecard-label">Career Certainty</div>' +
+                        '<div class="scorecard-value">' + certLast.toFixed(2) + '/5</div>' +
+                        '<div class="scorecard-trend ' + (certChange >= 0 ? 'up' : 'down') + '"><span class="arrow">' + (certChange >= 0 ? '&#9650;' : '&#9660;') + '</span> ' + (certChange >= 0 ? '+' : '') + certChange + ' Aug→Dec</div>' +
+                        '<div class="scorecard-sparkline">' + sparkline(certByMonth) + '</div>' +
+                    '</div>' +
+                    '<div class="scorecard-item yoy">' +
+                        '<div class="scorecard-label">YoY Certainty Change</div>' +
+                        '<div class="scorecard-value" style="color:#1d4ed8;">' + OCTOBER_FULL.yoy.certainty_change + '</div>' +
+                        '<div class="scorecard-badge">Oct 2024 → Oct 2025</div>' +
+                        '<div class="scorecard-trend up" style="margin-top:0.25rem;"><span class="arrow">&#9650;</span> Helpfulness ' + OCTOBER_FULL.yoy.helpfulness_change + '</div>' +
+                    '</div>' +
+                    '<div class="scorecard-item">' +
+                        '<div class="scorecard-label">Clear Career Plan</div>' +
+                        '<div class="scorecard-value">' + clearLast.toFixed(1) + '%</div>' +
+                        '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + clearChange + 'pp Aug→Dec</div>' +
+                        '<div class="scorecard-sparkline">' + sparkline(clearByMonth) + '</div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function renderSectorImpactSummary() {
+            var container = document.getElementById('sectorImpactSummary');
+            if (!container) return;
+            var avgCong = DATA.congruence.match_rate;
+            var avgCert = DATA.benchmarks.avg_certainty;
+
+            var sectorMap = [
+                {name: 'Biosciences & Health Tech', primary: 'Investigative', secondary: 'Realistic'},
+                {name: 'IT & Cybersecurity', primary: 'Investigative', secondary: 'Conventional'},
+                {name: 'Professional Services', primary: 'Enterprising', secondary: 'Conventional'},
+                {name: 'Hospitality & Tourism', primary: 'Social', secondary: 'Enterprising'},
+                {name: 'Health Services', primary: 'Social', secondary: 'Investigative'},
+                {name: 'Education', primary: 'Social', secondary: 'Artistic'},
+                {name: 'Advanced Manufacturing', primary: 'Realistic', secondary: 'Conventional'},
+                {name: 'Real Estate & Development', primary: 'Enterprising', secondary: 'Realistic'}
+            ];
+
+            var html = '<div style="margin-bottom:0.75rem;"><span style="font-size:14px;font-weight:700;color:var(--t1);">Sector Impact — Steve\'s 8 Priority Areas</span><span style="font-size:11px;color:var(--t3);margin-left:0.75rem;">Congruence & certainty by primary RIASEC type</span></div>';
+            html += '<div class="sector-grid">';
+            sectorMap.forEach(function(s) {
+                var rd = DATA.congruence_by_riasec[s.primary];
+                if (!rd) return;
+                var aboveCong = rd.match_pct >= avgCong;
+                var aboveCert = rd.avg_certainty >= avgCert;
+                var dirClass = (aboveCong && aboveCert) ? 'above' : 'below';
+                var dirText = (aboveCong && aboveCert) ? 'Above Avg' : (aboveCong || aboveCert) ? 'Mixed' : 'Below Avg';
+                if (!aboveCong && !aboveCert) dirClass = 'below';
+                else if (aboveCong !== aboveCert) dirClass = 'above'; // mixed shows neutral-green
+
+                html += '<div class="sector-impact-card">' +
+                    '<div class="sector-impact-name">' + s.name + '</div>' +
+                    '<div class="sector-impact-meta">' +
+                        '<span><strong>' + s.primary + '</strong></span>' +
+                        '<span>Congruence: <strong>' + rd.match_pct + '%</strong></span>' +
+                        '<span>Certainty: <strong>' + rd.avg_certainty.toFixed(2) + '</strong></span>' +
+                    '</div>' +
+                    '<div class="sector-impact-meta">' +
+                        '<span>N=' + rd.n.toLocaleString() + ' students</span>' +
+                        '<span class="sector-impact-dir ' + dirClass + '">' + dirText + '</span>' +
+                    '</div>' +
+                '</div>';
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function renderOverviewOctoberCharts() {
+            // Regression bars for Overview
+            var regContainer = document.getElementById('overviewRegressionBars');
+            if (regContainer && regContainer.innerHTML.trim() === '') {
+                var regs = [
+                    {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
+                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#166534', sig: '***'},
+                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#166534', sig: '***'},
+                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#166534', sig: '***'},
+                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#166534', sig: '***'},
+                    {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
+                    {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
+                ];
+                var maxAbs = Math.max.apply(null, regs.map(function(r) { return Math.abs(r.beta); }));
+                regContainer.innerHTML = regs.map(function(r) {
+                    var width = Math.abs(r.beta) / maxAbs * 100;
+                    var isNeg = r.beta < 0;
+                    return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">' +
+                        '<div style="width:180px;font-size:11px;text-align:right;color:var(--t2);">' + r.label + '</div>' +
+                        '<div style="flex:1;display:flex;align-items:center;' + (isNeg ? 'flex-direction:row-reverse;' : '') + '">' +
+                        '<div style="width:' + width + '%;height:18px;background:' + r.color + ';border-radius:3px;min-width:4px;"></div>' +
+                        '</div>' +
+                        '<div style="width:60px;font-size:12px;font-weight:700;color:' + r.color + ';">\u03B2=' + r.beta.toFixed(2) + r.sig + '</div>' +
+                        '</div>';
+                }).join('');
+            }
+
+            // CTE chart for Overview
+            var cteCtx = document.getElementById('overviewCTEChart');
+            if (cteCtx && !cteCtx.dataset.rendered) {
+                cteCtx.dataset.rendered = 'true';
+                new Chart(cteCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Arts, Media, Comm.', 'Business Mgmt', 'Health & Bio', 'Mfg, Eng, Tech', 'Law, Govt, Safety'],
+                        datasets: [{data: [29.1, 23.2, 18.9, 18.4, 18.0], backgroundColor: ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'], borderRadius: 4}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, title: {display: true, text: '% of Students'}}, x: {ticks: {font: {size: 10}}}}}
+                });
+            }
+
+            // Follow-up chart for Overview
+            var fuCtx = document.getElementById('overviewFollowupChart');
+            if (fuCtx && !fuCtx.dataset.rendered) {
+                fuCtx.dataset.rendered = 'true';
+                new Chart(fuCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mentoring', 'Knows Next Steps', 'Advisor Meeting', 'Exploration', 'Check-in'],
+                        datasets: [
+                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#166534', borderRadius: 4},
+                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#86efac', borderRadius: 4}
+                        ]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true, title: {display: true, text: '%'}}}}
+                });
+            }
+        }
+
+        function renderProgramPerfOctober() {
+            // Helpfulness by delivery type (horizontal bar)
+            var helpCtx = document.getElementById('helpfulnessByTypeChart');
+            if (helpCtx && !helpCtx.dataset.rendered) {
+                helpCtx.dataset.rendered = 'true';
+                var hbt = OCTOBER_FULL.helpfulness_by_type;
+                new Chart(helpCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['One-on-One', 'Whole Group', 'Exploration', 'Small Group'],
+                        datasets: [{
+                            data: [hbt.one_on_one, hbt.whole_group, hbt.exploration, hbt.small_group],
+                            backgroundColor: ['#166534', '#22c55e', '#86efac', '#bbf7d0'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {beginAtZero: true, max: 100, title: {display: true, text: '% Positive'}}}}
+                });
+            }
+
+            // Session type mix doughnut
+            var stCtx = document.getElementById('sessionTypeMixChart');
+            if (stCtx && !stCtx.dataset.rendered) {
+                stCtx.dataset.rendered = 'true';
+                var st = OCTOBER_FULL.session_types;
+                new Chart(stCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#d1d5db']}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
+                });
+            }
+
+            // Helpfulness insight card
+            var helpCardEl = document.getElementById('ic-helpfulness-type');
+            if (helpCardEl && helpCardEl.innerHTML.trim() === '') {
+                helpCardEl.innerHTML = buildInsightCard({
+                    id: 'oct-helpfulness-type', category: 'program', severity: 'positive',
+                    title: 'One-on-One Sessions Most Effective',
+                    value: '75.6% positive',
+                    detail: 'One-on-one sessions achieve 75.6% helpfulness — highest of any delivery type — but represent only 1.8% of all sessions. Whole group (71.5%) is the dominant mode at 81.9% of sessions.',
+                    soWhat: 'Even a modest increase in one-on-one sessions could meaningfully improve perceived helpfulness and outcomes.',
+                    nextStep: 'Pilot dedicated one-on-one slots at 3-5 schools to measure certainty lift vs. group sessions.',
+                    sources: [{label: 'Oct Report', action: 'page:monthly-report'}, {label: 'Regression Analysis', action: 'modal:regression'}]
+                });
+            }
+
+            // Regression bars for Program-Perf
+            var perfRegContainer = document.getElementById('perfRegressionBars');
+            if (perfRegContainer && perfRegContainer.innerHTML.trim() === '') {
+                var regs = [
+                    {label: 'CTE Options → Disengagement', beta: -3.27, color: '#dc2626', sig: '***'},
+                    {label: 'Session Helpful → Certainty', beta: 1.71, color: '#166534', sig: '***'},
+                    {label: 'Next Steps → Clarity', beta: 1.55, color: '#166534', sig: '***'},
+                    {label: 'RIASEC Themes → Score', beta: 1.15, color: '#166534', sig: '***'},
+                    {label: 'Certainty → Future Clarity', beta: 1.15, color: '#166534', sig: '***'},
+                    {label: 'Future Thinking → Certainty', beta: 0.92, color: '#22c55e', sig: '***'},
+                    {label: 'Helpful → Concentration', beta: 0.80, color: '#22c55e', sig: '***'},
+                    {label: 'Themes → Concentration', beta: -0.49, color: '#f59e0b', sig: '***'},
+                    {label: 'Themes → Clarity', beta: -0.31, color: '#f59e0b', sig: '**'}
+                ];
+                var maxAbs = Math.max.apply(null, regs.map(function(r) { return Math.abs(r.beta); }));
+                perfRegContainer.innerHTML = regs.map(function(r) {
+                    var width = Math.abs(r.beta) / maxAbs * 100;
+                    var isNeg = r.beta < 0;
+                    return '<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;">' +
+                        '<div style="width:200px;font-size:11px;text-align:right;color:var(--t2);">' + r.label + '</div>' +
+                        '<div style="flex:1;display:flex;align-items:center;' + (isNeg ? 'flex-direction:row-reverse;' : '') + '">' +
+                        '<div style="width:' + width + '%;height:18px;background:' + r.color + ';border-radius:3px;min-width:4px;"></div>' +
+                        '</div>' +
+                        '<div style="width:60px;font-size:12px;font-weight:700;color:' + r.color + ';">\u03B2=' + r.beta.toFixed(2) + r.sig + '</div>' +
+                        '</div>';
+                }).join('');
+            }
+
+            // YoY cards
+            var yoyEl = document.getElementById('perfYoYCards');
+            if (yoyEl && yoyEl.innerHTML.trim() === '') {
+                yoyEl.innerHTML = buildInsightCard({
+                    id: 'oct-yoy-certainty', category: 'program', severity: 'positive',
+                    title: 'Year-over-Year Certainty Improvement',
+                    value: OCTOBER_FULL.yoy.certainty_change,
+                    detail: 'Career certainty (Likely + Very Likely) increased by 6.27 percentage points from Oct 2024 to Oct 2025. Session helpfulness also rose ' + OCTOBER_FULL.yoy.helpfulness_change + '.',
+                    soWhat: 'Consistent improvement across both metrics suggests the program\'s quality and student engagement are strengthening year over year.',
+                    nextStep: 'Set a target of +3pp certainty improvement for SY 2026-27 and track monthly.',
+                    sources: [{label: 'Oct YoY Data', action: 'page:monthly-report'}]
+                }) + buildInsightCard({
+                    id: 'oct-yoy-helpfulness', category: 'engagement', severity: 'positive',
+                    title: 'Helpfulness Trending Up',
+                    value: OCTOBER_FULL.yoy.helpfulness_change + ' YoY',
+                    detail: 'Session helpfulness (Agree + Strongly Agree) rose from 70.3% to 71.5%, a steady improvement despite 3x program scale.',
+                    soWhat: 'Maintaining quality while scaling is a key indicator of program health.',
+                    sources: [{label: 'Oct Report', action: 'page:monthly-report'}]
+                });
+            }
+        }
+
+        function renderEngagementOctober() {
+            // Session type doughnut
+            var stCtx = document.getElementById('engSessionTypesChart');
+            if (stCtx && !stCtx.dataset.rendered) {
+                stCtx.dataset.rendered = 'true';
+                var st = OCTOBER_FULL.session_types;
+                new Chart(stCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#d1d5db']}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
+                });
+            }
+
+            // Grade distribution bar
+            var gdCtx = document.getElementById('engGradeDistChart');
+            if (gdCtx && !gdCtx.dataset.rendered) {
+                gdCtx.dataset.rendered = 'true';
+                var gd = OCTOBER_FULL.grade_dist;
+                new Chart(gdCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
+                        datasets: [{data: [gd[6], gd[7], gd[8], gd[9], gd[10], gd[11], gd[12]], backgroundColor: ['#166534', '#22c55e', '#86efac', '#3b82f6', '#6366f1', '#8b5cf6', '#a855f7'], borderRadius: 4}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, title: {display: true, text: '% of Students'}}}}
+                });
+            }
+
+            // Follow-up chart
+            var fuCtx = document.getElementById('engFollowupChart');
+            if (fuCtx && !fuCtx.dataset.rendered) {
+                fuCtx.dataset.rendered = 'true';
+                new Chart(fuCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mentoring', 'Knows Next Steps', 'Advisor Meeting', 'Exploration', 'Check-in'],
+                        datasets: [
+                            {label: 'Oct 2025', data: [34.1, 26.6, 25.8, 25.4, 20.8], backgroundColor: '#166534', borderRadius: 4},
+                            {label: 'Oct 2024', data: [38.0, 21.7, 33.2, 37.0, 24.4], backgroundColor: '#86efac', borderRadius: 4}
+                        ]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'top'}}, scales: {y: {beginAtZero: true, title: {display: true, text: '%'}}}}
+                });
+            }
+
+            // Insight cards
+            var cardsEl = document.getElementById('engOctoberCards');
+            if (cardsEl && cardsEl.innerHTML.trim() === '') {
+                cardsEl.innerHTML = buildInsightCard({
+                    id: 'oct-grade6-expansion', category: 'engagement', severity: 'positive',
+                    title: 'Grade 6 Expansion Drives Growth',
+                    value: '+17.13pp YoY',
+                    detail: 'Grade 6 enrollment surged from 13.5% to 30.6% year-over-year — the single largest demographic shift. Grade 8 declined by 16.48pp.',
+                    soWhat: 'Younger students are less differentiated in RIASEC themes, explaining the rise in zero-theme students (+14.77pp YoY). Age-appropriate session design is now critical.',
+                    nextStep: 'Develop Grade 6-specific session models focused on broad exploration before narrowing.',
+                    sources: [{label: 'Oct YoY', action: 'page:monthly-report'}]
+                }) + buildInsightCard({
+                    id: 'oct-followup-patterns', category: 'engagement', severity: 'info',
+                    title: '70.6% Want Follow-Up Support',
+                    value: '34.1% want mentoring',
+                    detail: 'Mentoring is the #1 requested follow-up type. All follow-up categories are declining YoY despite improving outcomes — a paradox worth investigating.',
+                    soWhat: 'Students may feel satisfied after one session, or follow-up framing may not resonate with the younger cohort.',
+                    nextStep: 'Reframe follow-up as "action support" and build mentoring infrastructure (alumni, professional connections).',
+                    sources: [{label: 'Follow-Up Data', action: 'page:monthly-report'}]
+                });
+            }
+        }
+
+        function renderCareerPlanOctober() {
+            var cardsEl = document.getElementById('careerPlanOctoberCards');
+            if (!cardsEl || cardsEl.innerHTML.trim() !== '') return;
+
+            cardsEl.innerHTML = buildInsightCard({
+                id: 'oct-nextsteps-clarity', category: 'career', severity: 'positive',
+                title: 'Next Steps Strongly Predict Clarity',
+                value: '\u03B2 = +1.55 (p<0.001)',
+                detail: 'Having concrete next steps is the third strongest predictor of career clarity. Students who leave sessions with written action items show significantly higher clarity scores.',
+                soWhat: 'Every coaching session should end with student-owned, specific next steps.',
+                nextStep: 'Implement SMART next-step templates for coaches. Track next-step completion rates.',
+                sources: [{label: 'Regression Analysis', action: 'page:monthly-report'}, {label: 'Career Plan', action: 'page:career-plan'}]
+            }) + buildInsightCard({
+                id: 'oct-certainty-clarity', category: 'career', severity: 'positive',
+                title: 'Certainty Drives Future Clarity',
+                value: '\u03B2 = +1.15 (p<0.001)',
+                detail: 'Career certainty is a strong predictor of future career clarity. This bidirectional relationship with session helpfulness (\u03B2=+1.71) creates a positive feedback loop.',
+                soWhat: 'Boosting certainty early creates compounding benefits for long-term clarity.',
+                sources: [{label: 'Regression Analysis', action: 'page:monthly-report'}]
+            }) + buildInsightCard({
+                id: 'oct-multitheme-clarity', category: 'personality', severity: 'neutral',
+                title: 'Multi-Theme Interests Lower Clarity',
+                value: '\u03B2 = -0.31 (p=0.009)',
+                detail: '57.9% of October students show multi-theme RIASEC interests (2+ types). While broad interests boost engagement scores (+1.15/theme), they predict LOWER clarity. Mean score for multi-theme: 3.33.',
+                soWhat: 'Students with "too many possible selves" need structured narrowing activities.',
+                nextStep: 'Implement values clarification and realistic career previews for the multi-theme majority.',
+                sources: [{label: 'RIASEC Analysis', action: 'page:riasec'}, {label: 'Regression', action: 'page:monthly-report'}]
+            }) + buildInsightCard({
+                id: 'oct-followup-career', category: 'career', severity: 'info',
+                title: '70.6% Want Follow-Up Support',
+                value: 'Mentoring #1 at 34.1%',
+                detail: 'The majority of students want continued support after sessions. Mentoring connections are the top request, followed by advisor meetings (25.8%) and exploration activities (25.4%).',
+                soWhat: 'Access to knowledgeable adults predicts greater clarity (\u03B2=+0.34). Mentoring infrastructure is a high-leverage investment.',
+                nextStep: 'Build alumni mentor database and formalize job shadowing programs.',
+                sources: [{label: 'Follow-Up Data', action: 'page:monthly-report'}]
+            });
+        }
+
+        function renderRiasecOctober() {
+            // Theme depth bar chart
+            var tdCtx = document.getElementById('themeDepthChart');
+            if (tdCtx && !tdCtx.dataset.rendered) {
+                tdCtx.dataset.rendered = 'true';
+                var rt = OCTOBER_FULL.riasec_themes;
+                new Chart(tdCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['0 Themes', '1 Theme', '2 Themes', '3+ Themes'],
+                        datasets: [{
+                            data: [rt.zero, rt.one, rt.two, rt.three_plus],
+                            backgroundColor: ['#dc2626', '#f59e0b', '#3b82f6', '#166534'],
+                            borderRadius: 4
+                        }]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, title: {display: true, text: '% of Students'}}}}
+                });
+            }
+
+            // Insight cards
+            var cardsEl = document.getElementById('riasecOctoberCards');
+            if (cardsEl && cardsEl.innerHTML.trim() === '') {
+                cardsEl.innerHTML = buildInsightCard({
+                    id: 'oct-theme-concentration', category: 'personality', severity: 'neutral',
+                    title: 'More Themes = Less Career Focus',
+                    value: '\u03B2 = -0.49 (p<0.001)',
+                    detail: 'Each additional RIASEC theme a student identifies with reduces their career concentration score. Students with 3+ themes (40.9%) have the broadest but least focused interests.',
+                    soWhat: 'Broad interests are developmentally normal but require guided narrowing to translate into actionable plans.',
+                    sources: [{label: 'Regression', action: 'page:monthly-report'}, {label: 'Holland (1997)', action: 'external:https://doi.org/10.1037/0022-0167.44.4.368'}]
+                }) + buildInsightCard({
+                    id: 'oct-zero-themes-yoy', category: 'personality', severity: 'negative',
+                    title: 'Zero-Theme Students Rising',
+                    value: '+14.77pp YoY',
+                    detail: '17.0% of October students identified zero RIASEC themes, up 14.77pp from last year. This correlates with the Grade 6 expansion — younger students are less differentiated.',
+                    soWhat: 'The younger cohort needs age-appropriate exploration activities before personality-career matching can be effective.',
+                    nextStep: 'Design "discovery" sessions for grades 6-7 focused on broad exposure, not narrowing.',
+                    sources: [{label: 'Oct YoY', action: 'page:monthly-report'}, {label: 'RIASEC Page', action: 'page:riasec'}]
+                });
+            }
+        }
+
+        function renderSectorsOctober() {
+            // CTE chart for sectors page
+            var cteCtx = document.getElementById('sectorsCTEChart');
+            if (cteCtx && !cteCtx.dataset.rendered) {
+                cteCtx.dataset.rendered = 'true';
+                new Chart(cteCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Arts, Media, Comm.', 'Business Mgmt', 'Health & Bio', 'Mfg, Eng, Tech', 'Law, Govt, Safety'],
+                        datasets: [{data: [29.1, 23.2, 18.9, 18.4, 18.0], backgroundColor: ['#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'], borderRadius: 4}]
+                    },
+                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {y: {beginAtZero: true, title: {display: true, text: '% of Students'}}, x: {ticks: {font: {size: 10}}}}}
+                });
+            }
+
+            // Insight cards
+            var cardsEl = document.getElementById('sectorsOctoberCards');
+            if (cardsEl && cardsEl.innerHTML.trim() === '') {
+                cardsEl.innerHTML = buildInsightCard({
+                    id: 'oct-cte-gap', category: 'career', severity: 'neutral',
+                    title: 'CTE Exposure Is the Strongest Engagement Lever',
+                    value: '\u03B2 = -3.27 (disengagement)',
+                    detail: '87.1% of students are open to CTE, but 28% selected zero options. CTE pathway exploration is the single most powerful predictor of reducing student disengagement (\u03B2=-3.27, p<0.001).',
+                    soWhat: 'Ensuring every student sees at least 2-3 CTE pathways aligned with priority sectors should be a top program priority.',
+                    nextStep: 'Map CTE pathway options directly to Steve\'s 8 priority sectors. Auto-suggest pathways based on RIASEC type.',
+                    sources: [{label: 'CTE Data', action: 'page:monthly-report'}, {label: 'Sectors', action: 'page:sectors'}]
+                });
+            }
+        }
+
+        function renderDistributionOctober() {
+            var cardsEl = document.getElementById('distributionOctoberCards');
+            if (!cardsEl || cardsEl.innerHTML.trim() !== '') return;
+
+            cardsEl.innerHTML = buildInsightCard({
+                id: 'oct-popular-career', category: 'career', severity: 'positive',
+                title: 'Healthy Career Diversity',
+                value: '55.2% zero popular-career alignment',
+                detail: '55.2% of students show zero alignment with the top-10 "popular" careers. Only 15.1% align with 2+ popular careers. This indicates healthy diversity beyond glamour careers.',
+                soWhat: 'Most students are looking beyond top-10 careers, which aligns with sector-focused guidance toward MoCo\'s priority workforce areas.',
+                nextStep: 'Continue highlighting sector-aligned career pathways over popular/glamour careers.',
+                sources: [{label: 'Oct Career Data', action: 'page:monthly-report'}, {label: 'BLS Reality Check', action: 'page:distribution'}]
+            });
+        }
+
         function initDashboard() {
             computeDataQuality();
             populateCoachFilter();
@@ -4054,6 +4736,16 @@
             populateBLSTable();
             initStaticInsightCards();
             renderOverviewScoresChart();
+            // October data distribution
+            renderCongruenceCertaintyScorecard();
+            renderSectorImpactSummary();
+            renderOverviewOctoberCharts();
+            renderProgramPerfOctober();
+            renderEngagementOctober();
+            renderCareerPlanOctober();
+            renderRiasecOctober();
+            renderSectorsOctober();
+            renderDistributionOctober();
         }
 
         function showPage(pageId) {
