@@ -2256,7 +2256,7 @@
                                 <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;"></span>Enterprising</span>
                                 <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>Conventional</span>
                             </div>
-                            <div style="position:relative;height:420px;"><canvas id="riasecBubbleChart"></canvas></div>
+                            <div style="position:relative;height:480px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
 
                         <!-- TOP 3 MONTHLY INSIGHTS: Ranked by divergence from trend and program impact -->
@@ -4353,23 +4353,23 @@
                 types.forEach(function(t) { typeGroups[t] = []; });
                 careerNames.forEach(function(name) { typeGroups[CAREER_RIASEC_MAP[name].primary].push(name); });
 
-                var datasets2 = careerNames.map(function(name) {
+                var datasets2 = careerNames.map(function(name, globalIdx) {
                     var c = CAREER_RIASEC_MAP[name];
                     var tc = typeColors[c.primary];
                     var bls = BLS_CAREERS[name];
-                    var r = Math.max(Math.sqrt(c.n) / 5, 6);
-                    // Spread careers within each type group in a circle around the type's center
+                    var r = Math.max(Math.sqrt(c.n) / 6, 5);
+                    // Spread careers using a seeded jitter based on career index
+                    // This ensures each career gets a unique position even if base values overlap
                     var group = typeGroups[c.primary];
                     var idx = group.indexOf(name);
                     var total = group.length;
                     var baseCong = congruenceData[c.primary][useMonth];
                     var baseCert = certaintyData[c.primary][useMonth];
                     var xOff = 0, yOff = 0;
-                    if (total === 1) { /* no offset */ }
-                    else {
-                        var angle = (idx * 2 * Math.PI) / total - Math.PI / 2;
-                        var spreadX = Math.min(total, 5) * 0.6;
-                        var spreadY = Math.min(total, 5) * 0.025;
+                    if (total > 1) {
+                        var angle = (idx * 2 * Math.PI) / total - Math.PI / 4;
+                        var spreadX = 1.0 + total * 0.4;
+                        var spreadY = 0.03 + total * 0.015;
                         xOff = Math.cos(angle) * spreadX;
                         yOff = Math.sin(angle) * spreadY;
                     }
@@ -4456,16 +4456,19 @@
                             var ctx2 = chart.ctx;
                             ctx2.save();
                             ctx2.textAlign = 'center';
+                            ctx2.textBaseline = 'bottom';
+                            ctx2.font = '600 10px Inter, sans-serif';
                             chart.data.datasets.forEach(function(ds, i) {
                                 var meta = chart.getDatasetMeta(i);
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
-                                    var shortName = ds._career.length > 16 ? ds._career.substring(0, 14) + '..' : ds._career;
-                                    // Label above the bubble
+                                    var shortName = ds._career.length > 20 ? ds._career.substring(0, 18) + '..' : ds._career;
+                                    // Dark outline for readability
+                                    ctx2.strokeStyle = '#fff';
+                                    ctx2.lineWidth = 3;
+                                    ctx2.strokeText(shortName, el.x, el.y - el.options.radius - 3);
                                     ctx2.fillStyle = '#1a1a1a';
-                                    ctx2.font = '600 9px Inter, sans-serif';
-                                    ctx2.textBaseline = 'bottom';
-                                    ctx2.fillText(shortName, el.x, el.y - el.options.radius - 2);
+                                    ctx2.fillText(shortName, el.x, el.y - el.options.radius - 3);
                                 }
                             });
                             ctx2.restore();
@@ -4943,7 +4946,7 @@
             } else if (seg === 'personality') {
                 var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
                 var colors = ['rgba(239,68,68,0.75)','rgba(59,130,246,0.75)','rgba(234,179,8,0.75)','rgba(34,197,94,0.75)','rgba(249,115,22,0.75)','rgba(139,92,246,0.75)'];
-                var borderColors = ['#ef4444','#3b82f6','#eab308','#3b82f6','#f97316','#8b5cf6'];
+                var borderColors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
                 var datasets = types.map(function(t, i) {
                     return { label: t, data: months.map(function(m) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; }), backgroundColor: colors[i], borderColor: borderColors[i], borderWidth: 1, borderRadius: 3 };
                 });
@@ -4955,7 +4958,8 @@
                     bodyFont: { size: 11 },
                     padding: 14,
                     cornerRadius: 8,
-                    bodySpacing: 3,
+                    bodySpacing: 0,
+                    filter: function(tooltipItem) { return tooltipItem.datasetIndex === 0; },
                     callbacks: {
                         title: function(items) { return items[0].label; },
                         label: function() { return ''; },
