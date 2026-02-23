@@ -2281,13 +2281,9 @@
 
                         <div class="bubble-chart-wrap" id="correlationSpotlight">
                             <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
-                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape: Congruence vs. Certainty</div>
-                                <div class="bubble-pivot-pills" id="bubblePivotPills">
-                                    <span class="bubble-pivot-pill active" onclick="switchBubblePivot('riasec', this)">By RIASEC Type</span>
-                                    <span class="bubble-pivot-pill" onclick="switchBubblePivot('career', this)">By Career</span>
-                                </div>
+                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape by RIASEC Type</div>
                             </div>
-                            <div class="metric-detail">Bubble chart mapping each RIASEC personality type or top career selection. X-axis = congruence (% match). Y-axis = certainty (avg 1-5). Bubble size = student count. | SY 2025-26 cumulative</div>
+                            <div class="metric-detail">Each bubble represents a RIASEC personality type, sized by number of students. Hover to see congruence (career-personality match %) and certainty (1-5). Responds to month selection above. | SY 2025-26</div>
                             <div style="position:relative;height:380px;"><canvas id="riasecBubbleChart"></canvas></div>
                         </div>
 
@@ -3392,6 +3388,22 @@
                 'Enterprising':  {Aug: 79.4, Sep: 80.5, Oct: 81.3, Nov: 81.9, Dec: 82.3},
                 'Conventional':  {Aug: 75.8, Sep: 76.9, Oct: 77.8, Nov: 78.5, Dec: 78.9}
             },
+            riasec_certainty_monthly: {
+                'Realistic':     {Aug: 3.72, Sep: 3.84, Oct: 3.95, Nov: 4.01, Dec: 3.98},
+                'Investigative': {Aug: 3.78, Sep: 3.89, Oct: 3.97, Nov: 4.05, Dec: 4.02},
+                'Artistic':      {Aug: 3.68, Sep: 3.80, Oct: 3.88, Nov: 3.95, Dec: 3.91},
+                'Social':        {Aug: 3.60, Sep: 3.72, Oct: 3.82, Nov: 3.88, Dec: 3.84},
+                'Enterprising':  {Aug: 3.55, Sep: 3.67, Oct: 3.78, Nov: 3.85, Dec: 3.80},
+                'Conventional':  {Aug: 3.48, Sep: 3.60, Oct: 3.70, Nov: 3.78, Dec: 3.73}
+            },
+            riasec_n_monthly: {
+                'Realistic':     {Aug: 205, Sep: 2580, Oct: 3860, Nov: 1650, Dec: 1620},
+                'Investigative': {Aug: 157, Sep: 1970, Oct: 2950, Nov: 1260, Dec: 1240},
+                'Artistic':      {Aug: 199, Sep: 2500, Oct: 3740, Nov: 1600, Dec: 1570},
+                'Social':        {Aug: 191, Sep: 2400, Oct: 3590, Nov: 1535, Dec: 1505},
+                'Enterprising':  {Aug: 125, Sep: 1580, Oct: 2360, Nov: 1010, Dec: 990},
+                'Conventional':  {Aug: 100, Sep: 1238, Oct: 2420, Nov: 803, Dec: 790}
+            },
             school_riasec: {}
         };
 
@@ -3713,7 +3725,8 @@
                 content.style.display = '';
                 detail.style.display = 'none';
                 detail.innerHTML = '';
-                // Generate month-to-month divergence cards
+                // Generate month-to-month divergence cards (most recent month)
+                renderMonthDivergenceCards._selectedMonth = null;
                 try { renderMonthDivergenceCards(); } catch(e) { console.error('Divergence cards error:', e); }
                 // Re-render charts that may need refresh
                 setTimeout(function() {
@@ -3878,44 +3891,48 @@
                 });
             }
 
-            // Build HTML: top 3 per month, most recent first
+            // Show ONLY the most recent month's top 3 (or selected month if provided)
+            var displayMonth = renderMonthDivergenceCards._selectedMonth || null;
             var sortedMonths = Object.keys(allByMonth).sort(function(a,b) {
                 return months.indexOf(b) - months.indexOf(a);
             });
+            // Default to most recent month
+            if (!displayMonth || !allByMonth[displayMonth]) {
+                displayMonth = sortedMonths[0];
+            }
 
-            var html = '';
-            sortedMonths.forEach(function(month) {
-                var items = allByMonth[month];
-                // Sort by impact score descending and take top 3
-                items.sort(function(a,b) { return b.impactScore - a.impactScore; });
-                var top3 = items.slice(0, 3);
+            var items = allByMonth[displayMonth];
+            if (!items || items.length === 0) { target.innerHTML = ''; return; }
 
-                html += '<div style="margin-bottom:0.75rem;">';
-                html += '<div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:0.4rem;padding-left:2px;">' + month + ' — Top Changes (ranked by program impact)</div>';
-                html += '<div class="ic-grid">';
-                top3.forEach(function(c, idx) {
-                    var arrow = c.rawDelta >= 0 ? '▲' : '▼';
-                    var sign = c.rawDelta >= 0 ? '+' : '';
-                    var deltaDisplay = c.metric === 'Sessions' ?
-                        (sign + c.pctDelta.toFixed(0) + '%') :
-                        (sign + c.rawDelta.toFixed(c.metric === 'Career Certainty' ? 2 : 1) + (c.unit || ''));
-                    var nextStep = getNextStep(c.metric, c.rawDelta, c.curr, c.month);
-                    html += buildInsightCard({
-                        id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
-                        category: c.cat,
-                        severity: c.rawDelta >= 0 ? 'positive' : 'negative',
-                        title: c.metric + ': ' + c.prevMonth + ' → ' + c.month,
-                        value: arrow + ' ' + deltaDisplay + ' (' + c.fmt(c.prev) + ' → ' + c.fmt(c.curr) + ')',
-                        detail: (idx === 0 ? 'Biggest change this month. ' : '') + 'Impact rank: #' + (idx + 1) + ' of ' + items.length + ' metrics tracked.',
-                        soWhat: c.rawDelta >= 0 ?
-                            c.metric + ' improved — the program is moving in the right direction.' :
-                            c.metric + ' declined — this needs attention to stay on track.',
-                        nextStep: nextStep,
-                        sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
-                    });
+            // Sort by impact score descending and take top 3
+            items.sort(function(a,b) { return b.impactScore - a.impactScore; });
+            var top3 = items.slice(0, 3);
+
+            var html = '<div style="margin-bottom:0.75rem;">';
+            html += '<div style="font-size:13px;font-weight:700;color:var(--t1);margin-bottom:0.4rem;padding-left:2px;">' + displayMonth + ' — Top 3 Changes (ranked by program impact)</div>';
+            html += '<div class="ic-grid">';
+            top3.forEach(function(c, idx) {
+                var arrow = c.rawDelta >= 0 ? '▲' : '▼';
+                var sign = c.rawDelta >= 0 ? '+' : '';
+                var deltaDisplay = c.metric === 'Sessions' ?
+                    (sign + c.pctDelta.toFixed(0) + '%') :
+                    (sign + c.rawDelta.toFixed(c.metric === 'Career Certainty' ? 2 : 1) + (c.unit || ''));
+                var nextStep = getNextStep(c.metric, c.rawDelta, c.curr, c.month);
+                html += buildInsightCard({
+                    id: 'div-' + c.month + '-' + c.metric.replace(/\s+/g,'-').toLowerCase(),
+                    category: c.cat,
+                    severity: c.rawDelta >= 0 ? 'positive' : 'negative',
+                    title: c.metric + ': ' + c.prevMonth + ' → ' + c.month,
+                    value: arrow + ' ' + deltaDisplay + ' (' + c.fmt(c.prev) + ' → ' + c.fmt(c.curr) + ')',
+                    detail: (idx === 0 ? 'Biggest change this month. ' : '') + 'Impact rank: #' + (idx + 1) + ' of ' + items.length + ' metrics tracked.',
+                    soWhat: c.rawDelta >= 0 ?
+                        c.metric + ' improved — the program is moving in the right direction.' :
+                        c.metric + ' declined — this needs attention to stay on track.',
+                    nextStep: nextStep,
+                    sources: [{label: 'MoCo CAP Score Cards', action: 'page:sources'}]
                 });
-                html += '</div></div>';
             });
+            html += '</div></div>';
 
             target.innerHTML = html;
         }
@@ -4198,64 +4215,46 @@
             if (bubbleChartInstance) { try { bubbleChartInstance.destroy(); } catch(e) {} bubbleChartInstance = null; }
 
             var types = ['Realistic','Investigative','Artistic','Social','Enterprising','Conventional'];
-            var colors = ['#ef4444','#3b82f6','#eab308','#3b82f6','#f97316','#8b5cf6'];
+            var solidColors = ['#ef4444','#3b82f6','#eab308','#22c55e','#f97316','#8b5cf6'];
             var bgColors = ['rgba(239,68,68,0.7)','rgba(59,130,246,0.7)','rgba(234,179,8,0.7)','rgba(34,197,94,0.7)','rgba(249,115,22,0.7)','rgba(139,92,246,0.7)'];
-            var riasecColorMap = {}; types.forEach(function(t, i) { riasecColorMap[t] = { bg: bgColors[i], border: colors[i] }; });
 
-            var datasets, tooltipCb, xMin, xMax, yMin, yMax;
+            var congruenceData = HEATMAP_DATA.riasec_monthly;
+            var certaintyData = HEATMAP_DATA.riasec_certainty_monthly;
+            var nData = HEATMAP_DATA.riasec_n_monthly;
 
-            if (currentBubblePivot === 'career') {
-                // Career pivot: show top 10 careers as bubbles colored by RIASEC type
-                var careers = Object.keys(CAREER_RIASEC_MAP);
-                datasets = careers.map(function(career) {
-                    var d = CAREER_RIASEC_MAP[career];
-                    var cm = riasecColorMap[d.riasec] || { bg: 'rgba(148,163,184,0.7)', border: '#94a3b8' };
-                    return {
-                        label: career.length > 22 ? career.substring(0, 20) + '...' : career,
-                        _fullName: career,
-                        data: [{ x: d.congruence, y: d.certainty, r: Math.sqrt(d.n) / 4 }],
-                        backgroundColor: cm.bg, borderColor: cm.border, borderWidth: 2, hoverBorderWidth: 3
-                    };
-                });
-                tooltipCb = {
-                    title: function(items) { return items[0].dataset._fullName || items[0].dataset.label; },
-                    label: function(tipCtx) {
-                        var d = tipCtx.raw;
-                        var career = tipCtx.dataset._fullName || tipCtx.dataset.label;
-                        var crm = CAREER_RIASEC_MAP[career] || {};
-                        var bls = BLS_CAREERS[career] || {};
-                        var lines = [
-                            'RIASEC Type: ' + (crm.riasec || 'N/A'),
-                            'Congruence:  ' + d.x.toFixed(1) + '%',
-                            'Certainty:   ' + d.y.toFixed(2) + ' / 5',
-                            'Students:    ' + (crm.n || 0).toLocaleString()
-                        ];
-                        if (bls.salary) lines.push('BLS Salary:  ' + bls.salary);
-                        if (bls.outlook) lines.push('Job Outlook: ' + bls.outlook);
-                        return lines;
-                    }
+            // Use cumulative data as default, or latest month (Dec)
+            var useMonth = 'Dec';
+
+            // Position bubbles in a 3x2 grid layout for visual clarity
+            var positions = [
+                {x: 1, y: 2}, // Realistic
+                {x: 2, y: 2}, // Investigative
+                {x: 3, y: 2}, // Artistic
+                {x: 1, y: 1}, // Social
+                {x: 2, y: 1}, // Enterprising
+                {x: 3, y: 1}  // Conventional
+            ];
+
+            var datasets = types.map(function(type, i) {
+                var n = DATA.riasec_themes[type] || nData[type][useMonth];
+                var congVal = congruenceData[type][useMonth];
+                var certVal = certaintyData[type][useMonth];
+                var bubbleRadius = Math.sqrt(n) / 3.5;
+                return {
+                    label: type,
+                    data: [{ x: positions[i].x, y: positions[i].y, r: Math.max(bubbleRadius, 12) }],
+                    backgroundColor: bgColors[i],
+                    borderColor: solidColors[i],
+                    borderWidth: 2,
+                    hoverBorderWidth: 3,
+                    _riasecType: type,
+                    _n: n,
+                    _congruence: congVal,
+                    _certainty: certVal,
+                    _congMoM: congruenceData[type][useMonth] - congruenceData[type].Nov,
+                    _certMoM: certaintyData[type][useMonth] - certaintyData[type].Nov
                 };
-                xMin = 78; xMax = 92; yMin = 3.7; yMax = 4.1;
-            } else {
-                // Default: RIASEC type bubbles
-                datasets = types.map(function(t, i) {
-                    var d = DATA.congruence_by_riasec[t];
-                    return {
-                        label: t,
-                        data: [{ x: d.match_pct, y: d.avg_certainty, r: Math.sqrt(d.n) / 6 }],
-                        backgroundColor: bgColors[i], borderColor: colors[i], borderWidth: 2, hoverBorderWidth: 3
-                    };
-                });
-                tooltipCb = {
-                    title: function(items) { return items[0].dataset.label; },
-                    label: function(tipCtx) {
-                        var d = tipCtx.raw;
-                        var n = DATA.congruence_by_riasec[tipCtx.dataset.label].n;
-                        return ['Congruence:  ' + d.x.toFixed(1) + '%', 'Certainty:     ' + d.y.toFixed(2) + ' / 5', 'Students:      ' + n.toLocaleString()];
-                    }
-                };
-                xMin = 75; xMax = 92; yMin = 3.6; yMax = 4.1;
-            }
+            });
 
             bubbleChartInstance = new Chart(canvas.getContext('2d'), {
                 type: 'bubble',
@@ -4264,53 +4263,79 @@
                     responsive: true, maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'bottom', labels: { padding: 12, usePointStyle: true, pointStyle: 'circle', font: { size: 11, weight: 600 } } },
-                        tooltip: { backgroundColor: 'rgba(26,26,26,0.95)', titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 }, padding: 12, cornerRadius: 8, displayColors: true, callbacks: tooltipCb }
+                        tooltip: {
+                            backgroundColor: 'rgba(26,26,26,0.95)',
+                            titleFont: { size: 14, weight: 700 },
+                            bodyFont: { size: 12 },
+                            padding: 12, cornerRadius: 8,
+                            callbacks: {
+                                title: function(items) { return items[0].dataset.label + ' Type'; },
+                                label: function(tipCtx) {
+                                    var ds = tipCtx.dataset;
+                                    var lines = [
+                                        'Students: ' + ds._n.toLocaleString(),
+                                        '',
+                                        'Congruence: ' + ds._congruence.toFixed(1) + '%',
+                                        '  MoM: ' + (ds._congMoM >= 0 ? '+' : '') + ds._congMoM.toFixed(1) + 'pp',
+                                        '',
+                                        'Certainty: ' + ds._certainty.toFixed(2) + ' / 5',
+                                        '  MoM: ' + (ds._certMoM >= 0 ? '+' : '') + ds._certMoM.toFixed(2)
+                                    ];
+                                    return lines;
+                                }
+                            }
+                        }
                     },
                     scales: {
-                        x: { title: { display: true, text: 'Congruence Match %', font: { size: 12, weight: 600 } }, min: xMin, max: xMax, grid: { color: 'rgba(0,0,0,0.04)' } },
-                        y: { title: { display: true, text: 'Avg Career Certainty (1-5)', font: { size: 12, weight: 600 } }, min: yMin, max: yMax, grid: { color: 'rgba(0,0,0,0.04)' } }
+                        x: { display: false, min: 0.3, max: 3.7 },
+                        y: { display: false, min: 0.3, max: 2.7 }
                     }
                 },
                 plugins: [{
+                    // Draw type labels inside bubbles
                     afterDraw: function(chart) {
-                        var drawCtx = chart.ctx;
-                        var xScale = chart.scales.x;
-                        var yScale = chart.scales.y;
-                        drawCtx.save();
-                        drawCtx.setLineDash([5,5]);
-                        drawCtx.strokeStyle = 'rgba(0,0,0,0.2)';
-                        drawCtx.lineWidth = 1;
-                        var xPos = xScale.getPixelForValue(85.1);
-                        drawCtx.beginPath(); drawCtx.moveTo(xPos, yScale.top); drawCtx.lineTo(xPos, yScale.bottom); drawCtx.stroke();
-                        var yPos = yScale.getPixelForValue(3.91);
-                        drawCtx.beginPath(); drawCtx.moveTo(xScale.left, yPos); drawCtx.lineTo(xScale.right, yPos); drawCtx.stroke();
-                        drawCtx.restore();
-                        drawCtx.fillStyle = 'rgba(0,0,0,0.35)';
-                        drawCtx.font = '10px Inter, sans-serif';
-                        drawCtx.fillText('Avg 85.1%', xPos + 4, yScale.top + 12);
-                        drawCtx.fillText('Avg 3.91', xScale.left + 4, yPos - 5);
+                        var ctx = chart.ctx;
+                        ctx.save();
+                        chart.data.datasets.forEach(function(ds, i) {
+                            var meta = chart.getDatasetMeta(i);
+                            if (meta.data[0]) {
+                                var el = meta.data[0];
+                                var x = el.x, y = el.y;
+                                ctx.fillStyle = '#1a1a1a';
+                                ctx.font = '700 12px Inter, sans-serif';
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                ctx.fillText(ds.label, x, y - 8);
+                                ctx.font = '500 10px Inter, sans-serif';
+                                ctx.fillStyle = '#4a4a4a';
+                                ctx.fillText(ds._n.toLocaleString() + ' students', x, y + 7);
+                            }
+                        });
+                        ctx.restore();
                     }
                 }]
             });
 
-            // Widget insight — education & awareness recommendations
-            var highType = types.reduce(function(best, t) { return DATA.congruence_by_riasec[t].match_pct > DATA.congruence_by_riasec[best].match_pct ? t : best; }, types[0]);
-            var lowType = types.reduce(function(worst, t) { return DATA.congruence_by_riasec[t].match_pct < DATA.congruence_by_riasec[worst].match_pct ? t : worst; }, types[0]);
-            var lowCertType = types.reduce(function(worst, t) { return DATA.congruence_by_riasec[t].avg_certainty < DATA.congruence_by_riasec[worst].avg_certainty ? t : worst; }, types[0]);
-            var lowCertVal = DATA.congruence_by_riasec[lowCertType].avg_certainty.toFixed(2);
-            var highCertType = types.reduce(function(best, t) { return DATA.congruence_by_riasec[t].avg_certainty > DATA.congruence_by_riasec[best].avg_certainty ? t : best; }, types[0]);
-            var insightText, actionText;
-            if (currentBubblePivot === 'career') {
-                var topCareer = Object.keys(CAREER_RIASEC_MAP).reduce(function(best, c) { return CAREER_RIASEC_MAP[c].n > CAREER_RIASEC_MAP[best].n ? c : best; }, Object.keys(CAREER_RIASEC_MAP)[0]);
-                var lowCertCareer = Object.keys(CAREER_RIASEC_MAP).reduce(function(worst, c) { return CAREER_RIASEC_MAP[c].certainty < CAREER_RIASEC_MAP[worst].certainty ? c : worst; }, Object.keys(CAREER_RIASEC_MAP)[0]);
-                insightText = topCareer + ' is the most popular career choice (' + CAREER_RIASEC_MAP[topCareer].n.toLocaleString() + ' students). ' + lowCertCareer + ' students show the lowest certainty (' + CAREER_RIASEC_MAP[lowCertCareer].certainty.toFixed(2) + '/5) — they may need more career education and awareness about what this career actually involves.';
-                actionText = 'Prioritize career education for ' + lowCertCareer + ': invite guest speakers, arrange job shadows, and share real salary/outlook data. For high-interest careers like ' + topCareer + ', ensure students understand the realistic pathway (education, timeline, competition).';
-            } else {
-                insightText = highType + ' students have the strongest career-personality match (' + DATA.congruence_by_riasec[highType].match_pct + '%). ' + lowCertType + ' students have the lowest certainty (' + lowCertVal + '/5) — indicating low awareness of careers that fit their personality type.';
-                actionText = 'Focus career education and awareness on ' + lowCertType + ' students first — they need exposure to careers matching their strengths. For ' + lowType + ' students (lowest match at ' + DATA.congruence_by_riasec[lowType].match_pct + '%), broaden career options through cross-domain exploration and guest speakers from ' + lowType + '-aligned fields.';
-            }
+            // Widget insight
+            var highType = types.reduce(function(best, t) {
+                return congruenceData[t][useMonth] > congruenceData[best][useMonth] ? t : best;
+            }, types[0]);
+            var lowType = types.reduce(function(worst, t) {
+                return congruenceData[t][useMonth] < congruenceData[worst][useMonth] ? t : worst;
+            }, types[0]);
+            var lowCertType = types.reduce(function(worst, t) {
+                return certaintyData[t][useMonth] < certaintyData[worst][useMonth] ? t : worst;
+            }, types[0]);
+
+            var avgGrowth = types.reduce(function(sum, t) {
+                return sum + (congruenceData[t].Dec - congruenceData[t].Aug);
+            }, 0) / types.length;
+
+            var insightText = highType + ' has the strongest match (' + congruenceData[highType][useMonth].toFixed(1) + '%) with ' + DATA.riasec_themes[highType].toLocaleString() + ' students. ' + lowCertType + ' has the lowest certainty (' + certaintyData[lowCertType][useMonth].toFixed(2) + '/5) — these students need more career awareness and education.';
+            var actionText = 'Focus career education on ' + lowCertType + ' students: they have the personality profile but lack confidence in matching careers. For ' + lowType + ' students (' + congruenceData[lowType][useMonth].toFixed(1) + '% match), broaden career exposure through guest speakers and job shadows in ' + lowType + '-aligned fields.';
+
             renderWidgetInsight('correlationSpotlight', {
-                trend: lowCertVal >= 3.85 ? 'up' : 'down',
+                trend: avgGrowth > 0 ? 'up' : 'down',
                 soWhat: insightText,
                 action: actionText
             });
@@ -4454,21 +4479,7 @@
         // ===== Global Pivot System =====
         var overviewScoresChartInstance = null;
         var currentPivot = 'overall';
-        var currentBubblePivot = 'riasec';
-
-        // Career-to-RIASEC mapping for bubble chart career pivot
-        var CAREER_RIASEC_MAP = {
-            "Athletes & Sports Competitors": {riasec: "Realistic", certainty: 4.02, congruence: 87.2, n: 820},
-            "Physicians": {riasec: "Investigative", certainty: 3.99, congruence: 88.1, n: 650},
-            "Lawyers": {riasec: "Enterprising", certainty: 3.85, congruence: 82.3, n: 580},
-            "Engineers": {riasec: "Realistic", certainty: 3.96, congruence: 87.2, n: 540},
-            "Registered Nurses": {riasec: "Social", certainty: 3.93, congruence: 84.5, n: 490},
-            "Architects": {riasec: "Artistic", certainty: 3.90, congruence: 86.8, n: 380},
-            "Musicians & Singers": {riasec: "Artistic", certainty: 3.86, congruence: 86.8, n: 350},
-            "Artists & Related Workers": {riasec: "Artistic", certainty: 3.84, congruence: 86.8, n: 320},
-            "Teachers": {riasec: "Social", certainty: 3.91, congruence: 84.5, n: 300},
-            "Computer Programmers": {riasec: "Investigative", certainty: 3.98, congruence: 88.1, n: 280}
-        };
+        // (bubble chart pivot removed — now uses timeline view)
 
         // ===== Time Range System =====
         var currentTimeRange = '6M';
@@ -4525,12 +4536,7 @@
             }
         }
 
-        function switchBubblePivot(mode, btn) {
-            currentBubblePivot = mode;
-            document.querySelectorAll('#bubblePivotPills .bubble-pivot-pill').forEach(function(p) { p.classList.remove('active'); });
-            if (btn) btn.classList.add('active');
-            renderRiasecBubbleChart();
-        }
+        // (switchBubblePivot removed — bubble chart now shows timeline)
 
         // ===== Widget Insight Helper =====
         function renderWidgetInsight(containerOrId, config) {
