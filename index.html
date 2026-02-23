@@ -4311,7 +4311,7 @@
                         }
                     },
                     plugins: [{
-                        afterDraw: function(chart) {
+                        afterDatasetsDraw: function(chart) {
                             var ctx2 = chart.ctx;
                             ctx2.save();
                             chart.data.datasets.forEach(function(ds, i) {
@@ -4375,12 +4375,12 @@
                         xOff = Math.cos(angle) * spreadX;
                         yOff = Math.sin(angle) * spreadY;
                     }
-                    // Personality type breakdown
+                    // Actual student data: we know total students per RIASEC type
+                    // and this career's primary/secondary O*NET alignment
+                    var totalRiasec = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
                     var typeBreakdown = {};
                     types.forEach(function(t) {
-                        if (t === c.primary) typeBreakdown[t] = 55;
-                        else if (t === c.secondary) typeBreakdown[t] = 25;
-                        else typeBreakdown[t] = Math.round(20 / (types.length - 2));
+                        typeBreakdown[t] = Math.round(DATA.riasec_themes[t] / totalRiasec * 100);
                     });
 
                     return {
@@ -4431,18 +4431,24 @@
                                         lines.push(ds._n.toLocaleString() + ' students selected ' + ds._career);
                                         lines.push('as a top career choice.');
                                         lines.push('');
-                                        lines.push('They identified with:');
+                                        lines.push('O*NET Career Profile:');
+                                        lines.push('  Primary type: ' + ds._primary + ' (' + typeDescPlain[ds._primary] + ')');
+                                        lines.push('  Secondary type: ' + ds._secondary + ' (' + typeDescPlain[ds._secondary] + ')');
+                                        lines.push('');
+                                        lines.push('MoCo Student Data:');
+                                        lines.push('  Career Match: ' + ds._congruence.toFixed(1) + '%');
+                                        lines.push('  Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        lines.push('');
+                                        lines.push('All Students by Personality:');
                                         var sortedTypes = types.slice().sort(function(a, b) { return ds._typeBreakdown[b] - ds._typeBreakdown[a]; });
                                         sortedTypes.forEach(function(t) {
                                             var pct = ds._typeBreakdown[t];
-                                            lines.push('  ' + t + ': ' + pct + '%');
+                                            var marker = (t === ds._primary) ? ' \u2190 career fit' : (t === ds._secondary) ? ' \u2190 secondary' : '';
+                                            lines.push('  ' + t + ': ' + DATA.riasec_themes[t].toLocaleString() + ' (' + pct + '%)' + marker);
                                         });
-                                        lines.push('');
-                                        lines.push('Career Match: ' + ds._congruence.toFixed(1) + '%');
-                                        lines.push('Confidence: ' + ds._certainty.toFixed(2) + '/5');
                                         if (ds._salary !== 'N/A') {
-                                            lines.push('Salary: ' + ds._salary);
-                                            lines.push('Outlook: ' + ds._outlook);
+                                            lines.push('');
+                                            lines.push('Salary: ' + ds._salary + ' | ' + ds._outlook);
                                         }
                                         lines.push('');
                                         lines.push('Click to deep-dive \u2192');
@@ -4457,7 +4463,7 @@
                         }
                     },
                     plugins: [{
-                        afterDraw: function(chart) {
+                        afterDatasetsDraw: function(chart) {
                             var ctx2 = chart.ctx;
                             ctx2.save();
                             ctx2.textAlign = 'center';
@@ -4467,13 +4473,11 @@
                                 var meta = chart.getDatasetMeta(i);
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
-                                    // Measure if full name fits within chart area (allow ~200px max width)
                                     var fullW = ctx2.measureText(ds._career).width;
                                     var displayName;
                                     if (fullW < 140) {
                                         displayName = ds._career;
                                     } else {
-                                        // Truncate to fit, full name shown on hover tooltip
                                         var words = ds._career.split(/[\s&]+/);
                                         if (words.length >= 3) {
                                             displayName = words.slice(0, 2).join(' ');
@@ -4481,7 +4485,6 @@
                                             displayName = ds._career.substring(0, 16) + '..';
                                         }
                                     }
-                                    // White outline for readability on any background
                                     ctx2.strokeStyle = '#fff';
                                     ctx2.lineWidth = 3;
                                     ctx2.strokeText(displayName, el.x, el.y - el.options.radius - 4);
@@ -4523,15 +4526,16 @@
                         '<span style="color:#94a3b8;padding:0 4px;">›</span>' +
                         '<button style="font-size:12px;padding:6px 16px;border-radius:6px;font-weight:600;' + drillStyle + '">' + (selectedCareer.length > 20 ? selectedCareer.substring(0, 18) + '..' : selectedCareer) + '</button>';
                 }
-                if (descEl) descEl.textContent = selectedCareer + ': How students who chose this career break down by personality type.';
+                if (descEl) descEl.textContent = selectedCareer + ': Actual MoCo student personality types vs O*NET career profile. Highlighted types align with this career.';
 
                 var bls = BLS_CAREERS[selectedCareer];
+                var totalRiasec2 = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
                 var datasets3 = types.map(function(type) {
                     var isPrimary = careerData.primary === type;
                     var isSecondary = careerData.secondary === type;
-                    var matchPct = isPrimary ? 55 : isSecondary ? 25 : 5;
-                    var studentsInType = Math.round(careerData.n * matchPct / 100);
-                    var r = Math.max(Math.sqrt(studentsInType) / 2.5, isPrimary ? 22 : isSecondary ? 16 : 8);
+                    var actualN = DATA.riasec_themes[type];
+                    var actualPct = Math.round(actualN / totalRiasec2 * 100);
+                    var r = Math.max(Math.sqrt(actualN) / 8, isPrimary ? 22 : isSecondary ? 16 : 10);
                     var tc = typeColors[type];
                     var typeCong = congruenceData[type][useMonth];
                     var typeCert = certaintyData[type][useMonth];
@@ -4540,12 +4544,13 @@
                     return {
                         label: type,
                         data: [{ x: typeCong, y: typeCert, r: r }],
-                        backgroundColor: isPrimary ? tc.bg : isSecondary ? tc.bg.replace('0.7', '0.4') : 'rgba(200,200,200,0.2)',
-                        borderColor: isPrimary ? tc.solid : isSecondary ? tc.solid : '#ccc',
+                        backgroundColor: isPrimary ? tc.bg : isSecondary ? tc.bg.replace('0.7', '0.4') : tc.bg.replace('0.7', '0.15'),
+                        borderColor: isPrimary ? tc.solid : isSecondary ? tc.solid : tc.solid,
                         borderWidth: isPrimary ? 3 : isSecondary ? 2 : 1,
+                        borderDash: isPrimary || isSecondary ? [] : [4, 3],
                         hoverBorderWidth: 3,
                         _type: type, _isPrimary: isPrimary, _isSecondary: isSecondary,
-                        _matchPct: matchPct, _studentsInType: studentsInType,
+                        _matchPct: actualPct, _studentsInType: actualN,
                         _congruence: typeCong, _certainty: typeCert,
                         _congMoM: congMoM, _certMoM: certMoM,
                         _desc: typeDescPlain[type]
@@ -4574,16 +4579,18 @@
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
-                                        lines.push(ds._matchPct + '% of ' + selectedCareer + ' students');
-                                        lines.push('identify as ' + ds.label + '.');
-                                        lines.push('That\'s ~' + ds._studentsInType.toLocaleString() + ' students.');
+                                        lines.push('MoCo Student Data:');
+                                        lines.push('  ' + ds._studentsInType.toLocaleString() + ' students identify as ' + ds.label);
+                                        lines.push('  (' + ds._matchPct + '% of all MoCo CAP students)');
                                         lines.push('');
-                                        lines.push(ds._isPrimary ? '★ This is the primary personality match.' : ds._isSecondary ? '◆ This is the secondary personality match.' : '○ Weak alignment with this type.');
+                                        lines.push('O*NET Career Fit for ' + selectedCareer + ':');
+                                        lines.push(ds._isPrimary ? '  \u2605 Primary personality match' : ds._isSecondary ? '  \u25C6 Secondary personality match' : '  \u25CB Not a typical fit for this career');
                                         lines.push('');
-                                        lines.push('Career-Personality Match: ' + ds._congruence.toFixed(1) + '%');
-                                        if (ds._congMoM !== 0) lines.push('  ' + (ds._congMoM >= 0 ? '▲ Up ' : '▼ Down ') + Math.abs(ds._congMoM).toFixed(1) + 'pp from last month');
-                                        lines.push('Career Confidence: ' + ds._certainty.toFixed(2) + '/5');
-                                        if (ds._certMoM !== 0) lines.push('  ' + (ds._certMoM >= 0 ? '▲ Up ' : '▼ Down ') + Math.abs(ds._certMoM).toFixed(2) + ' from last month');
+                                        lines.push(ds.label + ' Students\' Outcomes:');
+                                        lines.push('  Career Match: ' + ds._congruence.toFixed(1) + '%');
+                                        if (ds._congMoM !== 0) lines.push('    ' + (ds._congMoM >= 0 ? '\u25B2 +' : '\u25BC ') + Math.abs(ds._congMoM).toFixed(1) + 'pp from last month');
+                                        lines.push('  Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        if (ds._certMoM !== 0) lines.push('    ' + (ds._certMoM >= 0 ? '\u25B2 +' : '\u25BC ') + Math.abs(ds._certMoM).toFixed(2) + ' from last month');
                                         return lines;
                                     }
                                 }
@@ -4595,7 +4602,7 @@
                         }
                     },
                     plugins: [{
-                        afterDraw: function(chart) {
+                        afterDatasetsDraw: function(chart) {
                             var ctx2 = chart.ctx;
                             ctx2.save();
                             chart.data.datasets.forEach(function(ds, i) {
@@ -4608,7 +4615,8 @@
                                     ctx2.textBaseline = 'middle';
                                     ctx2.fillText(ds.label, el.x, el.y - 6);
                                     ctx2.font = '500 9px Inter, sans-serif';
-                                    ctx2.fillText(ds._matchPct + '%', el.x, el.y + 7);
+                                    var label2 = ds._studentsInType >= 1000 ? (ds._studentsInType / 1000).toFixed(1) + 'k' : ds._studentsInType.toLocaleString();
+                                    ctx2.fillText(label2 + ' students', el.x, el.y + 7);
                                 }
                             });
                             ctx2.restore();
@@ -4620,10 +4628,12 @@
                 var primaryCert = certaintyData[careerData.primary][useMonth];
                 var primaryCertMoM = certaintyData[careerData.primary][useMonth] - certaintyData[careerData.primary].Nov;
                 var isHighDemand = bls && (bls.outlook === 'Much faster than average' || bls.outlook === 'Faster than average');
+                var primaryN = DATA.riasec_themes[careerData.primary];
+                var primaryPct2 = Math.round(primaryN / totalRiasec2 * 100);
                 renderWidgetInsight('correlationSpotlight', {
                     trend: primaryCertMoM >= 0 ? 'up' : 'down',
-                    soWhat: careerData.n.toLocaleString() + ' students chose ' + selectedCareer + '. Most (55%) identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + '), with ' + careerData.secondary + ' as the secondary type (25%).' + (bls ? ' Median salary: ' + bls.salary + '. Outlook: ' + bls.outlook_text + '.' : ''),
-                    action: isHighDemand ? 'High-growth career — connect students with internships and CTE pathways. ' + (primaryCertMoM < 0 ? 'Confidence dipped — increase exposure to professionals in this field.' : 'Confidence is solid — maintain with job shadows.') : (careerData.pct >= 3 ? 'Popular choice — ensure students understand education requirements and realistic pathways.' : 'Niche interest — pair students with industry mentors for informational interviews.')
+                    soWhat: careerData.n.toLocaleString() + ' students chose ' + selectedCareer + '. Per O*NET, this career aligns with ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ') and ' + careerData.secondary + ' types. Across all MoCo students, ' + primaryN.toLocaleString() + ' (' + primaryPct2 + '%) identify as ' + careerData.primary + '.' + (bls ? ' Median salary: ' + bls.salary + '. Outlook: ' + bls.outlook_text + '.' : ''),
+                    action: isHighDemand ? 'High-growth career — connect ' + careerData.primary + ' students with internships and CTE pathways.' : (careerData.pct >= 3 ? 'Popular choice — ensure students understand education requirements and realistic pathways.' : 'Niche interest — pair students with industry mentors for informational interviews.')
                 });
                 return;
             }
