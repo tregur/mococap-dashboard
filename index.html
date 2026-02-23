@@ -4215,23 +4215,18 @@
                         filterBar.innerHTML += '<button class="seg-pill" onclick="setBubbleView(\'riasec:' + t + '\', this);" style="font-size:11px;padding:4px 10px;border-left:3px solid ' + typeColors[t].solid + ';">' + t + '</button>';
                     });
                 }
-                if (descEl) descEl.textContent = 'Each bubble = RIASEC type, sized by students. Click a type to see careers under it. Hover for congruence & certainty. | SY 2025-26';
+                if (descEl) descEl.textContent = 'X = Congruence (match %), Y = Certainty (1-5). Bubble size = students. Click a type to drill into careers. | SY 2025-26';
 
-                var positions = [
-                    {x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2},
-                    {x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}
-                ];
                 var datasets = types.map(function(type, i) {
                     var n = DATA.riasec_themes[type] || nData[type][useMonth];
                     var congVal = congruenceData[type][useMonth];
                     var certVal = certaintyData[type][useMonth];
                     var bubbleRadius = Math.sqrt(n) / 3.5;
-                    // Count careers under this type
                     var careerCount = 0;
                     Object.keys(CAREER_RIASEC_MAP).forEach(function(c) { if (CAREER_RIASEC_MAP[c].primary === type) careerCount++; });
                     return {
                         label: type,
-                        data: [{ x: positions[i].x, y: positions[i].y, r: Math.max(bubbleRadius, 12) }],
+                        data: [{ x: congVal, y: certVal, r: Math.max(bubbleRadius, 12) }],
                         backgroundColor: typeColors[type].bg,
                         borderColor: typeColors[type].solid,
                         borderWidth: 2, hoverBorderWidth: 3,
@@ -4278,8 +4273,8 @@
                             }
                         },
                         scales: {
-                            x: { display: false, min: 0.3, max: 3.7 },
-                            y: { display: false, min: 0.3, max: 2.7 }
+                            x: { title: { display: true, text: 'Congruence (Career-Personality Match %)', font: { size: 11, weight: 600 } }, min: 74, max: 92 },
+                            y: { title: { display: true, text: 'Certainty (1-5 Scale)', font: { size: 11, weight: 600 } }, min: 3.4, max: 4.2 }
                         }
                     },
                     plugins: [{
@@ -4291,11 +4286,11 @@
                                 if (meta.data[0]) {
                                     var el = meta.data[0];
                                     ctx2.fillStyle = '#1a1a1a';
-                                    ctx2.font = '700 12px Inter, sans-serif';
+                                    ctx2.font = '700 11px Inter, sans-serif';
                                     ctx2.textAlign = 'center';
                                     ctx2.textBaseline = 'middle';
                                     ctx2.fillText(ds.label, el.x, el.y - 8);
-                                    ctx2.font = '500 10px Inter, sans-serif';
+                                    ctx2.font = '500 9px Inter, sans-serif';
                                     ctx2.fillStyle = '#4a4a4a';
                                     ctx2.fillText(ds._n.toLocaleString() + ' students', el.x, el.y + 7);
                                 }
@@ -4348,18 +4343,27 @@
                     }
                 });
 
-                // Position in a dynamic grid
                 var allCareers = careers.concat(secondaryCareers);
-                var cols = Math.min(allCareers.length, 4);
+                // Add small offsets so careers with same parent type don't fully overlap
+                var offsetMap = {};
+                allCareers.forEach(function(c, i) {
+                    var key = c.data.congruence + '|' + c.data.certainty;
+                    if (!offsetMap[key]) offsetMap[key] = 0;
+                    c._offset = offsetMap[key];
+                    offsetMap[key]++;
+                });
                 var datasets2 = allCareers.map(function(c, i) {
-                    var row = Math.floor(i / cols);
-                    var col = i % cols;
                     var isPrimary = c.data.primary === selectedType;
                     var r = Math.sqrt(c.data.n) / 4;
                     var bls = BLS_CAREERS[c.name];
+                    // Spread overlapping bubbles in a small radius
+                    var angle = (c._offset * 2 * Math.PI) / Math.max(1, allCareers.filter(function(oc) { return oc.data.congruence === c.data.congruence && oc.data.certainty === c.data.certainty; }).length);
+                    var spread = c._offset === 0 ? 0 : 1.2;
+                    var xOff = Math.cos(angle) * spread;
+                    var yOff = Math.sin(angle) * spread * 0.04;
                     return {
                         label: c.name,
-                        data: [{ x: col + 1, y: (Math.ceil(allCareers.length / cols) - row), r: Math.max(r, 10) }],
+                        data: [{ x: c.data.congruence + xOff, y: c.data.certainty + yOff, r: Math.max(r, 10) }],
                         backgroundColor: isPrimary ? color.bg : 'rgba(200,200,200,0.4)',
                         borderColor: isPrimary ? color.solid : '#999',
                         borderWidth: isPrimary ? 2 : 1,
@@ -4367,14 +4371,14 @@
                         hoverBorderWidth: 3,
                         _career: c.name, _n: c.data.n, _pct: c.data.pct,
                         _congruence: c.data.congruence, _certainty: c.data.certainty,
+                        _congMoM: congruenceData[c.data.primary] ? (congruenceData[c.data.primary][useMonth] - congruenceData[c.data.primary].Nov) : 0,
+                        _certMoM: certaintyData[c.data.primary] ? (certaintyData[c.data.primary][useMonth] - certaintyData[c.data.primary].Nov) : 0,
                         _primary: c.data.primary, _secondary: c.data.secondary,
                         _isPrimary: isPrimary,
                         _salary: bls ? bls.salary : 'N/A',
                         _outlook: bls ? bls.outlook + ' (' + bls.outlook_text + ')' : 'N/A'
                     };
                 });
-
-                var maxRow = Math.ceil(allCareers.length / cols);
                 bubbleChartInstance = new Chart(canvas.getContext('2d'), {
                     type: 'bubble',
                     data: { datasets: datasets2 },
@@ -4401,8 +4405,8 @@
                                             'Students interested: ' + ds._n.toLocaleString() + ' (' + ds._pct + '% of total)',
                                             'Primary type: ' + ds._primary + (ds._isPrimary ? '' : ' (secondary: ' + selectedType + ')'),
                                             '',
-                                            'Congruence: ' + ds._congruence.toFixed(1) + '%',
-                                            'Certainty: ' + ds._certainty.toFixed(2) + '/5',
+                                            'Congruence: ' + ds._congruence.toFixed(1) + '%  (' + (ds._congMoM >= 0 ? '▲+' : '▼') + ds._congMoM.toFixed(1) + 'pp MoM)',
+                                            'Certainty: ' + ds._certainty.toFixed(2) + '/5  (' + (ds._certMoM >= 0 ? '▲+' : '▼') + ds._certMoM.toFixed(2) + ' MoM)',
                                             '',
                                             'Salary: ' + ds._salary,
                                             'Outlook: ' + ds._outlook,
@@ -4415,8 +4419,8 @@
                             }
                         },
                         scales: {
-                            x: { display: false, min: 0.2, max: cols + 0.8 },
-                            y: { display: false, min: 0.2, max: maxRow + 0.8 }
+                            x: { title: { display: true, text: 'Congruence (Career-Personality Match %)', font: { size: 11, weight: 600 } }, min: 74, max: 92 },
+                            y: { title: { display: true, text: 'Certainty (1-5 Scale)', font: { size: 11, weight: 600 } }, min: 3.4, max: 4.2 }
                         }
                     },
                     plugins: [{
@@ -4475,11 +4479,7 @@
                 }
                 if (descEl) descEl.textContent = selectedCareer + ' — showing personality type alignment. Larger bubble = stronger match.';
 
-                // Show how this career maps to each RIASEC type
-                var positions3 = [
-                    {x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2},
-                    {x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}
-                ];
+                // Show how this career maps to each RIASEC type — positioned by real congruence/certainty
                 var datasets3 = types.map(function(type, i) {
                     var isPrimary = careerData.primary === type;
                     var isSecondary = careerData.secondary === type;
@@ -4487,18 +4487,25 @@
                     var n = Math.round(careerData.n * matchLevel);
                     var r = Math.sqrt(n) / 3;
                     var tc = typeColors[type];
+                    var typeCong = congruenceData[type][useMonth];
+                    var typeCert = certaintyData[type][useMonth];
+                    var congMoM = congruenceData[type][useMonth] - congruenceData[type].Nov;
+                    var certMoM = certaintyData[type][useMonth] - certaintyData[type].Nov;
                     return {
                         label: type,
-                        data: [{ x: positions3[i].x, y: positions3[i].y, r: Math.max(r, isPrimary ? 20 : isSecondary ? 14 : 8) }],
+                        data: [{ x: typeCong, y: typeCert, r: Math.max(r, isPrimary ? 20 : isSecondary ? 14 : 8) }],
                         backgroundColor: isPrimary ? tc.bg : isSecondary ? tc.bg.replace('0.7', '0.4') : 'rgba(200,200,200,0.2)',
                         borderColor: isPrimary ? tc.solid : isSecondary ? tc.solid : '#ccc',
                         borderWidth: isPrimary ? 3 : isSecondary ? 2 : 1,
                         hoverBorderWidth: 3,
                         _type: type, _isPrimary: isPrimary, _isSecondary: isSecondary,
                         _matchLevel: isPrimary ? 'Primary' : isSecondary ? 'Secondary' : 'Low',
+                        _congruence: typeCong,
+                        _certainty: typeCert,
+                        _congMoM: congMoM,
+                        _certMoM: certMoM,
                         _matchPct: isPrimary ? careerData.congruence : isSecondary ? (careerData.congruence * 0.7).toFixed(1) : (careerData.congruence * 0.3).toFixed(1),
-                        _n: DATA.riasec_themes[type],
-                        _certainty: certaintyData[type][useMonth]
+                        _n: DATA.riasec_themes[type]
                     };
                 });
 
@@ -4529,8 +4536,9 @@
                                         var ds = tipCtx.dataset;
                                         return [
                                             'Match: ' + ds._matchLevel + (ds._isPrimary ? ' (best fit)' : ds._isSecondary ? ' (related)' : ' (weak)'),
-                                            'Type congruence: ' + ds._matchPct + '%',
-                                            'Type certainty: ' + ds._certainty.toFixed(2) + '/5',
+                                            '',
+                                            'Congruence: ' + ds._congruence.toFixed(1) + '%  (' + (ds._congMoM >= 0 ? '▲+' : '▼') + ds._congMoM.toFixed(1) + 'pp MoM)',
+                                            'Certainty: ' + ds._certainty.toFixed(2) + '/5  (' + (ds._certMoM >= 0 ? '▲+' : '▼') + ds._certMoM.toFixed(2) + ' MoM)',
                                             ds._type + ' students: ' + ds._n.toLocaleString(),
                                             '',
                                             'Click to see all ' + ds._type + ' careers'
@@ -4540,8 +4548,8 @@
                             }
                         },
                         scales: {
-                            x: { display: false, min: 0.3, max: 3.7 },
-                            y: { display: false, min: 0.3, max: 2.7 }
+                            x: { title: { display: true, text: 'Congruence (Career-Personality Match %)', font: { size: 11, weight: 600 } }, min: 74, max: 92 },
+                            y: { title: { display: true, text: 'Certainty (1-5 Scale)', font: { size: 11, weight: 600 } }, min: 3.4, max: 4.2 }
                         }
                     },
                     plugins: [{
@@ -4922,9 +4930,51 @@
                     return { label: t, data: months.map(function(m) { return HEATMAP_DATA.riasec_monthly[t][m] || 0; }), backgroundColor: colors[i], borderColor: borderColors[i], borderWidth: 1, borderRadius: 3 };
                 });
                 datasets.push({ label: 'Avg Certainty', data: certaintyByMonth, type: 'line', borderColor: '#1a1a1a', backgroundColor: 'transparent', borderWidth: 2.5, pointRadius: 6, pointBackgroundColor: '#1a1a1a', pointBorderColor: '#fff', pointBorderWidth: 2, tension: 0.3, yAxisID: 'y1', order: 0 });
+                var personalityTooltip = {
+                    backgroundColor: 'rgba(26,26,26,0.95)',
+                    titleFont: { size: 13, weight: 700 },
+                    bodyFont: { size: 11 },
+                    padding: 14,
+                    cornerRadius: 8,
+                    bodySpacing: 3,
+                    callbacks: {
+                        title: function(items) { return items[0].label; },
+                        label: function() { return ''; },
+                        afterBody: function(items) {
+                            var idx = items[0].dataIndex;
+                            var m = months[idx];
+                            var prevMonth = idx > 0 ? months[idx - 1] : null;
+                            var lines = [];
+                            lines.push('── Overall ──');
+                            var cong = congruenceByMonth[idx];
+                            var cert = certaintyByMonth[idx];
+                            lines.push('Match: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲+' : '▼') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
+                            lines.push('Confidence: ' + cert.toFixed(2) + '/5' + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲+' : '▼') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
+                            lines.push('');
+                            lines.push('── By Personality Type ──');
+                            types.forEach(function(t) {
+                                var typeCong = HEATMAP_DATA.riasec_monthly[t][m] || 0;
+                                var typeCert = HEATMAP_DATA.riasec_certainty_monthly[t][m] || 0;
+                                var congDelta = '', certDelta = '';
+                                if (prevMonth) {
+                                    var prevCong = HEATMAP_DATA.riasec_monthly[t][prevMonth] || 0;
+                                    var prevCert = HEATMAP_DATA.riasec_certainty_monthly[t][prevMonth] || 0;
+                                    var cd = typeCong - prevCong;
+                                    var ctd = typeCert - prevCert;
+                                    congDelta = ' (' + (cd >= 0 ? '▲+' : '▼') + cd.toFixed(1) + 'pp)';
+                                    certDelta = ' (' + (ctd >= 0 ? '▲+' : '▼') + ctd.toFixed(2) + ')';
+                                }
+                                lines.push(t + ':');
+                                lines.push('  Match: ' + typeCong.toFixed(1) + '%' + congDelta);
+                                lines.push('  Confidence: ' + typeCert.toFixed(2) + '/5' + certDelta);
+                            });
+                            return lines;
+                        }
+                    }
+                };
                 overviewScoresChartInstance = new Chart(ctx, {
                     type: 'bar', data: { labels: months, datasets: datasets },
-                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } } }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Congruence % (stacked by type)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { padding: 12, font: { size: 11, weight: 600 }, usePointStyle: true } }, tooltip: personalityTooltip }, scales: { x: { stacked: true }, y: { stacked: true, title: { display: true, text: 'Congruence % (stacked by type)', font: { size: 12, weight: 600 } }, min: 0 }, y1: { title: { display: true, text: 'Avg Certainty', font: { size: 12, weight: 600 } }, min: 3.5, max: 4.2, position: 'right', grid: { drawOnChartArea: false } } } }
                 });
             } else if (seg === 'grade') {
                 var grades = Object.keys(OCTOBER_FULL.grade_dist).sort(function(a,b) { return parseInt(a) - parseInt(b); });
