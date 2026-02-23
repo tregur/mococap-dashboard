@@ -4307,19 +4307,24 @@
             var useMonth = 'Dec';
             var descEl = document.getElementById('bubbleChartDesc');
             var filterBar = document.getElementById('bubbleFilterBar');
-            var isTypeView = bubbleChartView === 'type' || bubbleChartView === 'all';
+            var isTypeView = (bubbleChartView === 'type' || bubbleChartView === 'all') && bubbleChartView.indexOf('drilltype:') !== 0;
             var isCareerView = bubbleChartView === 'career';
+            var isTypeDrill = bubbleChartView.indexOf('drilltype:') === 0;
 
-            // Build filter bar: two main pills with clear colors
+            // Build filter bar
             if (filterBar) {
-                var typeBtnStyle = isTypeView
-                    ? 'background:#2563eb;color:#fff;border:1px solid #2563eb;'
-                    : 'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;';
-                var careerBtnStyle = isCareerView
-                    ? 'background:#2563eb;color:#fff;border:1px solid #2563eb;'
-                    : 'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;';
-                filterBar.innerHTML = '<button onclick="setBubbleView(\'type\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + typeBtnStyle + '">By Type</button>' +
+                var inactiveStyle = 'background:#f1f5f9;color:#475569;border:1px solid #cbd5e1;';
+                var activeStyle = 'background:#2563eb;color:#fff;border:1px solid #2563eb;';
+                var typeBtnStyle = isTypeView ? activeStyle : inactiveStyle;
+                var careerBtnStyle = isCareerView ? activeStyle : inactiveStyle;
+                var barHtml = '<button onclick="setBubbleView(\'type\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + typeBtnStyle + '">By Type</button>' +
                     '<button onclick="setBubbleView(\'career\', this);" style="font-size:12px;padding:6px 16px;border-radius:6px;cursor:pointer;font-weight:600;' + careerBtnStyle + '">By Career</button>';
+                if (isTypeDrill) {
+                    var drillTypeName = bubbleChartView.substring(10);
+                    barHtml += '<span style="color:#94a3b8;padding:0 4px;">\u203A</span>' +
+                        '<button style="font-size:12px;padding:6px 16px;border-radius:6px;font-weight:600;' + activeStyle + '">' + drillTypeName + '</button>';
+                }
+                filterBar.innerHTML = barHtml;
             }
 
             // === VIEW: By Type (default) ===
@@ -4360,6 +4365,15 @@
                     data: { datasets: datasets },
                     options: {
                         responsive: true, maintainAspectRatio: false,
+                        onHover: function(evt, elements) {
+                            evt.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                        },
+                        onClick: function(evt, elements) {
+                            if (elements.length > 0) {
+                                var clickedType = datasets[elements[0].datasetIndex].label;
+                                setBubbleView('drilltype:' + clickedType);
+                            }
+                        },
                         plugins: {
                             legend: { display: false },
                             tooltip: {
@@ -4376,16 +4390,25 @@
                                         var lines = [];
                                         lines.push(ds._n.toLocaleString() + ' students identify as ' + ds.label);
                                         lines.push('');
-                                        lines.push('Career Match: ' + ds._congruence.toFixed(1) + '%');
-                                        if (ds._congMoM !== 0) lines.push('  ' + (ds._congMoM >= 0 ? '▲ +' : '▼ ') + ds._congMoM.toFixed(1) + 'pp from last month');
+                                        var months = ['Aug','Sep','Oct','Nov','Dec'];
+                                        var augCong = congruenceData[ds.label].Aug;
+                                        var decCong = ds._congruence;
+                                        var totalGrowth = decCong - augCong;
+                                        lines.push('Career Match: ' + decCong.toFixed(1) + '%');
+                                        lines.push('  Growth: ' + augCong.toFixed(1) + '% \u2192 ' + decCong.toFixed(1) + '% (+' + totalGrowth.toFixed(1) + 'pp Aug\u2192Dec)');
                                         lines.push('');
+                                        var augCert = certaintyData[ds.label].Aug;
                                         lines.push('Confidence: ' + ds._certainty.toFixed(2) + '/5');
-                                        if (ds._certMoM !== 0) lines.push('  ' + (ds._certMoM >= 0 ? '▲ +' : '▼ ') + ds._certMoM.toFixed(2) + ' from last month');
+                                        lines.push('  Growth: ' + augCert.toFixed(2) + ' \u2192 ' + ds._certainty.toFixed(2) + ' (+' + (ds._certainty - augCert).toFixed(2) + ' Aug\u2192Dec)');
                                         lines.push('');
-                                        lines.push('Top careers chosen:');
+                                        lines.push('Top careers chosen by ' + ds.label + ':');
                                         ds._topCareers.forEach(function(c) {
-                                            lines.push('  ' + c.name + ' (' + c.n.toLocaleString() + ')');
+                                            var ad = ACTUAL_CAREER_RIASEC[c.name];
+                                            var anyPct = ad ? Math.round(ad.any[{Realistic:'R',Investigative:'I',Artistic:'A',Social:'S',Enterprising:'E',Conventional:'C'}[ds.label]]) : '';
+                                            lines.push('  ' + c.name + ' (' + c.n.toLocaleString() + ')' + (anyPct ? ' - ' + anyPct + '% match' : ''));
                                         });
+                                        lines.push('');
+                                        lines.push('Click to explore ' + ds.label + ' careers \u2192');
                                         return lines;
                                     }
                                 }
@@ -4774,6 +4797,230 @@
                     trend: primaryCertMoM >= 0 ? 'up' : 'down',
                     soWhat: (hasActualData ? 'Actual data (n=' + actualCareerData.n + '): ' : '') + primaryPct3 + '% of ' + selectedCareer + ' students identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ')' + (matchesOnet ? ', matching the O*NET expected profile.' : '. However, the most common type is actually ' + topActualType + ' (' + drillPcts[topActualType] + '%), which differs from the O*NET expected ' + careerData.primary + ' profile.') + ' Career congruence: ' + careerData.congruence.toFixed(1) + '%.' + (bls ? ' Salary: ' + bls.salary + '.' : ''),
                     action: matchesOnet ? 'Strong alignment — students\' personalities match career expectations. Focus on building confidence and practical experience.' : 'Personality-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
+                });
+                return;
+            }
+
+            // === VIEW: Type Deep-Dive (careers chosen by one personality type) ===
+            if (isTypeDrill) {
+                var selectedType = bubbleChartView.substring(10);
+                var typeColor = typeColors[selectedType];
+                var typeLetter = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'}[selectedType];
+                if (!typeColor) { setBubbleView('type'); return; }
+
+                // Congruence growth data for this type
+                var typeCongruence = congruenceData[selectedType];
+                var typeCertainty = certaintyData[selectedType];
+                var typeN = DATA.riasec_themes[selectedType] || nData[selectedType][useMonth];
+                var months = ['Aug','Sep','Oct','Nov','Dec'];
+                var congGrowth = typeCongruence.Dec - typeCongruence.Aug;
+                var certGrowth = typeCertainty.Dec - typeCertainty.Aug;
+
+                // Build career list for this type — careers where this type's students appear
+                var typeCareers = [];
+                Object.keys(CAREER_RIASEC_MAP).forEach(function(careerName) {
+                    var c = CAREER_RIASEC_MAP[careerName];
+                    var actual = ACTUAL_CAREER_RIASEC[careerName];
+                    var isOnetPrimary = c.primary === selectedType;
+                    var isOnetSecondary = c.secondary === selectedType;
+                    // How many students of this type chose this career (using "any match")
+                    var anyPct = actual ? actual.any[typeLetter] : 0;
+                    var primaryPct = actual ? actual.primary[typeLetter] : 0;
+                    var secondaryPct = actual ? actual.secondary[typeLetter] : 0;
+                    var studentCount = actual ? Math.round(actual.n * anyPct / 100) : 0;
+                    if (studentCount > 5) {
+                        typeCareers.push({
+                            name: careerName,
+                            anyPct: anyPct,
+                            primaryPct: primaryPct,
+                            secondaryPct: secondaryPct,
+                            studentCount: studentCount,
+                            totalN: actual ? actual.n : c.n,
+                            isOnetPrimary: isOnetPrimary,
+                            isOnetSecondary: isOnetSecondary,
+                            congruence: c.congruence,
+                            certainty: c.certainty,
+                            onetPrimary: c.primary,
+                            onetSecondary: c.secondary
+                        });
+                    }
+                });
+                typeCareers.sort(function(a, b) { return b.studentCount - a.studentCount; });
+
+                if (descEl) descEl.textContent = selectedType + ' students (' + typeDescPlain[selectedType] + '): Career choices, congruence growth, and O*NET alignment. Bubble size = students of this type choosing each career. | SY 2025-26';
+
+                // Create datasets — one per career
+                var dtDatasets = typeCareers.map(function(career, idx) {
+                    var r = Math.max(Math.sqrt(career.studentCount) * 1.2, 8);
+                    var onetColor = typeColors[career.onetPrimary];
+                    // Spread bubbles using congruence as x and certainty as y, with jitter
+                    var angle = (idx * 2 * Math.PI) / typeCareers.length - Math.PI / 6;
+                    var spread = 1.2 + idx * 0.3;
+                    var xOff = Math.cos(angle) * spread;
+                    var yOff = Math.sin(angle) * 0.03;
+                    // Highlight O*NET matches for this type
+                    var bgOpacity = career.isOnetPrimary ? 0.8 : career.isOnetSecondary ? 0.5 : 0.25;
+                    var bgColor = typeColor.solid.replace(')', ',' + bgOpacity + ')').replace('rgb(', 'rgba(');
+                    if (typeColor.solid.indexOf('#') === 0) {
+                        var hex = typeColor.solid;
+                        var rr = parseInt(hex.slice(1,3),16), gg = parseInt(hex.slice(3,5),16), bb = parseInt(hex.slice(5,7),16);
+                        bgColor = 'rgba(' + rr + ',' + gg + ',' + bb + ',' + bgOpacity + ')';
+                    }
+
+                    return {
+                        label: career.name,
+                        data: [{ x: career.congruence + xOff, y: career.certainty + yOff, r: r }],
+                        backgroundColor: bgColor,
+                        borderColor: career.isOnetPrimary ? typeColor.solid : career.isOnetSecondary ? typeColor.solid : '#94a3b8',
+                        borderWidth: career.isOnetPrimary ? 3 : career.isOnetSecondary ? 2 : 1,
+                        borderDash: career.isOnetPrimary || career.isOnetSecondary ? [] : [4, 3],
+                        hoverBorderWidth: 3,
+                        _career: career.name,
+                        _anyPct: career.anyPct,
+                        _primaryPct: career.primaryPct,
+                        _secondaryPct: career.secondaryPct,
+                        _studentCount: career.studentCount,
+                        _totalN: career.totalN,
+                        _isOnetPrimary: career.isOnetPrimary,
+                        _isOnetSecondary: career.isOnetSecondary,
+                        _congruence: career.congruence,
+                        _certainty: career.certainty,
+                        _onetPrimary: career.onetPrimary,
+                        _onetSecondary: career.onetSecondary
+                    };
+                });
+
+                bubbleChartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bubble',
+                    data: { datasets: dtDatasets },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        onHover: function(evt, elements) {
+                            evt.native.target.style.cursor = elements.length > 0 ? 'pointer' : 'default';
+                        },
+                        onClick: function(evt, elements) {
+                            if (elements.length > 0) {
+                                var clickedCareer = dtDatasets[elements[0].datasetIndex]._career;
+                                setBubbleView('drill:' + clickedCareer);
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                mode: 'nearest',
+                                intersect: true,
+                                backgroundColor: 'rgba(20,20,20,1)',
+                                titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
+                                padding: 16, cornerRadius: 8, bodySpacing: 2,
+                                callbacks: {
+                                    title: function(items) {
+                                        var ds = items[0].dataset;
+                                        return ds._career + (ds._isOnetPrimary ? ' \u2605 O*NET Match' : ds._isOnetSecondary ? ' \u25C6 Secondary Match' : '');
+                                    },
+                                    label: function() { return null; },
+                                    afterBody: function(items) {
+                                        var ds = items[0].dataset;
+                                        var lines = [];
+                                        lines.push(ds._studentCount.toLocaleString() + ' ' + selectedType + ' students chose this career');
+                                        lines.push('(out of ' + ds._totalN.toLocaleString() + ' total who chose ' + ds._career + ')');
+                                        lines.push('');
+                                        // Primary vs secondary matching
+                                        lines.push(selectedType + ' presence in ' + ds._career + ':');
+                                        lines.push('  Primary RIASEC:   ' + ds._primaryPct.toFixed(1) + '%');
+                                        lines.push('  Secondary RIASEC: ' + ds._secondaryPct.toFixed(1) + '%');
+                                        lines.push('  Any match:        ' + ds._anyPct.toFixed(1) + '%');
+                                        lines.push('');
+                                        // O*NET alignment
+                                        if (ds._isOnetPrimary) {
+                                            lines.push('\u2605 This career is an ideal O*NET match for ' + selectedType);
+                                            lines.push('  O*NET expects ' + selectedType + ' as primary type');
+                                        } else if (ds._isOnetSecondary) {
+                                            lines.push('\u25C6 O*NET secondary match — ' + selectedType + ' is expected');
+                                            lines.push('  Primary O*NET type: ' + ds._onetPrimary);
+                                        } else {
+                                            lines.push('O*NET primary: ' + ds._onetPrimary + ' | Not a typical ' + selectedType + ' career');
+                                            lines.push('But ' + ds._anyPct.toFixed(0) + '% of these students identify as ' + selectedType);
+                                        }
+                                        lines.push('');
+                                        // Congruence growth for the type overall
+                                        lines.push(selectedType + ' type trajectory (Aug\u2192Dec):');
+                                        lines.push('  Match:      ' + typeCongruence.Aug.toFixed(1) + '% \u2192 ' + typeCongruence.Dec.toFixed(1) + '% (+' + congGrowth.toFixed(1) + 'pp)');
+                                        lines.push('  Confidence: ' + typeCertainty.Aug.toFixed(2) + ' \u2192 ' + typeCertainty.Dec.toFixed(2) + ' (+' + certGrowth.toFixed(2) + ')');
+                                        lines.push('');
+                                        lines.push('Click to deep-dive into ' + ds._career + ' \u2192');
+                                        return lines;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 70, max: 97, ticks: { stepSize: 2 } },
+                            y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.2, max: 4.4, ticks: { stepSize: 0.1 } }
+                        }
+                    },
+                    plugins: [{
+                        afterDatasetsDraw: function(chart) {
+                            var ctx2 = chart.ctx;
+                            ctx2.save();
+                            ctx2.textAlign = 'center';
+                            ctx2.textBaseline = 'bottom';
+                            chart.data.datasets.forEach(function(ds, i) {
+                                var meta = chart.getDatasetMeta(i);
+                                if (meta.data[0]) {
+                                    var el = meta.data[0];
+                                    var isOnet = ds._isOnetPrimary || ds._isOnetSecondary;
+                                    ctx2.font = (isOnet ? '700 11px' : '500 10px') + ' Inter, sans-serif';
+                                    // Smart truncation for labels
+                                    var fullW = ctx2.measureText(ds._career).width;
+                                    var displayName;
+                                    if (fullW < 120) {
+                                        displayName = ds._career;
+                                    } else {
+                                        var words = ds._career.split(/[\s&]+/);
+                                        displayName = words.length >= 3 ? words.slice(0, 2).join(' ') : ds._career.substring(0, 14) + '..';
+                                    }
+                                    // O*NET marker
+                                    if (ds._isOnetPrimary) displayName = '\u2605 ' + displayName;
+                                    else if (ds._isOnetSecondary) displayName = '\u25C6 ' + displayName;
+                                    ctx2.strokeStyle = '#fff';
+                                    ctx2.lineWidth = 3;
+                                    ctx2.strokeText(displayName, el.x, el.y - el.options.radius - 4);
+                                    ctx2.fillStyle = isOnet ? '#1a1a1a' : '#666';
+                                    ctx2.fillText(displayName, el.x, el.y - el.options.radius - 4);
+                                    // Show % inside bubble
+                                    ctx2.font = '500 9px Inter, sans-serif';
+                                    ctx2.fillStyle = '#1a1a1a';
+                                    ctx2.textBaseline = 'middle';
+                                    ctx2.fillText(ds._anyPct.toFixed(0) + '%', el.x, el.y);
+                                    ctx2.textBaseline = 'bottom';
+                                }
+                            });
+                            ctx2.restore();
+                        }
+                    }]
+                });
+
+                // Widget insight — Type drill-down
+                var onetMatches = typeCareers.filter(function(c) { return c.isOnetPrimary; });
+                var onetSecMatches = typeCareers.filter(function(c) { return c.isOnetSecondary; });
+                var nonOnetCareers = typeCareers.filter(function(c) { return !c.isOnetPrimary && !c.isOnetSecondary; });
+                var topCareerDT = typeCareers[0];
+                var onetMatchNames = onetMatches.map(function(c) { return c.name; }).join(', ');
+                var nonOnetTop = nonOnetCareers.length > 0 ? nonOnetCareers[0] : null;
+
+                // Growth narrative
+                var growthRate = congGrowth / 4; // avg pp per month over Aug-Dec (4 intervals)
+                var growthWord = growthRate >= 1 ? 'strong' : growthRate >= 0.5 ? 'steady' : 'gradual';
+
+                renderWidgetInsight('correlationSpotlight', {
+                    trend: congGrowth > 0 ? 'up' : 'down',
+                    soWhat: selectedType + ' students (' + typeN.toLocaleString() + ') show ' + growthWord + ' congruence growth: ' + typeCongruence.Aug.toFixed(1) + '% \u2192 ' + typeCongruence.Dec.toFixed(1) + '% (+' + congGrowth.toFixed(1) + 'pp over 5 months). ' +
+                        (topCareerDT ? 'Top career: ' + topCareerDT.name + ' (' + topCareerDT.studentCount.toLocaleString() + ' students, ' + topCareerDT.anyPct.toFixed(0) + '% match). ' : '') +
+                        (onetMatches.length > 0 ? onetMatches.length + ' O*NET-aligned career' + (onetMatches.length > 1 ? 's' : '') + ' (' + onetMatchNames + '). ' : 'No careers in top 20 are primary O*NET matches for ' + selectedType + '. ') +
+                        (nonOnetTop ? nonOnetTop.name + ' is the most popular non-aligned choice (' + nonOnetTop.anyPct.toFixed(0) + '% ' + selectedType + ' match).' : ''),
+                    action: onetMatches.length > 0
+                        ? 'Students are finding O*NET-aligned paths. Strengthen exposure to ' + onetMatchNames + ' through job shadows and mentoring. ' + (nonOnetTop ? 'For the ' + nonOnetTop.studentCount.toLocaleString() + ' students in ' + nonOnetTop.name + ', explore whether their ' + selectedType + ' traits transfer.' : '')
+                        : selectedType + ' students are choosing careers outside typical O*NET alignment. This may reflect authentic interest — investigate whether primary RIASEC coding (' + typeCareers[0].primaryPct.toFixed(0) + '%) vs any-match (' + typeCareers[0].anyPct.toFixed(0) + '%) indicates growing career clarity.'
                 });
                 return;
             }
