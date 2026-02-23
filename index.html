@@ -3384,29 +3384,90 @@
             "Physical Therapists": {primary: "Social", secondary: "Realistic", pct: 0.5, n: 95, congruence: 84.5, certainty: 3.92}
         };
 
-        // Actual student RIASEC breakdown per career (from Oct full dataset, N=18,920, keyword matching on career interests)
-        // Each value: n = students matched, R/I/A/S/E/C = % of those students with each primary RIASEC type
+        // Actual student RIASEC breakdown per career (from Oct full dataset, N=18,920, keyword matching)
+        // primary = % with type as #1 RIASEC code | secondary = % with type as #2 code | any = % with type anywhere in code
+        // Note: "any" totals >100% because students can have multiple RIASEC types (e.g., "RIA" = Realistic+Investigative+Artistic)
         var ACTUAL_CAREER_RIASEC = {
-            "Athletes & Sports Competitors": {n: 2011, R: 69.7, I: 9.4, A: 8.6, S: 7.2, E: 3.7, C: 1.3},
-            "Lawyers": {n: 1790, R: 39.8, I: 30.1, A: 12.9, S: 10.3, E: 5.6, C: 1.3},
-            "Physicians": {n: 2195, R: 45.2, I: 27.0, A: 11.8, S: 11.5, E: 2.8, C: 1.7},
-            "Engineers": {n: 2155, R: 68.0, I: 19.7, A: 5.8, S: 2.8, E: 2.5, C: 1.2},
-            "Teachers": {n: 1252, R: 41.4, I: 22.0, A: 23.0, S: 11.7, E: 1.4, C: 0.6},
-            "Registered Nurses": {n: 1009, R: 40.5, I: 22.6, A: 14.6, S: 18.6, E: 1.8, C: 1.9},
-            "Veterinarians": {n: 517, R: 55.7, I: 14.5, A: 18.8, S: 8.1, E: 0.8, C: 2.1},
-            "Architects": {n: 603, R: 62.4, I: 17.7, A: 14.4, S: 3.2, E: 2.0, C: 0.3},
-            "Actors": {n: 391, R: 34.0, I: 18.7, A: 42.2, S: 4.6, E: 0.3, C: 0.3},
-            "Computer Programmers": {n: 676, R: 51.6, I: 29.1, A: 11.7, S: 3.7, E: 2.4, C: 1.5},
-            "Musicians & Singers": {n: 633, R: 35.1, I: 20.9, A: 39.7, S: 2.7, E: 1.3, C: 0.5},
-            "Artists & Related Workers": {n: 1440, R: 38.1, I: 19.1, A: 39.4, S: 1.9, E: 0.8, C: 0.6},
-            "Police Officers": {n: 489, R: 46.2, I: 31.9, A: 8.6, S: 9.2, E: 3.3, C: 0.8},
-            "Psychologists": {n: 813, R: 38.0, I: 28.0, A: 18.6, S: 14.3, E: 0.6, C: 0.5},
-            "Business Managers": {n: 1320, R: 48.7, I: 17.9, A: 15.5, S: 7.5, E: 9.0, C: 1.4},
-            "Accountants": {n: 175, R: 42.3, I: 21.7, A: 9.7, S: 9.7, E: 11.4, C: 5.1},
-            "Data Analysts": {n: 49, R: 53.1, I: 36.7, A: 4.1, S: 2.0, E: 2.0, C: 2.0},
-            "UX Designers": {n: 5, R: 80.0, I: 0.0, A: 20.0, S: 0.0, E: 0.0, C: 0.0},
-            "Project Managers": {n: 9, R: 33.3, I: 33.3, A: 11.1, S: 11.1, E: 11.1, C: 0.0},
-            "Physical Therapists": {n: 125, R: 61.6, I: 18.4, A: 5.6, S: 13.6, E: 0.8, C: 0.0}
+            "Athletes & Sports Competitors": {n: 2011,
+                primary: {R: 69.7, I: 9.4, A: 8.6, S: 7.2, E: 3.7, C: 1.3},
+                secondary: {R: 0.0, I: 18.4, A: 19.7, S: 16.5, E: 8.0, C: 2.2},
+                any: {R: 69.7, I: 27.8, A: 34.6, S: 37.1, E: 28.4, C: 12.5}},
+            "Lawyers": {n: 1790,
+                primary: {R: 39.8, I: 30.1, A: 12.9, S: 10.3, E: 5.6, C: 1.3},
+                secondary: {R: 0.0, I: 18.0, A: 17.3, S: 22.3, E: 16.8, C: 2.3},
+                any: {R: 39.8, I: 48.2, A: 36.4, S: 46.3, E: 44.4, C: 18.5}},
+            "Physicians": {n: 2195,
+                primary: {R: 45.2, I: 27.0, A: 11.8, S: 11.5, E: 2.8, C: 1.7},
+                secondary: {R: 0.0, I: 20.5, A: 18.6, S: 23.8, E: 7.4, C: 3.4},
+                any: {R: 45.2, I: 47.5, A: 37.1, S: 55.3, E: 22.7, C: 18.2}},
+            "Engineers": {n: 2155,
+                primary: {R: 68.0, I: 19.7, A: 5.8, S: 2.8, E: 2.5, C: 1.2},
+                secondary: {R: 0.0, I: 34.3, A: 19.0, S: 10.8, E: 9.6, C: 3.9},
+                any: {R: 68.0, I: 54.0, A: 37.4, S: 24.3, E: 27.5, C: 22.2}},
+            "Teachers": {n: 1252,
+                primary: {R: 41.4, I: 22.0, A: 23.0, S: 11.7, E: 1.4, C: 0.6},
+                secondary: {R: 0.0, I: 13.1, A: 28.0, S: 26.7, E: 5.9, C: 2.2},
+                any: {R: 41.4, I: 35.1, A: 56.7, S: 62.9, E: 19.4, C: 13.7}},
+            "Registered Nurses": {n: 1009,
+                primary: {R: 40.5, I: 22.6, A: 14.6, S: 18.6, E: 1.8, C: 1.9},
+                secondary: {R: 0.0, I: 14.5, A: 19.1, S: 27.1, E: 4.7, C: 3.2},
+                any: {R: 40.5, I: 37.1, A: 38.2, S: 66.4, E: 16.3, C: 16.5}},
+            "Veterinarians": {n: 517,
+                primary: {R: 55.7, I: 14.5, A: 18.8, S: 8.1, E: 0.8, C: 2.1},
+                secondary: {R: 0.0, I: 18.8, A: 26.7, S: 22.8, E: 3.7, C: 2.7},
+                any: {R: 55.7, I: 33.3, A: 55.7, S: 51.3, E: 15.7, C: 17.4}},
+            "Architects": {n: 603,
+                primary: {R: 62.4, I: 17.7, A: 14.4, S: 3.2, E: 2.0, C: 0.3},
+                secondary: {R: 0.0, I: 25.4, A: 32.0, S: 11.4, E: 7.8, C: 2.7},
+                any: {R: 62.4, I: 43.1, A: 62.4, S: 27.5, E: 23.1, C: 22.1}},
+            "Actors": {n: 391,
+                primary: {R: 34.0, I: 18.7, A: 42.2, S: 4.6, E: 0.3, C: 0.3},
+                secondary: {R: 0.0, I: 10.7, A: 32.0, S: 27.1, E: 9.0, C: 1.3},
+                any: {R: 34.0, I: 29.4, A: 81.8, S: 52.4, E: 26.1, C: 10.5}},
+            "Computer Programmers": {n: 676,
+                primary: {R: 51.6, I: 29.1, A: 11.7, S: 3.7, E: 2.4, C: 1.5},
+                secondary: {R: 0.0, I: 31.1, A: 22.5, S: 12.0, E: 10.2, C: 5.0},
+                any: {R: 51.6, I: 60.2, A: 46.0, S: 25.1, E: 27.2, C: 27.4}},
+            "Musicians & Singers": {n: 633,
+                primary: {R: 35.1, I: 20.9, A: 39.7, S: 2.7, E: 1.3, C: 0.5},
+                secondary: {R: 0.0, I: 11.7, A: 38.4, S: 21.3, E: 4.6, C: 0.8},
+                any: {R: 35.1, I: 32.5, A: 87.5, S: 43.4, E: 20.9, C: 9.5}},
+            "Artists & Related Workers": {n: 1440,
+                primary: {R: 38.1, I: 19.1, A: 39.4, S: 1.9, E: 0.8, C: 0.6},
+                secondary: {R: 0.0, I: 10.1, A: 41.5, S: 14.8, E: 3.7, C: 2.3},
+                any: {R: 38.1, I: 29.2, A: 90.1, S: 35.8, E: 15.8, C: 14.2}},
+            "Police Officers": {n: 489,
+                primary: {R: 46.2, I: 31.9, A: 8.6, S: 9.2, E: 3.3, C: 0.8},
+                secondary: {R: 0.0, I: 24.1, A: 19.4, S: 14.1, E: 5.5, C: 2.0},
+                any: {R: 46.2, I: 56.0, A: 37.6, S: 42.1, E: 19.8, C: 11.0}},
+            "Psychologists": {n: 813,
+                primary: {R: 38.0, I: 28.0, A: 18.6, S: 14.3, E: 0.6, C: 0.5},
+                secondary: {R: 0.0, I: 15.5, A: 22.9, S: 33.0, E: 5.8, C: 3.0},
+                any: {R: 38.0, I: 43.5, A: 48.3, S: 69.7, E: 21.4, C: 15.9}},
+            "Business Managers": {n: 1320,
+                primary: {R: 48.7, I: 17.9, A: 15.5, S: 7.5, E: 9.0, C: 1.4},
+                secondary: {R: 0.0, I: 17.3, A: 16.0, S: 18.5, E: 20.2, C: 3.2},
+                any: {R: 48.7, I: 35.2, A: 37.0, S: 35.2, E: 54.9, C: 17.9}},
+            "Accountants": {n: 175,
+                primary: {R: 42.3, I: 21.7, A: 9.7, S: 9.7, E: 11.4, C: 5.1},
+                secondary: {R: 0.0, I: 17.1, A: 11.4, S: 15.4, E: 23.4, C: 7.4},
+                any: {R: 42.3, I: 38.9, A: 26.3, S: 26.9, E: 50.9, C: 40.0}},
+            "Data Analysts": {n: 49,
+                primary: {R: 53.1, I: 36.7, A: 4.1, S: 2.0, E: 2.0, C: 2.0},
+                secondary: {R: 0.0, I: 36.7, A: 20.4, S: 14.3, E: 8.2, C: 6.1},
+                any: {R: 53.1, I: 73.5, A: 30.6, S: 24.5, E: 16.3, C: 44.9}},
+            "UX Designers": {n: 5,
+                primary: {R: 80.0, I: 0.0, A: 20.0, S: 0.0, E: 0.0, C: 0.0},
+                secondary: {R: 0.0, I: 20.0, A: 40.0, S: 20.0, E: 0.0, C: 0.0},
+                any: {R: 80.0, I: 20.0, A: 80.0, S: 40.0, E: 20.0, C: 0.0}},
+            "Project Managers": {n: 9,
+                primary: {R: 33.3, I: 33.3, A: 11.1, S: 11.1, E: 11.1, C: 0.0},
+                secondary: {R: 0.0, I: 0.0, A: 33.3, S: 0.0, E: 22.2, C: 11.1},
+                any: {R: 33.3, I: 33.3, A: 44.4, S: 33.3, E: 33.3, C: 33.3}},
+            "Physical Therapists": {n: 125,
+                primary: {R: 61.6, I: 18.4, A: 5.6, S: 13.6, E: 0.8, C: 0.0},
+                secondary: {R: 0.0, I: 22.4, A: 13.6, S: 32.8, E: 8.8, C: 2.4},
+                any: {R: 61.6, I: 40.8, A: 26.4, S: 62.4, E: 20.8, C: 23.2}}
         };
 
         var bubbleChartView = 'type'; // 'type' or 'career'
@@ -4401,11 +4462,24 @@
                         yOff = Math.sin(angle) * spreadY;
                     }
                     // Use actual student data from ACTUAL_CAREER_RIASEC (Oct dataset, N=18,920)
+                    // Shows primary + secondary RIASEC matching for full picture
                     var actualData = ACTUAL_CAREER_RIASEC[name];
-                    var typeBreakdown = {};
+                    var typeBreakdown = {};  // primary %
+                    var typeBreakdownSec = {};  // secondary %
+                    var typeBreakdownAny = {};  // any match %
                     var typeLetterMap = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
                     types.forEach(function(t) {
-                        typeBreakdown[t] = actualData ? Math.round(actualData[typeLetterMap[t]]) : Math.round(DATA.riasec_themes[t] / Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0) * 100);
+                        var k = typeLetterMap[t];
+                        if (actualData && actualData.n >= 20) {
+                            typeBreakdown[t] = Math.round(actualData.primary[k]);
+                            typeBreakdownSec[t] = Math.round(actualData.secondary[k]);
+                            typeBreakdownAny[t] = Math.round(actualData.any[k]);
+                        } else {
+                            var totalR = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
+                            typeBreakdown[t] = Math.round(DATA.riasec_themes[t] / totalR * 100);
+                            typeBreakdownSec[t] = 0;
+                            typeBreakdownAny[t] = typeBreakdown[t];
+                        }
                     });
                     var actualN = actualData ? actualData.n : c.n;
 
@@ -4418,7 +4492,8 @@
                         _career: name, _n: c.n, _pct: c.pct,
                         _primary: c.primary, _secondary: c.secondary,
                         _congruence: c.congruence, _certainty: c.certainty,
-                        _typeBreakdown: typeBreakdown,
+                        _typeBreakdown: typeBreakdown, _typeBreakdownSec: typeBreakdownSec, _typeBreakdownAny: typeBreakdownAny,
+                        _actualN: actualN, _hasActual: actualData && actualData.n >= 20,
                         _salary: bls ? bls.salary : 'N/A',
                         _outlook: bls ? bls.outlook_text : 'N/A',
                         _desc: typeDescPlain[c.primary]
@@ -4454,26 +4529,38 @@
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
-                                        var ad = ACTUAL_CAREER_RIASEC[ds._career];
                                         lines.push(ds._n.toLocaleString() + ' students selected ' + ds._career);
-                                        lines.push('as a top career choice.');
                                         lines.push('');
-                                        if (ad && ad.n >= 20) {
-                                            lines.push('Student personality data (n=' + ad.n + '):');
-                                        } else {
-                                            lines.push('Estimated personality data:');
-                                        }
-                                        var sortedTypes = types.slice().sort(function(a, b) { return ds._typeBreakdown[b] - ds._typeBreakdown[a]; });
-                                        sortedTypes.forEach(function(t) {
-                                            var pct = ds._typeBreakdown[t];
-                                            if (pct > 0) {
-                                                var marker = (t === ds._primary) ? ' \u2605' : (t === ds._secondary) ? ' \u25C6' : '';
-                                                lines.push('  ' + t + ': ' + pct + '%' + marker);
-                                            }
+                                        // O*NET expected: primary type gets ~40%, secondary ~25%, others split rest
+                                        var onetExpected = {};
+                                        types.forEach(function(t) {
+                                            if (t === ds._primary) onetExpected[t] = 40;
+                                            else if (t === ds._secondary) onetExpected[t] = 25;
+                                            else onetExpected[t] = Math.round(35 / 4);
                                         });
-                                        lines.push('  \u2605 = O*NET primary  \u25C6 = secondary');
+                                        if (ds._hasActual) {
+                                            lines.push('              Actual  O*NET  Var');
+                                            var sortedTypes = types.slice().sort(function(a, b) { return ds._typeBreakdownAny[b] - ds._typeBreakdownAny[a]; });
+                                            sortedTypes.forEach(function(t) {
+                                                var actual = ds._typeBreakdownAny[t];
+                                                var onet = onetExpected[t];
+                                                var variance = actual - onet;
+                                                var varStr = (variance >= 0 ? '+' : '') + variance;
+                                                if (actual > 0) {
+                                                    // Pad for alignment
+                                                    var name = (t + '          ').substring(0, 14);
+                                                    lines.push(name + actual + '%   ' + onet + '%  ' + varStr);
+                                                }
+                                            });
+                                            lines.push('(n=' + ds._actualN + ' | "Any match" = primary or secondary)');
+                                        } else {
+                                            lines.push('Limited data (n=' + ds._actualN + ') — estimated');
+                                            types.slice().sort(function(a, b) { return ds._typeBreakdown[b] - ds._typeBreakdown[a]; }).forEach(function(t) {
+                                                if (ds._typeBreakdown[t] > 0) lines.push('  ' + t + ': ~' + ds._typeBreakdown[t] + '%');
+                                            });
+                                        }
                                         lines.push('');
-                                        lines.push('Career match: ' + ds._congruence.toFixed(1) + '% | Confidence: ' + ds._certainty.toFixed(2) + '/5');
+                                        lines.push('Match: ' + ds._congruence.toFixed(1) + '% | Confidence: ' + ds._certainty.toFixed(2) + '/5');
                                         if (ds._salary !== 'N/A') {
                                             lines.push('Salary: ' + ds._salary + ' | ' + ds._outlook);
                                         }
@@ -4559,14 +4646,20 @@
 
                 var bls = BLS_CAREERS[selectedCareer];
                 var typeLetterMap2 = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
-                var drillPcts = {};
+                var drillPcts = {};       // "any match" % for bubble sizing
+                var drillPrimary = {};    // primary % for tooltip detail
+                var drillSecondary = {};  // secondary % for tooltip detail
                 types.forEach(function(t) {
+                    var k = typeLetterMap2[t];
                     if (hasActualData) {
-                        drillPcts[t] = Math.round(actualCareerData[typeLetterMap2[t]]);
+                        drillPcts[t] = Math.round(actualCareerData.any[k]);
+                        drillPrimary[t] = Math.round(actualCareerData.primary[k]);
+                        drillSecondary[t] = Math.round(actualCareerData.secondary[k]);
                     } else {
-                        // Fallback: use overall RIASEC distribution
                         var totalR = Object.values(DATA.riasec_themes).reduce(function(s,v){return s+v;},0);
                         drillPcts[t] = Math.round(DATA.riasec_themes[t] / totalR * 100);
+                        drillPrimary[t] = drillPcts[t];
+                        drillSecondary[t] = 0;
                     }
                 });
 
@@ -4590,7 +4683,8 @@
                         borderDash: isPrimary || isSecondary ? [] : [4, 3],
                         hoverBorderWidth: 3,
                         _type: type, _isPrimary: isPrimary, _isSecondary: isSecondary,
-                        _matchPct: derivedPct, _studentsInType: estimatedN,
+                        _matchPct: derivedPct, _primaryPct: drillPrimary[type], _secondaryPct: drillSecondary[type],
+                        _studentsInType: estimatedN,
                         _congruence: typeCong, _certainty: typeCert,
                         _congMoM: congMoM, _certMoM: certMoM,
                         _desc: typeDescPlain[type]
@@ -4619,26 +4713,23 @@
                                     afterBody: function(items) {
                                         var ds = items[0].dataset;
                                         var lines = [];
-                                        var src = hasActualData ? 'Actual student data' : 'Estimated';
-                                        lines.push(src + ': ' + ds._matchPct + '% of ' + selectedCareer);
-                                        lines.push('students identify as ' + ds.label + '.');
-                                        lines.push('That\'s ' + (hasActualData ? '' : '~') + ds._studentsInType.toLocaleString() + ' students.');
+                                        // O*NET expected for this specific type
+                                        var onetPct = ds._isPrimary ? 40 : ds._isSecondary ? 25 : 9;
+                                        var actualAny = ds._matchPct;
+                                        var variance = actualAny - onetPct;
+                                        var varStr = (variance >= 0 ? '+' : '') + variance + '%';
+                                        lines.push(ds.label + ' (' + ds._desc + ')');
                                         lines.push('');
-                                        if (ds._isPrimary) {
-                                            lines.push('\u2605 O*NET primary fit — this career');
-                                            lines.push('  best matches ' + ds.label + ' personality.');
-                                        } else if (ds._isSecondary) {
-                                            lines.push('\u25C6 O*NET secondary fit — strong');
-                                            lines.push('  alignment with ' + ds.label + ' traits.');
-                                        } else {
-                                            lines.push('Not a typical O*NET fit for this career.');
-                                        }
+                                        lines.push('         Actual  O*NET   Var');
+                                        lines.push('Any:     ' + actualAny + '%    ' + onetPct + '%   ' + varStr);
+                                        lines.push('Primary: ' + ds._primaryPct + '%');
+                                        lines.push('Second:  ' + ds._secondaryPct + '%');
                                         lines.push('');
-                                        lines.push(ds.label + ' type outcomes (all careers):');
-                                        lines.push('  Match rate: ' + ds._congruence.toFixed(1) + '%');
-                                        if (ds._congMoM !== 0) lines.push('    ' + (ds._congMoM >= 0 ? '\u25B2 +' : '\u25BC ') + Math.abs(ds._congMoM).toFixed(1) + 'pp MoM');
-                                        lines.push('  Confidence: ' + ds._certainty.toFixed(2) + '/5');
-                                        if (ds._certMoM !== 0) lines.push('    ' + (ds._certMoM >= 0 ? '\u25B2 +' : '\u25BC ') + Math.abs(ds._certMoM).toFixed(2) + ' MoM');
+                                        lines.push(ds._isPrimary ? '\u2605 O*NET primary fit for ' + selectedCareer : ds._isSecondary ? '\u25C6 O*NET secondary fit' : 'Not a typical O*NET fit');
+                                        lines.push('');
+                                        lines.push(ds.label + ' type outcomes:');
+                                        lines.push('  Match: ' + ds._congruence.toFixed(1) + '%' + (ds._congMoM !== 0 ? ' (' + (ds._congMoM >= 0 ? '+' : '') + ds._congMoM.toFixed(1) + 'pp MoM)' : ''));
+                                        lines.push('  Confidence: ' + ds._certainty.toFixed(2) + '/5' + (ds._certMoM !== 0 ? ' (' + (ds._certMoM >= 0 ? '+' : '') + ds._certMoM.toFixed(2) + ' MoM)' : ''));
                                         return lines;
                                     }
                                 }
