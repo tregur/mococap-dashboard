@@ -2411,7 +2411,7 @@
                     <div class="seg-pills" id="globalPivotPills">
                         <span class="seg-pill active" data-pivot="overall" onclick="switchGlobalPivot('overall', this)">Overall</span>
                         <span class="seg-pill" data-pivot="school" onclick="switchGlobalPivot('school', this)">By School</span>
-                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By Personality</span>
+                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By RIASEC Type</span>
                         <span class="seg-pill" data-pivot="grade" onclick="switchGlobalPivot('grade', this)">By Grade</span>
                         <span class="seg-pill" data-pivot="career" onclick="switchGlobalPivot('career', this)">By Career</span>
                     </div>
@@ -2431,12 +2431,12 @@
                         <div class="widget-grid" id="widgetGrid">
                             <div class="widget" id="widgetRiasecDonut">
                                 <div class="widget-header">
-                                    <span class="widget-title">Personality Themes (RIASEC)</span>
+                                    <span class="widget-title">Interest Themes (RIASEC)</span>
                                 </div>
                                 <div class="widget-body">
                                     <div class="widget-chart-wrap" style="height:200px;"><canvas id="riasecDonutCanvas"></canvas></div>
                                 </div>
-                                <div class="widget-footer" id="riasecDonutFooter">Distribution of student personality types</div>
+                                <div class="widget-footer" id="riasecDonutFooter">Distribution of student RIASEC types</div>
                             </div>
                             <div class="widget" id="widgetCongruenceTime">
                                 <div class="widget-header">
@@ -2446,7 +2446,7 @@
                                 <div class="widget-body">
                                     <div class="widget-chart-wrap" style="height:200px;"><canvas id="congruenceTimeCanvas"></canvas></div>
                                 </div>
-                                <div class="widget-footer" id="congruenceTimeFooter">Career-personality match and clarity trend, Aug–Dec</div>
+                                <div class="widget-footer" id="congruenceTimeFooter">Career-interest match and clarity trend, Aug–Dec</div>
                             </div>
                             <div class="widget" id="widgetEngagement">
                                 <div class="widget-header">
@@ -2494,7 +2494,7 @@
                                 <div id="categoryChips" style="display:none;"></div>
 
                                 <div class="bubble-chart-wrap" id="overviewScoresSection">
-                                    <div class="metric-detail" style="margin-bottom:0.5rem;">Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
+                                    <div class="metric-detail" style="margin-bottom:0.5rem;">Career-interest match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
                                     <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty by School</div>
                                     <div id="overviewScoresCanvasWrap" style="position:relative;height:680px;"><canvas id="overviewScoresCanvas"></canvas></div>
                                     <div id="overviewScoresTable"></div>
@@ -2502,9 +2502,9 @@
 
                                 <div class="bubble-chart-wrap" id="correlationSpotlight">
                                     <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
-                                        <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape</div>
+                                        <div class="bubble-chart-title" style="margin-bottom:0;">Career-Interest Landscape</div>
                                     </div>
-                                    <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see personality match. | SY 2025-26</div>
+                                    <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see interest match. | SY 2025-26</div>
                                     <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
                                         <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
                                     </div>
@@ -2581,22 +2581,22 @@
 
                     <div class="page" id="congruence">
                         <div class="section-narrative">
-                            <p><strong>Career-Personality Congruence (Holland Code Analysis):</strong> Using Holland's (1997) hexagonal model and O*NET 28.1 RIASEC mappings, <span class="clickable-metric" onclick="showModal('congruence')">85.1% of students</span> show High or Medium career-personality match. The breakdown: High Match (≥2 matching codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%.</p>
+                            <p><strong>Career-Interest Congruence (Holland Code Analysis):</strong> Using Holland's (1997) hexagonal model and O*NET 28.1 RIASEC mappings, <span class="clickable-metric" onclick="showModal('congruence')">85.1% of students</span> show High or Medium career-interest match. The breakdown: High Match (≥2 matching codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%.</p>
                             <p><strong>Key Insight — The Congruence Paradox:</strong> Students with "High" congruence actually report <em>lower</em> certainty (3.90) than "Medium" matches (4.03). This counterintuitive finding suggests that the most aligned students are also the most reflective — they understand career complexity rather than being naively certain.</p>
                             <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (2,962 students); O*NET 28.1 Database; Holland, J.L. (1997) Making vocational choices, 3rd ed.</div>
                         </div>
                         <div class="insight-box positive">
-                            <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest personality-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
+                            <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest interest-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
-                                <div class="chart-title">Career-Personality Match Distribution</div>
-                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC personality type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
+                                <div class="chart-title">Career-Interest Match Distribution</div>
+                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC RIASEC type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
                                 <div class="chart-container"><canvas id="congruenceDonutChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Congruence by RIASEC Type</div>
-                                <div class="metric-detail">Match percentage for each of the 6 Holland personality types: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-personality fit for that type. | SY 2025-26</div>
+                                <div class="metric-detail">Match percentage for each of the 6 Holland RIASEC types: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-interest fit for that type. | SY 2025-26</div>
                                 <div class="chart-container" style="height: auto; min-height: 400px;"><div id="riasecCongruenceBars"></div></div>
                             </div>
                         </div>
@@ -2612,7 +2612,7 @@
                         <div class="heatmap-container">
                             <div class="heatmap-title">RIASEC Congruence Heatmap: Types x Months</div>
                             <div class="insight-box" style="margin-bottom:1rem;">
-                                <strong>Why This Matters:</strong> Tracking how each personality type's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
+                                <strong>Why This Matters:</strong> Tracking how each RIASEC type's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
                             </div>
                             <table class="heatmap-table" id="heatmapRiasecMonths">
                                 <!-- Dynamically populated -->
@@ -2644,7 +2644,7 @@
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by RIASEC Type</div>
-                                <div class="metric-detail">Average career certainty (1-5 scale) for students of each Holland personality type. Compares how confident each personality group feels about their chosen career path. | SY 2025-26</div>
+                                <div class="metric-detail">Average career certainty (1-5 scale) for students of each Holland RIASEC type. Compares how confident each interest group feels about their chosen career path. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="certaintyByRiasecChart"></canvas></div>
                                 <div id="ic-certainty-riasec"></div>
                             </div>
@@ -2775,7 +2775,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">RIASEC Type Distribution (10,006 students)</div>
-                                <div class="metric-detail">Count of students identified with each Holland personality type: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
+                                <div class="metric-detail">Count of students identified with each Holland RIASEC type: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
                                 <div class="chart-container"><canvas id="riasecDistChart"></canvas></div>
                                 <div id="ic-riasec-distribution"></div>
                             </div>
@@ -2784,7 +2784,7 @@
                         <!-- October: Theme Depth Analysis -->
                         <div class="chart-card" style="margin-bottom:1rem;">
                             <div class="chart-title">RIASEC Theme Depth Distribution (October)</div>
-                            <div class="metric-detail">Number of personality types each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple personality types. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
+                            <div class="metric-detail">Number of RIASEC types each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple RIASEC types. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
                         </div>
                         <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
@@ -2818,7 +2818,7 @@
 
                     <div class="page" id="sectors">
                         <div class="section-narrative">
-                            <p><strong>Montgomery County Priority Sectors × RIASEC Crosswalk:</strong> Eight workforce sectors have been identified as priorities for Montgomery County economic development. Below, each sector is mapped to primary and secondary RIASEC types, enabling targeted career coaching that connects student personality profiles to local workforce demand.</p>
+                            <p><strong>Montgomery County Priority Sectors × RIASEC Crosswalk:</strong> Eight workforce sectors have been identified as priorities for Montgomery County economic development. Below, each sector is mapped to primary and secondary RIASEC types, enabling targeted career coaching that connects student interest profiles to local workforce demand.</p>
                         </div>
                         <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="priority-sector-card">
@@ -2992,8 +2992,8 @@
                                 <div class="expert-header" onclick="toggleExpert(this)">
                                     <div class="expert-avatar" style="background: rgba(245, 158, 11, 0.1);">⚖️</div>
                                     <div class="expert-info">
-                                        <div class="expert-name">Labor Market Analyst — Career-Personality Evaluator</div>
-                                        <div class="expert-role">Workforce alignment, career-personality fit, labor market demand</div>
+                                        <div class="expert-name">Labor Market Analyst — Career-Interest Evaluator</div>
+                                        <div class="expert-role">Workforce alignment, career-interest fit, labor market demand</div>
                                     </div>
                                     <span class="expert-toggle">▾</span>
                                 </div>
@@ -3003,7 +3003,7 @@
                                         <div class="expert-text">
                                             The top career selections reveal a critical market-aspiration mismatch. <span class="expert-metric">Athletes &amp; Sports Competitors (7.1%)</span> leads all career interests — yet BLS data shows only ~16,500 professional athlete positions exist nationally with a -3% growth outlook. Meanwhile, Montgomery County's actual priority sectors — Biosciences, IT/Cybersecurity, Hospitality — are underrepresented in student aspirations.
                                             <br><br>
-                                            Positively, <span class="expert-metric">Lawyers (4.0%)</span>, <span class="expert-metric">Physicians (3.7%)</span>, and <span class="expert-metric">Engineers (3.6%)</span> align well with high-demand, high-wage occupations. The RIASEC distribution shows Social (4,637) and Artistic (4,829) types dominating — both align with growing sectors (healthcare, creative economy) in the DC metro area. The <span class="expert-metric">85.1%</span> personality-career congruence rate is excellent from a workforce development standpoint — it means students are selecting careers that match their assessed aptitudes.
+                                            Positively, <span class="expert-metric">Lawyers (4.0%)</span>, <span class="expert-metric">Physicians (3.7%)</span>, and <span class="expert-metric">Engineers (3.6%)</span> align well with high-demand, high-wage occupations. The RIASEC distribution shows Social (4,637) and Artistic (4,829) types dominating — both align with growing sectors (healthcare, creative economy) in the DC metro area. The <span class="expert-metric">85.1%</span> interest-career congruence rate is excellent from a workforce development standpoint — it means students are selecting careers that match their assessed aptitudes.
                                         </div>
                                     </div>
                                     <div class="expert-section">
@@ -3015,7 +3015,7 @@
                                     <div class="expert-section">
                                         <div class="expert-section-title blue">→ Recommendations</div>
                                         <div class="expert-text">
-                                            1) Create a "Career Reality Check" module that pairs aspiration data with BLS occupational outlook and local demand data. 2) Map each MoCo Priority Sector to primary RIASEC codes and identify which student personality types are natural fits. 3) Develop "career adjacent" suggestions — e.g., students interested in athletics could explore sports medicine (Investigative), sports management (Enterprising), or kinesiology (Realistic). 4) Partner with Montgomery County Economic Development to feature local employers and internship pipelines. 5) Add wage/demand data alongside career exploration results so students see labor market realities early.
+                                            1) Create a "Career Reality Check" module that pairs aspiration data with BLS occupational outlook and local demand data. 2) Map each MoCo Priority Sector to primary RIASEC codes and identify which student RIASEC types are natural fits. 3) Develop "career adjacent" suggestions — e.g., students interested in athletics could explore sports medicine (Investigative), sports management (Enterprising), or kinesiology (Realistic). 4) Partner with Montgomery County Economic Development to feature local employers and internship pipelines. 5) Add wage/demand data alongside career exploration results so students see labor market realities early.
                                         </div>
                                     </div>
                                     <div class="expert-rating">
@@ -3041,13 +3041,13 @@
                                         <div class="expert-text">
                                             Cross-referencing this program's data against Holland's (1997) hexagonal model and O*NET 28.1 database reveals strong construct validity. The RIASEC distribution — <span class="expert-metric">R: 5,011 | A: 4,829 | S: 4,637 | I: 3,811 | E: 3,050 | C: 2,357</span> — closely mirrors national adolescent norms where Realistic and Artistic types typically lead. The Conventional type's lower representation (9.9%) is consistent with developmental psychology — abstract organizational interests emerge later in career maturity.
                                             <br><br>
-                                            The <span class="expert-metric">85.1%</span> congruence rate (High + Medium match) exceeds typical benchmarks. Meta-analytic data (Nye et al., 2012) suggests average interest-occupation congruence in adult populations hovers around 40-60%. The elevated rate here likely reflects the program's use of O*NET-SOC mappings at the interest exploration stage rather than actual job placement — students are being matched to career INTERESTS that fit their personality, not to jobs. This is methodologically appropriate for this age group.
+                                            The <span class="expert-metric">85.1%</span> congruence rate (High + Medium match) exceeds typical benchmarks. Meta-analytic data (Nye et al., 2012) suggests average interest-occupation congruence in adult populations hovers around 40-60%. The elevated rate here likely reflects the program's use of O*NET-SOC mappings at the interest exploration stage rather than actual job placement — students are being matched to career INTERESTS that fit their interests, not to jobs. This is methodologically appropriate for this age group.
                                         </div>
                                     </div>
                                     <div class="expert-section">
                                         <div class="expert-section-title amber">⚡ Hexagonal Analysis</div>
                                         <div class="expert-text">
-                                            The congruence-by-type breakdown reveals an expected pattern: <span class="expert-metric">Investigative (88.1%)</span> leads because I-type careers (STEM, research) have clearest personality-occupation alignment in O*NET. <span class="expert-metric">Conventional (78.9%)</span> lags because C-type adolescents often haven't encountered careers that match their organizational strengths. The 9.2pp spread across types is within normal hexagonal model predictions — adjacent types on Holland's hexagon (e.g., R-I, A-S) show naturally higher congruence due to shared trait space.
+                                            The congruence-by-type breakdown reveals an expected pattern: <span class="expert-metric">Investigative (88.1%)</span> leads because I-type careers (STEM, research) have clearest interest-occupation alignment in O*NET. <span class="expert-metric">Conventional (78.9%)</span> lags because C-type adolescents often haven't encountered careers that match their organizational strengths. The 9.2pp spread across types is within normal hexagonal model predictions — adjacent types on Holland's hexagon (e.g., R-I, A-S) show naturally higher congruence due to shared trait space.
                                             <br><br>
                                             A notable finding: Certainty correlates positively with congruence for most types EXCEPT High Match (3.90) underperforming Medium Match (4.03). This "congruence paradox" — where the best-matched students aren't the most certain — may reflect that highly congruent students have more refined awareness of career complexity, leading to measured rather than inflated certainty.
                                         </div>
@@ -3149,8 +3149,8 @@
                                     <div style="text-align:center;padding:1rem;background:var(--surface);border-radius:8px;"><div style="font-size:24px;font-weight:700;color:var(--g);">40.9%</div><div style="font-size:11px;color:var(--t3);">3+ themes</div></div>
                                 </div>
                                 <div class="insight-box alert" style="margin-top:1rem;">
-                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more personality types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
-                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland personality-career model</div>
+                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more RIASEC types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
+                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland interest-career model</div>
                                 </div>
                             </div>
 
@@ -3161,7 +3161,7 @@
                                     <canvas id="ctePathwayChart" height="200"></canvas>
                                 </div>
                                 <div class="insight-box positive" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their personality type.</em>
+                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their RIASEC type.</em>
                                 </div>
                             </div>
 
@@ -3262,7 +3262,7 @@
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
                                     <p><strong>Sessions YTD (49,467):</strong> Count of all unique student interactions through MoCo CAP platform, July-December 2025.</p>
                                     <p><strong>Unique Students (47,163):</strong> De-duplicated student IDs. Est. 68% reach of MCPS high school population.</p>
-                                    <p><strong>Congruence Rate (85.1%):</strong> Percentage of students with High or Medium career-personality match using Holland Code and O*NET-SOC mappings.</p>
+                                    <p><strong>Congruence Rate (85.1%):</strong> Percentage of students with High or Medium career-interest match using Holland Code and O*NET-SOC mappings.</p>
                                     <p><strong>Clear Career Plan (22.1%):</strong> Percentage of survey respondents reporting clear understanding of career direction (10,006 students).</p>
                                     <p><strong>Helpful Rating (3.68/5):</strong> Average Likert scale response to 'How helpful was this program?'</p>
                                     <p><strong>Average Certainty (3.87/5):</strong> Mean response to 'How certain are you about your career?'</p>
@@ -3283,7 +3283,7 @@
                                     <p>Holland, J. L. (1997). Making vocational choices (3rd ed.). Psychological Assessment Resources.</p>
                                     <p>O*NET 28.1 Database. (2023). National Center for O*NET Development.</p>
                                     <p>MCPS Public Data. (2023). Enrollment, FARMS rates, and graduation statistics.</p>
-                                    <p>MoCo CAP Enriched Dataset. (2025). Platform session logs with student personality and career interest mappings.</p>
+                                    <p>MoCo CAP Enriched Dataset. (2025). Platform session logs with student interest and career selection mappings.</p>
                                 </div>
                             </div>
                         </div>
@@ -3853,7 +3853,7 @@
         }
 
         // ===== Insight Card Builder =====
-        const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Personality',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
+        const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Interests',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
         const SEV_LABELS = {positive:'Positive',negative:'Concern',neutral:'Watchlist',info:'Info'};
 
         function buildInsightCard(cfg) {
@@ -4146,7 +4146,7 @@
 
             // Impact weights: congruence/certainty changes weigh more since they're program priorities
             var IMPACT_WEIGHTS = {
-                'Congruence': 3.0,  // Career-personality match is the primary metric
+                'Congruence': 3.0,  // Career-interest match is the primary metric
                 'Career Certainty': 2.5,  // Confidence is a key outcome
                 'Clear Plan %': 2.0,  // Career clarity tracks program effectiveness
                 'Sessions': 1.0  // Volume matters but less than outcomes
@@ -4155,8 +4155,8 @@
             // Next step generators keyed by metric and direction
             function getNextStep(metric, delta, curr, month) {
                 if (metric === 'Congruence') {
-                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their personality type. Focus on the ' + (DATA.congruence.dist['No Match'] || 0).toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
-                    return 'Congruence dipped in ' + month + '. Review which personality types are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
+                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their RIASEC type. Focus on the ' + (DATA.congruence.dist['No Match'] || 0).toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
+                    return 'Congruence dipped in ' + month + '. Review which RIASEC types are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
                 }
                 if (metric === 'Career Certainty') {
                     if (delta >= 0) return 'Certainty is rising — the program is building student confidence. Keep sessions focused on helping students discover and confirm their direction.';
@@ -4430,7 +4430,7 @@
                 if (DATA.congruence.match_rate > 80) {
                     wins.push(buildInsightCard({
                         id: 'win-congruence', category: 'personality', severity: 'positive',
-                        title: DATA.congruence.match_rate + '% of students matched to careers that fit their personality',
+                        title: DATA.congruence.match_rate + '% of students matched to careers that fit their interests',
                         value: DATA.congruence.match_rate + '%',
                         detail: 'Students are being guided toward careers that align with who they are. This strong match rate across ' + schoolCount + ' schools shows the coaching process is working.'
                     }));
@@ -4478,7 +4478,7 @@
                     value: DATA.future_thinking['Some Idea'].toLocaleString() + ' students',
                     detail: DATA.future_thinking['Some Idea'].toLocaleString() + ' students have "some idea" about their career but haven\'t committed to a direction yet. They\'re closest to clarity.',
                     soWhat: 'CTE exposure is the single most powerful way to move students from "exploring" to "I have a plan." These students just need a nudge.',
-                    nextStep: 'In your next sessions with these students, walk through 2-3 CTE pathways that match their personality type. Ask them to pick one to research further.',
+                    nextStep: 'In your next sessions with these students, walk through 2-3 CTE pathways that match their RIASEC type. Ask them to pick one to research further.',
                     sources: [{label: 'Oct 2025 Analysis', action: 'page:sources'}]
                 }));
 
@@ -4687,7 +4687,7 @@
                 const clarityIcon = parseFloat(clarityDelta) >= 0 ? '▲' : '▼';
                 const clarityColor = parseFloat(clarityDelta) >= 0 ? '#1e40af' : '#dc2626';
 
-                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-personality match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
+                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-interest match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
                 '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" group (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) is the highest-impact group to focus on — these students are closest to having a clear plan.</p>' +
                 '<p><strong>So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year). The top 3 actions to accelerate impact: <strong>(1)</strong> Show the "Some Idea" group CTE career pathways — this is the single most powerful way to move students toward clarity, <strong>(2)</strong> End every session with specific, written next steps the student owns, <strong>(3)</strong> Connect students with mentors (70.6% want follow-up support).</p>' +
                 '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Oct 2025 Analysis (' + OCTOBER_FULL.n_sample.toLocaleString() + ' students surveyed, ' + OCTOBER_FULL.n_full_year.toLocaleString() + ' total served)</div>';
@@ -4698,7 +4698,7 @@
             if (highlightsEl) {
                 let cards = '';
                 if (DATA.congruence.match_rate > 80) {
-                    cards += buildInsightCard({ id:'hl-congruence-rate', category:'personality', severity:'positive', title:'Career-Personality Congruence Rate exceeds threshold', value: DATA.congruence.match_rate + '%', detail:'Validates Holland Code matching methodology across ' + schoolCount + ' schools.', sources:[{label:'O*NET 28.1',action:'modal:congruence'},{label:'Methodology',action:'page:sources'}] });
+                    cards += buildInsightCard({ id:'hl-congruence-rate', category:'personality', severity:'positive', title:'Career-Interest Congruence Rate exceeds threshold', value: DATA.congruence.match_rate + '%', detail:'Validates Holland Code matching methodology across ' + schoolCount + ' schools.', sources:[{label:'O*NET 28.1',action:'modal:congruence'},{label:'Methodology',action:'page:sources'}] });
                 }
                 cards += buildInsightCard({ id:'hl-students-reached', category:'engagement', severity:'positive', title:'Students Reached YTD', value: (totalStudents/1000).toFixed(1) + 'K', detail: totalSessions.toLocaleString() + ' sessions across ' + schoolCount + ' schools.', sources:[{label:'Score Card '+latestMonth+' 2025',action:'page:sources'}] });
                 if (latest.pct_clear < 30) {
@@ -4722,7 +4722,7 @@
 
                 kpisEl.innerHTML =
                     '<div class="kpi-card"><div class="kpi-label">Students Reached</div><div class="kpi-value">' + (totalStudents/1000).toFixed(1) + 'K</div><div class="kpi-subtext">YTD 2025-26 ' + kpiIcon(totalStudents, 30000, 40000) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Personality Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Interest Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Clear Plan %</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'clear_plan\')">' + latest.pct_clear + '%</span></div><div class="kpi-subtext">Career Clarity ' + kpiIcon(latest.pct_clear, 15, 25) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Avg Certainty</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'certainty\')">' + avgCertainty + '/5</span></div><div class="kpi-subtext">Career Confidence ' + kpiIcon(parseFloat(avgCertainty), 3.5, 4.0) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Schools</div><div class="kpi-value">' + schoolCount + '</div><div class="kpi-subtext">Participating</div></div>' +
@@ -4813,7 +4813,7 @@
                 { id:'corr-dosage-certainty', cat:'engagement', sev:'positive', label:'More Sessions = More Certainty', value:'Strong connection', explain:'Students who attend more sessions become more certain about their career direction. Schools averaging 7+ sessions per student see certainty scores of 4.12 out of 5, compared to just 3.62 for schools with only 2-3 sessions. Based on 1,537 students across all schools.', source:'MoCo CAP dosage analysis' },
                 { id:'corr-cte-engagement', cat:'career', sev:'positive', label:'CTE Exposure Prevents Disengagement', value:'HIGHEST PRIORITY', explain:'Showing students CTE career pathways is the single most powerful way to keep them engaged. However, 28% of students haven\'t explored any CTE options yet — they are the highest-risk group for checking out. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
                 { id:'corr-helpful-certainty', cat:'program', sev:'positive', label:'Helpful Sessions Build Certainty', value:'HIGH PRIORITY', explain:'When students find sessions genuinely helpful, they become more certain about their career path — and more certain students rate future sessions even higher. This creates a positive cycle. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
-                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Many Interests Can Lower Clarity', value:'WATCH', explain:'Students who identify with 3 or more personality types (40.9% of students) tend to have lower career clarity. Having "too many possible selves" makes it hard to commit to a direction. These students need guided narrowing activities.', source:'Oct 2025 student survey' },
+                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Many Interests Can Lower Clarity', value:'WATCH', explain:'Students who identify with 3 or more RIASEC types (40.9% of students) tend to have lower career clarity. Having "too many possible selves" makes it hard to commit to a direction. These students need guided narrowing activities.', source:'Oct 2025 student survey' },
                 { id:'corr-farms-gap', cat:'equity', sev:'neutral', label:'Economic Disadvantage Creates Barriers', value:'Equity gap: -0.31 pts', explain:'Schools with higher rates of students receiving free/reduced meals (FARMS > 40%) average 0.31 points lower on career certainty, even when they get more sessions. Economic disadvantage creates additional barriers that sessions alone can\'t fully overcome.', source:'MCPS equity analysis' }
             ];
 
@@ -4890,7 +4890,7 @@
 
             // === VIEW: By Type (default) ===
             if (isTypeView) {
-                if (descEl) descEl.textContent = 'Each bubble is a personality type. X = how well careers match that type. Y = how confident those students feel. | SY 2025-26';
+                if (descEl) descEl.textContent = 'Each bubble is a RIASEC type. X = how well careers match that type. Y = how confident those students feel. | SY 2025-26';
 
                 var datasets = types.map(function(type, i) {
                     var n = DATA.riasec_themes[type] || nData[type][useMonth];
@@ -4976,7 +4976,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.3, max: 4.3, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -5009,7 +5009,7 @@
                 var gap = highCong - congruenceData[lowCertType][useMonth];
                 renderWidgetInsight('correlationSpotlight', {
                     trend: lowCertMoM < 0 ? 'down' : 'up',
-                    soWhat: highType + ' students (' + typeDescPlain[highType] + ') have the strongest career match at ' + highCong.toFixed(1) + '%. ' + lowCertType + ' students (' + typeDescPlain[lowCertType] + ') report the lowest confidence at ' + lowCert.toFixed(2) + '/5' + (lowCertMoM < 0 ? ', down ' + Math.abs(lowCertMoM).toFixed(2) + ' from last month' : '') + '. There\'s a ' + gap.toFixed(1) + 'pp gap in career match between the highest and lowest personality types.',
+                    soWhat: highType + ' students (' + typeDescPlain[highType] + ') have the strongest career match at ' + highCong.toFixed(1) + '%. ' + lowCertType + ' students (' + typeDescPlain[lowCertType] + ') report the lowest confidence at ' + lowCert.toFixed(2) + '/5' + (lowCertMoM < 0 ? ', down ' + Math.abs(lowCertMoM).toFixed(2) + ' from last month' : '') + '. There\'s a ' + gap.toFixed(1) + 'pp gap in career match between the highest and lowest RIASEC types.',
                     action: 'Focus career exploration activities on ' + lowCertType + ' students — they have interest but aren\'t confident in their path. Pair them with mentors in ' + lowCertType + '-aligned careers like ' + (Object.keys(CAREER_RIASEC_MAP).filter(function(c) { return CAREER_RIASEC_MAP[c].primary === lowCertType; })[0] || 'related fields') + '.'
                 });
                 return;
@@ -5017,7 +5017,7 @@
 
             // === VIEW: By Career (Bundled by RIASEC type) ===
             if (isCareerView) {
-                if (descEl) descEl.textContent = 'Careers bundled by RIASEC personality type. Click a bundle to highlight careers in table below. | SY 2025-26';
+                if (descEl) descEl.textContent = 'Careers bundled by RIASEC RIASEC type. Click a bundle to highlight careers in table below. | SY 2025-26';
 
                 var careerNames = Object.keys(CAREER_RIASEC_MAP);
                 // Group careers by RIASEC type
@@ -5152,7 +5152,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 76, max: 92, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 76, max: 92, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.5, max: 4.2, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -5284,7 +5284,7 @@
                 }
                 var actualCareerData = ACTUAL_CAREER_RIASEC[selectedCareer];
                 var hasActualData = actualCareerData && actualCareerData.n >= 20;
-                if (descEl) descEl.textContent = selectedCareer + ': ' + (hasActualData ? 'Actual MoCo student personality data (n=' + actualCareerData.n + ')' : 'Estimated personality breakdown') + '. Bubble size = % of students with each type. \u2605 = O*NET career fit.';
+                if (descEl) descEl.textContent = selectedCareer + ': ' + (hasActualData ? 'Actual MoCo student interest data (n=' + actualCareerData.n + ')' : 'Estimated interest breakdown') + '. Bubble size = % of students with each type. \u2605 = O*NET career fit.';
 
                 var bls = BLS_CAREERS[selectedCareer];
                 var typeLetterMap2 = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
@@ -5378,7 +5378,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.3, max: 4.3, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -5415,12 +5415,12 @@
                 renderWidgetInsight('correlationSpotlight', {
                     trend: primaryCertMoM >= 0 ? 'up' : 'down',
                     soWhat: (hasActualData ? 'Actual data (n=' + actualCareerData.n + '): ' : '') + primaryPct3 + '% of ' + selectedCareer + ' students identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ')' + (matchesOnet ? ', matching the O*NET expected profile.' : '. However, the most common type is actually ' + topActualType + ' (' + drillPcts[topActualType] + '%), which differs from the O*NET expected ' + careerData.primary + ' profile.') + ' Career congruence: ' + careerData.congruence.toFixed(1) + '%.' + (bls ? ' Salary: ' + bls.salary + '.' : ''),
-                    action: matchesOnet ? 'Strong alignment — students\' personalities match career expectations. Focus on building confidence and practical experience.' : 'Personality-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
+                    action: matchesOnet ? 'Strong alignment — students\' personalities match career expectations. Focus on building confidence and practical experience.' : 'Interest-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
                 });
                 return;
             }
 
-            // === VIEW: Type Deep-Dive (careers chosen by one personality type) ===
+            // === VIEW: Type Deep-Dive (careers chosen by one RIASEC type) ===
             if (isTypeDrill) {
                 var selectedType = bubbleChartView.substring(10);
                 var typeColor = typeColors[selectedType];
@@ -5819,7 +5819,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 74, max: 93, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 74, max: 93, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.5, max: 4.2, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -5896,7 +5896,7 @@
                 ptHtml += '<span><span style="color:#22c55e;">\u2713</span> Strong (at/above avg)</span>';
                 ptHtml += '</div>';
                 ptHtml += '<div style="margin-top:0.5rem;padding:0.6rem;background:var(--surface);border-radius:8px;border-left:3px solid #f97316;font-size:11px;color:var(--t2);line-height:1.5;">';
-                ptHtml += '<strong>How priority areas are scored:</strong> Each sector maps to a primary RIASEC type. Match % = congruence between students\' personality and the sector\'s O*NET classification (Aug\u2013Dec monthly data). Gap = distance from district avg (' + avgCongAll.toFixed(1) + '%). Growth = semester trajectory. Sectors with large gaps but positive growth = highest-ROI intervention targets.';
+                ptHtml += '<strong>How priority areas are scored:</strong> Each sector maps to a primary RIASEC type. Match % = congruence between students\' interests and the sector\'s O*NET classification (Aug\u2013Dec monthly data). Gap = distance from district avg (' + avgCongAll.toFixed(1) + '%). Growth = semester trajectory. Sectors with large gaps but positive growth = highest-ROI intervention targets.';
                 ptHtml += '</div>';
                 prTable.innerHTML = ptHtml;
 
@@ -6033,14 +6033,14 @@
 
         function initStaticInsightCards() {
             var cards = [
-                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'Students with the strongest career-personality match (3.90 certainty) are slightly less certain than medium-match students (4.03). This is actually healthy — deeply aligned students understand how complex careers really are, rather than being overconfident.', soWhat:'Don\'t worry if high-match students seem slightly less certain. This shows mature career thinking.', nextStep:'Focus attention on the 14.9% with No Match — they need 1-on-1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'2,962 students analyzed',action:'modal:congruence'}] }},
-                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Is Growing', detail:'Clarity grew from 18.2% to 22.1% — steady progress. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the best group to focus on — they\'re closest to having a clear plan.', soWhat:'The "Some Idea" students are your highest-leverage group. They just need a nudge.', nextStep:'Show these students CTE career pathways — this is the single most powerful way to move them from "Some Idea" to "Clear Plan." Focus on matching pathways to their personality type.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Oct Analysis',action:'modal:clear_plan'}] }},
-                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty Varies by Personality Type', detail:'Investigative-type students (3.97 out of 5) feel most certain about their careers. Conventional-type students (3.71) feel least certain — a 0.26 point gap. Conventional students may not see themselves in traditional "organized/structured" careers.', soWhat:'Conventional-type students need exposure to modern careers that match their strengths.', nextStep:'Showcase careers like data analytics, UX research, and project management to Conventional-type students — these roles offer strong salary and growth.', sources:[{label:'Career-Personality Data',action:'page:sources'}] }},
+                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'Students with the strongest career-interest match (3.90 certainty) are slightly less certain than medium-match students (4.03). This is actually healthy — deeply aligned students understand how complex careers really are, rather than being overconfident.', soWhat:'Don\'t worry if high-match students seem slightly less certain. This shows mature career thinking.', nextStep:'Focus attention on the 14.9% with No Match — they need 1-on-1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Career-Interest Research',action:'page:sources'},{label:'2,962 students analyzed',action:'modal:congruence'}] }},
+                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Is Growing', detail:'Clarity grew from 18.2% to 22.1% — steady progress. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the best group to focus on — they\'re closest to having a clear plan.', soWhat:'The "Some Idea" students are your highest-leverage group. They just need a nudge.', nextStep:'Show these students CTE career pathways — this is the single most powerful way to move them from "Some Idea" to "Clear Plan." Focus on matching pathways to their RIASEC type.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Oct Analysis',action:'modal:clear_plan'}] }},
+                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty Varies by RIASEC Type', detail:'Investigative-type students (3.97 out of 5) feel most certain about their careers. Conventional-type students (3.71) feel least certain — a 0.26 point gap. Conventional students may not see themselves in traditional "organized/structured" careers.', soWhat:'Conventional-type students need exposure to modern careers that match their strengths.', nextStep:'Showcase careers like data analytics, UX research, and project management to Conventional-type students — these roles offer strong salary and growth.', sources:[{label:'Career-Interest Data',action:'page:sources'}] }},
                 { el:'ic-dosage-response', cfg:{ id:'ac-dosage-response', category:'engagement', severity:'positive', title:'More Sessions = More Certainty', detail:'Each additional session adds measurable career certainty. Students with 7+ sessions average 4.12 out of 5 on certainty vs. 3.62 for students with only 2-3 sessions — that\'s a 14% improvement. Based on 1,537 students with 2+ sessions.', soWhat:'Session count matters. Aim for 6+ sessions per student, especially at schools with the lowest certainty.', nextStep:'Prioritize Watkins Mill HS (3.81 sessions/student, 3.64 certainty) and Paint Branch HS (5.46 sessions/student, 3.70 certainty) for quality improvement.', sources:[{label:'Dosage analysis, 1,537 students',action:'modal:dosage'}] }},
                 { el:'ic-graduation-rates', cfg:{ id:'ac-graduation-rates', category:'school', severity:'negative', title:'Low Graduation Schools Need More Support', detail:'Schools with lower graduation rates (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be an early indicator of academic persistence.', soWhat:'These schools need more intensive career coaching. Increased clarity may help keep students on track to graduate.', nextStep:'Increase session frequency at schools below 85% graduation rate. Track whether improved career clarity correlates with better graduation outcomes over time.', sources:[{label:'MCPS Public Data',action:'page:sources'}] }},
                 { el:'ic-coach-performance', cfg:{ id:'ac-coach-performance', category:'program', severity:'info', title:'Coach Quality Varies — Learn from the Best', detail:'Volume and quality don\'t always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms other high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.', soWhat:'Study what top coaches do differently. Their methods should be shared across the team.', nextStep:'Pair coaches with the lowest certainty scores with mentors. Set minimum quality benchmarks alongside session volume targets.', sources:[{label:'Coach performance data',action:'page:sources'}] }},
                 { el:'ic-yoy-growth', cfg:{ id:'ac-yoy-growth', category:'program', severity:'neutral', title:'3x Growth — Watch Quality Closely', detail:'The program has grown 3x year-over-year, which validates the scaling strategy. But rapid growth can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.', soWhat:'Keep monitoring how helpful students find sessions as the program grows.', nextStep:'Set a quality floor: if helpfulness drops below 3.50 out of 5 at any school, pause expansion there and invest in coach training first.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'}] }},
-                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'Personality Type Distribution', detail:'Realistic (21.2%) and Artistic (20.4%) types are most common. Conventional (9.9%) is underrepresented, which is normal for this age group. 40.9% of October students identified with 3+ personality types, which makes narrowing harder.', soWhat:'Students with many interests (40.9%) need structured decision-making help, not just more exploration.', nextStep:'For Conventional-type students, showcase careers like data analytics, UX research, and project management. For multi-interest students, use values exercises to help them prioritize.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'Oct 2025 Analysis',action:'page:sources'}] }}
+                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'RIASEC Type Distribution', detail:'Realistic (21.2%) and Artistic (20.4%) types are most common. Conventional (9.9%) is underrepresented, which is normal for this age group. 40.9% of October students identified with 3+ RIASEC types, which makes narrowing harder.', soWhat:'Students with many interests (40.9%) need structured decision-making help, not just more exploration.', nextStep:'For Conventional-type students, showcase careers like data analytics, UX research, and project management. For multi-interest students, use values exercises to help them prioritize.', sources:[{label:'Career-Interest Research',action:'page:sources'},{label:'Oct 2025 Analysis',action:'page:sources'}] }}
             ];
             cards.forEach(function(c) {
                 var el = document.getElementById(c.el);
@@ -6149,11 +6149,11 @@
                 var descEl = titleEl.querySelector('.metric-detail');
                 var titleTextEl = titleEl.querySelector('.bubble-chart-title');
                 if (seg === 'overall') {
-                    if (descEl) descEl.textContent = 'Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
+                    if (descEl) descEl.textContent = 'Career-interest match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by School';
                 } else if (seg === 'personality') {
-                    if (descEl) descEl.textContent = 'Monthly congruence stacked by RIASEC personality type with certainty overlay. Each bar = one type\'s career-personality match %. | SY 2025-26';
-                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Personality Type';
+                    if (descEl) descEl.textContent = 'Monthly congruence stacked by RIASEC RIASEC type with certainty overlay. Each bar = one type\'s career-interest match %. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by RIASEC Type';
                 } else if (seg === 'grade') {
                     if (descEl) descEl.textContent = 'Monthly enrollment distribution by grade level with certainty overlay. Track how grade composition shifts affect program metrics. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Grade Level';
@@ -6161,7 +6161,7 @@
                     if (descEl) descEl.textContent = 'Top career selections stacked monthly with certainty overlay. Track career preference shifts and alignment with BLS outlook. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Career Choice';
                 } else {
-                    if (descEl) descEl.textContent = 'Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
+                    if (descEl) descEl.textContent = 'Monthly congruence (career-interest match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty Trends';
                 }
             }
@@ -6446,7 +6446,7 @@
                             lines.push('Match: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲+' : '▼') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
                             lines.push('Confidence: ' + cert.toFixed(2) + '/5' + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲+' : '▼') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
                             lines.push('');
-                            lines.push('── By Personality Type ──');
+                            lines.push('── By RIASEC Type ──');
                             types.forEach(function(t) {
                                 var typeCong = HEATMAP_DATA.riasec_monthly[t][m] || 0;
                                 var typeCert = HEATMAP_DATA.riasec_certainty_monthly[t][m] || 0;
@@ -6778,7 +6778,7 @@
             html += '</div>';
             html += '<div style="margin-top:0.75rem;padding:0.75rem;background:var(--surface);border-radius:8px;border-left:3px solid #2563eb;font-size:11px;color:var(--t2);line-height:1.5;">';
             html += '<strong>How these metrics are calculated:</strong><br>';
-            html += '<strong>Career Match %</strong> = Congruence between student RIASEC personality type and their chosen career\'s O*NET classification. Derived from school-level certainty and HS/MS level adjustments against the district average (' + avgCong.toFixed(1) + '%).<br>';
+            html += '<strong>Career Match %</strong> = Congruence between student RIASEC RIASEC type and their chosen career\'s O*NET classification. Derived from school-level certainty and HS/MS level adjustments against the district average (' + avgCong.toFixed(1) + '%).<br>';
             html += '<strong>Confidence</strong> = Self-reported career certainty (1-5 scale) from student surveys. Direct survey response, avg across all respondents at each school.<br>';
             html += '<strong>Clear Plan %</strong> = % of surveyed students who report having a clear career plan. Direct survey response.<br>';
             html += '<strong>Priority</strong> = Schools below the district average on all 3 metrics are flagged \u26A0. Schools below on 2 of 3 are flagged \u25B3. Deltas show distance from district average.';
@@ -6819,7 +6819,7 @@
                 };
             });
             rows.sort(function(a,b) { return a.match - b.match; }); // lowest match first
-            var html = '<table class="mom-table"><thead><tr><th></th><th>Personality Type</th><th>Career Match</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>MoM</th><th>Students (Dec)</th><th>Top Careers</th></tr></thead><tbody>';
+            var html = '<table class="mom-table"><thead><tr><th></th><th>RIASEC Type</th><th>Career Match</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>MoM</th><th>Students (Dec)</th><th>Top Careers</th></tr></thead><tbody>';
             rows.forEach(function(r) {
                 var icon = r.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : r.status === 'watch' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
                 var rowBg = r.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : r.status === 'watch' ? ' style="background:rgba(249,115,22,0.04);"' : '';
@@ -7078,11 +7078,11 @@
             container.innerHTML =
                 '<div class="scorecard-row">' +
                     '<div class="scorecard-item">' +
-                        '<div class="scorecard-label">Career-Personality Match</div>' +
+                        '<div class="scorecard-label">Career-Interest Match</div>' +
                         '<div class="scorecard-value">' + congLast.toFixed(1) + '%</div>' +
                         '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + congChange + 'pp Aug→Dec</div>' +
                         '<div class="scorecard-sparkline">' + sparkline(congByMonth) + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Avg match between student RIASEC type and career O*NET code. Calculated from survey personality profiles vs career classifications.</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Avg match between student RIASEC type and career O*NET code. Calculated from survey interest profiles vs career classifications.</div>' +
                     '</div>' +
                     '<div class="scorecard-item">' +
                         '<div class="scorecard-label">Career Confidence</div>' +
@@ -7112,7 +7112,7 @@
                         (certPeaked ? 'Career confidence peaked at ' + Math.max.apply(null, certByMonth).toFixed(2) + ' in ' + certPeakMonth + ' and has dipped slightly — this may be seasonal (finals/winter break) but warrants monitoring. ' : '') +
                         'At the current pace of +' + monthlyGain + 'pp/month in career clarity, the program is on track to reach ' + clearTarget + '% by ' + (monthsToTarget !== 'N/A' && monthsToTarget <= 12 ? 'approximately ' + monthsToTarget + ' months from now' : 'mid-2026') + '.' +
                     '</div>' +
-                    '<div class="widget-insight-action"><em>Next step:</em> Focus on the 6,329 "Some Idea" students — they\'re closest to having a clear plan and represent the highest-leverage group. Show them CTE pathways matching their personality type.</div>' +
+                    '<div class="widget-insight-action"><em>Next step:</em> Focus on the 6,329 "Some Idea" students — they\'re closest to having a clear plan and represent the highest-leverage group. Show them CTE pathways matching their RIASEC type.</div>' +
                 '</div>';
         }
 
@@ -7149,7 +7149,7 @@
                     whatToDo: 'Introduce urban planning, architecture, and property management careers.'}
             ];
 
-            // Plain-English personality type descriptions
+            // Plain-English RIASEC type descriptions
             var typeDescriptions = {
                 'Realistic': 'Hands-on, practical',
                 'Investigative': 'Analytical, science-oriented',
@@ -7161,7 +7161,7 @@
 
             var html = '<div style="margin-bottom:0.75rem;">' +
                 '<span style="font-size:14px;font-weight:700;color:var(--t1);">MoCo Priority Sectors — How Students Align</span>' +
-                '<div style="font-size:11px;color:var(--t3);margin-top:2px;">How well do student interests match Montgomery County\'s priority economic sectors? Cards show career-personality fit and student confidence for each sector.</div>' +
+                '<div style="font-size:11px;color:var(--t3);margin-top:2px;">How well do student interests match Montgomery County\'s priority economic sectors? Cards show career-interest fit and student confidence for each sector.</div>' +
                 '</div>';
             html += '<div class="sector-grid">';
 
@@ -7265,9 +7265,9 @@
                 priority: 'MODERATE',
                 priorityColor: '#2563eb',
                 barColor: '#3b82f6',
-                title: 'Explore personality-career connections (RIASEC)',
-                plain: 'When students discover their RIASEC personality themes (e.g., Artistic, Social, Investigative), their overall engagement scores improve.',
-                counselorAction: 'Use RIASEC assessments early in the process. Help students connect their personality type to matching career fields.',
+                title: 'Explore interest-career connections (RIASEC)',
+                plain: 'When students discover their RIASEC interest themes (e.g., Artistic, Social, Investigative), their overall engagement scores improve.',
+                counselorAction: 'Use RIASEC assessments early in the process. Help students connect their RIASEC type to matching career fields.',
                 impact: 'Positive effect on overall engagement scores'
             },
             {
@@ -7310,7 +7310,7 @@
                 priorityColor: '#f59e0b',
                 barColor: '#f59e0b',
                 title: 'Too many interests can scatter focus',
-                plain: 'Students who identify with many personality types (3+) tend to have less focused career plans. Broad interests are normal but need guided narrowing.',
+                plain: 'Students who identify with many RIASEC types (3+) tend to have less focused career plans. Broad interests are normal but need guided narrowing.',
                 counselorAction: 'For students with 3+ RIASEC themes: help them find careers that blend their interests rather than picking just one. Example: "You\'re Artistic AND Social — consider art therapy or teaching."',
                 impact: 'Mild negative effect — more themes = less career focus'
             },
@@ -7321,7 +7321,7 @@
                 priorityColor: '#f59e0b',
                 barColor: '#f59e0b',
                 title: 'Multiple interests can lower clarity',
-                plain: 'Having many personality interests slightly reduces career clarity. Students with "too many possible selves" struggle to commit to a direction.',
+                plain: 'Having many broad interests slightly reduces career clarity. Students with "too many possible selves" struggle to commit to a direction.',
                 counselorAction: 'Use values clarification activities to help multi-interest students prioritize. Ask: "If you could only do one of these for 5 years, which would it be?"',
                 impact: 'Mild negative effect — too many options = less clarity'
             }
@@ -7556,7 +7556,7 @@
                 id: 'oct-multitheme-clarity', category: 'personality', severity: 'neutral',
                 title: 'Students with Many Interests Need Help Narrowing',
                 value: 'WATCH — 57.9% of students affected',
-                detail: '57.9% of October students identify with multiple personality types (2+ RIASEC themes). While having broad interests boosts engagement, it also makes it harder for students to commit to a clear career direction.',
+                detail: '57.9% of October students identify with multiple RIASEC types (2+ RIASEC themes). While having broad interests boosts engagement, it also makes it harder for students to commit to a clear career direction.',
                 soWhat: 'Having "too many possible selves" is developmentally normal — but these students need structured help narrowing down, not just more exploration.',
                 nextStep: 'Use values clarification activities: "If you could only do one of these for 5 years, which would it be?" Help students find careers that blend their interests.',
                 sources: [{label: 'RIASEC Analysis', action: 'page:riasec'}, {label: 'Oct Analysis', action: 'page:monthly-report'}]
@@ -7595,9 +7595,9 @@
             if (cardsEl && cardsEl.innerHTML.trim() === '') {
                 cardsEl.innerHTML = buildInsightCard({
                     id: 'oct-theme-concentration', category: 'personality', severity: 'neutral',
-                    title: 'More Personality Types = Less Career Focus',
+                    title: 'More RIASEC Types = Less Career Focus',
                     value: 'WATCH — 40.9% of students have 3+ types',
-                    detail: 'Students who identify with many RIASEC personality types tend to have the broadest but least focused career interests. Having 3 or more types (40.9% of students) makes it harder to narrow down a direction.',
+                    detail: 'Students who identify with many RIASEC RIASEC types tend to have the broadest but least focused career interests. Having 3 or more types (40.9% of students) makes it harder to narrow down a direction.',
                     soWhat: 'Broad interests are developmentally normal, especially for younger students. But without guided narrowing, these students struggle to make concrete career plans.',
                     nextStep: 'Help multi-type students find careers that blend their interests. Example: A student who is both Artistic AND Social might thrive in art therapy, teaching, or UX design.',
                     sources: [{label: 'Oct Analysis', action: 'page:monthly-report'}, {label: 'RIASEC Research', action: 'page:sources'}]
@@ -7606,7 +7606,7 @@
                     title: 'Zero-Theme Students Rising',
                     value: '+14.77pp YoY',
                     detail: '17.0% of October students identified zero RIASEC themes, up 14.77pp from last year. This correlates with the Grade 6 expansion — younger students are less differentiated.',
-                    soWhat: 'The younger cohort needs age-appropriate exploration activities before personality-career matching can be effective.',
+                    soWhat: 'The younger cohort needs age-appropriate exploration activities before interest-career matching can be effective.',
                     nextStep: 'Design "discovery" sessions for grades 6-7 focused on broad exposure, not narrowing.',
                     sources: [{label: 'Oct YoY', action: 'page:monthly-report'}, {label: 'RIASEC Page', action: 'page:riasec'}]
                 });
@@ -7713,7 +7713,7 @@
             var navItems = document.querySelectorAll('.nav-item');
             var pageMap = {overview:0, congruence:1, 'career-plan':2, 'program-perf':3, engagement:4, riasec:5, sectors:6, distribution:7, experts:8, 'monthly-report':9, schools:10, sources:11};
             if (pageMap[pageId] !== undefined && navItems[pageMap[pageId]]) navItems[pageMap[pageId]].classList.add('active');
-            const titles = {overview: 'Overview', congruence: 'Career-Personality Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
+            const titles = {overview: 'Overview', congruence: 'Career-Interest Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
             document.getElementById('pageTitle').textContent = titles[pageId] || 'Dashboard';
             document.getElementById('pageSubtitle').textContent = 'Career coaching program insights';
             // Reset month view when navigating to overview
@@ -7943,7 +7943,7 @@
             var total = dist['High']+dist['Medium']+dist['Low']+dist['No Match'];
             var noMatch = dist['No Match'];
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-personality match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-interest match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
         }
 
         function renderRiasecCongruenceBarsChart() {
@@ -8004,7 +8004,7 @@
             var topType = Object.keys(themes).reduce(function(a,b){return themes[a]>themes[b]?a:b;});
             var lowType = Object.keys(themes).reduce(function(a,b){return themes[a]<themes[b]?a:b;});
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented personality types.'});
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented RIASEC types.'});
         }
 
         function renderMonthlyTrendChart() {
@@ -8281,8 +8281,8 @@
 
         const MODAL_DATA = {
             congruence: {
-                title: "Career-Personality Fit Details",
-                metrics: [{label:"Metric",value:"Career-Personality Congruence"},{label:"Fit Rate",value:"85.1%"},{label:"Sample Size",value:"N = 2,962 student records"},{label:"Confidence",value:"HIGH (N ≥ 200)"}],
+                title: "Career-Interest Fit Details",
+                metrics: [{label:"Metric",value:"Career-Interest Congruence"},{label:"Fit Rate",value:"85.1%"},{label:"Sample Size",value:"N = 2,962 student records"},{label:"Confidence",value:"HIGH (N ≥ 200)"}],
                 methodology: "Student career selections matched to O*NET-SOC RIASEC profiles using Holland Code theory. High Match (≥2 codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%. The 85.1% represents High + Medium combined.",
                 source: "MoCo CAP Enriched Dataset; O*NET 28.1; Holland (1997)"
             },
