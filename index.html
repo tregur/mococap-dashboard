@@ -2129,6 +2129,438 @@
         .insight-age-1 { opacity: 0.85; }
         .insight-age-2 { opacity: 0.7; }
         .insight-age-3 { opacity: 0.55; }
+
+        /* ===== District Command Center ===== */
+        .command-center {
+            margin-bottom: 1.5rem;
+        }
+        .command-banner {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            color: white;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .command-banner-left { flex: 1; min-width: 200px; }
+        .command-banner-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .command-banner-sub {
+            font-size: 13px;
+            opacity: 0.85;
+        }
+        .command-banner-stats {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .command-stat {
+            text-align: center;
+            min-width: 80px;
+        }
+        .command-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .command-stat-label {
+            font-size: 11px;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .command-stat-delta {
+            font-size: 11px;
+            margin-top: 2px;
+        }
+        .command-stat-delta.up { color: #86efac; }
+        .command-stat-delta.down { color: #fca5a5; }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Attention Queue */
+        .attention-queue {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .attention-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .attention-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--t1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .attention-count {
+            background: #dc2626;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 1px 7px;
+            border-radius: 10px;
+        }
+        .attention-count.ok {
+            background: #059669;
+        }
+        .attention-list {
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .attention-item {
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .attention-item:hover { background: var(--surface); }
+        .attention-item:last-child { border-bottom: none; }
+        .attention-severity {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .attention-severity.critical { background: #dc2626; }
+        .attention-severity.warning { background: #f59e0b; }
+        .attention-severity.info { background: #3b82f6; }
+        .attention-info { flex: 1; }
+        .attention-school {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--t1);
+        }
+        .attention-reason {
+            font-size: 11px;
+            color: var(--t2);
+            margin-top: 1px;
+        }
+        .attention-metric {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--t3);
+            text-align: right;
+            min-width: 60px;
+        }
+
+        /* Board Talking Points */
+        .board-points {
+            background: var(--bg);
+            border: 1px solid var(--bdr);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .board-header {
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .board-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--t1);
+        }
+        .board-copy-btn {
+            padding: 4px 10px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--t2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .board-copy-btn:hover {
+            border-color: var(--g);
+            color: var(--g);
+        }
+        .board-body { padding: 1rem 1.25rem; }
+        .board-section {
+            margin-bottom: 1rem;
+        }
+        .board-section:last-child { margin-bottom: 0; }
+        .board-section-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--t3);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .board-section-title.wins { color: #059669; }
+        .board-section-title.concerns { color: #dc2626; }
+        .board-section-title.next { color: var(--g); }
+        .board-item {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--t2);
+            padding: 3px 0 3px 1rem;
+            border-left: 2px solid var(--bdr);
+            margin-bottom: 0.25rem;
+        }
+        .board-item.win { border-left-color: #059669; }
+        .board-item.concern { border-left-color: #dc2626; }
+        .board-item.next { border-left-color: var(--g); }
+
+        /* ===== Stakeholder Feedback System ===== */
+        .feedback-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 4000;
+            background: var(--g);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+        .feedback-fab:hover {
+            background: #1d4ed8;
+            box-shadow: 0 6px 24px rgba(37, 99, 235, 0.4);
+            transform: translateY(-2px);
+        }
+        .feedback-fab-icon { font-size: 16px; }
+
+        .feedback-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 6500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        .feedback-overlay.active { display: flex; }
+        .feedback-modal {
+            background: var(--bg);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 520px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .feedback-modal-head {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--bdr);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .feedback-modal-head h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .feedback-modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            color: var(--t3);
+            cursor: pointer;
+        }
+        .feedback-modal-body { padding: 1.5rem; }
+        .feedback-field {
+            margin-bottom: 1rem;
+        }
+        .feedback-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--t2);
+            margin-bottom: 0.4rem;
+        }
+        .feedback-input, .feedback-textarea, .feedback-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            color: var(--t1);
+            transition: border-color 0.2s;
+        }
+        .feedback-input:focus, .feedback-textarea:focus, .feedback-select:focus {
+            outline: none;
+            border-color: var(--g);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .feedback-textarea { resize: vertical; min-height: 80px; }
+        .feedback-flag-row {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .feedback-flag-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            color: var(--t2);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .feedback-flag-btn:hover { border-color: var(--g); color: var(--g); }
+        .feedback-flag-btn.selected {
+            background: var(--g);
+            color: white;
+            border-color: var(--g);
+        }
+        .feedback-submit {
+            width: 100%;
+            padding: 10px;
+            background: var(--g);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .feedback-submit:hover { background: #1d4ed8; }
+        .feedback-success {
+            text-align: center;
+            padding: 2rem 1rem;
+            display: none;
+        }
+        .feedback-success.show { display: block; }
+        .feedback-success-icon {
+            font-size: 48px;
+            margin-bottom: 0.5rem;
+        }
+        .feedback-success-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--t1);
+            margin-bottom: 0.25rem;
+        }
+        .feedback-success-sub {
+            font-size: 12px;
+            color: var(--t3);
+        }
+
+        /* Feedback Log */
+        .feedback-log-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .feedback-log-table th {
+            background: var(--surface);
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--t3);
+            border-bottom: 1px solid var(--bdr);
+        }
+        .feedback-log-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: top;
+        }
+        .feedback-status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .feedback-status.open { background: #fef2f2; color: #991b1b; }
+        .feedback-status.resolved { background: #dcfce7; color: #166534; }
+
+        /* School quartile coloring */
+        tr.quartile-top td:first-child { border-left: 3px solid #059669; }
+        tr.quartile-bottom td:first-child { border-left: 3px solid #dc2626; }
+        tr.quartile-top { background: rgba(5, 150, 105, 0.03); }
+        tr.quartile-bottom { background: rgba(220, 38, 38, 0.03); }
+
+        /* School detail expand */
+        .school-detail-row td {
+            padding: 0 !important;
+            border-bottom: 1px solid var(--bdr);
+        }
+        .school-detail-content {
+            padding: 1rem 1.5rem;
+            background: var(--surface);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+        .school-detail-metric {
+            text-align: center;
+        }
+        .school-detail-metric .sdm-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--t1);
+        }
+        .school-detail-metric .sdm-label {
+            font-size: 11px;
+            color: var(--t3);
+            text-transform: uppercase;
+        }
+        .school-detail-actions {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            padding-top: 0.5rem;
+        }
+        .school-flag-btn {
+            padding: 4px 10px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            background: var(--bg);
+            font-family: 'Inter', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--t2);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .school-flag-btn:hover { border-color: #dc2626; color: #dc2626; }
     </style>
 </head>
 <body>
@@ -2160,6 +2592,7 @@
                     <div class="nav-item" onclick="showPage('experts')"><span class="nav-icon">🧠</span><span class="nav-label">Expert Council</span></div>
                     <div class="nav-item" onclick="showPage('monthly-report')"><span class="nav-icon">📅</span><span class="nav-label">Monthly Report</span></div>
                     <div class="nav-item" onclick="showPage('schools')"><span class="nav-icon">🏫</span><span class="nav-label">Schools</span></div>
+                    <div class="nav-item" onclick="showPage('feedback-log')"><span class="nav-icon">📝</span><span class="nav-label">Feedback Log</span></div>
                     <div class="nav-item" onclick="showPage('sources')"><span class="nav-icon">📚</span><span class="nav-label">Sources</span></div>
                 </nav>
             </div>
@@ -2218,7 +2651,7 @@
                     <div class="seg-pills" id="globalPivotPills">
                         <span class="seg-pill active" data-pivot="overall" onclick="switchGlobalPivot('overall', this)">Overall</span>
                         <span class="seg-pill" data-pivot="school" onclick="switchGlobalPivot('school', this)">By School</span>
-                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By Personality</span>
+                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By Interest Area</span>
                         <span class="seg-pill" data-pivot="grade" onclick="switchGlobalPivot('grade', this)">By Grade</span>
                         <span class="seg-pill" data-pivot="career" onclick="switchGlobalPivot('career', this)">By Career</span>
                     </div>
@@ -2226,6 +2659,32 @@
 
                 <div class="content">
                     <div class="page active" id="overview">
+                        <!-- DISTRICT COMMAND CENTER: First 30 seconds for district leaders -->
+                        <div class="command-center" id="commandCenter">
+                            <div class="command-banner" id="commandBanner">
+                                <!-- Populated by renderCommandCenter() -->
+                            </div>
+                            <div class="command-grid">
+                                <div class="attention-queue" id="attentionQueue">
+                                    <div class="attention-header">
+                                        <h3>Schools Needing Attention <span class="attention-count" id="attentionCount">0</span></h3>
+                                    </div>
+                                    <div class="attention-list" id="attentionList">
+                                        <!-- Populated by renderAttentionQueue() -->
+                                    </div>
+                                </div>
+                                <div class="board-points" id="boardPoints">
+                                    <div class="board-header">
+                                        <h3>Board Talking Points</h3>
+                                        <button class="board-copy-btn" onclick="copyBoardPoints()">Copy to Clipboard</button>
+                                    </div>
+                                    <div class="board-body" id="boardBody">
+                                        <!-- Populated by renderBoardTalkingPoints() -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="month-nav" id="monthNav"></div>
                         <div id="categoryChips" style="display:none;">
                         </div>
@@ -2234,7 +2693,7 @@
 
                         <!-- PRIMARY WIDGETS: Congruence & Certainty front and center -->
                         <div class="bubble-chart-wrap" id="overviewScoresSection">
-                            <div class="metric-detail" style="margin-bottom:0.5rem;">Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
+                            <div class="metric-detail" style="margin-bottom:0.5rem;">Career-interest alignment and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
                             <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty by School</div>
                             <div id="overviewScoresCanvasWrap" style="position:relative;height:680px;"><canvas id="overviewScoresCanvas"></canvas></div>
                             <div id="overviewScoresTable"></div>
@@ -2242,9 +2701,9 @@
 
                         <div class="bubble-chart-wrap" id="correlationSpotlight">
                             <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
-                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape</div>
+                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Interest Landscape</div>
                             </div>
-                            <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see personality match. | SY 2025-26</div>
+                            <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see interest alignment. | SY 2025-26</div>
                             <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
                                 <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
                             </div>
@@ -2326,22 +2785,22 @@
 
                     <div class="page" id="congruence">
                         <div class="section-narrative">
-                            <p><strong>Career-Personality Congruence (Holland Code Analysis):</strong> Using Holland's (1997) hexagonal model and O*NET 28.1 RIASEC mappings, <span class="clickable-metric" onclick="showModal('congruence')">85.1% of students</span> show High or Medium career-personality match. The breakdown: High Match (≥2 matching codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%.</p>
+                            <p><strong>Career-Interest Congruence (Holland Code Analysis):</strong> Using Holland's (1997) hexagonal model and O*NET 28.1 RIASEC mappings, <span class="clickable-metric" onclick="showModal('congruence')">85.1% of students</span> show High or Medium career-interest match. The breakdown: High Match (≥2 matching codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%.</p>
                             <p><strong>Key Insight — The Congruence Paradox:</strong> Students with "High" congruence actually report <em>lower</em> certainty (3.90) than "Medium" matches (4.03). This counterintuitive finding suggests that the most aligned students are also the most reflective — they understand career complexity rather than being naively certain.</p>
                             <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (2,962 students); O*NET 28.1 Database; Holland, J.L. (1997) Making vocational choices, 3rd ed.</div>
                         </div>
                         <div class="insight-box positive">
-                            <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest personality-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
+                            <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest interest-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
-                                <div class="chart-title">Career-Personality Match Distribution</div>
-                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC personality type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
+                                <div class="chart-title">Career-Interest Match Distribution</div>
+                                <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC RIASEC interest area (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
                                 <div class="chart-container"><canvas id="congruenceDonutChart"></canvas></div>
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Congruence by RIASEC Type</div>
-                                <div class="metric-detail">Match percentage for each of the 6 Holland personality types: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-personality fit for that type. | SY 2025-26</div>
+                                <div class="metric-detail">Match percentage for each of the 6 Holland RIASEC interest areas: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-interest fit for that type. | SY 2025-26</div>
                                 <div class="chart-container" style="height: auto; min-height: 400px;"><div id="riasecCongruenceBars"></div></div>
                             </div>
                         </div>
@@ -2357,7 +2816,7 @@
                         <div class="heatmap-container">
                             <div class="heatmap-title">RIASEC Congruence Heatmap: Types x Months</div>
                             <div class="insight-box" style="margin-bottom:1rem;">
-                                <strong>Why This Matters:</strong> Tracking how each personality type's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
+                                <strong>Why This Matters:</strong> Tracking how each RIASEC interest area's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
                             </div>
                             <table class="heatmap-table" id="heatmapRiasecMonths">
                                 <!-- Dynamically populated -->
@@ -2389,7 +2848,7 @@
                             </div>
                             <div class="chart-card">
                                 <div class="chart-title">Certainty by RIASEC Type</div>
-                                <div class="metric-detail">Average career certainty (1-5 scale) for students of each Holland personality type. Compares how confident each personality group feels about their chosen career path. | SY 2025-26</div>
+                                <div class="metric-detail">Average career certainty (1-5 scale) for students of each Holland RIASEC interest area. Compares how confident each interest group feels about their chosen career path. | SY 2025-26</div>
                                 <div class="chart-container"><canvas id="certaintyByRiasecChart"></canvas></div>
                                 <div id="ic-certainty-riasec"></div>
                             </div>
@@ -2520,7 +2979,7 @@
                         <div class="chart-grid">
                             <div class="chart-card">
                                 <div class="chart-title">RIASEC Type Distribution (10,006 students)</div>
-                                <div class="metric-detail">Count of students identified with each Holland personality type: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
+                                <div class="metric-detail">Count of students identified with each Holland RIASEC interest area: Realistic (hands-on), Investigative (analytical), Artistic (creative), Social (helping), Enterprising (leading), Conventional (organizing). | SY 2025-26 cumulative</div>
                                 <div class="chart-container"><canvas id="riasecDistChart"></canvas></div>
                                 <div id="ic-riasec-distribution"></div>
                             </div>
@@ -2529,7 +2988,7 @@
                         <!-- October: Theme Depth Analysis -->
                         <div class="chart-card" style="margin-bottom:1rem;">
                             <div class="chart-title">RIASEC Theme Depth Distribution (October)</div>
-                            <div class="metric-detail">Number of personality types each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple personality types. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
+                            <div class="metric-detail">Number of RIASEC interest areas each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple RIASEC interest areas. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
                         </div>
                         <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
@@ -2563,7 +3022,7 @@
 
                     <div class="page" id="sectors">
                         <div class="section-narrative">
-                            <p><strong>Montgomery County Priority Sectors × RIASEC Crosswalk:</strong> Eight workforce sectors have been identified as priorities for Montgomery County economic development. Below, each sector is mapped to primary and secondary RIASEC types, enabling targeted career coaching that connects student personality profiles to local workforce demand.</p>
+                            <p><strong>Montgomery County Priority Sectors × RIASEC Crosswalk:</strong> Eight workforce sectors have been identified as priorities for Montgomery County economic development. Below, each sector is mapped to primary and secondary RIASEC types, enabling targeted career coaching that connects student RIASEC profiles to local workforce demand.</p>
                         </div>
                         <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="priority-sector-card">
@@ -2737,8 +3196,8 @@
                                 <div class="expert-header" onclick="toggleExpert(this)">
                                     <div class="expert-avatar" style="background: rgba(245, 158, 11, 0.1);">⚖️</div>
                                     <div class="expert-info">
-                                        <div class="expert-name">Labor Market Analyst — Career-Personality Evaluator</div>
-                                        <div class="expert-role">Workforce alignment, career-personality fit, labor market demand</div>
+                                        <div class="expert-name">Labor Market Analyst — Career-Interest Evaluator</div>
+                                        <div class="expert-role">Workforce alignment, career-interest fit, labor market demand</div>
                                     </div>
                                     <span class="expert-toggle">▾</span>
                                 </div>
@@ -2748,7 +3207,7 @@
                                         <div class="expert-text">
                                             The top career selections reveal a critical market-aspiration mismatch. <span class="expert-metric">Athletes &amp; Sports Competitors (7.1%)</span> leads all career interests — yet BLS data shows only ~16,500 professional athlete positions exist nationally with a -3% growth outlook. Meanwhile, Montgomery County's actual priority sectors — Biosciences, IT/Cybersecurity, Hospitality — are underrepresented in student aspirations.
                                             <br><br>
-                                            Positively, <span class="expert-metric">Lawyers (4.0%)</span>, <span class="expert-metric">Physicians (3.7%)</span>, and <span class="expert-metric">Engineers (3.6%)</span> align well with high-demand, high-wage occupations. The RIASEC distribution shows Social (4,637) and Artistic (4,829) types dominating — both align with growing sectors (healthcare, creative economy) in the DC metro area. The <span class="expert-metric">85.1%</span> personality-career congruence rate is excellent from a workforce development standpoint — it means students are selecting careers that match their assessed aptitudes.
+                                            Positively, <span class="expert-metric">Lawyers (4.0%)</span>, <span class="expert-metric">Physicians (3.7%)</span>, and <span class="expert-metric">Engineers (3.6%)</span> align well with high-demand, high-wage occupations. The RIASEC distribution shows Social (4,637) and Artistic (4,829) types dominating — both align with growing sectors (healthcare, creative economy) in the DC metro area. The <span class="expert-metric">85.1%</span> interest-career congruence rate is excellent from a workforce development standpoint — it means students are selecting careers that match their assessed aptitudes.
                                         </div>
                                     </div>
                                     <div class="expert-section">
@@ -2760,7 +3219,7 @@
                                     <div class="expert-section">
                                         <div class="expert-section-title blue">→ Recommendations</div>
                                         <div class="expert-text">
-                                            1) Create a "Career Reality Check" module that pairs aspiration data with BLS occupational outlook and local demand data. 2) Map each MoCo Priority Sector to primary RIASEC codes and identify which student personality types are natural fits. 3) Develop "career adjacent" suggestions — e.g., students interested in athletics could explore sports medicine (Investigative), sports management (Enterprising), or kinesiology (Realistic). 4) Partner with Montgomery County Economic Development to feature local employers and internship pipelines. 5) Add wage/demand data alongside career exploration results so students see labor market realities early.
+                                            1) Create a "Career Reality Check" module that pairs aspiration data with BLS occupational outlook and local demand data. 2) Map each MoCo Priority Sector to primary RIASEC codes and identify which student RIASEC interest areas are natural fits. 3) Develop "career adjacent" suggestions — e.g., students interested in athletics could explore sports medicine (Investigative), sports management (Enterprising), or kinesiology (Realistic). 4) Partner with Montgomery County Economic Development to feature local employers and internship pipelines. 5) Add wage/demand data alongside career exploration results so students see labor market realities early.
                                         </div>
                                     </div>
                                     <div class="expert-rating">
@@ -2786,13 +3245,13 @@
                                         <div class="expert-text">
                                             Cross-referencing this program's data against Holland's (1997) hexagonal model and O*NET 28.1 database reveals strong construct validity. The RIASEC distribution — <span class="expert-metric">R: 5,011 | A: 4,829 | S: 4,637 | I: 3,811 | E: 3,050 | C: 2,357</span> — closely mirrors national adolescent norms where Realistic and Artistic types typically lead. The Conventional type's lower representation (9.9%) is consistent with developmental psychology — abstract organizational interests emerge later in career maturity.
                                             <br><br>
-                                            The <span class="expert-metric">85.1%</span> congruence rate (High + Medium match) exceeds typical benchmarks. Meta-analytic data (Nye et al., 2012) suggests average interest-occupation congruence in adult populations hovers around 40-60%. The elevated rate here likely reflects the program's use of O*NET-SOC mappings at the interest exploration stage rather than actual job placement — students are being matched to career INTERESTS that fit their personality, not to jobs. This is methodologically appropriate for this age group.
+                                            The <span class="expert-metric">85.1%</span> congruence rate (High + Medium match) exceeds typical benchmarks. Meta-analytic data (Nye et al., 2012) suggests average interest-occupation congruence in adult populations hovers around 40-60%. The elevated rate here likely reflects the program's use of O*NET-SOC mappings at the interest exploration stage rather than actual job placement — students are being matched to career INTERESTS that fit their interests, not to jobs. This is methodologically appropriate for this age group.
                                         </div>
                                     </div>
                                     <div class="expert-section">
                                         <div class="expert-section-title amber">⚡ Hexagonal Analysis</div>
                                         <div class="expert-text">
-                                            The congruence-by-type breakdown reveals an expected pattern: <span class="expert-metric">Investigative (88.1%)</span> leads because I-type careers (STEM, research) have clearest personality-occupation alignment in O*NET. <span class="expert-metric">Conventional (78.9%)</span> lags because C-type adolescents often haven't encountered careers that match their organizational strengths. The 9.2pp spread across types is within normal hexagonal model predictions — adjacent types on Holland's hexagon (e.g., R-I, A-S) show naturally higher congruence due to shared trait space.
+                                            The congruence-by-type breakdown reveals an expected pattern: <span class="expert-metric">Investigative (88.1%)</span> leads because I-type careers (STEM, research) have clearest interest-occupation alignment in O*NET. <span class="expert-metric">Conventional (78.9%)</span> lags because C-type adolescents often haven't encountered careers that match their organizational strengths. The 9.2pp spread across types is within normal hexagonal model predictions — adjacent types on Holland's hexagon (e.g., R-I, A-S) show naturally higher congruence due to shared trait space.
                                             <br><br>
                                             A notable finding: Certainty correlates positively with congruence for most types EXCEPT High Match (3.90) underperforming Medium Match (4.03). This "congruence paradox" — where the best-matched students aren't the most certain — may reflect that highly congruent students have more refined awareness of career complexity, leading to measured rather than inflated certainty.
                                         </div>
@@ -2894,8 +3353,8 @@
                                     <div style="text-align:center;padding:1rem;background:var(--surface);border-radius:8px;"><div style="font-size:24px;font-weight:700;color:var(--g);">40.9%</div><div style="font-size:11px;color:var(--t3);">3+ themes</div></div>
                                 </div>
                                 <div class="insight-box alert" style="margin-top:1rem;">
-                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more personality types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
-                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland personality-career model</div>
+                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more RIASEC interest areas. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
+                                    <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland interest-career model</div>
                                 </div>
                             </div>
 
@@ -2906,7 +3365,7 @@
                                     <canvas id="ctePathwayChart" height="200"></canvas>
                                 </div>
                                 <div class="insight-box positive" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their personality type.</em>
+                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their RIASEC interest area.</em>
                                 </div>
                             </div>
 
@@ -2999,6 +3458,34 @@
                         </div>
                     </div>
 
+                    <div class="page" id="feedback-log">
+                        <div style="max-width:900px;">
+                            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+                                <div>
+                                    <h2 style="font-size:18px;margin-bottom:0.25rem;">Stakeholder Feedback</h2>
+                                    <p style="font-size:13px;color:var(--t2);">All feedback from district staff, program managers, and stakeholders. Items are reviewed within 7 business days.</p>
+                                </div>
+                                <button class="feedback-submit" style="width:auto;padding:8px 16px;" onclick="openFeedback()">+ Leave Feedback</button>
+                            </div>
+                            <div class="table-container">
+                                <table class="feedback-log-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th>View</th>
+                                            <th>Type</th>
+                                            <th>Comment</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="feedbackLogBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="page" id="sources">
                         <div style="max-width: 800px;">
                             <h2 style="font-size: 18px; margin-bottom: 1rem;">Methodology & Data Sources</h2>
@@ -3007,7 +3494,7 @@
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
                                     <p><strong>Sessions YTD (49,467):</strong> Count of all unique student interactions through MoCo CAP platform, July-December 2025.</p>
                                     <p><strong>Unique Students (47,163):</strong> De-duplicated student IDs. Est. 68% reach of MCPS high school population.</p>
-                                    <p><strong>Congruence Rate (85.1%):</strong> Percentage of students with High or Medium career-personality match using Holland Code and O*NET-SOC mappings.</p>
+                                    <p><strong>Congruence Rate (85.1%):</strong> Percentage of students with High or Medium career-interest match using Holland Code and O*NET-SOC mappings.</p>
                                     <p><strong>Clear Career Plan (22.1%):</strong> Percentage of survey respondents reporting clear understanding of career direction (10,006 students).</p>
                                     <p><strong>Helpful Rating (3.68/5):</strong> Average Likert scale response to 'How helpful was this program?'</p>
                                     <p><strong>Average Certainty (3.87/5):</strong> Mean response to 'How certain are you about your career?'</p>
@@ -3028,7 +3515,7 @@
                                     <p>Holland, J. L. (1997). Making vocational choices (3rd ed.). Psychological Assessment Resources.</p>
                                     <p>O*NET 28.1 Database. (2023). National Center for O*NET Development.</p>
                                     <p>MCPS Public Data. (2023). Enrollment, FARMS rates, and graduation statistics.</p>
-                                    <p>MoCo CAP Enriched Dataset. (2025). Platform session logs with student personality and career interest mappings.</p>
+                                    <p>MoCo CAP Enriched Dataset. (2025). Platform session logs with student RIASEC interest area and career interest mappings.</p>
                                 </div>
                             </div>
                         </div>
@@ -3080,6 +3567,73 @@
                     </div>
                 </div>
                 <button class="threshold-save" onclick="saveThresholds()">Apply Sensitivity & Recheck</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback FAB Button -->
+    <button class="feedback-fab" id="feedbackFab" onclick="openFeedback()" style="display:none;">
+        <span class="feedback-fab-icon">💬</span> Leave Feedback
+    </button>
+
+    <!-- Feedback Modal -->
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-modal">
+            <div class="feedback-modal-head">
+                <h3>Share Feedback</h3>
+                <button class="feedback-modal-close" onclick="closeFeedback()">✕</button>
+            </div>
+            <div class="feedback-modal-body" id="feedbackFormBody">
+                <div class="feedback-field">
+                    <label class="feedback-label">Your Name</label>
+                    <input class="feedback-input" id="fbName" type="text" placeholder="e.g., Dr. Smith, Program Manager">
+                </div>
+                <div class="feedback-field">
+                    <label class="feedback-label">Your Role</label>
+                    <select class="feedback-select" id="fbRole">
+                        <option value="">Select your role...</option>
+                        <option value="District Admin">District Administrator</option>
+                        <option value="Program Manager">Program Manager</option>
+                        <option value="School Counselor">School Counselor</option>
+                        <option value="Principal">Principal</option>
+                        <option value="Board Member">Board Member</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="feedback-field">
+                    <label class="feedback-label">What type of feedback?</label>
+                    <div class="feedback-flag-row" id="fbFlagRow">
+                        <button class="feedback-flag-btn" onclick="toggleFeedbackFlag(this)" data-flag="flag-school">Flag a School</button>
+                        <button class="feedback-flag-btn" onclick="toggleFeedbackFlag(this)" data-flag="flag-metric">Flag a Metric</button>
+                        <button class="feedback-flag-btn" onclick="toggleFeedbackFlag(this)" data-flag="question">Question</button>
+                        <button class="feedback-flag-btn" onclick="toggleFeedbackFlag(this)" data-flag="suggestion">Suggestion</button>
+                        <button class="feedback-flag-btn" onclick="toggleFeedbackFlag(this)" data-flag="concern">Concern</button>
+                    </div>
+                </div>
+                <div class="feedback-field" id="fbSchoolField" style="display:none;">
+                    <label class="feedback-label">Which school?</label>
+                    <select class="feedback-select" id="fbSchool">
+                        <option value="">Select school...</option>
+                    </select>
+                </div>
+                <div class="feedback-field">
+                    <label class="feedback-label">Your Feedback</label>
+                    <textarea class="feedback-textarea" id="fbComment" placeholder="What did you notice? What would help you make better decisions?"></textarea>
+                </div>
+                <div class="feedback-field">
+                    <label class="feedback-label">Priority</label>
+                    <select class="feedback-select" id="fbPriority">
+                        <option value="normal">Normal</option>
+                        <option value="high">High - Needs attention this week</option>
+                        <option value="urgent">Urgent - Blocking a decision</option>
+                    </select>
+                </div>
+                <button class="feedback-submit" onclick="submitFeedback()">Submit Feedback</button>
+            </div>
+            <div class="feedback-success" id="feedbackSuccess">
+                <div class="feedback-success-icon">✓</div>
+                <div class="feedback-success-text">Feedback Submitted</div>
+                <div class="feedback-success-sub">Thomas and Steve will review within 7 business days.</div>
             </div>
         </div>
     </div>
@@ -3598,7 +4152,7 @@
         }
 
         // ===== Insight Card Builder =====
-        const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Personality',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
+        const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Interest Area',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
         const SEV_LABELS = {positive:'Positive',negative:'Concern',neutral:'Watchlist',info:'Info'};
 
         function buildInsightCard(cfg) {
@@ -3891,7 +4445,7 @@
 
             // Impact weights: congruence/certainty changes weigh more since they're program priorities
             var IMPACT_WEIGHTS = {
-                'Congruence': 3.0,  // Career-personality match is the primary metric
+                'Congruence': 3.0,  // Career-interest alignment is the primary metric
                 'Career Certainty': 2.5,  // Confidence is a key outcome
                 'Clear Plan %': 2.0,  // Career clarity tracks program effectiveness
                 'Sessions': 1.0  // Volume matters but less than outcomes
@@ -3900,8 +4454,8 @@
             // Next step generators keyed by metric and direction
             function getNextStep(metric, delta, curr, month) {
                 if (metric === 'Congruence') {
-                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their personality type. Focus on the ' + (DATA.congruence.dist['No Match'] || 0).toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
-                    return 'Congruence dipped in ' + month + '. Review which personality types are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
+                    if (delta >= 0) return 'Congruence is improving. Continue matching students to careers that align with their RIASEC interest area. Focus on the ' + (DATA.congruence.dist['No Match'] || 0).toLocaleString() + ' students with no match — they need 1-on-1 career exploration.';
+                    return 'Congruence dipped in ' + month + '. Review which RIASEC interest areas are losing alignment and schedule career education sessions focused on those types. Check if newer students have completed RIASEC assessments.';
                 }
                 if (metric === 'Career Certainty') {
                     if (delta >= 0) return 'Certainty is rising — the program is building student confidence. Keep sessions focused on helping students discover and confirm their direction.';
@@ -4133,7 +4687,7 @@
                 const clarityIcon = parseFloat(clarityDelta) >= 0 ? '▲' : '▼';
                 const clarityColor = parseFloat(clarityDelta) >= 0 ? '#1e40af' : '#dc2626';
 
-                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-personality match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
+                summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-interest match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
                 '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" group (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) is the highest-impact group to focus on — these students are closest to having a clear plan.</p>' +
                 '<p><strong>So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year). The top 3 actions to accelerate impact: <strong>(1)</strong> Show the "Some Idea" group CTE career pathways — this is the single most powerful way to move students toward clarity, <strong>(2)</strong> End every session with specific, written next steps the student owns, <strong>(3)</strong> Connect students with mentors (70.6% want follow-up support).</p>' +
                 '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Oct 2025 Analysis (' + OCTOBER_FULL.n_sample.toLocaleString() + ' students surveyed, ' + OCTOBER_FULL.n_full_year.toLocaleString() + ' total served)</div>';
@@ -4144,7 +4698,7 @@
             if (highlightsEl) {
                 let cards = '';
                 if (DATA.congruence.match_rate > 80) {
-                    cards += buildInsightCard({ id:'hl-congruence-rate', category:'personality', severity:'positive', title:'Career-Personality Congruence Rate exceeds threshold', value: DATA.congruence.match_rate + '%', detail:'Validates Holland Code matching methodology across ' + schoolCount + ' schools.', sources:[{label:'O*NET 28.1',action:'modal:congruence'},{label:'Methodology',action:'page:sources'}] });
+                    cards += buildInsightCard({ id:'hl-congruence-rate', category:'personality', severity:'positive', title:'Career-Interest Congruence Rate exceeds threshold', value: DATA.congruence.match_rate + '%', detail:'Validates Holland Code matching methodology across ' + schoolCount + ' schools.', sources:[{label:'O*NET 28.1',action:'modal:congruence'},{label:'Methodology',action:'page:sources'}] });
                 }
                 cards += buildInsightCard({ id:'hl-students-reached', category:'engagement', severity:'positive', title:'Students Reached YTD', value: (totalStudents/1000).toFixed(1) + 'K', detail: totalSessions.toLocaleString() + ' sessions across ' + schoolCount + ' schools.', sources:[{label:'Score Card '+latestMonth+' 2025',action:'page:sources'}] });
                 if (latest.pct_clear < 30) {
@@ -4168,7 +4722,7 @@
 
                 kpisEl.innerHTML =
                     '<div class="kpi-card"><div class="kpi-label">Students Reached</div><div class="kpi-value">' + (totalStudents/1000).toFixed(1) + 'K</div><div class="kpi-subtext">YTD 2025-26 ' + kpiIcon(totalStudents, 30000, 40000) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Personality Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Interest Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Clear Plan %</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'clear_plan\')">' + latest.pct_clear + '%</span></div><div class="kpi-subtext">Career Clarity ' + kpiIcon(latest.pct_clear, 15, 25) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Avg Certainty</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'certainty\')">' + avgCertainty + '/5</span></div><div class="kpi-subtext">Career Confidence ' + kpiIcon(parseFloat(avgCertainty), 3.5, 4.0) + '</div></div>' +
                     '<div class="kpi-card"><div class="kpi-label">Schools</div><div class="kpi-value">' + schoolCount + '</div><div class="kpi-subtext">Participating</div></div>' +
@@ -4259,7 +4813,7 @@
                 { id:'corr-dosage-certainty', cat:'engagement', sev:'positive', label:'More Sessions = More Certainty', value:'Strong connection', explain:'Students who attend more sessions become more certain about their career direction. Schools averaging 7+ sessions per student see certainty scores of 4.12 out of 5, compared to just 3.62 for schools with only 2-3 sessions. Based on 1,537 students across all schools.', source:'MoCo CAP dosage analysis' },
                 { id:'corr-cte-engagement', cat:'career', sev:'positive', label:'CTE Exposure Prevents Disengagement', value:'HIGHEST PRIORITY', explain:'Showing students CTE career pathways is the single most powerful way to keep them engaged. However, 28% of students haven\'t explored any CTE options yet — they are the highest-risk group for checking out. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
                 { id:'corr-helpful-certainty', cat:'program', sev:'positive', label:'Helpful Sessions Build Certainty', value:'HIGH PRIORITY', explain:'When students find sessions genuinely helpful, they become more certain about their career path — and more certain students rate future sessions even higher. This creates a positive cycle. Based on 1,012 October student responses.', source:'Oct 2025 student survey' },
-                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Many Interests Can Lower Clarity', value:'WATCH', explain:'Students who identify with 3 or more personality types (40.9% of students) tend to have lower career clarity. Having "too many possible selves" makes it hard to commit to a direction. These students need guided narrowing activities.', source:'Oct 2025 student survey' },
+                { id:'corr-multi-theme', cat:'personality', sev:'negative', label:'Many Interests Can Lower Clarity', value:'WATCH', explain:'Students who identify with 3 or more RIASEC interest areas (40.9% of students) tend to have lower career clarity. Having "too many possible selves" makes it hard to commit to a direction. These students need guided narrowing activities.', source:'Oct 2025 student survey' },
                 { id:'corr-farms-gap', cat:'equity', sev:'neutral', label:'Economic Disadvantage Creates Barriers', value:'Equity gap: -0.31 pts', explain:'Schools with higher rates of students receiving free/reduced meals (FARMS > 40%) average 0.31 points lower on career certainty, even when they get more sessions. Economic disadvantage creates additional barriers that sessions alone can\'t fully overcome.', source:'MCPS equity analysis' }
             ];
 
@@ -4336,7 +4890,7 @@
 
             // === VIEW: By Type (default) ===
             if (isTypeView) {
-                if (descEl) descEl.textContent = 'Each bubble is a personality type. X = how well careers match that type. Y = how confident those students feel. | SY 2025-26';
+                if (descEl) descEl.textContent = 'Each bubble is a RIASEC interest area. X = how well careers match that type. Y = how confident those students feel. | SY 2025-26';
 
                 var datasets = types.map(function(type, i) {
                     var n = DATA.riasec_themes[type] || nData[type][useMonth];
@@ -4422,7 +4976,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.3, max: 4.3, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -4455,7 +5009,7 @@
                 var gap = highCong - congruenceData[lowCertType][useMonth];
                 renderWidgetInsight('correlationSpotlight', {
                     trend: lowCertMoM < 0 ? 'down' : 'up',
-                    soWhat: highType + ' students (' + typeDescPlain[highType] + ') have the strongest career match at ' + highCong.toFixed(1) + '%. ' + lowCertType + ' students (' + typeDescPlain[lowCertType] + ') report the lowest confidence at ' + lowCert.toFixed(2) + '/5' + (lowCertMoM < 0 ? ', down ' + Math.abs(lowCertMoM).toFixed(2) + ' from last month' : '') + '. There\'s a ' + gap.toFixed(1) + 'pp gap in career match between the highest and lowest personality types.',
+                    soWhat: highType + ' students (' + typeDescPlain[highType] + ') have the strongest career match at ' + highCong.toFixed(1) + '%. ' + lowCertType + ' students (' + typeDescPlain[lowCertType] + ') report the lowest confidence at ' + lowCert.toFixed(2) + '/5' + (lowCertMoM < 0 ? ', down ' + Math.abs(lowCertMoM).toFixed(2) + ' from last month' : '') + '. There\'s a ' + gap.toFixed(1) + 'pp gap in career match between the highest and lowest RIASEC interest areas.',
                     action: 'Focus career exploration activities on ' + lowCertType + ' students — they have interest but aren\'t confident in their path. Pair them with mentors in ' + lowCertType + '-aligned careers like ' + (Object.keys(CAREER_RIASEC_MAP).filter(function(c) { return CAREER_RIASEC_MAP[c].primary === lowCertType; })[0] || 'related fields') + '.'
                 });
                 return;
@@ -4463,7 +5017,7 @@
 
             // === VIEW: By Career (Bundled by RIASEC type) ===
             if (isCareerView) {
-                if (descEl) descEl.textContent = 'Careers bundled by RIASEC personality type. Click a bundle to highlight careers in table below. | SY 2025-26';
+                if (descEl) descEl.textContent = 'Careers bundled by RIASEC RIASEC interest area. Click a bundle to highlight careers in table below. | SY 2025-26';
 
                 var careerNames = Object.keys(CAREER_RIASEC_MAP);
                 // Group careers by RIASEC type
@@ -4598,7 +5152,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 76, max: 92, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 76, max: 92, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.5, max: 4.2, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -4730,7 +5284,7 @@
                 }
                 var actualCareerData = ACTUAL_CAREER_RIASEC[selectedCareer];
                 var hasActualData = actualCareerData && actualCareerData.n >= 20;
-                if (descEl) descEl.textContent = selectedCareer + ': ' + (hasActualData ? 'Actual MoCo student personality data (n=' + actualCareerData.n + ')' : 'Estimated personality breakdown') + '. Bubble size = % of students with each type. \u2605 = O*NET career fit.';
+                if (descEl) descEl.textContent = selectedCareer + ': ' + (hasActualData ? 'Actual MoCo student RIASEC data (n=' + actualCareerData.n + ')' : 'Estimated RIASEC breakdown') + '. Bubble size = % of students with each type. \u2605 = O*NET career fit.';
 
                 var bls = BLS_CAREERS[selectedCareer];
                 var typeLetterMap2 = {Realistic:'R', Investigative:'I', Artistic:'A', Social:'S', Enterprising:'E', Conventional:'C'};
@@ -4824,7 +5378,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 72, max: 95, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.3, max: 4.3, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -4861,12 +5415,12 @@
                 renderWidgetInsight('correlationSpotlight', {
                     trend: primaryCertMoM >= 0 ? 'up' : 'down',
                     soWhat: (hasActualData ? 'Actual data (n=' + actualCareerData.n + '): ' : '') + primaryPct3 + '% of ' + selectedCareer + ' students identify as ' + careerData.primary + ' (' + typeDescPlain[careerData.primary] + ')' + (matchesOnet ? ', matching the O*NET expected profile.' : '. However, the most common type is actually ' + topActualType + ' (' + drillPcts[topActualType] + '%), which differs from the O*NET expected ' + careerData.primary + ' profile.') + ' Career congruence: ' + careerData.congruence.toFixed(1) + '%.' + (bls ? ' Salary: ' + bls.salary + '.' : ''),
-                    action: matchesOnet ? 'Strong alignment — students\' personalities match career expectations. Focus on building confidence and practical experience.' : 'Personality-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
+                    action: matchesOnet ? 'Strong alignment — students\' interests match career expectations. Focus on building confidence and practical experience.' : 'Interest-career mismatch — ' + topActualType + ' students are choosing a ' + careerData.primary + ' career. Consider whether this reflects genuine interest or limited exposure to ' + topActualType + '-aligned careers.'
                 });
                 return;
             }
 
-            // === VIEW: Type Deep-Dive (careers chosen by one personality type) ===
+            // === VIEW: Type Deep-Dive (careers chosen by one RIASEC interest area) ===
             if (isTypeDrill) {
                 var selectedType = bubbleChartView.substring(10);
                 var typeColor = typeColors[selectedType];
@@ -5265,7 +5819,7 @@
                             }
                         },
                         scales: {
-                            x: { title: { display: true, text: 'Career-Personality Match %', font: { size: 11, weight: 600 } }, min: 74, max: 93, ticks: { stepSize: 2 } },
+                            x: { title: { display: true, text: 'Career-Interest Match %', font: { size: 11, weight: 600 } }, min: 74, max: 93, ticks: { stepSize: 2 } },
                             y: { title: { display: true, text: 'Career Confidence (1-5)', font: { size: 11, weight: 600 } }, min: 3.5, max: 4.2, ticks: { stepSize: 0.1 } }
                         }
                     },
@@ -5342,7 +5896,7 @@
                 ptHtml += '<span><span style="color:#22c55e;">\u2713</span> Strong (at/above avg)</span>';
                 ptHtml += '</div>';
                 ptHtml += '<div style="margin-top:0.5rem;padding:0.6rem;background:var(--surface);border-radius:8px;border-left:3px solid #f97316;font-size:11px;color:var(--t2);line-height:1.5;">';
-                ptHtml += '<strong>How priority areas are scored:</strong> Each sector maps to a primary RIASEC type. Match % = congruence between students\' personality and the sector\'s O*NET classification (Aug\u2013Dec monthly data). Gap = distance from district avg (' + avgCongAll.toFixed(1) + '%). Growth = semester trajectory. Sectors with large gaps but positive growth = highest-ROI intervention targets.';
+                ptHtml += '<strong>How priority areas are scored:</strong> Each sector maps to a primary RIASEC type. Match % = congruence between students\' RIASEC interest area and the sector\'s O*NET classification (Aug\u2013Dec monthly data). Gap = distance from district avg (' + avgCongAll.toFixed(1) + '%). Growth = semester trajectory. Sectors with large gaps but positive growth = highest-ROI intervention targets.';
                 ptHtml += '</div>';
                 prTable.innerHTML = ptHtml;
 
@@ -5479,14 +6033,14 @@
 
         function initStaticInsightCards() {
             var cards = [
-                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'Students with the strongest career-personality match (3.90 certainty) are slightly less certain than medium-match students (4.03). This is actually healthy — deeply aligned students understand how complex careers really are, rather than being overconfident.', soWhat:'Don\'t worry if high-match students seem slightly less certain. This shows mature career thinking.', nextStep:'Focus attention on the 14.9% with No Match — they need 1-on-1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'2,962 students analyzed',action:'modal:congruence'}] }},
-                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Is Growing', detail:'Clarity grew from 18.2% to 22.1% — steady progress. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the best group to focus on — they\'re closest to having a clear plan.', soWhat:'The "Some Idea" students are your highest-leverage group. They just need a nudge.', nextStep:'Show these students CTE career pathways — this is the single most powerful way to move them from "Some Idea" to "Clear Plan." Focus on matching pathways to their personality type.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Oct Analysis',action:'modal:clear_plan'}] }},
-                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty Varies by Personality Type', detail:'Investigative-type students (3.97 out of 5) feel most certain about their careers. Conventional-type students (3.71) feel least certain — a 0.26 point gap. Conventional students may not see themselves in traditional "organized/structured" careers.', soWhat:'Conventional-type students need exposure to modern careers that match their strengths.', nextStep:'Showcase careers like data analytics, UX research, and project management to Conventional-type students — these roles offer strong salary and growth.', sources:[{label:'Career-Personality Data',action:'page:sources'}] }},
+                { el:'ic-congruence-paradox', cfg:{ id:'ac-congruence-paradox', category:'personality', severity:'info', title:'The Congruence Paradox', detail:'Students with the strongest career-interest match (3.90 certainty) are slightly less certain than medium-match students (4.03). This is actually healthy — deeply aligned students understand how complex careers really are, rather than being overconfident.', soWhat:'Don\'t worry if high-match students seem slightly less certain. This shows mature career thinking.', nextStep:'Focus attention on the 14.9% with No Match — they need 1-on-1 career exploration sessions to discover better-fitting paths.', sources:[{label:'Career-Interest Research',action:'page:sources'},{label:'2,962 students analyzed',action:'modal:congruence'}] }},
+                { el:'ic-clarity-trajectory', cfg:{ id:'ac-clarity-trajectory', category:'career', severity:'positive', title:'Career Clarity Is Growing', detail:'Clarity grew from 18.2% to 22.1% — steady progress. To reach the 30% target by May, the 63.3% "Some Idea" group (6,329 students) is the best group to focus on — they\'re closest to having a clear plan.', soWhat:'The "Some Idea" students are your highest-leverage group. They just need a nudge.', nextStep:'Show these students CTE career pathways — this is the single most powerful way to move them from "Some Idea" to "Clear Plan." Focus on matching pathways to their RIASEC interest area.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'},{label:'Oct Analysis',action:'modal:clear_plan'}] }},
+                { el:'ic-certainty-riasec', cfg:{ id:'ac-certainty-riasec', category:'personality', severity:'neutral', title:'Certainty Varies by RIASEC Interest Area', detail:'Investigative-type students (3.97 out of 5) feel most certain about their careers. Conventional-type students (3.71) feel least certain — a 0.26 point gap. Conventional students may not see themselves in traditional "organized/structured" careers.', soWhat:'Conventional-type students need exposure to modern careers that match their strengths.', nextStep:'Showcase careers like data analytics, UX research, and project management to Conventional-type students — these roles offer strong salary and growth.', sources:[{label:'Career-Interest Data',action:'page:sources'}] }},
                 { el:'ic-dosage-response', cfg:{ id:'ac-dosage-response', category:'engagement', severity:'positive', title:'More Sessions = More Certainty', detail:'Each additional session adds measurable career certainty. Students with 7+ sessions average 4.12 out of 5 on certainty vs. 3.62 for students with only 2-3 sessions — that\'s a 14% improvement. Based on 1,537 students with 2+ sessions.', soWhat:'Session count matters. Aim for 6+ sessions per student, especially at schools with the lowest certainty.', nextStep:'Prioritize Watkins Mill HS (3.81 sessions/student, 3.64 certainty) and Paint Branch HS (5.46 sessions/student, 3.70 certainty) for quality improvement.', sources:[{label:'Dosage analysis, 1,537 students',action:'modal:dosage'}] }},
                 { el:'ic-graduation-rates', cfg:{ id:'ac-graduation-rates', category:'school', severity:'negative', title:'Low Graduation Schools Need More Support', detail:'Schools with lower graduation rates (Watkins Mill 83.4%, Wheaton 81.2%) also show lower career clarity. Career coaching may be an early indicator of academic persistence.', soWhat:'These schools need more intensive career coaching. Increased clarity may help keep students on track to graduate.', nextStep:'Increase session frequency at schools below 85% graduation rate. Track whether improved career clarity correlates with better graduation outcomes over time.', sources:[{label:'MCPS Public Data',action:'page:sources'}] }},
                 { el:'ic-coach-performance', cfg:{ id:'ac-coach-performance', category:'program', severity:'info', title:'Coach Quality Varies — Learn from the Best', detail:'Volume and quality don\'t always align. Lynn Jeanpierre (4.38 certainty, 1,073 sessions) significantly outperforms other high-volume coaches. Nicholas Loutoo (2.50 certainty) needs support.', soWhat:'Study what top coaches do differently. Their methods should be shared across the team.', nextStep:'Pair coaches with the lowest certainty scores with mentors. Set minimum quality benchmarks alongside session volume targets.', sources:[{label:'Coach performance data',action:'page:sources'}] }},
                 { el:'ic-yoy-growth', cfg:{ id:'ac-yoy-growth', category:'program', severity:'neutral', title:'3x Growth — Watch Quality Closely', detail:'The program has grown 3x year-over-year, which validates the scaling strategy. But rapid growth can strain quality — helpfulness dropped 3.2% in December. Growth without quality is unsustainable.', soWhat:'Keep monitoring how helpful students find sessions as the program grows.', nextStep:'Set a quality floor: if helpfulness drops below 3.50 out of 5 at any school, pause expansion there and invest in coach training first.', sources:[{label:'MoCo CAP Score Cards',action:'page:sources'}] }},
-                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'Personality Type Distribution', detail:'Realistic (21.2%) and Artistic (20.4%) types are most common. Conventional (9.9%) is underrepresented, which is normal for this age group. 40.9% of October students identified with 3+ personality types, which makes narrowing harder.', soWhat:'Students with many interests (40.9%) need structured decision-making help, not just more exploration.', nextStep:'For Conventional-type students, showcase careers like data analytics, UX research, and project management. For multi-interest students, use values exercises to help them prioritize.', sources:[{label:'Career-Personality Research',action:'page:sources'},{label:'Oct 2025 Analysis',action:'page:sources'}] }}
+                { el:'ic-riasec-distribution', cfg:{ id:'ac-riasec-distribution', category:'personality', severity:'info', title:'RIASEC Interest Area Distribution', detail:'Realistic (21.2%) and Artistic (20.4%) types are most common. Conventional (9.9%) is underrepresented, which is normal for this age group. 40.9% of October students identified with 3+ RIASEC interest areas, which makes narrowing harder.', soWhat:'Students with many interests (40.9%) need structured decision-making help, not just more exploration.', nextStep:'For Conventional-type students, showcase careers like data analytics, UX research, and project management. For multi-interest students, use values exercises to help them prioritize.', sources:[{label:'Career-Interest Research',action:'page:sources'},{label:'Oct 2025 Analysis',action:'page:sources'}] }}
             ];
             cards.forEach(function(c) {
                 var el = document.getElementById(c.el);
@@ -5595,11 +6149,11 @@
                 var descEl = titleEl.querySelector('.metric-detail');
                 var titleTextEl = titleEl.querySelector('.bubble-chart-title');
                 if (seg === 'overall') {
-                    if (descEl) descEl.textContent = 'Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
+                    if (descEl) descEl.textContent = 'Career-interest alignment and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by School';
                 } else if (seg === 'personality') {
-                    if (descEl) descEl.textContent = 'Monthly congruence stacked by RIASEC personality type with certainty overlay. Each bar = one type\'s career-personality match %. | SY 2025-26';
-                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Personality Type';
+                    if (descEl) descEl.textContent = 'Monthly congruence stacked by RIASEC RIASEC interest area with certainty overlay. Each bar = one type\'s career-interest match %. | SY 2025-26';
+                    if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by RIASEC Interest Area';
                 } else if (seg === 'grade') {
                     if (descEl) descEl.textContent = 'Monthly enrollment distribution by grade level with certainty overlay. Track how grade composition shifts affect program metrics. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Grade Level';
@@ -5607,7 +6161,7 @@
                     if (descEl) descEl.textContent = 'Top career selections stacked monthly with certainty overlay. Track career preference shifts and alignment with BLS outlook. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty by Career Choice';
                 } else {
-                    if (descEl) descEl.textContent = 'Monthly congruence (career-personality match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
+                    if (descEl) descEl.textContent = 'Monthly congruence (career-interest match %) and certainty (1-5 self-reported confidence) from Aug\u2013Dec 2025. | SY 2025-26';
                     if (titleTextEl) titleTextEl.textContent = 'Congruence & Certainty Trends';
                 }
             }
@@ -5892,7 +6446,7 @@
                             lines.push('Match: ' + cong.toFixed(1) + '%' + (idx > 0 ? '  (' + (cong >= congruenceByMonth[idx-1] ? '▲+' : '▼') + (cong - congruenceByMonth[idx-1]).toFixed(1) + 'pp)' : ''));
                             lines.push('Confidence: ' + cert.toFixed(2) + '/5' + (idx > 0 ? '  (' + (cert >= certaintyByMonth[idx-1] ? '▲+' : '▼') + (cert - certaintyByMonth[idx-1]).toFixed(2) + ')' : ''));
                             lines.push('');
-                            lines.push('── By Personality Type ──');
+                            lines.push('── By RIASEC Interest Area ──');
                             types.forEach(function(t) {
                                 var typeCong = HEATMAP_DATA.riasec_monthly[t][m] || 0;
                                 var typeCert = HEATMAP_DATA.riasec_certainty_monthly[t][m] || 0;
@@ -6224,7 +6778,7 @@
             html += '</div>';
             html += '<div style="margin-top:0.75rem;padding:0.75rem;background:var(--surface);border-radius:8px;border-left:3px solid #2563eb;font-size:11px;color:var(--t2);line-height:1.5;">';
             html += '<strong>How these metrics are calculated:</strong><br>';
-            html += '<strong>Career Match %</strong> = Congruence between student RIASEC personality type and their chosen career\'s O*NET classification. Derived from school-level certainty and HS/MS level adjustments against the district average (' + avgCong.toFixed(1) + '%).<br>';
+            html += '<strong>Career Match %</strong> = Congruence between student RIASEC RIASEC interest area and their chosen career\'s O*NET classification. Derived from school-level certainty and HS/MS level adjustments against the district average (' + avgCong.toFixed(1) + '%).<br>';
             html += '<strong>Confidence</strong> = Self-reported career certainty (1-5 scale) from student surveys. Direct survey response, avg across all respondents at each school.<br>';
             html += '<strong>Clear Plan %</strong> = % of surveyed students who report having a clear career plan. Direct survey response.<br>';
             html += '<strong>Priority</strong> = Schools below the district average on all 3 metrics are flagged \u26A0. Schools below on 2 of 3 are flagged \u25B3. Deltas show distance from district average.';
@@ -6265,7 +6819,7 @@
                 };
             });
             rows.sort(function(a,b) { return a.match - b.match; }); // lowest match first
-            var html = '<table class="mom-table"><thead><tr><th></th><th>Personality Type</th><th>Career Match</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>MoM</th><th>Students (Dec)</th><th>Top Careers</th></tr></thead><tbody>';
+            var html = '<table class="mom-table"><thead><tr><th></th><th>RIASEC Interest Area</th><th>Career Match</th><th>Gap</th><th>Growth (Aug\u2192Dec)</th><th>Confidence</th><th>MoM</th><th>Students (Dec)</th><th>Top Careers</th></tr></thead><tbody>';
             rows.forEach(function(r) {
                 var icon = r.status === 'critical' ? '<span style="color:#ef4444;">\u26A0</span>' : r.status === 'watch' ? '<span style="color:#f97316;">\u25B3</span>' : '<span style="color:#22c55e;">\u2713</span>';
                 var rowBg = r.status === 'critical' ? ' style="background:rgba(239,68,68,0.06);"' : r.status === 'watch' ? ' style="background:rgba(249,115,22,0.04);"' : '';
@@ -6524,11 +7078,11 @@
             container.innerHTML =
                 '<div class="scorecard-row">' +
                     '<div class="scorecard-item">' +
-                        '<div class="scorecard-label">Career-Personality Match</div>' +
+                        '<div class="scorecard-label">Career-Interest Match</div>' +
                         '<div class="scorecard-value">' + congLast.toFixed(1) + '%</div>' +
                         '<div class="scorecard-trend up"><span class="arrow">&#9650;</span> +' + congChange + 'pp Aug→Dec</div>' +
                         '<div class="scorecard-sparkline">' + sparkline(congByMonth) + '</div>' +
-                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Avg match between student RIASEC type and career O*NET code. Calculated from survey personality profiles vs career classifications.</div>' +
+                        '<div style="font-size:10px;color:var(--t3);margin-top:0.25rem;line-height:1.4;">Avg match between student RIASEC type and career O*NET code. Calculated from survey RIASEC profiles vs career classifications.</div>' +
                     '</div>' +
                     '<div class="scorecard-item">' +
                         '<div class="scorecard-label">Career Confidence</div>' +
@@ -6558,7 +7112,7 @@
                         (certPeaked ? 'Career confidence peaked at ' + Math.max.apply(null, certByMonth).toFixed(2) + ' in ' + certPeakMonth + ' and has dipped slightly — this may be seasonal (finals/winter break) but warrants monitoring. ' : '') +
                         'At the current pace of +' + monthlyGain + 'pp/month in career clarity, the program is on track to reach ' + clearTarget + '% by ' + (monthsToTarget !== 'N/A' && monthsToTarget <= 12 ? 'approximately ' + monthsToTarget + ' months from now' : 'mid-2026') + '.' +
                     '</div>' +
-                    '<div class="widget-insight-action"><em>Next step:</em> Focus on the 6,329 "Some Idea" students — they\'re closest to having a clear plan and represent the highest-leverage group. Show them CTE pathways matching their personality type.</div>' +
+                    '<div class="widget-insight-action"><em>Next step:</em> Focus on the 6,329 "Some Idea" students — they\'re closest to having a clear plan and represent the highest-leverage group. Show them CTE pathways matching their RIASEC interest area.</div>' +
                 '</div>';
         }
 
@@ -6595,7 +7149,7 @@
                     whatToDo: 'Introduce urban planning, architecture, and property management careers.'}
             ];
 
-            // Plain-English personality type descriptions
+            // Plain-English RIASEC interest area descriptions
             var typeDescriptions = {
                 'Realistic': 'Hands-on, practical',
                 'Investigative': 'Analytical, science-oriented',
@@ -6607,7 +7161,7 @@
 
             var html = '<div style="margin-bottom:0.75rem;">' +
                 '<span style="font-size:14px;font-weight:700;color:var(--t1);">MoCo Priority Sectors — How Students Align</span>' +
-                '<div style="font-size:11px;color:var(--t3);margin-top:2px;">How well do student interests match Montgomery County\'s priority economic sectors? Cards show career-personality fit and student confidence for each sector.</div>' +
+                '<div style="font-size:11px;color:var(--t3);margin-top:2px;">How well do student interests match Montgomery County\'s priority economic sectors? Cards show career-interest fit and student confidence for each sector.</div>' +
                 '</div>';
             html += '<div class="sector-grid">';
 
@@ -6711,9 +7265,9 @@
                 priority: 'MODERATE',
                 priorityColor: '#2563eb',
                 barColor: '#3b82f6',
-                title: 'Explore personality-career connections (RIASEC)',
-                plain: 'When students discover their RIASEC personality themes (e.g., Artistic, Social, Investigative), their overall engagement scores improve.',
-                counselorAction: 'Use RIASEC assessments early in the process. Help students connect their personality type to matching career fields.',
+                title: 'Explore interest-career connections (RIASEC)',
+                plain: 'When students discover their RIASEC RIASEC themes (e.g., Artistic, Social, Investigative), their overall engagement scores improve.',
+                counselorAction: 'Use RIASEC assessments early in the process. Help students connect their RIASEC interest area to matching career fields.',
                 impact: 'Positive effect on overall engagement scores'
             },
             {
@@ -6756,7 +7310,7 @@
                 priorityColor: '#f59e0b',
                 barColor: '#f59e0b',
                 title: 'Too many interests can scatter focus',
-                plain: 'Students who identify with many personality types (3+) tend to have less focused career plans. Broad interests are normal but need guided narrowing.',
+                plain: 'Students who identify with many RIASEC interest areas (3+) tend to have less focused career plans. Broad interests are normal but need guided narrowing.',
                 counselorAction: 'For students with 3+ RIASEC themes: help them find careers that blend their interests rather than picking just one. Example: "You\'re Artistic AND Social — consider art therapy or teaching."',
                 impact: 'Mild negative effect — more themes = less career focus'
             },
@@ -6767,7 +7321,7 @@
                 priorityColor: '#f59e0b',
                 barColor: '#f59e0b',
                 title: 'Multiple interests can lower clarity',
-                plain: 'Having many personality interests slightly reduces career clarity. Students with "too many possible selves" struggle to commit to a direction.',
+                plain: 'Having many RIASEC interests slightly reduces career clarity. Students with "too many possible selves" struggle to commit to a direction.',
                 counselorAction: 'Use values clarification activities to help multi-interest students prioritize. Ask: "If you could only do one of these for 5 years, which would it be?"',
                 impact: 'Mild negative effect — too many options = less clarity'
             }
@@ -7002,7 +7556,7 @@
                 id: 'oct-multitheme-clarity', category: 'personality', severity: 'neutral',
                 title: 'Students with Many Interests Need Help Narrowing',
                 value: 'WATCH — 57.9% of students affected',
-                detail: '57.9% of October students identify with multiple personality types (2+ RIASEC themes). While having broad interests boosts engagement, it also makes it harder for students to commit to a clear career direction.',
+                detail: '57.9% of October students identify with multiple RIASEC interest areas (2+ RIASEC themes). While having broad interests boosts engagement, it also makes it harder for students to commit to a clear career direction.',
                 soWhat: 'Having "too many possible selves" is developmentally normal — but these students need structured help narrowing down, not just more exploration.',
                 nextStep: 'Use values clarification activities: "If you could only do one of these for 5 years, which would it be?" Help students find careers that blend their interests.',
                 sources: [{label: 'RIASEC Analysis', action: 'page:riasec'}, {label: 'Oct Analysis', action: 'page:monthly-report'}]
@@ -7041,9 +7595,9 @@
             if (cardsEl && cardsEl.innerHTML.trim() === '') {
                 cardsEl.innerHTML = buildInsightCard({
                     id: 'oct-theme-concentration', category: 'personality', severity: 'neutral',
-                    title: 'More Personality Types = Less Career Focus',
+                    title: 'More RIASEC Interest Areas = Less Career Focus',
                     value: 'WATCH — 40.9% of students have 3+ types',
-                    detail: 'Students who identify with many RIASEC personality types tend to have the broadest but least focused career interests. Having 3 or more types (40.9% of students) makes it harder to narrow down a direction.',
+                    detail: 'Students who identify with many RIASEC RIASEC interest areas tend to have the broadest but least focused career interests. Having 3 or more types (40.9% of students) makes it harder to narrow down a direction.',
                     soWhat: 'Broad interests are developmentally normal, especially for younger students. But without guided narrowing, these students struggle to make concrete career plans.',
                     nextStep: 'Help multi-type students find careers that blend their interests. Example: A student who is both Artistic AND Social might thrive in art therapy, teaching, or UX design.',
                     sources: [{label: 'Oct Analysis', action: 'page:monthly-report'}, {label: 'RIASEC Research', action: 'page:sources'}]
@@ -7052,7 +7606,7 @@
                     title: 'Zero-Theme Students Rising',
                     value: '+14.77pp YoY',
                     detail: '17.0% of October students identified zero RIASEC themes, up 14.77pp from last year. This correlates with the Grade 6 expansion — younger students are less differentiated.',
-                    soWhat: 'The younger cohort needs age-appropriate exploration activities before personality-career matching can be effective.',
+                    soWhat: 'The younger cohort needs age-appropriate exploration activities before interest-career matching can be effective.',
                     nextStep: 'Design "discovery" sessions for grades 6-7 focused on broad exposure, not narrowing.',
                     sources: [{label: 'Oct YoY', action: 'page:monthly-report'}, {label: 'RIASEC Page', action: 'page:riasec'}]
                 });
@@ -7103,10 +7657,316 @@
             });
         }
 
+        // ===== DISTRICT COMMAND CENTER =====
+        function renderCommandCenter() {
+            var months = Object.keys(DATA.alignment_trajectory);
+            var latestMonth = months[months.length - 1];
+            var prevMonth = months[months.length - 2];
+            var latest = DATA.alignment_trajectory[latestMonth];
+            var prev = DATA.alignment_trajectory[prevMonth];
+            var allSchools = Object.values(DATA.schools);
+            var totalStudents = Object.values(DATA.unique_trend).reduce(function(a,b){return a+b;}, 0);
+            var totalSessions = Object.values(DATA.sessions_trend).reduce(function(a,b){return a+b;}, 0);
+            var schoolCount = allSchools.length;
+            var clarityDelta = (latest.pct_clear - prev.pct_clear).toFixed(1);
+            var certaintyDelta = (latest.avg_certainty - prev.avg_certainty).toFixed(2);
+
+            var banner = document.getElementById('commandBanner');
+            if (!banner) return;
+
+            // Program health: green if congruence >80 AND clarity trending up
+            var healthStatus = (DATA.congruence.match_rate > 80 && parseFloat(clarityDelta) >= 0) ? 'On Track' : 'Needs Review';
+            var healthColor = healthStatus === 'On Track' ? '#86efac' : '#fca5a5';
+
+            banner.innerHTML =
+                '<div class="command-banner-left">' +
+                    '<div class="command-banner-title">Montgomery County CAP — District Overview</div>' +
+                    '<div class="command-banner-sub">' + latestMonth + ' 2025 | ' + schoolCount + ' schools | <span style="color:' + healthColor + ';font-weight:600;">' + healthStatus + '</span></div>' +
+                '</div>' +
+                '<div class="command-banner-stats">' +
+                    '<div class="command-stat">' +
+                        '<div class="command-stat-value">' + (totalStudents/1000).toFixed(1) + 'K</div>' +
+                        '<div class="command-stat-label">Students Reached</div>' +
+                    '</div>' +
+                    '<div class="command-stat">' +
+                        '<div class="command-stat-value">' + DATA.congruence.match_rate + '%</div>' +
+                        '<div class="command-stat-label">Congruence Rate</div>' +
+                    '</div>' +
+                    '<div class="command-stat">' +
+                        '<div class="command-stat-value">' + latest.pct_clear + '%</div>' +
+                        '<div class="command-stat-label">Clear Plan</div>' +
+                        '<div class="command-stat-delta ' + (parseFloat(clarityDelta) >= 0 ? 'up' : 'down') + '">' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp</div>' +
+                    '</div>' +
+                    '<div class="command-stat">' +
+                        '<div class="command-stat-value">' + latest.avg_certainty.toFixed(2) + '</div>' +
+                        '<div class="command-stat-label">Avg Certainty</div>' +
+                        '<div class="command-stat-delta ' + (parseFloat(certaintyDelta) >= 0 ? 'up' : 'down') + '">' + (parseFloat(certaintyDelta) >= 0 ? '+' : '') + certaintyDelta + '</div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        function renderAttentionQueue() {
+            var listEl = document.getElementById('attentionList');
+            var countEl = document.getElementById('attentionCount');
+            if (!listEl) return;
+
+            var allSchools = Object.values(DATA.schools);
+            var validSchools = allSchools.filter(function(s) { return s.metrics.avg_certainty > 0 && s.survey_n >= 30; });
+            var avgCertainty = validSchools.reduce(function(s,sc){return s + sc.metrics.avg_certainty * sc.survey_n;}, 0) / validSchools.reduce(function(s,sc){return s + sc.survey_n;}, 0);
+            var avgClear = validSchools.reduce(function(s,sc){return s + sc.metrics.pct_clear * sc.survey_n;}, 0) / validSchools.reduce(function(s,sc){return s + sc.survey_n;}, 0);
+
+            // Compute SD
+            var certVals = validSchools.map(function(s){return s.metrics.avg_certainty;});
+            var clearVals = validSchools.map(function(s){return s.metrics.pct_clear;});
+            var certSD = Math.sqrt(certVals.reduce(function(s,v){return s + Math.pow(v - avgCertainty,2);},0) / certVals.length);
+            var clearSD = Math.sqrt(clearVals.reduce(function(s,v){return s + Math.pow(v - avgClear,2);},0) / clearVals.length);
+
+            var issues = [];
+            validSchools.forEach(function(school) {
+                var reasons = [];
+                var severity = 'info';
+                if (school.metrics.avg_certainty < avgCertainty - 1.5 * certSD) {
+                    reasons.push('Certainty ' + school.metrics.avg_certainty.toFixed(2) + ' (district avg ' + avgCertainty.toFixed(2) + ')');
+                    severity = 'critical';
+                }
+                if (school.metrics.pct_clear < avgClear - 1.5 * clearSD) {
+                    reasons.push('Clear Plan ' + school.metrics.pct_clear.toFixed(1) + '% (district avg ' + avgClear.toFixed(1) + '%)');
+                    severity = severity === 'critical' ? 'critical' : 'warning';
+                }
+                if (school.metrics.avg_certainty < 3.0) {
+                    if (reasons.length === 0) reasons.push('Certainty below 3.0');
+                    severity = 'critical';
+                }
+                if (school.metrics.pct_clear < 10) {
+                    if (reasons.length === 0) reasons.push('Clear Plan below 10%');
+                    severity = severity === 'info' ? 'warning' : severity;
+                }
+                // High sessions but low outcomes
+                if (school.ytd > 500 && school.metrics.avg_certainty < avgCertainty - certSD) {
+                    reasons.push('High sessions (' + school.ytd + ') but below-avg certainty');
+                    severity = 'warning';
+                }
+                if (reasons.length > 0) {
+                    issues.push({school: school.school, reasons: reasons, severity: severity, certainty: school.metrics.avg_certainty, clear: school.metrics.pct_clear});
+                }
+            });
+
+            // Also flag schools with very low survey N
+            allSchools.filter(function(s){return s.survey_n > 0 && s.survey_n < 10;}).forEach(function(school) {
+                issues.push({school: school.school, reasons: ['Only ' + school.survey_n + ' survey responses — insufficient for analysis'], severity: 'info', certainty: school.metrics.avg_certainty, clear: school.metrics.pct_clear});
+            });
+
+            // Sort by severity
+            var order = {critical:0, warning:1, info:2};
+            issues.sort(function(a,b) { return (order[a.severity]||2) - (order[b.severity]||2); });
+
+            if (countEl) {
+                countEl.textContent = issues.length;
+                countEl.className = 'attention-count' + (issues.length === 0 ? ' ok' : '');
+            }
+
+            if (issues.length === 0) {
+                listEl.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--t3);font-size:13px;">All schools within normal ranges. No immediate action needed.</div>';
+                return;
+            }
+
+            listEl.innerHTML = issues.slice(0, 10).map(function(item) {
+                return '<div class="attention-item" onclick="showPage(\'schools\')">' +
+                    '<div class="attention-severity ' + item.severity + '"></div>' +
+                    '<div class="attention-info">' +
+                        '<div class="attention-school">' + item.school + '</div>' +
+                        '<div class="attention-reason">' + item.reasons[0] + '</div>' +
+                    '</div>' +
+                    '<div class="attention-metric">' + item.certainty.toFixed(2) + ' / ' + item.clear.toFixed(1) + '%</div>' +
+                '</div>';
+            }).join('') + (issues.length > 10 ? '<div style="padding:0.5rem 1.25rem;font-size:11px;color:var(--t3);text-align:center;">+ ' + (issues.length - 10) + ' more schools</div>' : '');
+        }
+
+        function renderBoardTalkingPoints() {
+            var bodyEl = document.getElementById('boardBody');
+            if (!bodyEl) return;
+
+            var months = Object.keys(DATA.alignment_trajectory);
+            var latestMonth = months[months.length - 1];
+            var prevMonth = months[months.length - 2];
+            var latest = DATA.alignment_trajectory[latestMonth];
+            var prev = DATA.alignment_trajectory[prevMonth];
+            var allSchools = Object.values(DATA.schools);
+            var totalStudents = Object.values(DATA.unique_trend).reduce(function(a,b){return a+b;}, 0);
+            var totalSessions = Object.values(DATA.sessions_trend).reduce(function(a,b){return a+b;}, 0);
+            var validSchools = allSchools.filter(function(s){return s.metrics.avg_certainty > 0 && s.survey_n >= 30;});
+            var topSchools = validSchools.slice().sort(function(a,b){return b.metrics.pct_clear - a.metrics.pct_clear;}).slice(0,3);
+            var clarityDelta = (latest.pct_clear - prev.pct_clear).toFixed(1);
+
+            var wins = [];
+            wins.push(totalStudents.toLocaleString() + ' unique students reached across ' + allSchools.length + ' schools (' + totalSessions.toLocaleString() + ' sessions YTD)');
+            if (DATA.congruence.match_rate > 80) {
+                wins.push(DATA.congruence.match_rate + '% career-interest congruence — students are choosing careers aligned with their strengths');
+            }
+            if (OCTOBER_FULL && OCTOBER_FULL.confidence) {
+                wins.push('Career confidence at ' + OCTOBER_FULL.confidence.pct_positive + '% (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year)');
+            }
+            if (parseFloat(clarityDelta) > 0) {
+                wins.push('Career clarity improving: ' + latest.pct_clear + '% now have a clear plan (+' + clarityDelta + 'pp from ' + prevMonth + ')');
+            }
+
+            var concerns = [];
+            if (latest.pct_clear < 25) {
+                concerns.push('Clear career plan at ' + latest.pct_clear + '% — below 25% target. The "Some Idea" group (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students) is the key intervention opportunity.');
+            }
+            if (DATA.benchmarks.avg_helpful < 3.75) {
+                concerns.push('Session helpfulness at ' + DATA.benchmarks.avg_helpful.toFixed(2) + '/5 — below 3.75 target. Improving session quality is the strongest driver of student career certainty.');
+            }
+            var lowSchools = validSchools.filter(function(s){return s.metrics.pct_clear < 10;});
+            if (lowSchools.length > 0) {
+                concerns.push(lowSchools.length + ' school' + (lowSchools.length > 1 ? 's' : '') + ' below 10% clear plan rate — may need targeted support');
+            }
+
+            var nextSteps = [];
+            nextSteps.push('Focus CTE career pathway sessions on the ' + DATA.future_thinking['Some Idea'].toLocaleString() + ' "Some Idea" students — highest-impact group for clarity gains');
+            nextSteps.push('Top-performing schools (' + topSchools.map(function(s){return s.school;}).join(', ') + ') — identify and replicate best practices');
+            nextSteps.push('Continue monthly tracking with next data intake due by March 1');
+
+            bodyEl.innerHTML =
+                '<div class="board-section">' +
+                    '<div class="board-section-title wins">Wins This Period</div>' +
+                    wins.map(function(w){return '<div class="board-item win">' + w + '</div>';}).join('') +
+                '</div>' +
+                '<div class="board-section">' +
+                    '<div class="board-section-title concerns">Areas to Monitor</div>' +
+                    concerns.map(function(c){return '<div class="board-item concern">' + c + '</div>';}).join('') +
+                '</div>' +
+                '<div class="board-section">' +
+                    '<div class="board-section-title next">Recommended Next Steps</div>' +
+                    nextSteps.map(function(n){return '<div class="board-item next">' + n + '</div>';}).join('') +
+                '</div>';
+        }
+
+        function copyBoardPoints() {
+            var body = document.getElementById('boardBody');
+            if (!body) return;
+            var text = '';
+            body.querySelectorAll('.board-section').forEach(function(section) {
+                var title = section.querySelector('.board-section-title');
+                if (title) text += title.textContent.trim() + '\n';
+                section.querySelectorAll('.board-item').forEach(function(item) {
+                    text += '  - ' + item.textContent.trim() + '\n';
+                });
+                text += '\n';
+            });
+            text += 'Source: MoCo CAP Impact Dashboard | ' + new Date().toLocaleDateString();
+            navigator.clipboard.writeText(text).then(function() {
+                var btn = document.querySelector('.board-copy-btn');
+                if (btn) { btn.textContent = 'Copied!'; setTimeout(function(){btn.textContent = 'Copy to Clipboard';}, 2000); }
+            });
+        }
+
+        // ===== STAKEHOLDER FEEDBACK SYSTEM =====
+        var feedbackStore = JSON.parse(localStorage.getItem('mococap_feedback') || '[]');
+
+        function openFeedback() {
+            document.getElementById('feedbackOverlay').classList.add('active');
+            document.getElementById('feedbackFormBody').style.display = '';
+            document.getElementById('feedbackSuccess').classList.remove('show');
+            // Populate school dropdown
+            var schoolSelect = document.getElementById('fbSchool');
+            if (schoolSelect && schoolSelect.options.length <= 1) {
+                Object.values(DATA.schools).sort(function(a,b){return a.school.localeCompare(b.school);}).forEach(function(s) {
+                    var opt = document.createElement('option');
+                    opt.value = s.school;
+                    opt.textContent = s.school;
+                    schoolSelect.appendChild(opt);
+                });
+            }
+            // Auto-fill current view
+            var pageTitle = document.getElementById('pageTitle');
+            if (pageTitle) {
+                var viewField = document.getElementById('feedbackFormBody');
+                if (viewField) viewField.setAttribute('data-current-view', pageTitle.textContent);
+            }
+        }
+
+        function closeFeedback() {
+            document.getElementById('feedbackOverlay').classList.remove('active');
+        }
+
+        function toggleFeedbackFlag(btn) {
+            btn.classList.toggle('selected');
+            // Show/hide school field
+            var showSchool = document.querySelector('[data-flag="flag-school"].selected');
+            document.getElementById('fbSchoolField').style.display = showSchool ? '' : 'none';
+        }
+
+        function submitFeedback() {
+            var name = document.getElementById('fbName').value.trim();
+            var role = document.getElementById('fbRole').value;
+            var comment = document.getElementById('fbComment').value.trim();
+            if (!name || !comment) { alert('Please fill in your name and feedback.'); return; }
+
+            var flags = [];
+            document.querySelectorAll('.feedback-flag-btn.selected').forEach(function(btn){flags.push(btn.getAttribute('data-flag'));});
+
+            var entry = {
+                id: Date.now(),
+                date: new Date().toISOString().split('T')[0],
+                name: name,
+                role: role,
+                view: document.getElementById('feedbackFormBody').getAttribute('data-current-view') || 'Dashboard',
+                type: flags.join(', ') || 'General',
+                school: document.getElementById('fbSchool').value || '',
+                comment: comment,
+                priority: document.getElementById('fbPriority').value,
+                status: 'open'
+            };
+
+            feedbackStore.push(entry);
+            localStorage.setItem('mococap_feedback', JSON.stringify(feedbackStore));
+
+            // Show success
+            document.getElementById('feedbackFormBody').style.display = 'none';
+            document.getElementById('feedbackSuccess').classList.add('show');
+
+            // Reset form
+            document.getElementById('fbName').value = '';
+            document.getElementById('fbComment').value = '';
+            document.getElementById('fbRole').value = '';
+            document.getElementById('fbPriority').value = 'normal';
+            document.querySelectorAll('.feedback-flag-btn.selected').forEach(function(btn){btn.classList.remove('selected');});
+            document.getElementById('fbSchoolField').style.display = 'none';
+
+            // Update log if visible
+            renderFeedbackLog();
+
+            setTimeout(closeFeedback, 2000);
+        }
+
+        function renderFeedbackLog() {
+            var tbody = document.getElementById('feedbackLogBody');
+            if (!tbody) return;
+            if (feedbackStore.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2rem;color:var(--t3);">No feedback submitted yet. Use the "Leave Feedback" button to share your thoughts.</td></tr>';
+                return;
+            }
+            tbody.innerHTML = feedbackStore.slice().reverse().map(function(fb) {
+                var priorityBadge = fb.priority === 'urgent' ? ' <span style="color:#dc2626;font-weight:600;">[URGENT]</span>' : (fb.priority === 'high' ? ' <span style="color:#f59e0b;font-weight:600;">[HIGH]</span>' : '');
+                return '<tr>' +
+                    '<td style="white-space:nowrap;">' + fb.date + '</td>' +
+                    '<td><strong>' + fb.name + '</strong><br><span style="font-size:11px;color:var(--t3);">' + (fb.role || '') + '</span></td>' +
+                    '<td>' + fb.view + (fb.school ? '<br><span style="font-size:11px;color:var(--g);">' + fb.school + '</span>' : '') + '</td>' +
+                    '<td>' + fb.type + priorityBadge + '</td>' +
+                    '<td style="max-width:300px;">' + fb.comment + '</td>' +
+                    '<td><span class="feedback-status ' + fb.status + '">' + fb.status + '</span></td>' +
+                '</tr>';
+            }).join('');
+        }
+
         function initDashboard() {
             try { computeDataQuality(); } catch(e) { console.error('computeDataQuality error:', e); }
             try { populateCoachFilter(); } catch(e) { console.error('populateCoachFilter error:', e); }
             try { computeNorms(); } catch(e) { console.error('computeNorms error:', e); }
+            try { renderCommandCenter(); } catch(e) { console.error('renderCommandCenter error:', e); }
+            try { renderAttentionQueue(); } catch(e) { console.error('renderAttentionQueue error:', e); }
+            try { renderBoardTalkingPoints(); } catch(e) { console.error('renderBoardTalkingPoints error:', e); }
             try { renderMonthNav(); } catch(e) { console.error('renderMonthNav error:', e); }
             try { generateDynamicOverview(); } catch(e) { console.error('generateDynamicOverview error:', e); }
             try { renderCorrelationSpotlight(); } catch(e) { console.error('renderCorrelationSpotlight error:', e); }
@@ -7124,6 +7984,10 @@
             try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('Scorecard error:', e); }
             try { renderSectorImpactSummary(); } catch(e) { console.error('Sector summary error:', e); }
             try { renderOverviewOctoberCharts(); } catch(e) { console.error('Overview Oct charts error:', e); }
+            try { renderFeedbackLog(); } catch(e) { console.error('renderFeedbackLog error:', e); }
+            // Show feedback FAB
+            var fab = document.getElementById('feedbackFab');
+            if (fab) fab.style.display = '';
             // Hidden-page charts are deferred to showPage() — Chart.js needs display:block to render properly
         }
 
@@ -7134,9 +7998,9 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             // Find the nav item for this page and activate it
             var navItems = document.querySelectorAll('.nav-item');
-            var pageMap = {overview:0, congruence:1, 'career-plan':2, 'program-perf':3, engagement:4, riasec:5, sectors:6, distribution:7, experts:8, 'monthly-report':9, schools:10, sources:11};
+            var pageMap = {overview:0, congruence:1, 'career-plan':2, 'program-perf':3, engagement:4, riasec:5, sectors:6, distribution:7, experts:8, 'monthly-report':9, schools:10, 'feedback-log':11, sources:12};
             if (pageMap[pageId] !== undefined && navItems[pageMap[pageId]]) navItems[pageMap[pageId]].classList.add('active');
-            const titles = {overview: 'Overview', congruence: 'Career-Personality Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
+            const titles = {overview: 'Overview', congruence: 'Career-Interest Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', 'feedback-log': 'Stakeholder Feedback', sources: 'Methodology & Sources'};
             document.getElementById('pageTitle').textContent = titles[pageId] || 'Dashboard';
             document.getElementById('pageSubtitle').textContent = 'Career coaching program insights';
             // Reset month view when navigating to overview
@@ -7184,6 +8048,8 @@
                     renderRegressionBars();
                     renderCTEChart();
                     renderFollowupChart();
+                } else if (pageId === 'feedback-log') {
+                    renderFeedbackLog();
                 }
                 } catch(e) { console.error('showPage render error (' + pageId + '):', e); }
             }, 100);
@@ -7197,8 +8063,19 @@
             const tbody = document.getElementById('schoolTableBody');
             tbody.innerHTML = '';
             const filtered = getFilteredSchools();
+            // Compute quartiles for clear plan %
+            const validForQuartile = filtered.filter(s => s.survey_n >= 30 && s.metrics.pct_clear >= 0);
+            const clearVals = validForQuartile.map(s => s.metrics.pct_clear).sort((a,b) => a - b);
+            const q25 = clearVals[Math.floor(clearVals.length * 0.25)] || 0;
+            const q75 = clearVals[Math.floor(clearVals.length * 0.75)] || 100;
+
             filtered.sort((a, b) => a.school.localeCompare(b.school)).forEach(school => {
                 const tr = document.createElement('tr');
+                // Quartile coloring
+                if (school.survey_n >= 30) {
+                    if (school.metrics.pct_clear >= q75) tr.className = 'quartile-top';
+                    else if (school.metrics.pct_clear <= q25) tr.className = 'quartile-bottom';
+                }
                 const certClass = (school.metrics.avg_certainty > 0 && school.survey_n >= 30) ?
                     (school.metrics.avg_certainty < activeThresholds.certainty_low ? 'alert-cell negative' :
                      school.metrics.avg_certainty > activeThresholds.certainty_high ? 'alert-cell positive' : '') : '';
@@ -7218,10 +8095,50 @@
                     schoolLabel += ' <span class="dq-badge dq-anomaly">⚠ Anomaly</span>';
                 }
                 const coachDisplay = (school.coach && school.coach.trim() !== '') ? school.coach : '<span class="dq-badge dq-unassigned">● Unassigned</span>';
+                tr.style.cursor = 'pointer';
+                tr.setAttribute('data-school', school.school);
+                tr.onclick = function() { toggleSchoolDetail(this, school); };
                 tr.innerHTML = '<td>' + schoolLabel + '</td><td>' + school.level + '</td><td>' + coachDisplay + '</td><td class="' + sessClass + '">' + school.ytd + '</td><td>' + school.survey_n + '</td><td class="' + certClass + '">' + (school.metrics.avg_certainty || 0).toFixed(2) + '</td><td class="' + planClass + '">' + (school.metrics.pct_clear || 0).toFixed(1) + '%</td>';
                 tbody.appendChild(tr);
             });
             updateTableRowCount();
+        }
+
+        function toggleSchoolDetail(row, school) {
+            var existing = row.nextElementSibling;
+            if (existing && existing.classList.contains('school-detail-row')) {
+                existing.remove();
+                return;
+            }
+            // Remove any other open detail rows
+            document.querySelectorAll('.school-detail-row').forEach(function(r){r.remove();});
+
+            var dosageInfo = DERIVED.dosage_data.find(function(d){return d.school === school.school;});
+            var dosage = dosageInfo ? dosageInfo.dosage.toFixed(2) : 'N/A';
+
+            var detailRow = document.createElement('tr');
+            detailRow.className = 'school-detail-row';
+            detailRow.innerHTML = '<td colspan="7"><div class="school-detail-content">' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + school.ytd + '</div><div class="sdm-label">YTD Sessions</div></div>' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + dosage + '</div><div class="sdm-label">Sessions/Student</div></div>' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + (school.metrics.avg_certainty || 0).toFixed(2) + '</div><div class="sdm-label">Avg Certainty</div></div>' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + (school.metrics.pct_clear || 0).toFixed(1) + '%</div><div class="sdm-label">Clear Plan</div></div>' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + school.survey_n + '</div><div class="sdm-label">Survey N</div></div>' +
+                '<div class="school-detail-metric"><div class="sdm-value">' + school.level + '</div><div class="sdm-label">Level</div></div>' +
+                '<div class="school-detail-actions" style="grid-column:1/-1;">' +
+                    '<button class="school-flag-btn" onclick="event.stopPropagation(); flagSchool(\'' + school.school.replace(/'/g, "\\'") + '\');">Flag for Review</button>' +
+                '</div>' +
+            '</div></td>';
+            row.after(detailRow);
+        }
+
+        function flagSchool(schoolName) {
+            document.getElementById('fbSchoolField').style.display = '';
+            var select = document.getElementById('fbSchool');
+            if (select) select.value = schoolName;
+            var flagBtn = document.querySelector('[data-flag="flag-school"]');
+            if (flagBtn) flagBtn.classList.add('selected');
+            openFeedback();
         }
 
         function filterSchoolTable() {
@@ -7362,7 +8279,7 @@
             var total = dist['High']+dist['Medium']+dist['Low']+dist['No Match'];
             var noMatch = dist['No Match'];
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-personality match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-interest match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
         }
 
         function renderRiasecCongruenceBarsChart() {
@@ -7423,7 +8340,7 @@
             var topType = Object.keys(themes).reduce(function(a,b){return themes[a]>themes[b]?a:b;});
             var lowType = Object.keys(themes).reduce(function(a,b){return themes[a]<themes[b]?a:b;});
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented personality types.'});
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented RIASEC interest areas.'});
         }
 
         function renderMonthlyTrendChart() {
@@ -7700,8 +8617,8 @@
 
         const MODAL_DATA = {
             congruence: {
-                title: "Career-Personality Fit Details",
-                metrics: [{label:"Metric",value:"Career-Personality Congruence"},{label:"Fit Rate",value:"85.1%"},{label:"Sample Size",value:"N = 2,962 student records"},{label:"Confidence",value:"HIGH (N ≥ 200)"}],
+                title: "Career-Interest Fit Details",
+                metrics: [{label:"Metric",value:"Career-Interest Congruence"},{label:"Fit Rate",value:"85.1%"},{label:"Sample Size",value:"N = 2,962 student records"},{label:"Confidence",value:"HIGH (N ≥ 200)"}],
                 methodology: "Student career selections matched to O*NET-SOC RIASEC profiles using Holland Code theory. High Match (≥2 codes) = 28.1%, Medium (1 code) = 36.5%, Low (adjacent) = 20.6%, No Match = 14.9%. The 85.1% represents High + Medium combined.",
                 source: "MoCo CAP Enriched Dataset; O*NET 28.1; Holland (1997)"
             },
