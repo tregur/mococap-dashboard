@@ -4,8 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoCo CAP Impact Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Analytics 4 — replace G-XXXXXXXXXX with your Measurement ID -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+
+        // Custom event tracking helper
+        function trackEvent(action, category, label, value) {
+            if (typeof gtag === 'function') {
+                gtag('event', action, {
+                    event_category: category || 'engagement',
+                    event_label: label || '',
+                    value: value || 0
+                });
+            }
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -14,21 +34,23 @@
         }
 
         :root {
-            --g: #0d9488;
-            --g-light: #ccfbf1;
-            --bg: #fafaf9;
-            --surface: #f5f5f4;
-            --bdr: #e7e5e4;
-            --t1: #1c1917;
-            --t2: #57534e;
-            --t3: #a8a29e;
-            --positive: #0d9488;
-            --attention: #d97706;
-            --celebrate: #7c3aed;
+            --g: #5c6e3c;
+            --g-dark: #3d4a28;
+            --g-light: #eef3e5;
+            --bg: #f8faf6;
+            --surface: #f1f4ed;
+            --bdr: #dde3d5;
+            --t1: #1a1e14;
+            --t2: #4a5240;
+            --t3: #8a9478;
+            --positive: #4a7c32;
+            --attention: #b8860b;
+            --celebrate: #6b8e23;
+            --glow: rgba(92,110,60,0.12);
         }
 
         html, body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             background: var(--bg);
             color: var(--t1);
             height: 100%;
@@ -40,7 +62,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, var(--g) 0%, #0096a3 100%);
+            background: linear-gradient(135deg, #2d3520 0%, #3d4a28 40%, #5c6e3c 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -64,7 +86,9 @@
         }
 
         .login-box h1 {
-            font-size: 28px;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             margin-bottom: 0.5rem;
             color: var(--t1);
         }
@@ -80,7 +104,7 @@
             padding: 12px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 14px;
             margin-bottom: 1rem;
             transition: border-color 0.2s;
@@ -106,7 +130,7 @@
         }
 
         .login-box button:hover {
-            background: #00a804;
+            background: #3d4a28;
         }
 
         #mainContent {
@@ -126,7 +150,7 @@
 
         .sidebar {
             width: 240px;
-            background: var(--bg);
+            background: linear-gradient(180deg, var(--bg) 0%, #eef3e5 100%);
             border-right: 1px solid var(--bdr);
             display: flex;
             flex-direction: column;
@@ -156,7 +180,11 @@
         .sidebar-logo {
             font-weight: 700;
             font-size: 16px;
-            color: var(--g);
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--g) 0%, var(--celebrate) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .sidebar.collapsed .sidebar-logo {
@@ -210,7 +238,7 @@
         .nav-item.active {
             color: var(--g);
             border-left-color: var(--g);
-            background: rgba(37, 99, 235, 0.05);
+            background: var(--glow);
         }
 
         .sidebar.collapsed .nav-item.active {
@@ -221,6 +249,11 @@
         .nav-icon {
             font-size: 16px;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
         }
 
         .nav-label {
@@ -241,15 +274,18 @@
         .header {
             padding: 0.5rem 1.5rem;
             border-bottom: 1px solid var(--bdr);
-            background: var(--bg);
+            background: linear-gradient(90deg, var(--bg) 0%, #eef3e5 100%);
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            overflow-x: auto;
         }
 
         .header h1 {
-            font-size: 16px;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             margin-bottom: 0;
             white-space: nowrap;
         }
@@ -374,14 +410,15 @@
 
         /* === Educator-Friendly Overview === */
         .welcome-section {
-            background: linear-gradient(135deg, var(--g-light) 0%, #f0fdf4 100%);
+            background: linear-gradient(135deg, var(--g-light) 0%, #e8eedc 50%, var(--bg) 100%);
             border-radius: 16px;
             padding: 1.75rem 2rem;
             margin-bottom: 1.25rem;
         }
         .welcome-greeting {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
+            letter-spacing: -0.02em;
             color: var(--t1);
             margin-bottom: 0.25rem;
         }
@@ -393,35 +430,139 @@
         }
         .metric-highlights {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 0.75rem;
             margin-bottom: 1.25rem;
         }
-        @media (min-width: 900px) {
+        @media (min-width: 600px) {
             .metric-highlights { grid-template-columns: repeat(4, 1fr); }
         }
         .metric-highlight-card {
-            background: #fff;
+            background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
             border: 1px solid var(--bdr);
             border-radius: 14px;
             padding: 1rem 1.1rem;
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.2s, border-color 0.2s;
+            cursor: pointer;
+            position: relative;
+        }
+        .mh-compact-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .mh-compact-col .metric-highlight-card {
+            padding: 0.5rem 0.8rem;
+            flex: 1;
+        }
+        .mh-compact-col .mh-value {
+            font-size: 18px;
+        }
+        .mh-compact-col .mh-header {
+            margin-bottom: 0.25rem;
+        }
+        .mh-compact-col .mh-label {
+            font-size: 10px;
+        }
+        .mh-compact-col .mh-expand-hint {
+            font-size: 9px;
+            margin-top: 0.25rem;
+            padding-top: 0.2rem;
+        }
+        .mh-compact-col .mh-context {
+            font-size: 9px;
+            margin-top: 0.15rem;
+        }
+        .mh-compact-col .mh-trend {
+            font-size: 10px;
+            margin-top: 0.15rem;
+        }
+        .mh-popover-source {
+            font-size: 10px;
+            color: var(--t3);
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--bdr);
+            line-height: 1.5;
+        }
+        .mh-popover-source-label {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--t2);
+            margin-right: 0.25rem;
         }
         .metric-highlight-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px var(--glow), 0 2px 8px rgba(0,0,0,0.04);
+            border-color: var(--g);
         }
-        .mh-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--t3);
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
+        .metric-highlight-card.expanded {
+            border-color: var(--g);
+        }
+        .mh-header {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
             margin-bottom: 0.5rem;
         }
+        .mh-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--t3);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .mh-info {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            border: 1px solid var(--bdr);
+            background: var(--surface);
+            color: var(--t3);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .mh-info:hover { background: var(--g-light); color: var(--g); border-color: var(--g); }
+        .mh-popover {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            background: #fff;
+            border: 1px solid var(--g);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            z-index: 100;
+            font-size: 12px;
+            color: var(--t2);
+            line-height: 1.6;
+            display: none;
+            transform: translateY(-4px);
+        }
+        .mh-popover.visible { display: block; }
+        .mh-popover-title {
+            font-weight: 700; color: var(--t1); font-size: 13px;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+        .mh-popover-close {
+            position: absolute; top: 6px; right: 8px;
+            cursor: pointer; color: var(--t3); font-size: 14px;
+            line-height: 1;
+        }
+        .mh-popover-close:hover { color: var(--t1); }
         .mh-value {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--t1);
+            letter-spacing: -0.02em;
         }
         .mh-trend {
             font-size: 12px;
@@ -432,8 +573,52 @@
         .mh-trend.down { color: var(--attention); }
         .mh-context {
             font-size: 11px;
+            font-weight: 500;
             color: var(--t3);
             margin-top: 0.25rem;
+        }
+        .mh-expand-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 10px;
+            color: var(--t3);
+            margin-top: 0.5rem;
+            border-top: 1px dashed var(--bdr);
+            padding-top: 0.4rem;
+            transition: color 0.15s;
+        }
+        .metric-highlight-card:hover .mh-expand-hint { color: var(--g); }
+        .mh-breakdown {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid var(--bdr);
+        }
+        .metric-highlight-card.expanded .mh-breakdown { display: block; }
+        .metric-highlight-card.expanded .mh-expand-hint { display: none; }
+        .mh-breakdown-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.2rem 0;
+            font-size: 11px;
+        }
+        .mh-breakdown-label { color: var(--t2); }
+        .mh-breakdown-value { font-weight: 600; color: var(--t1); }
+        .mh-breakdown-bar-wrap {
+            flex: 1;
+            height: 4px;
+            background: var(--surface);
+            border-radius: 2px;
+            margin: 0 0.5rem;
+            overflow: hidden;
+        }
+        .mh-breakdown-bar {
+            height: 100%;
+            border-radius: 2px;
+            background: var(--g);
+            transition: width 0.4s ease;
         }
         .overview-section-header {
             display: flex;
@@ -443,8 +628,9 @@
             margin-top: 0.5rem;
         }
         .overview-section-header h3 {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
             color: var(--t1);
             margin: 0;
         }
@@ -499,7 +685,7 @@
             min-width: 0;
         }
         .widget:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 20px var(--glow), 0 2px 8px rgba(0,0,0,0.04);
         }
         .widget--wide {
             grid-column: 1 / -1;
@@ -509,11 +695,36 @@
             align-items: center;
             justify-content: space-between;
             margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+        }
+        .widget-mini-pills {
+            display: flex;
+            gap: 2px;
+            background: var(--surface);
+            border-radius: 6px;
+            padding: 2px;
+        }
+        .widget-mini-pill {
+            font-size: 9px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--t3);
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+        .widget-mini-pill:hover { color: var(--t2); }
+        .widget-mini-pill.active {
+            background: var(--g);
+            color: #fff;
         }
         .widget-title {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--t1);
+            letter-spacing: -0.01em;
         }
         .widget-badge {
             font-size: 10px;
@@ -523,7 +734,7 @@
             border-radius: 4px;
             letter-spacing: 0.04em;
         }
-        .widget-badge--positive { background: var(--g-light); color: #0f766e; }
+        .widget-badge--positive { background: var(--g-light); color: var(--g-dark); }
         .widget-badge--attention { background: #fef3c7; color: #92400e; }
         .widget-body {
             flex: 1;
@@ -540,6 +751,171 @@
         .widget-chart-wrap {
             position: relative;
             width: 100%;
+        }
+        .widget-insight {
+            font-size: 12px;
+            color: var(--t2);
+            line-height: 1.5;
+            padding: 0.5rem 0 0.25rem;
+            border-top: 1px solid var(--bdr);
+            margin-top: 0.5rem;
+        }
+        .widget-action {
+            font-size: 12px;
+            color: var(--g);
+            font-weight: 600;
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.35rem;
+        }
+        .widget-action::before {
+            content: '\2192';
+            flex-shrink: 0;
+        }
+        .widget-deeplink {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fff;
+            background: var(--g);
+            cursor: pointer;
+            margin-top: 0.75rem;
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .widget-deeplink:hover {
+            background: var(--g-dark);
+            transform: translateY(-1px);
+        }
+        .widget-deeplink svg {
+            flex-shrink: 0;
+        }
+        /* Feedback survey */
+        .fb-trigger {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px dashed var(--bdr);
+        }
+        .fb-thumb {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px; height: 26px;
+            border-radius: 6px;
+            border: 1px solid var(--bdr);
+            background: var(--bg);
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.15s;
+        }
+        .fb-thumb:hover { border-color: var(--g); background: var(--g-light); }
+        .fb-thumb.selected { border-color: var(--g); background: var(--g); }
+        .fb-thumb.selected svg { stroke: #fff; }
+        .fb-prompt { font-size: 10px; color: var(--t3); }
+        .fb-survey {
+            display: none;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background: var(--surface);
+            border-radius: 8px;
+            border: 1px solid var(--bdr);
+        }
+        .fb-survey.open { display: block; }
+        .fb-survey-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--t2);
+            margin-bottom: 0.25rem;
+            margin-top: 0.5rem;
+        }
+        .fb-survey-label:first-child { margin-top: 0; }
+        .fb-stars {
+            display: flex;
+            gap: 4px;
+        }
+        .fb-star {
+            width: 24px; height: 24px;
+            border-radius: 4px;
+            border: 1px solid var(--bdr);
+            background: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--t3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .fb-star:hover { border-color: var(--g); color: var(--g); }
+        .fb-star.selected { background: var(--g); color: #fff; border-color: var(--g); }
+        .fb-textarea {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid var(--bdr);
+            border-radius: 6px;
+            font-size: 11px;
+            font-family: 'Montserrat', sans-serif;
+            resize: vertical;
+            min-height: 48px;
+            outline: none;
+            margin-top: 0.25rem;
+        }
+        .fb-textarea:focus { border-color: var(--g); }
+        .fb-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            background: var(--g);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            transition: background 0.15s;
+        }
+        .fb-submit:hover { background: var(--g-dark); }
+        .fb-thanks {
+            font-size: 11px;
+            color: var(--positive);
+            font-weight: 600;
+            padding: 0.35rem 0;
+        }
+
+        /* Clickable insight cards */
+        .insight-card--clickable { cursor: pointer; }
+        .insight-card--clickable:hover {
+            border-color: var(--g);
+        }
+        .ic-nav-arrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            margin-top: 0.75rem;
+            color: var(--g);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 0.35rem 0.75rem;
+            border: 1px solid var(--g);
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+        .insight-card--clickable:hover .ic-nav-arrow {
+            background: var(--g);
+            color: #fff;
+            transform: translateX(2px);
         }
 
         .overview-chart-card {
@@ -656,7 +1032,7 @@
             padding: 8px 12px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 13px;
         }
 
@@ -739,7 +1115,8 @@
 
         .chart-title {
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.01em;
             margin-bottom: 1rem;
             color: var(--t1);
         }
@@ -985,7 +1362,7 @@
             padding: 4px 8px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 11px;
             color: var(--t1);
             background: var(--bg);
@@ -1007,6 +1384,96 @@
             margin: 0 0.1rem;
         }
 
+        /* Multi-select school dropdown */
+        .ms-wrap { position: relative; min-width: 240px; }
+        .ms-display {
+            display: flex; align-items: center; gap: 4px;
+            padding: 3px 8px; border: 1px solid var(--bdr); border-radius: 6px;
+            background: var(--bg); cursor: pointer; min-height: 28px; flex-wrap: wrap;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .ms-display:hover { border-color: var(--g); }
+        .ms-display.open { border-color: var(--g); box-shadow: 0 0 0 3px var(--glow); }
+        .ms-placeholder { font-size: 11px; color: var(--t2); white-space: nowrap; }
+        .ms-tag {
+            display: inline-flex; align-items: center; gap: 3px;
+            padding: 1px 6px; background: var(--g-light); color: var(--g);
+            border-radius: 4px; font-size: 10px; font-weight: 600;
+            white-space: nowrap; max-width: 140px; overflow: hidden; text-overflow: ellipsis;
+        }
+        .ms-tag-close {
+            cursor: pointer; font-size: 12px; line-height: 1; opacity: 0.6;
+            transition: opacity 0.15s;
+        }
+        .ms-tag-close:hover { opacity: 1; }
+        .ms-tag--benchmark { background: #fef3c7; color: #92400e; }
+        .ms-overflow { font-size: 10px; color: var(--t3); font-weight: 600; white-space: nowrap; }
+        .ms-arrow {
+            margin-left: auto; flex-shrink: 0; transition: transform 0.2s;
+        }
+        .ms-display.open .ms-arrow { transform: rotate(180deg); }
+        .ms-dropdown {
+            position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+            background: #fff; border: 1px solid var(--bdr); border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
+            z-index: 1000; display: none; overflow: hidden;
+            min-width: 280px;
+        }
+        .ms-dropdown.open { display: block; }
+        .ms-search-wrap {
+            padding: 8px; border-bottom: 1px solid var(--bdr);
+        }
+        .ms-search {
+            width: 100%; padding: 6px 8px; border: 1px solid var(--bdr);
+            border-radius: 6px; font-size: 11px; font-family: 'Montserrat', sans-serif;
+            outline: none; transition: border-color 0.2s;
+        }
+        .ms-search:focus { border-color: var(--g); }
+        .ms-options {
+            max-height: 240px; overflow-y: auto; padding: 4px 0;
+        }
+        .ms-options::-webkit-scrollbar { width: 4px; }
+        .ms-options::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 4px; }
+        .ms-option {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 12px; font-size: 11px; color: var(--t1);
+            cursor: pointer; transition: background 0.15s;
+        }
+        .ms-option:hover { background: var(--surface); }
+        .ms-option.selected { background: var(--g-light); }
+        .ms-option input[type="checkbox"] {
+            accent-color: var(--g); width: 14px; height: 14px; flex-shrink: 0;
+        }
+        .ms-option-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .ms-option-meta { margin-left: auto; font-size: 10px; color: var(--t3); white-space: nowrap; }
+        .ms-divider { height: 1px; background: var(--bdr); margin: 4px 8px; }
+        .ms-special {
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 12px; font-size: 11px; cursor: pointer;
+            transition: background 0.15s; font-weight: 600;
+        }
+        .ms-special:hover { background: var(--surface); }
+        .ms-special.active { background: var(--g-light); color: var(--g); }
+        .ms-footer {
+            padding: 6px 12px; border-top: 1px solid var(--bdr);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .ms-footer-btn {
+            font-size: 10px; font-weight: 600; cursor: pointer;
+            color: var(--g); padding: 2px 6px; border-radius: 4px;
+            transition: background 0.15s; border: none; background: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .ms-footer-btn:hover { background: var(--g-light); }
+        .ms-confidence {
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: 10px; font-weight: 600; padding: 2px 8px;
+            border-radius: 4px; margin-left: 0.5rem;
+        }
+        .ms-confidence--low { background: #fef2f2; color: #dc2626; }
+        .ms-confidence--medium { background: #fffbeb; color: #d97706; }
+        .ms-confidence--high { background: var(--g-light); color: var(--g); }
+
         .alerts-btn {
             display: flex;
             align-items: center;
@@ -1015,7 +1482,7 @@
             border: 1px solid var(--bdr);
             border-radius: 6px;
             background: var(--bg);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 11px;
             font-weight: 600;
             color: var(--t2);
@@ -1119,7 +1586,7 @@
             padding: 6px 10px;
             border: 1px solid var(--bdr);
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 13px;
             text-align: right;
             color: var(--t1);
@@ -1150,7 +1617,7 @@
             color: white;
             border: none;
             border-radius: 6px;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -1424,6 +1891,8 @@
             font-size: 11px;
             color: var(--t3);
             margin-top: 0.25rem;
+            padding-top: 0.25rem;
+            border-top: 1px dashed var(--bdr);
         }
 
         .coach-table {
@@ -1581,7 +2050,7 @@
             border: 1px solid var(--bdr);
             border-radius: 6px;
             background: var(--bg);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 13px;
             font-weight: 500;
             color: var(--t2);
@@ -1798,8 +2267,8 @@
         /* ===== Global Search ===== */
         .global-search-wrap {
             position: relative;
-            flex: 0 1 220px;
-            min-width: 140px;
+            flex: 0 1 260px;
+            min-width: 180px;
         }
         .global-search-wrap svg {
             position: absolute;
@@ -1892,7 +2361,7 @@
         }
         @keyframes icFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
         .insight-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            box-shadow: 0 4px 20px var(--glow), 0 2px 8px rgba(0,0,0,0.04);
             transform: translateY(-1px);
         }
         .insight-card[data-severity="positive"] { border-top: 3px solid var(--g); }
@@ -1906,7 +2375,7 @@
             gap: 0.5rem;
             padding: 0.6rem 1rem;
             border-bottom: 1px solid var(--bdr);
-            background: var(--surface);
+            background: linear-gradient(135deg, var(--surface) 0%, #eef3e5 100%);
         }
         .ic-category-icon {
             display: flex;
@@ -1919,7 +2388,7 @@
         }
         .ic-category-icon[data-cat="school"]      { background: #dbeafe; color: #1d4ed8; }
         .ic-category-icon[data-cat="grade"]        { background: #fef3c7; color: #92400e; }
-        .ic-category-icon[data-cat="personality"]  { background: #ede9fe; color: #6d28d9; }
+        .ic-category-icon[data-cat="personality"]  { background: var(--g-light); color: var(--g); }
         .ic-category-icon[data-cat="career"]       { background: #dcfce7; color: #1e40af; }
         .ic-category-icon[data-cat="engagement"]   { background: #fce7f3; color: #be185d; }
         .ic-category-icon[data-cat="program"]      { background: #ffedd5; color: #c2410c; }
@@ -1942,28 +2411,28 @@
             border-radius: 4px;
             letter-spacing: 0.05em;
         }
-        .ic-severity--positive { background: var(--g-light); color: #0f766e; }
+        .ic-severity--positive { background: #ecfdf5; color: #047857; }
         .ic-severity--negative { background: #fef3c7; color: #92400e; }
         .ic-severity--neutral  { background: #fef3c7; color: #92400e; }
         .ic-severity--info     { background: #e0f2fe; color: #0369a1; }
 
         .ic-body {
-            padding: 0.85rem 1rem;
+            padding: 0.75rem 1rem;
             flex: 1;
         }
         .ic-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--t1);
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
             line-height: 1.4;
         }
         .ic-value {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.35rem;
         }
-        .ic-value--positive { color: #0f766e; }
+        .ic-value--positive { color: #047857; }
         .ic-value--negative { color: #b45309; }
         .ic-value--neutral  { color: #854d0e; }
         .ic-value--info     { color: #0369a1; }
@@ -1976,40 +2445,41 @@
         .ic-action {
             background: var(--surface);
             border-radius: 6px;
-            padding: 0.65rem;
-            margin-top: 0.5rem;
+            padding: 0.5rem 0.65rem;
+            margin-top: 0.4rem;
         }
         .ic-action-sowhat, .ic-action-nextstep {
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1.5;
             color: var(--t2);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.25rem;
         }
         .ic-action-nextstep {
-            padding-left: 0.75rem;
+            padding-left: 0.65rem;
             border-left: 2px solid var(--g);
             margin-bottom: 0;
+            font-style: italic;
         }
         .ic-action-label {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
             text-transform: uppercase;
             color: var(--t3);
             display: block;
-            margin-bottom: 2px;
-            letter-spacing: 0.04em;
+            margin-bottom: 1px;
+            letter-spacing: 0.05em;
         }
         .ic-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.45rem 1rem;
-            border-top: 1px solid var(--bdr);
-            background: var(--surface);
+            padding: 0.4rem 1rem;
+            border-top: 1px dashed var(--bdr);
+            background: transparent;
             gap: 0.5rem;
         }
         .ic-sources {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--t3);
             flex: 1;
             line-height: 1.4;
@@ -2020,7 +2490,7 @@
         .ic-source-link {
             color: var(--t3);
             text-decoration: underline;
-            text-decoration-style: dotted;
+            text-decoration-style: dashed;
             text-underline-offset: 2px;
             cursor: pointer;
         }
@@ -2089,7 +2559,7 @@
         }
         .seg-pill:last-child { border-right: none; }
         .seg-pill:hover { background: var(--surface); }
-        .seg-pill.active { background: var(--t1); color: var(--bg); }
+        .seg-pill.active { background: linear-gradient(135deg, #2d3520 0%, var(--g) 100%); color: #fff; }
 
         /* Search highlight */
         mark.search-hl { background: #fef08a; color: var(--t1); border-radius: 2px; padding: 0 1px; }
@@ -2280,7 +2750,7 @@
             position: sticky;
             top: 0;
             z-index: 99;
-            background: var(--bg);
+            background: linear-gradient(90deg, #eef3e5 0%, var(--bg) 50%, #eef3e5 100%);
             border-bottom: 1px solid var(--bdr);
             padding: 6px 1.5rem;
             display: flex;
@@ -2342,80 +2812,66 @@
                     <button class="sidebar-toggle" onclick="toggleSidebar()">✕</button>
                 </div>
                 <nav class="sidebar-nav">
-                    <div class="nav-item active" onclick="showPage('overview')"><span class="nav-icon">📊</span><span class="nav-label">Overview</span></div>
-                    <div class="nav-item" onclick="showPage('congruence')"><span class="nav-icon">🎯</span><span class="nav-label">Congruence</span></div>
-                    <div class="nav-item" onclick="showPage('career-plan')"><span class="nav-icon">📈</span><span class="nav-label">Career Plan</span></div>
-                    <div class="nav-item" onclick="showPage('program-perf')"><span class="nav-icon">⭐</span><span class="nav-label">Program Performance</span></div>
-                    <div class="nav-item" onclick="showPage('engagement')"><span class="nav-icon">💬</span><span class="nav-label">Engagement</span></div>
-                    <div class="nav-item" onclick="showPage('riasec')"><span class="nav-icon">🌈</span><span class="nav-label">RIASEC Themes</span></div>
-                    <div class="nav-item" onclick="showPage('sectors')"><span class="nav-icon">🏭</span><span class="nav-label">Priority Sectors</span></div>
-                    <div class="nav-item" onclick="showPage('distribution')"><span class="nav-icon">📋</span><span class="nav-label">Distribution</span></div>
-                    <div class="nav-item" onclick="showPage('experts')"><span class="nav-icon">🧠</span><span class="nav-label">Expert Council</span></div>
-                    <div class="nav-item" onclick="showPage('monthly-report')"><span class="nav-icon">📅</span><span class="nav-label">Monthly Report</span></div>
-                    <div class="nav-item" onclick="showPage('schools')"><span class="nav-icon">🏫</span><span class="nav-label">Schools</span></div>
-                    <div class="nav-item" onclick="showPage('sources')"><span class="nav-icon">📚</span><span class="nav-label">Sources</span></div>
+                    <div class="nav-item active" onclick="showPage('overview')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="4" width="4" height="17" rx="1"/></svg></span><span class="nav-label">Overview</span></div>
+                    <div class="nav-item" onclick="showPage('congruence')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span class="nav-label">Congruence</span></div>
+                    <div class="nav-item" onclick="showPage('career-plan')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span><span class="nav-label">Career Plan</span></div>
+                    <div class="nav-item" onclick="showPage('program-perf')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg></span><span class="nav-label">Program Performance</span></div>
+                    <div class="nav-item" onclick="showPage('engagement')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span><span class="nav-label">Engagement</span></div>
+                    <div class="nav-item" onclick="showPage('riasec')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span class="nav-label">RIASEC Themes</span></div>
+                    <div class="nav-item" onclick="showPage('sectors')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></span><span class="nav-label">Priority Sectors</span></div>
+                    <div class="nav-item" onclick="showPage('distribution')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg></span><span class="nav-label">Distribution</span></div>
+                    <div class="nav-item" onclick="showPage('experts')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span><span class="nav-label">Expert Council</span></div>
+                    <div class="nav-item" onclick="showPage('monthly-report')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="nav-label">Monthly Report</span></div>
+                    <div class="nav-item" onclick="showPage('schools')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/></svg></span><span class="nav-label">Schools</span></div>
+                    <div class="nav-item" onclick="showPage('sources')"><span class="nav-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span class="nav-label">Sources</span></div>
                 </nav>
             </div>
 
             <div class="main">
                 <div class="header">
-                    <h1 id="pageTitle">Overview</h1>
-                    <p id="pageSubtitle">Program impact and student outcomes</p>
+                    <h1 id="pageTitle" style="font-size:16px;white-space:nowrap;">Overview</h1>
                     <div class="global-search-wrap">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-                        <input type="text" class="global-search" id="globalSearchInput" placeholder="Search insights..." oninput="globalSearch(this.value)">
+                        <input type="text" class="global-search" id="globalSearchInput" placeholder="Search pages, metrics, schools..." oninput="globalSearch(this.value)">
                     </div>
                     <div class="header-filters">
-                        <div class="filter-group">
-                            <span class="filter-label">Level</span>
-                            <select class="filter-select" id="filterLevel" onchange="applyGlobalFilters()">
-                                <option value="all">All Schools</option>
-                                <option value="High">High Schools</option>
-                                <option value="Middle">Middle Schools</option>
-                                <option value="Special">Special Programs</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <span class="filter-label">Coach</span>
-                            <select class="filter-select" id="filterCoach" onchange="applyGlobalFilters()">
-                                <option value="all">All Coaches</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <span class="filter-label">Min N</span>
-                            <select class="filter-select" id="filterMinN" onchange="applyGlobalFilters()" style="min-width:70px;">
-                                <option value="0">No Min</option>
-                                <option value="30" selected>N ≥ 30</option>
-                                <option value="50">N ≥ 50</option>
-                                <option value="100">N ≥ 100</option>
-                                <option value="200">N ≥ 200</option>
-                            </select>
+                        <div class="filter-group" style="position:relative;">
+                            <span class="filter-label">Comparing</span>
+                            <div class="ms-wrap" id="schoolMultiSelect">
+                                <div class="ms-display" id="msDisplay" onclick="toggleMultiSelect(event)">
+                                    <span class="ms-placeholder" id="msPlaceholder">District-Wide (All Schools)</span>
+                                    <svg class="ms-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                                </div>
+                                <div class="ms-dropdown" id="msDropdown">
+                                    <div class="ms-search-wrap">
+                                        <input type="text" class="ms-search" id="msSearch" placeholder="Search schools..." oninput="filterSchoolOptions(this.value)" onclick="event.stopPropagation()">
+                                    </div>
+                                    <div class="ms-special active" id="msDistrictBtn" onclick="selectDistrictMode(event)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                        District-Wide (All Schools)
+                                    </div>
+                                    <div class="ms-special" id="msBenchmarkBtn" onclick="selectBenchmarkMode(event)">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                                        vs. Industry Benchmark
+                                    </div>
+                                    <div class="ms-divider"></div>
+                                    <div class="ms-options" id="msOptions">
+                                        <!-- Dynamically populated -->
+                                    </div>
+                                    <div class="ms-footer">
+                                        <button class="ms-footer-btn" onclick="clearSchoolSelections(event)">Clear All</button>
+                                        <span id="msCount" style="font-size:10px;color:var(--t3);"></span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="filter-divider"></div>
-                        <button class="alerts-btn" onclick="openThresholds()">
-                            Alerts <span class="alert-count zero" id="alertCountBadge">0</span>
-                        </button>
+                        <button class="alerts-btn" onclick="downloadPdf()" title="Download as PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF</button>
                         <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">Reset</button>
                     </div>
                 </div>
 
-                <div class="global-pivot-bar" id="globalPivotBar">
-                    <div class="seg-pills" id="timeRangePills">
-                        <span class="seg-pill" data-range="1M" onclick="switchTimeRange('1M', this)">1M</span>
-                        <span class="seg-pill" data-range="3M" onclick="switchTimeRange('3M', this)">3M</span>
-                        <span class="seg-pill active" data-range="6M" onclick="switchTimeRange('6M', this)">6M</span>
-                        <span class="seg-pill" data-range="YTD" onclick="switchTimeRange('YTD', this)">YTD</span>
-                        <span class="seg-pill" data-range="ALL" onclick="switchTimeRange('ALL', this)">ALL</span>
-                    </div>
-                    <div style="width:1px;height:20px;background:var(--bdr);margin:0 0.75rem;"></div>
-                    <div class="seg-pills" id="globalPivotPills">
-                        <span class="seg-pill active" data-pivot="overall" onclick="switchGlobalPivot('overall', this)">Overall</span>
-                        <span class="seg-pill" data-pivot="school" onclick="switchGlobalPivot('school', this)">By School</span>
-                        <span class="seg-pill" data-pivot="personality" onclick="switchGlobalPivot('personality', this)">By RIASEC Type</span>
-                        <span class="seg-pill" data-pivot="grade" onclick="switchGlobalPivot('grade', this)">By Grade</span>
-                        <span class="seg-pill" data-pivot="career" onclick="switchGlobalPivot('career', this)">By Career</span>
-                    </div>
-                </div>
+                <!-- Global pivot bar removed — time & category filters are now at widget level -->
 
                 <div class="content">
                     <div class="page active" id="overview">
@@ -2429,42 +2885,75 @@
 
                         <!-- B: WIDGET GRID — modular data viz chips -->
                         <div class="widget-grid" id="widgetGrid">
-                            <div class="widget" id="widgetRiasecDonut">
+                            <div class="widget" id="widgetRiasecDonut" data-page="riasec">
                                 <div class="widget-header">
                                     <span class="widget-title">Interest Themes (RIASEC)</span>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="riasecDonutCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="riasecDonutCanvas"></canvas></div>
                                 </div>
-                                <div class="widget-footer" id="riasecDonutFooter">Distribution of student RIASEC types</div>
+                                <div class="widget-insight" id="riasecInsight"></div>
+                                <div class="widget-action" id="riasecAction"></div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
+                                    <div class="widget-deeplink" onclick="showPage('riasec')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('riasec','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('riasec','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                </div>
+                                <div class="fb-survey" id="fbSurvey-riasec"></div>
                             </div>
-                            <div class="widget" id="widgetCongruenceTime">
+                            <div class="widget" id="widgetCongruenceTime" data-page="congruence">
                                 <div class="widget-header">
-                                    <span class="widget-title">Congruence &amp; Clarity Over Time</span>
-                                    <span class="widget-badge widget-badge--positive" id="congruenceBadge">85.1% match</span>
+                                    <span class="widget-title">Congruence &amp; Clarity</span>
+                                    <div class="widget-mini-pills" id="congruenceTimePills">
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','3M',this)">3M</span>
+                                        <span class="widget-mini-pill active" onclick="switchWidgetRange('congruence','6M',this)">6M</span>
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','ALL',this)">ALL</span>
+                                    </div>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="congruenceTimeCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="congruenceTimeCanvas"></canvas></div>
                                 </div>
-                                <div class="widget-footer" id="congruenceTimeFooter">Career-interest match and clarity trend, Aug–Dec</div>
+                                <div class="widget-insight" id="congruenceInsight"></div>
+                                <div class="widget-action" id="congruenceAction"></div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
+                                    <div class="widget-deeplink" onclick="showPage('congruence')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('congruence','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('congruence','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                </div>
+                                <div class="fb-survey" id="fbSurvey-congruence"></div>
                             </div>
-                            <div class="widget" id="widgetEngagement">
+                            <div class="widget" id="widgetEngagement" data-page="engagement">
                                 <div class="widget-header">
                                     <span class="widget-title">Student Engagement</span>
+                                    <div class="widget-mini-pills" id="engagementTimePills">
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','3M',this)">3M</span>
+                                        <span class="widget-mini-pill active" onclick="switchWidgetRange('engagement','6M',this)">6M</span>
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','ALL',this)">ALL</span>
+                                    </div>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="engagementTrendChart"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="engagementTrendChart"></canvas></div>
                                 </div>
-                                <div class="widget-footer">Sessions &amp; students reached each month</div>
+                                <div class="widget-insight" id="engagementInsight"></div>
+                                <div class="widget-action" id="engagementAction"></div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
+                                    <div class="widget-deeplink" onclick="showPage('engagement')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('engagement','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('engagement','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                </div>
+                                <div class="fb-survey" id="fbSurvey-engagement"></div>
                             </div>
-                            <div class="widget" id="widgetClarity">
+                            <div class="widget" id="widgetClarity" data-page="career-plan">
                                 <div class="widget-header">
                                     <span class="widget-title">Career Clarity</span>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="clarityDonutCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="clarityDonutCanvas"></canvas></div>
                                 </div>
-                                <div class="widget-footer" id="clarityDonutFooter">Where students stand on their career direction</div>
+                                <div class="widget-insight" id="clarityInsight"></div>
+                                <div class="widget-action" id="clarityAction"></div>
+                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
+                                    <div class="widget-deeplink" onclick="showPage('career-plan')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('career-plan','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('career-plan','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                </div>
+                                <div class="fb-survey" id="fbSurvey-career-plan"></div>
                             </div>
                         </div>
 
@@ -3767,13 +4256,17 @@
         Chart.defaults.elements.line.tension = 0.3;
         Chart.defaults.elements.point.radius = 0;
         Chart.defaults.elements.point.hoverRadius = 5;
-        Chart.defaults.elements.point.hoverBackgroundColor = '#2563eb';
+        Chart.defaults.elements.point.hoverBackgroundColor = '#334155';
         Chart.defaults.elements.bar.borderRadius = 6;
-        // Enhanced tooltips — larger, easier to read
-        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(26,26,26,0.95)';
-        Chart.defaults.plugins.tooltip.titleFont = {size: 14, weight: 700, family: "'Inter', sans-serif"};
-        Chart.defaults.plugins.tooltip.bodyFont = {size: 13, family: "'Inter', sans-serif"};
-        Chart.defaults.plugins.tooltip.padding = 14;
+        // Enhanced tooltips — light bg, easy to read
+        Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(255,255,255,0.97)';
+        Chart.defaults.plugins.tooltip.titleColor = '#1a1e14';
+        Chart.defaults.plugins.tooltip.bodyColor = '#4a5240';
+        Chart.defaults.plugins.tooltip.borderColor = 'rgba(0,0,0,0.08)';
+        Chart.defaults.plugins.tooltip.borderWidth = 1;
+        Chart.defaults.plugins.tooltip.titleFont = {size: 13, weight: 700, family: "'Inter', sans-serif"};
+        Chart.defaults.plugins.tooltip.bodyFont = {size: 12, family: "'Inter', sans-serif"};
+        Chart.defaults.plugins.tooltip.padding = 12;
         Chart.defaults.plugins.tooltip.cornerRadius = 8;
         Chart.defaults.plugins.tooltip.boxPadding = 6;
         Chart.defaults.plugins.tooltip.usePointStyle = true;
@@ -3788,19 +4281,18 @@
                 meta.data.forEach(function(arc, i) {
                     var val = chart.data.datasets[0].data[i];
                     var total = chart.data.datasets[0].data.reduce(function(a,b){return a+b;},0);
-                    var pct = ((val/total)*100).toFixed(1) + '%';
-                    var label = chart.data.labels[i];
+                    var pct = Math.round((val/total)*100) + '%';
                     var pos = arc.tooltipPosition();
-                    // Only show label if slice is large enough
-                    if (val/total < 0.05) { return; }
-                    ctx.fillStyle = '#1a1a1a';
-                    ctx.font = '600 11px Inter, sans-serif';
+                    // Only show label if slice is large enough (10%+)
+                    if (val/total < 0.10) { return; }
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '700 13px Montserrat, sans-serif';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText(pct, pos.x, pos.y - 6);
-                    ctx.font = '500 9px Inter, sans-serif';
-                    ctx.fillStyle = '#4a4a4a';
-                    ctx.fillText(val.toLocaleString(), pos.x, pos.y + 7);
+                    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+                    ctx.shadowBlur = 4;
+                    ctx.fillText(pct, pos.x, pos.y);
+                    ctx.shadowBlur = 0;
                 });
                 ctx.restore();
             }
@@ -3836,6 +4328,7 @@
             try { localStorage.setItem('mococap_insight_ratings', JSON.stringify(r)); } catch(e) {}
         }
         function rateInsight(insightId, direction, btn) {
+            trackEvent('insight_rate', 'feedback', insightId + ':' + direction);
             const ratings = getInsightRatings();
             const card = btn.closest('.insight-card');
             const upBtn = card.querySelector('.ic-rate-up');
@@ -3855,6 +4348,7 @@
         // ===== Insight Card Builder =====
         const CAT_LABELS = {school:'School-Based',grade:'Grade Level',personality:'RIASEC / Interests',career:'Career',engagement:'Engagement',program:'Program',equity:'Equity',data:'Data Quality'};
         const SEV_LABELS = {positive:'Positive',negative:'Concern',neutral:'Watchlist',info:'Info'};
+        const CATEGORY_PAGE_MAP = {school:'schools',grade:'distribution',personality:'congruence',career:'career-plan',engagement:'engagement',program:'program-perf',equity:'program-perf',data:'sources'};
 
         function buildInsightCard(cfg) {
             var cat = cfg.category || 'data';
@@ -3867,8 +4361,8 @@
             var srcHtml = '';
             if (cfg.sources && cfg.sources.length) {
                 srcHtml = cfg.sources.map(function(s) {
-                    if (s.action.startsWith('page:')) return '<a href="#" class="ic-source-link" onclick="showPage(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
-                    if (s.action.startsWith('modal:')) return '<a href="#" class="ic-source-link" onclick="showModal(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
+                    if (s.action.startsWith('page:')) return '<a href="#" class="ic-source-link" onclick="event.stopPropagation(); showPage(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
+                    if (s.action.startsWith('modal:')) return '<a href="#" class="ic-source-link" onclick="event.stopPropagation(); showModal(\'' + s.action.split(':')[1] + '\'); return false;">' + s.label + '</a>';
                     if (s.action.startsWith('external:')) return '<a href="' + s.action.replace('external:','') + '" target="_blank" rel="noopener" class="ic-source-link">' + s.label + '</a>';
                     return '<span class="ic-source-link">' + s.label + '</span>';
                 }).join('<span class="ic-source-sep">|</span>');
@@ -3890,7 +4384,12 @@
 
             var lastingHtml = cfg.lasting ? '<span class="lasting-badge">Lasting Impact</span>' : '';
 
-            return '<div class="insight-card" data-insight-id="' + cfg.id + '" data-category="' + cat + '" data-severity="' + sev + '">' +
+            var navTarget = cfg.deepDivePage || CATEGORY_PAGE_MAP[cat] || '';
+            var clickableClass = navTarget ? ' insight-card--clickable' : '';
+            var clickHandler = navTarget ? ' onclick="showPage(\'' + navTarget + '\')"' : '';
+            var arrowHtml = navTarget ? '<div class="ic-nav-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg><span>View details</span></div>' : '';
+
+            return '<div class="insight-card' + clickableClass + '" data-insight-id="' + cfg.id + '" data-category="' + cat + '" data-severity="' + sev + '"' + clickHandler + '>' +
                 '<div class="ic-header">' +
                     '<span class="ic-category-icon" data-cat="' + cat + '">' + getCategoryIcon(cat) + '</span>' +
                     '<span class="ic-category-label">' + (CAT_LABELS[cat]||cat) + lastingHtml + '</span>' +
@@ -3901,14 +4400,15 @@
                     valHtml +
                     '<div class="ic-detail">' + cfg.detail + '</div>' +
                     actionHtml +
+                    arrowHtml +
                 '</div>' +
                 '<div class="ic-footer">' +
                     '<div class="ic-sources">' + srcHtml + '</div>' +
                     '<div class="ic-rating">' +
-                        '<button class="ic-rate-btn ic-rate-up' + upCls + '" onclick="rateInsight(\'' + cfg.id + '\',\'up\',this)" title="Helpful">' +
+                        '<button class="ic-rate-btn ic-rate-up' + upCls + '" onclick="event.stopPropagation(); rateInsight(\'' + cfg.id + '\',\'up\',this)" title="Helpful">' +
                             '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
                         '</button>' +
-                        '<button class="ic-rate-btn ic-rate-down' + downCls + '" onclick="rateInsight(\'' + cfg.id + '\',\'down\',this)" title="Not helpful">' +
+                        '<button class="ic-rate-btn ic-rate-down' + downCls + '" onclick="event.stopPropagation(); rateInsight(\'' + cfg.id + '\',\'down\',this)" title="Not helpful">' +
                             '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"/></svg>' +
                         '</button>' +
                     '</div>' +
@@ -3918,24 +4418,84 @@
 
         // ===== Global Search =====
         function globalSearch(query) {
-            var cards = document.querySelectorAll('.page.active .insight-card');
             var q = query.trim().toLowerCase();
+            if (!q) {
+                // Reset: show all cards, hide search results
+                document.querySelectorAll('.insight-card').forEach(function(c) { c.style.display = ''; });
+                var sr = document.getElementById('globalSearchResults');
+                if (sr) sr.remove();
+                return;
+            }
+
+            // Search insight cards on active page
+            var cards = document.querySelectorAll('.page.active .insight-card');
             cards.forEach(function(card) {
-                // Remove previous highlights
-                card.querySelectorAll('mark.search-hl').forEach(function(m) {
-                    m.replaceWith(m.textContent);
-                });
-                if (!q) { card.style.display = ''; return; }
                 var text = (card.querySelector('.ic-title')?.textContent || '') + ' ' +
                            (card.querySelector('.ic-detail')?.textContent || '') + ' ' +
-                           (card.querySelector('.ic-category-label')?.textContent || '') + ' ' +
-                           (card.querySelector('.ic-sources')?.textContent || '');
-                if (text.toLowerCase().includes(q)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
+                           (card.querySelector('.ic-category-label')?.textContent || '');
+                card.style.display = text.toLowerCase().includes(q) ? '' : 'none';
+            });
+
+            // Build global results dropdown
+            var results = [];
+
+            // Search pages
+            var pageNames = {
+                overview: 'Overview', congruence: 'Career-Interest Congruence', 'career-plan': 'Career Plan Trajectory',
+                'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Themes',
+                sectors: 'Priority Sectors', distribution: 'Career Distribution', experts: 'Expert Council',
+                'monthly-report': 'Monthly Report', schools: 'Schools', sources: 'Sources & Methodology'
+            };
+            Object.keys(pageNames).forEach(function(k) {
+                if (pageNames[k].toLowerCase().includes(q)) {
+                    results.push({ type: 'page', label: pageNames[k], action: "showPage('" + k + "')" });
                 }
             });
+
+            // Search schools
+            Object.keys(DATA.schools).forEach(function(name) {
+                if (name.toLowerCase().includes(q)) {
+                    results.push({ type: 'school', label: name, action: "showPage('schools')" });
+                }
+            });
+
+            // Search metrics
+            var metricTerms = [
+                { term: 'clarity', label: 'Career Clarity — 22.1%', page: 'career-plan' },
+                { term: 'confidence', label: 'Confidence — 3.90/5', page: 'career-plan' },
+                { term: 'congruence', label: 'Congruence — 85.1%', page: 'congruence' },
+                { term: 'riasec', label: 'RIASEC Interest Themes', page: 'riasec' },
+                { term: 'engagement', label: 'Student Engagement', page: 'engagement' },
+                { term: 'dosage', label: 'Session Dosage Analysis', page: 'program-perf' }
+            ];
+            metricTerms.forEach(function(m) {
+                if (m.term.includes(q) || m.label.toLowerCase().includes(q)) {
+                    results.push({ type: 'metric', label: m.label, action: "showPage('" + m.page + "')" });
+                }
+            });
+
+            // Show results dropdown
+            var sr = document.getElementById('globalSearchResults');
+            if (!sr) {
+                sr = document.createElement('div');
+                sr.id = 'globalSearchResults';
+                sr.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid var(--bdr);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:200;max-height:280px;overflow-y:auto;margin-top:4px;';
+                document.querySelector('.global-search-wrap').appendChild(sr);
+            }
+
+            if (results.length === 0) {
+                sr.innerHTML = '<div style="padding:0.75rem;font-size:11px;color:var(--t3);">No results for "' + q + '"</div>';
+            } else {
+                sr.innerHTML = results.slice(0, 8).map(function(r) {
+                    var icon = r.type === 'page' ? '&#128196;' : r.type === 'school' ? '&#127979;' : '&#128202;';
+                    return '<div style="padding:0.5rem 0.75rem;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:0.5rem;border-bottom:1px solid var(--surface);" ' +
+                        'onmouseover="this.style.background=\'var(--surface)\'" onmouseout="this.style.background=\'#fff\'" ' +
+                        'onclick="' + r.action + '; document.getElementById(\'globalSearchInput\').value=\'\'; globalSearch(\'\');">' +
+                        '<span style="font-size:14px;">' + icon + '</span>' +
+                        '<span>' + r.label + '</span>' +
+                        '<span style="margin-left:auto;font-size:9px;color:var(--t3);text-transform:uppercase;">' + r.type + '</span></div>';
+                }).join('');
+            }
         }
 
         // ===== Category Filters =====
@@ -4352,6 +4912,51 @@
             }
         }
 
+        var widgetRanges = { congruence: '6M', engagement: '6M' };
+
+        function switchWidgetRange(widgetId, range, btn) {
+            widgetRanges[widgetId] = range;
+            // Update pill highlights
+            var pills = btn.parentElement.querySelectorAll('.widget-mini-pill');
+            pills.forEach(function(p) { p.classList.remove('active'); });
+            btn.classList.add('active');
+            // Re-render the specific widget
+            if (widgetId === 'congruence') { try { renderCongruenceTimeWidget(); } catch(e) {} }
+            if (widgetId === 'engagement') { try { renderEngagementTrendChart(); } catch(e) {} }
+        }
+
+        function getWidgetMonths(widgetId) {
+            var range = widgetRanges[widgetId] || '6M';
+            var allMonths = Object.keys(DATA.alignment_trajectory);
+            if (range === 'ALL') return allMonths;
+            var n = range === '3M' ? 3 : range === '6M' ? 6 : allMonths.length;
+            return allMonths.slice(-n);
+        }
+
+        function toggleMetricPopover(infoBtn, e) {
+            e.stopPropagation();
+            var card = infoBtn.closest('.metric-highlight-card');
+            var popover = card.querySelector('.mh-popover');
+            // Close all other popovers
+            document.querySelectorAll('.mh-popover.visible').forEach(function(p) {
+                if (p !== popover) p.classList.remove('visible');
+            });
+            popover.classList.toggle('visible');
+        }
+
+        function closeMetricPopover(closeBtn, e) {
+            e.stopPropagation();
+            closeBtn.closest('.mh-popover').classList.remove('visible');
+        }
+
+        function toggleMetricBreakdown(card, e) {
+            // Don't toggle if clicking info button or popover
+            if (e.target.closest('.mh-info') || e.target.closest('.mh-popover')) return;
+            // Close any open popovers
+            card.querySelectorAll('.mh-popover.visible').forEach(function(p) { p.classList.remove('visible'); });
+            card.classList.toggle('expanded');
+        }
+
         function renderEducatorOverview() {
             var months = Object.keys(DATA.alignment_trajectory);
             var latestMonth = months[months.length - 1];
@@ -4389,37 +4994,219 @@
             summaryParts.push((totalStudents/1000).toFixed(1) + 'K students reached across ' + schoolCount + ' schools this year');
             if (sumEl) sumEl.textContent = summaryParts.join('. ') + '.';
 
-            // === B: METRIC HIGHLIGHT CARDS ===
+            // === B: METRIC HIGHLIGHT CARDS (Clarity, Confidence, Congruence) ===
             var metricsEl = document.getElementById('educatorMetrics');
             if (metricsEl) {
-                function metricCard(label, value, trendVal, trendLabel, context) {
-                    var trendHtml = '';
+                // Compute ratio metrics
+                var totalYtdSessions = allSchools.reduce(function(s,sc){ return s + sc.ytd; }, 0);
+                var totalSurveyStudents = allSchools.reduce(function(s,sc){ return s + sc.survey_n; }, 0);
+                var sessionsPerStudent = totalSurveyStudents > 0 ? (totalYtdSessions / totalSurveyStudents).toFixed(1) : '—';
+                var coaches = {};
+                allSchools.forEach(function(s) { if (s.coach) coaches[s.coach] = (coaches[s.coach] || 0) + s.survey_n; });
+                var counselorCount = Object.keys(coaches).length;
+                var counselorToStudent = counselorCount > 0 ? Math.round(totalSurveyStudents / counselorCount) : '—';
+
+                var METRIC_DEFS = {
+                    clarity: {
+                        label: 'Career Clarity',
+                        definition: 'Percentage of students who report having a clear career plan after coaching sessions. Based on survey question: "Do you have a clear plan for your career?" Responses categorized as Unsure, Some Idea, or Clear Plan.',
+                        source: 'MoCo CAP Score Card — ' + latestMonth + ' ' + latest.n.toLocaleString() + ' students'
+                    },
+                    confidence: {
+                        label: 'Confidence',
+                        definition: 'Average career certainty score (1-5 scale) measuring how confident students feel about their chosen career direction. Weighted by survey responses across schools with N≥30.',
+                        source: 'Post-session survey, weighted average'
+                    },
+                    congruence: {
+                        label: 'Congruence',
+                        definition: 'Career-interest match rate — the percentage of students whose career selection aligns with their RIASEC interest profile (Holland Code). High + Medium match combined. Based on ' + Object.values(DATA.congruence.dist).reduce(function(a,b){return a+b;},0).toLocaleString() + ' students with career-RIASEC matching out of ' + totalSurveyStudents.toLocaleString() + ' surveyed.',
+                        source: 'O*NET-SOC × Holland Code crosswalk | ' + totalSurveyStudents.toLocaleString() + ' students surveyed'
+                    },
+                    sessionsRatio: {
+                        label: 'Sessions / Student',
+                        definition: 'Average number of coaching sessions per student this year. Calculated as total YTD sessions across all schools divided by total students surveyed. Higher dosage correlates with improved career certainty.',
+                        source: 'YTD across ' + schoolCount + ' schools'
+                    },
+                    counselorRatio: {
+                        label: 'Counselor : Student',
+                        definition: 'Ratio of career coaches to students served. Shows the caseload per coach. Lower ratios generally enable more personalized guidance and higher-quality interactions.',
+                        source: counselorCount + ' coaches across ' + schoolCount + ' schools'
+                    }
+                };
+
+                function trendHtml(trendVal, trendLabel) {
                     if (trendVal && trendVal !== '') {
                         var trendNum = parseFloat(trendVal);
                         var isUp = trendNum >= 0;
                         var arrow = isUp ? '&#9650;' : '&#9660;';
-                        var trendClass = isUp ? 'up' : 'down';
-                        trendHtml = '<div class="mh-trend ' + trendClass + '">' + arrow + ' ' + (isUp ? '+' : '') + trendVal + ' ' + trendLabel + '</div>';
+                        var cls = isUp ? 'up' : 'down';
+                        return '<div class="mh-trend ' + cls + '">' + arrow + ' ' + (isUp ? '+' : '') + trendVal + ' ' + trendLabel + '</div>';
                     } else if (trendLabel) {
-                        trendHtml = '<div class="mh-trend" style="color:var(--t3);">' + trendLabel + '</div>';
+                        return '<div class="mh-trend" style="color:var(--t3);">' + trendLabel + '</div>';
                     }
-                    return '<div class="metric-highlight-card">' +
-                        '<div class="mh-label">' + label + '</div>' +
+                    return '';
+                }
+
+                function buildMetricCard(id, value, trend, trendLabel, context, breakdownHtml, opts) {
+                    var def = METRIC_DEFS[id];
+                    var o = opts || {};
+                    var expanded = o.expanded ? ' expanded' : '';
+                    return '<div class="metric-highlight-card' + expanded + '" onclick="toggleMetricBreakdown(this, event)">' +
+                        '<div class="mh-header">' +
+                            '<div class="mh-label">' + def.label + '</div>' +
+                            '<span class="mh-info" onclick="toggleMetricPopover(this, event)" title="What is this?">i</span>' +
+                        '</div>' +
+                        '<div class="mh-popover">' +
+                            '<span class="mh-popover-close" onclick="closeMetricPopover(this, event)">&times;</span>' +
+                            '<div class="mh-popover-title">' + def.label + '</div>' +
+                            '<p style="margin:0 0 0.5rem;">' + def.definition + '</p>' +
+                            '<div class="mh-popover-source"><span class="mh-popover-source-label">Source</span> ' + def.source + '</div>' +
+                        '</div>' +
                         '<div class="mh-value">' + value + '</div>' +
-                        trendHtml +
+                        trendHtml(trend, trendLabel) +
                         '<div class="mh-context">' + context + '</div>' +
+                        '<div class="mh-expand-hint"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg> breakdown</div>' +
+                        '<div class="mh-breakdown">' + breakdownHtml + '</div>' +
                     '</div>';
                 }
+
+                function breakdownRow(label, value, pct) {
+                    return '<div class="mh-breakdown-row">' +
+                        '<span class="mh-breakdown-label">' + label + '</span>' +
+                        '<div class="mh-breakdown-bar-wrap"><div class="mh-breakdown-bar" style="width:' + pct + '%"></div></div>' +
+                        '<span class="mh-breakdown-value">' + value + '</span>' +
+                    '</div>';
+                }
+
+                // Clarity breakdown — Unsure / Some Idea / Clear Plan
+                var ft = DATA.future_thinking;
+                var ftTotal = ft['Unsure'] + ft['Some Idea'] + ft['Clear Plan'];
+                var clarityBreakdown =
+                    breakdownRow('Clear Plan', (ft['Clear Plan']/ftTotal*100).toFixed(1) + '%', ft['Clear Plan']/ftTotal*100) +
+                    breakdownRow('Some Idea', (ft['Some Idea']/ftTotal*100).toFixed(1) + '%', ft['Some Idea']/ftTotal*100) +
+                    breakdownRow('Unsure', (ft['Unsure']/ftTotal*100).toFixed(1) + '%', ft['Unsure']/ftTotal*100);
+
+                // Congruence breakdown — No Match / Low / Medium / High
+                var cd = DATA.congruence.dist;
+                var cdTotal = cd['No Match'] + cd['Low'] + cd['Medium'] + cd['High'];
+                var congruenceBreakdown =
+                    breakdownRow('High', (cd['High']/cdTotal*100).toFixed(1) + '%', cd['High']/cdTotal*100) +
+                    breakdownRow('Medium', (cd['Medium']/cdTotal*100).toFixed(1) + '%', cd['Medium']/cdTotal*100) +
+                    breakdownRow('Low', (cd['Low']/cdTotal*100).toFixed(1) + '%', cd['Low']/cdTotal*100) +
+                    breakdownRow('No Match', (cd['No Match']/cdTotal*100).toFixed(1) + '%', cd['No Match']/cdTotal*100);
 
                 var sessionsPctChange = ((latestSessions - prevSessions) / prevSessions * 100).toFixed(1);
                 var studentsPctChange = ((latestStudents - prevStudents) / prevStudents * 100).toFixed(1);
                 var certaintyDelta = (latest.avg_certainty - prev.avg_certainty).toFixed(2);
 
-                metricsEl.innerHTML =
-                    metricCard('Students Reached', (totalStudents/1000).toFixed(1) + 'K', studentsPctChange + '%', 'from ' + prevMonth, latestStudents.toLocaleString() + ' students in ' + latestMonth) +
-                    metricCard('Career Clarity', latest.pct_clear + '%', clarityDelta + 'pp', 'from ' + prevMonth, 'Students with a clear career plan') +
-                    metricCard('Career Confidence', avgCertainty + '/5', certaintyDelta, 'from ' + prevMonth, 'How certain students feel about their path') +
-                    metricCard('Helpfulness', DATA.benchmarks.avg_helpful.toFixed(1) + '/5', '', 'target: 3.75', 'How students rate session quality');
+                // Sessions/student breakdown by school (top 5 by dosage)
+                var dosageSorted = allSchools.filter(function(s){ return s.survey_n >= 30; }).map(function(s) {
+                    return { school: s.school, dosage: (s.ytd / s.survey_n).toFixed(1) };
+                }).sort(function(a,b) { return b.dosage - a.dosage; });
+                var maxDosage = dosageSorted.length > 0 ? parseFloat(dosageSorted[0].dosage) : 1;
+                var sessRatioBreakdown = '';
+                dosageSorted.slice(0,5).forEach(function(d) {
+                    var name = d.school.length > 20 ? d.school.substring(0,18) + '...' : d.school;
+                    sessRatioBreakdown += breakdownRow(name, d.dosage + 'x', parseFloat(d.dosage)/maxDosage*100);
+                });
+
+                // Counselor caseload breakdown (top 5 by student count)
+                var coachList = [];
+                Object.keys(coaches).forEach(function(c) {
+                    coachList.push({ name: c, students: coaches[c] });
+                });
+                coachList.sort(function(a,b) { return b.students - a.students; });
+                var maxCase = coachList.length > 0 ? coachList[0].students : 1;
+                var counselorBreakdown = '';
+                coachList.slice(0,5).forEach(function(c) {
+                    var name = c.name.length > 20 ? c.name.substring(0,18) + '...' : c.name;
+                    counselorBreakdown += breakdownRow(name, '1:' + c.students, c.students/maxCase*100);
+                });
+
+                if (currentComparisonMode === 'schools' && currentComparisonSchools.length > 0) {
+                    var selected = currentComparisonSchools.map(function(n) { return DATA.schools[n]; }).filter(Boolean);
+                    var totalN = selected.reduce(function(s,sc){ return s + sc.survey_n; }, 0);
+                    var validSelected = selected.filter(function(sc){ return sc.metrics.avg_certainty > 0 && sc.survey_n >= 30; });
+                    var weightedN = validSelected.reduce(function(s,sc){ return s + sc.survey_n; }, 0);
+                    var selCert = weightedN > 0 ? (validSelected.reduce(function(s,sc){ return s + sc.metrics.avg_certainty * sc.survey_n; }, 0) / weightedN) : 0;
+                    var selClear = weightedN > 0 ? (validSelected.reduce(function(s,sc){ return s + sc.metrics.pct_clear * sc.survey_n; }, 0) / weightedN) : 0;
+                    var distWeightedN = validSchools.reduce(function(s,sc){ return s + sc.survey_n; }, 0);
+                    var distAvgCert = distWeightedN > 0 ? (validSchools.reduce(function(s,sc){ return s + sc.metrics.avg_certainty * sc.survey_n; }, 0) / distWeightedN) : 0;
+                    var distAvgClear = distWeightedN > 0 ? (validSchools.reduce(function(s,sc){ return s + sc.metrics.pct_clear * sc.survey_n; }, 0) / distWeightedN) : 0;
+                    var showDelta = totalN >= 30;
+                    var lowNNote = !showDelta ? '<div style="font-size:10px;color:#dc2626;margin-top:0.25rem;">Low confidence (N=' + totalN + ')</div>' : '';
+
+                    // Confidence breakdown — per-school comparison
+                    var confBreakdown = '';
+                    selected.forEach(function(sc) {
+                        var pct = sc.metrics.avg_certainty / 5 * 100;
+                        confBreakdown += breakdownRow(sc.school.length > 22 ? sc.school.substring(0,20) + '...' : sc.school, sc.metrics.avg_certainty.toFixed(2) + '/5', pct);
+                    });
+
+                    metricsEl.innerHTML =
+                        buildMetricCard('congruence', DATA.congruence.match_rate + '%',
+                            '', 'career-interest match', cdTotal.toLocaleString() + ' matched of ' + totalSurveyStudents.toLocaleString() + ' surveyed', congruenceBreakdown, {expanded: true}) +
+                        buildMetricCard('clarity', selClear.toFixed(1) + '%',
+                            showDelta ? ((selClear - distAvgClear).toFixed(1) + 'pp') : '', showDelta ? 'vs district' : '',
+                            'N=' + totalN + lowNNote, clarityBreakdown, {expanded: true}) +
+                        buildMetricCard('confidence', selCert.toFixed(2) + '/5',
+                            showDelta ? (selCert - distAvgCert).toFixed(2) : '', showDelta ? 'vs district' : '',
+                            'N=' + totalN + lowNNote, confBreakdown || clarityBreakdown, {expanded: true}) +
+                        '<div class="mh-compact-col">' +
+                        buildMetricCard('sessionsRatio', sessionsPerStudent + 'x',
+                            '', 'sessions per student', totalYtdSessions.toLocaleString() + ' / ' + totalSurveyStudents.toLocaleString() + ' students', sessRatioBreakdown) +
+                        buildMetricCard('counselorRatio', '1:' + counselorToStudent,
+                            '', 'coach to student', counselorCount + ' coaches / ' + totalSurveyStudents.toLocaleString() + ' students', counselorBreakdown) +
+                        '</div>';
+                } else if (currentComparisonMode === 'benchmark') {
+                    var benchCert = DATA.benchmarks.avg_certainty;
+                    var benchClear = DATA.benchmarks.pct_clear;
+                    var certVsBench = (parseFloat(avgCertainty) - benchCert).toFixed(2);
+                    var clearVsBench = (latest.pct_clear - benchClear).toFixed(1);
+                    // Confidence breakdown — benchmark vs district
+                    var confBenchBreakdown =
+                        breakdownRow('District', avgCertainty + '/5', parseFloat(avgCertainty)/5*100) +
+                        breakdownRow('Benchmark', benchCert.toFixed(2) + '/5', benchCert/5*100);
+
+                    metricsEl.innerHTML =
+                        buildMetricCard('congruence', DATA.congruence.match_rate + '%',
+                            '', 'career-interest match', cdTotal.toLocaleString() + ' matched of ' + totalSurveyStudents.toLocaleString() + ' surveyed', congruenceBreakdown, {expanded: true}) +
+                        buildMetricCard('clarity', latest.pct_clear + '%',
+                            clearVsBench + 'pp', 'vs benchmark ' + benchClear + '%',
+                            'Benchmark: ' + benchClear + '%', clarityBreakdown, {expanded: true}) +
+                        buildMetricCard('confidence', avgCertainty + '/5',
+                            certVsBench, 'vs benchmark ' + benchCert,
+                            'Benchmark: ' + benchCert + '/5', confBenchBreakdown, {expanded: true}) +
+                        '<div class="mh-compact-col">' +
+                        buildMetricCard('sessionsRatio', sessionsPerStudent + 'x',
+                            '', 'sessions per student', totalYtdSessions.toLocaleString() + ' / ' + totalSurveyStudents.toLocaleString() + ' students', sessRatioBreakdown) +
+                        buildMetricCard('counselorRatio', '1:' + counselorToStudent,
+                            '', 'coach to student', counselorCount + ' coaches / ' + totalSurveyStudents.toLocaleString() + ' students', counselorBreakdown) +
+                        '</div>';
+                } else {
+                    // Confidence breakdown — trajectory
+                    var confTrajBreakdown = '';
+                    months.slice(-4).forEach(function(m) {
+                        var d = DATA.alignment_trajectory[m];
+                        confTrajBreakdown += breakdownRow(m, d.avg_certainty.toFixed(2) + '/5', d.avg_certainty/5*100);
+                    });
+
+                    metricsEl.innerHTML =
+                        buildMetricCard('congruence', DATA.congruence.match_rate + '%',
+                            '', 'career-interest match', cdTotal.toLocaleString() + ' matched of ' + totalSurveyStudents.toLocaleString() + ' surveyed', congruenceBreakdown, {expanded: true}) +
+                        buildMetricCard('clarity', latest.pct_clear + '%',
+                            clarityDelta + 'pp', 'from ' + prevMonth,
+                            latest.n.toLocaleString() + ' students in ' + latestMonth, clarityBreakdown, {expanded: true}) +
+                        buildMetricCard('confidence', avgCertainty + '/5',
+                            certaintyDelta, 'from ' + prevMonth,
+                            'Weighted across ' + validSchools.length + ' schools', confTrajBreakdown, {expanded: true}) +
+                        '<div class="mh-compact-col">' +
+                        buildMetricCard('sessionsRatio', sessionsPerStudent + 'x',
+                            '', 'sessions per student', totalYtdSessions.toLocaleString() + ' / ' + totalSurveyStudents.toLocaleString() + ' students', sessRatioBreakdown) +
+                        buildMetricCard('counselorRatio', '1:' + counselorToStudent,
+                            '', 'coach to student', counselorCount + ' coaches / ' + totalSurveyStudents.toLocaleString() + ' students', counselorBreakdown) +
+                        '</div>';
+                }
             }
 
             // === C: WINS & CELEBRATIONS ===
@@ -4518,7 +5305,7 @@
             var labels = Object.keys(themes);
             var values = labels.map(function(k) { return themes[k]; });
             var total = values.reduce(function(a,b) { return a+b; }, 0);
-            var colors = {Realistic:'#ef4444', Investigative:'#3b82f6', Artistic:'#eab308', Social:'#22c55e', Enterprising:'#f97316', Conventional:'#8b5cf6'};
+            var colors = {Realistic:'#dc2626', Investigative:'#2563eb', Artistic:'#d97706', Social:'#059669', Enterprising:'#ea580c', Conventional:'#7c3aed'};
             new Chart(c, {
                 type: 'doughnut',
                 data: {
@@ -4526,20 +5313,20 @@
                     datasets: [{
                         data: values,
                         backgroundColor: labels.map(function(l) { return colors[l] || '#94a3b8'; }),
-                        borderWidth: 2,
+                        borderWidth: 3,
                         borderColor: '#fff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '55%',
+                    cutout: '40%',
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } },
+                        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 8, font: { size: 10, family: 'Montserrat' } } },
                         tooltip: {
                             callbacks: {
                                 label: function(ctx) {
-                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + (ctx.raw / total * 100).toFixed(1) + '%)';
+                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + Math.round(ctx.raw / total * 100) + '%)';
                                 }
                             }
                         }
@@ -4548,14 +5335,18 @@
             });
             var topTheme = labels[0];
             var topPct = (values[0] / total * 100).toFixed(0);
-            var footer = document.getElementById('riasecDonutFooter');
-            if (footer) footer.textContent = total.toLocaleString() + ' students — ' + topTheme + ' is the top theme at ' + topPct + '%';
+            var lowTheme = labels[labels.length - 1];
+            var lowPct = (values[values.length - 1] / total * 100).toFixed(0);
+            var ins = document.getElementById('riasecInsight');
+            if (ins) ins.textContent = topTheme + ' leads at ' + topPct + '%. ' + lowTheme + ' is least common (' + lowPct + '%), which is typical for this age group.';
+            var act = document.getElementById('riasecAction');
+            if (act) act.textContent = 'Balance career exposure for underrepresented types, especially ' + lowTheme + '.';
         }
 
         function renderCongruenceTimeWidget() {
             var c = destroyAndGet('congruenceTimeCanvas');
             if (!c) return;
-            var months = Object.keys(DATA.alignment_trajectory);
+            var months = getWidgetMonths('congruence');
             var clarity = months.map(function(m) { return DATA.alignment_trajectory[m].pct_clear; });
             var certainty = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
 
@@ -4567,23 +5358,23 @@
                         {
                             label: 'Clear Plan %',
                             data: clarity,
-                            borderColor: 'var(--g)',
-                            backgroundColor: 'rgba(13,148,136,0.1)',
+                            borderColor: '#2563eb',
+                            backgroundColor: 'rgba(37,99,235,0.08)',
                             fill: true,
                             tension: 0.3,
                             pointRadius: 4,
-                            pointBackgroundColor: '#0d9488',
+                            pointBackgroundColor: '#2563eb',
                             yAxisID: 'y'
                         },
                         {
                             label: 'Certainty (1-5)',
                             data: certainty,
-                            borderColor: '#7c3aed',
+                            borderColor: '#8b5cf6',
                             backgroundColor: 'transparent',
                             borderDash: [4, 3],
                             tension: 0.3,
                             pointRadius: 4,
-                            pointBackgroundColor: '#7c3aed',
+                            pointBackgroundColor: '#8b5cf6',
                             yAxisID: 'y1'
                         }
                     ]
@@ -4604,10 +5395,13 @@
 
             var badge = document.getElementById('congruenceBadge');
             if (badge) badge.textContent = DATA.congruence.match_rate + '% match';
-            var footer = document.getElementById('congruenceTimeFooter');
             var lastClarity = clarity[clarity.length - 1];
             var firstClarity = clarity[0];
-            if (footer) footer.textContent = 'Clarity: ' + firstClarity + '% → ' + lastClarity + '% (+' + (lastClarity - firstClarity).toFixed(1) + 'pp since Aug)';
+            var noMatch = DATA.congruence.dist['No Match'] || 0;
+            var ins = document.getElementById('congruenceInsight');
+            if (ins) ins.textContent = DATA.congruence.match_rate + '% career-interest match. Clarity rose from ' + firstClarity + '% to ' + lastClarity + '% since Aug.';
+            var act = document.getElementById('congruenceAction');
+            if (act) act.textContent = 'Focus on the ' + noMatch.toLocaleString() + ' no-match students — they need 1-on-1 career exploration.';
         }
 
         function renderClarityDonutWidget() {
@@ -4617,7 +5411,7 @@
             var labels = ['Unsure', 'Some Idea', 'Clear Plan'];
             var values = [ft['Unsure'], ft['Some Idea'], ft['Clear Plan']];
             var total = values.reduce(function(a,b) { return a+b; }, 0);
-            var colors = ['#a8a29e', '#d97706', '#0d9488'];
+            var colors = ['#64748b', '#d97706', '#2563eb'];
 
             new Chart(c, {
                 type: 'doughnut',
@@ -4626,20 +5420,20 @@
                     datasets: [{
                         data: values,
                         backgroundColor: colors,
-                        borderWidth: 2,
+                        borderWidth: 3,
                         borderColor: '#fff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    cutout: '55%',
+                    cutout: '40%',
                     plugins: {
-                        legend: { position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } },
+                        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 8, font: { size: 10, family: 'Montserrat' } } },
                         tooltip: {
                             callbacks: {
                                 label: function(ctx) {
-                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + (ctx.raw / total * 100).toFixed(1) + '%)';
+                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + Math.round(ctx.raw / total * 100) + '%)';
                                 }
                             }
                         }
@@ -4647,8 +5441,12 @@
                 }
             });
 
-            var footer = document.getElementById('clarityDonutFooter');
-            if (footer) footer.textContent = ft['Some Idea'].toLocaleString() + ' students with "Some Idea" — closest to clarity';
+            var clearPct = Math.round(ft['Clear Plan'] / total * 100);
+            var someIdeaPct = Math.round(ft['Some Idea'] / total * 100);
+            var ins = document.getElementById('clarityInsight');
+            if (ins) ins.textContent = clearPct + '% have a clear plan. ' + someIdeaPct + '% have "Some Idea" — your highest-leverage group.';
+            var act = document.getElementById('clarityAction');
+            if (act) act.textContent = 'Show "Some Idea" students CTE pathways matching their RIASEC type to move them to "Clear Plan."';
         }
 
         function generateDynamicOverview() {
@@ -4940,7 +5738,7 @@
                             tooltip: {
                                 mode: 'nearest',
                                 intersect: true,
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
@@ -5124,7 +5922,7 @@
                             legend: { display: false },
                             tooltip: {
                                 mode: 'nearest', intersect: true,
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
@@ -5343,7 +6141,7 @@
                             tooltip: {
                                 mode: 'nearest',
                                 intersect: true,
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
@@ -5534,7 +6332,7 @@
                             tooltip: {
                                 mode: 'nearest',
                                 intersect: true,
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 16, cornerRadius: 8, bodySpacing: 2,
                                 callbacks: {
@@ -5783,7 +6581,7 @@
                             legend: { display: false },
                             tooltip: {
                                 mode: 'nearest', intersect: true,
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 14, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 16, cornerRadius: 8, bodySpacing: 3,
                                 callbacks: {
@@ -6331,7 +7129,7 @@
                                 }
                             } },
                             tooltip: {
-                                backgroundColor: 'rgba(20,20,20,1)',
+                                backgroundColor: 'rgba(255,255,255,0.97)', titleColor: '#1a1e14', bodyColor: '#4a5240', borderColor: 'rgba(0,0,0,0.08)', borderWidth: 1,
                                 titleFont: { size: 13, weight: 700 }, bodyFont: { size: 12 },
                                 padding: 14, cornerRadius: 8, bodySpacing: 3,
                                 callbacks: {
@@ -6487,7 +7285,7 @@
             } else if (seg === 'career') {
                 var topCareers = DATA.october_data.top_careers.slice(0, 6);
                 var careerColors = ['#ef4444','#f97316','#eab308','#3b82f6','#3b82f6','#8b5cf6'];
-                var careerBorders = ['#dc2626','#ea580c','#ca8a04','#2563eb','#2563eb','#7c3aed'];
+                var careerBorders = ['#dc2626','#ea580c','#ca8a04','#2563eb','#2563eb','#6b8e23'];
                 var datasets = topCareers.map(function(c, i) {
                     return { label: c.career.length > 18 ? c.career.substring(0,16) + '...' : c.career, data: months.map(function(m, mi) { var shift = (mi - 2) * (i % 2 === 0 ? 0.15 : -0.1); return Math.max(0, c.pct + shift); }), backgroundColor: careerColors[i], borderColor: careerBorders[i], borderWidth: 1, borderRadius: 3 };
                 });
@@ -7419,9 +8217,9 @@
                     type: 'doughnut',
                     data: {
                         labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
-                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#3b82f6', '#d1d5db']}]
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#06b6d4', '#059669', '#94a3b8'], borderColor: '#fff', borderWidth: 3}]
                     },
-                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
+                    options: {responsive: true, maintainAspectRatio: false, cutout: '40%', plugins: {legend: {position: 'right', labels: {font: {size: 11, family: 'Montserrat'}}}}}
                 });
             }
 
@@ -7473,9 +8271,9 @@
                     type: 'doughnut',
                     data: {
                         labels: ['Whole Group', 'Small Group', 'Exploration', 'One-on-One', 'Other'],
-                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#93c5fd', '#3b82f6', '#d1d5db']}]
+                        datasets: [{data: [st.whole_group, st.small_group, st.exploration, st.one_on_one, st.other], backgroundColor: ['#1e40af', '#3b82f6', '#06b6d4', '#059669', '#94a3b8'], borderColor: '#fff', borderWidth: 3}]
                     },
-                    options: {responsive: true, maintainAspectRatio: false, plugins: {legend: {position: 'right', labels: {font: {size: 11}}}}}
+                    options: {responsive: true, maintainAspectRatio: false, cutout: '40%', plugins: {legend: {position: 'right', labels: {font: {size: 11, family: 'Montserrat'}}}}}
                 });
             }
 
@@ -7715,7 +8513,7 @@
             if (pageMap[pageId] !== undefined && navItems[pageMap[pageId]]) navItems[pageMap[pageId]].classList.add('active');
             const titles = {overview: 'Overview', congruence: 'Career-Interest Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
             document.getElementById('pageTitle').textContent = titles[pageId] || 'Dashboard';
-            document.getElementById('pageSubtitle').textContent = 'Career coaching program insights';
+            trackEvent('page_view', 'navigation', pageId);
             // Reset month view when navigating to overview
             if (pageId === 'overview') {
                 var mc = document.getElementById('monthViewContent');
@@ -7875,7 +8673,7 @@
 
         function renderEngagementTrendChart() {
             var c = destroyAndGet('engagementTrendChart'); if (!c) return;
-            var months = getActiveMonths();
+            var months = getWidgetMonths('engagement');
             var sessions = months.map(function(m){return DATA.sessions_trend[m] || 0;});
             var unique = months.map(function(m){return DATA.unique_trend[m] || 0;});
             new Chart(c, {
@@ -7883,7 +8681,7 @@
                 data:{
                     labels:months,
                     datasets:[
-                        {label:'Total Sessions', data:sessions, backgroundColor:'rgba(37,99,235,0.75)', borderRadius:4, order:2},
+                        {label:'Total Sessions', data:sessions, backgroundColor:'rgba(100,116,139,0.7)', borderRadius:4, order:2},
                         {label:'Unique Students', data:unique, type:'line', borderColor:'#f97316', backgroundColor:'rgba(249,115,22,0.1)', borderWidth:2.5, pointRadius:5, pointBackgroundColor:'#f97316', pointBorderColor:'#fff', pointBorderWidth:2, tension:0.3, fill:true, order:1}
                     ]
                 },
@@ -7893,7 +8691,7 @@
                         legend:{position:'bottom', labels:{padding:12, font:{size:11, weight:600}, usePointStyle:true}},
                         tooltip:{
                             mode:'index', intersect:false,
-                            backgroundColor:'rgba(20,20,20,0.95)',
+                            backgroundColor:'rgba(255,255,255,0.97)', titleColor:'#1a1e14', bodyColor:'#4a5240', borderColor:'rgba(0,0,0,0.08)', borderWidth:1,
                             titleFont:{size:13, weight:700}, bodyFont:{size:12},
                             padding:12, cornerRadius:8, bodySpacing:3,
                             callbacks:{
@@ -7924,26 +8722,31 @@
                 soWhat: 'Engagement peaked in ' + peakMonth + ' (' + peak.toLocaleString() + ' sessions). Dec: ' + lastSessions.toLocaleString() + ' sessions reaching ' + lastUnique.toLocaleString() + ' unique students (' + Math.round(lastSessions/peak*100) + '% of peak).',
                 action: 'Plan outreach campaigns before seasonal dips to sustain engagement. ' + (lastUnique < peak ? 'Dec drop is typical (winter break). Track Jan recovery.' : 'Strong momentum — maintain.')
             });
+            // Populate widget insight/action zones
+            var ins = document.getElementById('engagementInsight');
+            if (ins) ins.textContent = lastSessions.toLocaleString() + ' sessions in ' + months[months.length-1] + ' reaching ' + lastUnique.toLocaleString() + ' students. Peak was ' + peakMonth + ' (' + peak.toLocaleString() + ').';
+            var act = document.getElementById('engagementAction');
+            if (act) act.textContent = lastUnique < peak ? 'Dec drop is typical (winter break). Plan outreach campaigns for Jan recovery.' : 'Strong momentum — maintain current session frequency.';
         }
 
         function renderClarityDistChart() {
             var c = destroyAndGet('clarityDistChart'); if (!c) return;
             var data = DATA.future_thinking;
-            new Chart(c, {type:'doughnut',data:{labels:['Clear Plan','Some Idea','Unsure'],datasets:[{data:[data['Clear Plan'],data['Some Idea'],data.Unsure],backgroundColor:['#2563eb','#f59e0b','#ff4444'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+            new Chart(c, {type:'doughnut',data:{labels:['Clear Plan','Some Idea','Unsure'],datasets:[{data:[data['Clear Plan'],data['Some Idea'],data.Unsure],backgroundColor:['#2563eb','#d97706','#64748b'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'40%',plugins:{legend:{position:'bottom',labels:{font:{family:'Montserrat'}}}}}});
             var total = data['Clear Plan'] + data['Some Idea'] + data.Unsure;
-            var pctClear = (data['Clear Plan']/total*100).toFixed(1);
+            var pctClear = Math.round(data['Clear Plan']/total*100);
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: parseFloat(pctClear) > 20 ? 'up' : 'down', soWhat: pctClear + '% of students have a clear career plan. ' + data.Unsure.toLocaleString() + ' students are still unsure.', action: 'Focus follow-up sessions on the ' + data.Unsure.toLocaleString() + ' unsure students with goal-setting activities.'});
+            if (card) renderWidgetInsight(card, {trend: pctClear > 20 ? 'up' : 'down', soWhat: pctClear + '% of students have a clear career plan. ' + data.Unsure.toLocaleString() + ' students are still unsure.', action: 'Focus follow-up sessions on the ' + data.Unsure.toLocaleString() + ' unsure students with goal-setting activities.'});
         }
 
         function renderCongruenceDonutChart() {
             var c = destroyAndGet('congruenceDonutChart'); if (!c) return;
             var dist = DATA.congruence.dist;
-            new Chart(c, {type:'doughnut',data:{labels:['High Match','Medium','Low','No Match'],datasets:[{data:[dist['High'],dist['Medium'],dist['Low'],dist['No Match']],backgroundColor:['#2563eb','#60a5fa','#ffd54f','#ef5350'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom'}}}});
+            new Chart(c, {type:'doughnut',data:{labels:['High Match','Medium','Low','No Match'],datasets:[{data:[dist['High'],dist['Medium'],dist['Low'],dist['No Match']],backgroundColor:['#2563eb','#60a5fa','#d97706','#dc2626'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'40%',plugins:{legend:{position:'bottom',labels:{font:{family:'Montserrat'}}}}}});
             var total = dist['High']+dist['Medium']+dist['Low']+dist['No Match'];
             var noMatch = dist['No Match'];
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + (noMatch/total*100).toFixed(1) + '%) show no career-interest match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
+            if (card) renderWidgetInsight(card, {trend: 'up', soWhat: 'Congruence rate: ' + DATA.congruence.match_rate + '%. ' + noMatch + ' students (' + Math.round(noMatch/total*100) + '%) show no career-interest match.', action: 'Route no-match students to career assessment and targeted exploration activities.'});
         }
 
         function renderRiasecCongruenceBarsChart() {
@@ -7999,12 +8802,12 @@
         function renderRiasecDistChart() {
             var c = destroyAndGet('riasecDistChart'); if (!c) return;
             var themes = DATA.riasec_themes;
-            new Chart(c, {type:'doughnut',data:{labels:Object.keys(themes),datasets:[{data:Object.values(themes),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6','#06b6d4'],borderColor:'#fff',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom'}}}});
+            new Chart(c, {type:'doughnut',data:{labels:Object.keys(themes),datasets:[{data:Object.values(themes),backgroundColor:['#dc2626','#d97706','#059669','#2563eb','#7c3aed','#06b6d4'],borderColor:'#fff',borderWidth:3}]},options:{responsive:true,maintainAspectRatio:false,cutout:'40%',plugins:{legend:{position:'bottom',labels:{font:{family:'Montserrat'}}}}}});
             var total = Object.values(themes).reduce(function(a,b){return a+b;},0);
             var topType = Object.keys(themes).reduce(function(a,b){return themes[a]>themes[b]?a:b;});
             var lowType = Object.keys(themes).reduce(function(a,b){return themes[a]<themes[b]?a:b;});
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + (themes[topType]/total*100).toFixed(1) + '%). ' + lowType + ' is least common (' + (themes[lowType]/total*100).toFixed(1) + '%).', action: 'Balance career exposure for underrepresented RIASEC types.'});
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topType + ' is dominant (' + Math.round(themes[topType]/total*100) + '%). ' + lowType + ' is least common (' + Math.round(themes[lowType]/total*100) + '%).', action: 'Balance career exposure for underrepresented RIASEC types.'});
         }
 
         function renderMonthlyTrendChart() {
@@ -8063,27 +8866,212 @@
             header.classList.toggle('expanded');
         }
 
-        function populateCoachFilter() {
-            const select = document.getElementById('filterCoach');
-            const coaches = [...new Set(Object.values(DATA.schools).map(s => s.coach).filter(c => c))].sort();
-            coaches.forEach(coach => {
-                const opt = document.createElement('option');
-                opt.value = coach;
-                opt.textContent = coach;
-                select.appendChild(opt);
+        var currentComparisonMode = 'district';
+        var currentComparisonSchools = [];
+
+        function switchComparisonMode(value) {
+            if (value === 'benchmark') {
+                currentComparisonMode = 'benchmark';
+                currentComparisonSchools = [];
+            } else if (value === 'district') {
+                currentComparisonMode = 'district';
+                currentComparisonSchools = [];
+            } else {
+                currentComparisonMode = 'schools';
+            }
+            applyGlobalFilters();
+            var overviewPage = document.getElementById('overview');
+            if (overviewPage && overviewPage.classList.contains('active')) {
+                try { renderEducatorOverview(); } catch(e) {}
+            }
+        }
+
+        /* Multi-select dropdown logic */
+        function toggleMultiSelect(e) {
+            if (e) e.stopPropagation();
+            var display = document.getElementById('msDisplay');
+            var dropdown = document.getElementById('msDropdown');
+            var isOpen = dropdown.classList.contains('open');
+            if (isOpen) {
+                dropdown.classList.remove('open');
+                display.classList.remove('open');
+            } else {
+                dropdown.classList.add('open');
+                display.classList.add('open');
+                var search = document.getElementById('msSearch');
+                if (search) { search.value = ''; filterSchoolOptions(''); setTimeout(function(){ search.focus(); }, 50); }
+            }
+        }
+
+        function closeMultiSelect() {
+            var display = document.getElementById('msDisplay');
+            var dropdown = document.getElementById('msDropdown');
+            if (dropdown) dropdown.classList.remove('open');
+            if (display) display.classList.remove('open');
+        }
+
+        document.addEventListener('click', function(e) {
+            var wrap = document.getElementById('schoolMultiSelect');
+            if (wrap && !wrap.contains(e.target)) closeMultiSelect();
+        });
+
+        function selectDistrictMode(e) {
+            if (e) e.stopPropagation();
+            currentComparisonSchools = [];
+            currentComparisonMode = 'district';
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode('district');
+        }
+
+        function selectBenchmarkMode(e) {
+            if (e) e.stopPropagation();
+            currentComparisonSchools = [];
+            currentComparisonMode = 'benchmark';
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode('benchmark');
+        }
+
+        function toggleSchoolSelection(schoolName, e) {
+            if (e) e.stopPropagation();
+            var idx = currentComparisonSchools.indexOf(schoolName);
+            if (idx >= 0) {
+                currentComparisonSchools.splice(idx, 1);
+            } else {
+                currentComparisonSchools.push(schoolName);
+            }
+            if (currentComparisonSchools.length === 0) {
+                currentComparisonMode = 'district';
+            } else {
+                currentComparisonMode = 'schools';
+            }
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode(currentComparisonMode);
+        }
+
+        function removeSchoolTag(schoolName, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            var idx = currentComparisonSchools.indexOf(schoolName);
+            if (idx >= 0) currentComparisonSchools.splice(idx, 1);
+            if (currentComparisonSchools.length === 0) currentComparisonMode = 'district';
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode(currentComparisonMode);
+        }
+
+        function clearSchoolSelections(e) {
+            if (e) e.stopPropagation();
+            currentComparisonSchools = [];
+            currentComparisonMode = 'district';
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode('district');
+        }
+
+        function updateMsDisplay() {
+            var display = document.getElementById('msDisplay');
+            var placeholder = document.getElementById('msPlaceholder');
+            if (!display) return;
+            // Remove existing tags
+            display.querySelectorAll('.ms-tag, .ms-overflow').forEach(function(el) { el.remove(); });
+
+            if (currentComparisonMode === 'benchmark') {
+                if (placeholder) { placeholder.style.display = 'inline'; placeholder.textContent = 'vs. Industry Benchmark'; }
+            } else if (currentComparisonSchools.length === 0) {
+                if (placeholder) { placeholder.style.display = 'inline'; placeholder.textContent = 'District-Wide (All Schools)'; }
+            } else {
+                if (placeholder) placeholder.style.display = 'none';
+                var arrow = display.querySelector('.ms-arrow');
+                var maxTags = 2;
+                currentComparisonSchools.slice(0, maxTags).forEach(function(name) {
+                    var tag = document.createElement('span');
+                    tag.className = 'ms-tag';
+                    // Abbreviate long names
+                    var short = name.length > 18 ? name.substring(0, 16) + '...' : name;
+                    tag.innerHTML = short + ' <span class="ms-tag-close" onclick="removeSchoolTag(\'' + name.replace(/'/g, "\\'") + '\', event)">&times;</span>';
+                    tag.title = name;
+                    display.insertBefore(tag, arrow);
+                });
+                if (currentComparisonSchools.length > maxTags) {
+                    var overflow = document.createElement('span');
+                    overflow.className = 'ms-overflow';
+                    overflow.textContent = '+' + (currentComparisonSchools.length - maxTags) + ' more';
+                    display.insertBefore(overflow, arrow);
+                }
+            }
+            // Update footer count
+            var countEl = document.getElementById('msCount');
+            if (countEl) {
+                countEl.textContent = currentComparisonSchools.length > 0 ? currentComparisonSchools.length + ' selected' : '';
+            }
+        }
+
+        function updateMsHighlights() {
+            var distBtn = document.getElementById('msDistrictBtn');
+            var benchBtn = document.getElementById('msBenchmarkBtn');
+            if (distBtn) distBtn.classList.toggle('active', currentComparisonMode === 'district');
+            if (benchBtn) benchBtn.classList.toggle('active', currentComparisonMode === 'benchmark');
+            // Update checkboxes
+            var opts = document.querySelectorAll('#msOptions .ms-option');
+            opts.forEach(function(opt) {
+                var cb = opt.querySelector('input[type="checkbox"]');
+                if (cb) {
+                    var isSelected = currentComparisonSchools.indexOf(cb.value) >= 0;
+                    cb.checked = isSelected;
+                    opt.classList.toggle('selected', isSelected);
+                }
             });
         }
 
-        function getFilteredSchools() {
-            const level = document.getElementById('filterLevel').value;
-            const coach = document.getElementById('filterCoach').value;
-            const minN = parseInt(document.getElementById('filterMinN').value);
-            return Object.values(DATA.schools).filter(school => {
-                if (level !== 'all' && school.level !== level) return false;
-                if (coach !== 'all' && school.coach !== coach) return false;
-                if (school.survey_n < minN) return false;
-                return true;
+        function filterSchoolOptions(query) {
+            var q = query.toLowerCase().trim();
+            var opts = document.querySelectorAll('#msOptions .ms-option');
+            opts.forEach(function(opt) {
+                var label = opt.querySelector('.ms-option-label');
+                var text = label ? label.textContent.toLowerCase() : '';
+                opt.style.display = (!q || text.indexOf(q) >= 0) ? '' : 'none';
             });
+        }
+
+        function populateSchoolCompareDropdown() {
+            var container = document.getElementById('msOptions');
+            if (!container) return;
+            container.innerHTML = '';
+            var schools = Object.values(DATA.schools).sort(function(a,b) { return a.school.localeCompare(b.school); });
+            schools.forEach(function(s) {
+                var div = document.createElement('div');
+                div.className = 'ms-option';
+                div.onclick = function(e) { toggleSchoolSelection(s.school, e); };
+                var cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = s.school;
+                cb.onclick = function(e) { e.stopPropagation(); toggleSchoolSelection(s.school); };
+                var label = document.createElement('span');
+                label.className = 'ms-option-label';
+                label.textContent = s.school;
+                var meta = document.createElement('span');
+                meta.className = 'ms-option-meta';
+                meta.textContent = 'N=' + s.survey_n;
+                div.appendChild(cb);
+                div.appendChild(label);
+                div.appendChild(meta);
+                container.appendChild(div);
+            });
+        }
+
+        function populateCoachFilter() {
+            // Legacy — now replaced by populateSchoolCompareDropdown
+            populateSchoolCompareDropdown();
+        }
+
+        function getFilteredSchools() {
+            var allSchools = Object.values(DATA.schools);
+            if (currentComparisonMode === 'schools' && currentComparisonSchools.length > 0) {
+                return allSchools.filter(function(s) { return currentComparisonSchools.indexOf(s.school) >= 0; });
+            }
+            return allSchools.filter(function(s) { return s.survey_n >= 30; });
         }
 
         function applyGlobalFilters() {
@@ -8095,23 +9083,23 @@
         }
 
         function updateFilteredKPIs() {
-            const filtered = getFilteredSchools();
-            const validSchools = filtered.filter(s => s.metrics.avg_certainty > 0 && s.survey_n >= 30);
-            if (validSchools.length > 0) {
-                const totalSessions = filtered.reduce((sum, s) => sum + s.ytd, 0);
-                const avgCertainty = validSchools.reduce((sum, s) => sum + s.metrics.avg_certainty, 0) / validSchools.length;
-                const avgClear = validSchools.reduce((sum, s) => sum + s.metrics.pct_clear, 0) / validSchools.length;
-                const subtitle = document.getElementById('pageSubtitle');
-                const level = document.getElementById('filterLevel').value;
-                const coach = document.getElementById('filterCoach').value;
-                let filterText = 'Career coaching program insights';
-                if (level !== 'all' || coach !== 'all') {
-                    const parts = [];
-                    if (level !== 'all') parts.push(level + ' schools');
-                    if (coach !== 'all') parts.push(coach);
-                    filterText = 'Filtered: ' + parts.join(' · ') + ` — ${filtered.length} schools, ${totalSessions.toLocaleString()} sessions, ${avgCertainty.toFixed(2)} avg certainty, ${avgClear.toFixed(1)}% clear plan`;
+            var filtered = getFilteredSchools();
+            var subtitle = document.getElementById('pageSubtitle');
+            if (!subtitle) return;
+
+            if (currentComparisonMode === 'schools' && currentComparisonSchools.length > 0) {
+                var totalN = filtered.reduce(function(s, sc) { return s + sc.survey_n; }, 0);
+                var totalYtd = filtered.reduce(function(s, sc) { return s + sc.ytd; }, 0);
+                if (currentComparisonSchools.length === 1) {
+                    subtitle.textContent = filtered[0].school + ' — ' + totalYtd.toLocaleString() + ' sessions, N=' + totalN;
+                } else {
+                    subtitle.textContent = currentComparisonSchools.length + ' schools selected — ' + totalYtd.toLocaleString() + ' sessions, N=' + totalN;
                 }
-                subtitle.textContent = filterText;
+            } else if (currentComparisonMode === 'benchmark') {
+                subtitle.textContent = 'District vs. Industry Benchmarks — ' + filtered.length + ' schools';
+            } else {
+                var totalSessions = filtered.reduce(function(sum, s) { return sum + s.ytd; }, 0);
+                subtitle.textContent = 'District-wide — ' + filtered.length + ' schools, ' + totalSessions.toLocaleString() + ' sessions';
             }
         }
 
@@ -8163,44 +9151,47 @@
 
             // Update badge
             const badge = document.getElementById('alertCountBadge');
-            const negCount = currentAlerts.filter(a => a.direction === 'negative').length;
-            const posCount = currentAlerts.filter(a => a.direction === 'positive').length;
-            badge.textContent = currentAlerts.length;
-            badge.className = 'alert-count' + (currentAlerts.length === 0 ? ' zero' : negCount > 0 ? '' : ' positive');
+            if (badge) {
+                const negCount = currentAlerts.filter(a => a.direction === 'negative').length;
+                badge.textContent = currentAlerts.length;
+                badge.className = 'alert-count' + (currentAlerts.length === 0 ? ' zero' : negCount > 0 ? '' : ' positive');
+            }
 
-            // Update banner
+            // Update banner (if present)
             const banner = document.getElementById('alertBanner');
             const bannerList = document.getElementById('alertBannerList');
-            if (currentAlerts.length > 0) {
-                banner.classList.add('visible');
+            if (banner && bannerList) {
+                if (currentAlerts.length > 0) {
+                    banner.classList.add('visible');
 
-                const negAlerts = currentAlerts.filter(a => a.direction === 'negative');
-                const posAlerts = currentAlerts.filter(a => a.direction === 'positive');
+                    const negAlerts = currentAlerts.filter(a => a.direction === 'negative');
+                    const posAlerts = currentAlerts.filter(a => a.direction === 'positive');
 
-                let html = '';
-                if (negAlerts.length > 0) {
-                    html += '<div class="alert-section-title concern-title">⚠ Concerns (' + negAlerts.length + ' flags)</div>';
-                    const grouped = {};
-                    negAlerts.forEach(a => { if (!grouped[a.type]) grouped[a.type] = []; grouped[a.type].push(a); });
-                    html += Object.entries(grouped).map(([type, alerts]) => {
-                        const schoolList = alerts.slice(0, 4).map(a => `${a.school} (${a.value})`).join(', ');
-                        const more = alerts.length > 4 ? ` +${alerts.length - 4} more` : '';
-                        return `<div class="alert-banner-item negative"><span class="alert-dot negative"></span><strong>${type}:</strong> ${schoolList}${more}<div class="alert-insight">${alerts[0].insight}</div></div>`;
-                    }).join('');
+                    let html = '';
+                    if (negAlerts.length > 0) {
+                        html += '<div class="alert-section-title concern-title">⚠ Concerns (' + negAlerts.length + ' flags)</div>';
+                        const grouped = {};
+                        negAlerts.forEach(a => { if (!grouped[a.type]) grouped[a.type] = []; grouped[a.type].push(a); });
+                        html += Object.entries(grouped).map(([type, alerts]) => {
+                            const schoolList = alerts.slice(0, 4).map(a => `${a.school} (${a.value})`).join(', ');
+                            const more = alerts.length > 4 ? ` +${alerts.length - 4} more` : '';
+                            return `<div class="alert-banner-item negative"><span class="alert-dot negative"></span><strong>${type}:</strong> ${schoolList}${more}<div class="alert-insight">${alerts[0].insight}</div></div>`;
+                        }).join('');
+                    }
+                    if (posAlerts.length > 0) {
+                        html += '<div class="alert-section-title standout-title">★ Standouts (' + posAlerts.length + ' flags)</div>';
+                        const grouped = {};
+                        posAlerts.forEach(a => { if (!grouped[a.type]) grouped[a.type] = []; grouped[a.type].push(a); });
+                        html += Object.entries(grouped).map(([type, alerts]) => {
+                            const schoolList = alerts.slice(0, 4).map(a => `${a.school} (${a.value})`).join(', ');
+                            const more = alerts.length > 4 ? ` +${alerts.length - 4} more` : '';
+                            return `<div class="alert-banner-item positive"><span class="alert-dot positive"></span><strong>${type}:</strong> ${schoolList}${more}<div class="alert-insight">${alerts[0].insight}</div></div>`;
+                        }).join('');
+                    }
+                    bannerList.innerHTML = html;
+                } else {
+                    banner.classList.remove('visible');
                 }
-                if (posAlerts.length > 0) {
-                    html += '<div class="alert-section-title standout-title">★ Standouts (' + posAlerts.length + ' flags)</div>';
-                    const grouped = {};
-                    posAlerts.forEach(a => { if (!grouped[a.type]) grouped[a.type] = []; grouped[a.type].push(a); });
-                    html += Object.entries(grouped).map(([type, alerts]) => {
-                        const schoolList = alerts.slice(0, 4).map(a => `${a.school} (${a.value})`).join(', ');
-                        const more = alerts.length > 4 ? ` +${alerts.length - 4} more` : '';
-                        return `<div class="alert-banner-item positive"><span class="alert-dot positive"></span><strong>${type}:</strong> ${schoolList}${more}<div class="alert-insight">${alerts[0].insight}</div></div>`;
-                    }).join('');
-                }
-                bannerList.innerHTML = html;
-            } else {
-                banner.classList.remove('visible');
             }
         }
 
@@ -8273,10 +9264,145 @@
         }
 
         function resetFilters() {
-            document.getElementById('filterLevel').value = 'all';
-            document.getElementById('filterCoach').value = 'all';
-            document.getElementById('filterMinN').value = '30';
+            currentComparisonMode = 'district';
+            currentComparisonSchools = [];
+            updateMsDisplay();
+            updateMsHighlights();
+            closeMultiSelect();
             applyGlobalFilters();
+            var overviewPage = document.getElementById('overview');
+            if (overviewPage && overviewPage.classList.contains('active')) {
+                try { renderEducatorOverview(); } catch(e) {}
+            }
+        }
+
+        // === PDF Download ===
+        function downloadPdf() {
+            trackEvent('pdf_download', 'export', document.getElementById('pageTitle').textContent);
+            var content = document.querySelector('.content');
+            if (!content) return;
+            var btn = event.target.closest('button');
+            if (btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+            var opt = {
+                margin: [0.3, 0.3, 0.3, 0.3],
+                filename: 'MoCo_CAP_Dashboard_' + new Date().toISOString().slice(0,10) + '.pdf',
+                image: { type: 'jpeg', quality: 0.95 },
+                html2canvas: { scale: 2, useCORS: true, logging: false },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+            html2pdf().set(opt).from(content).save().then(function() {
+                if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF'; }
+            }).catch(function() {
+                if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF'; }
+            });
+        }
+
+        // === Feedback Survey System ===
+        var feedbackState = {};
+
+        function openFeedback(widgetId, sentiment, btn, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            // Toggle thumb selection
+            var trigger = btn.closest('.fb-trigger');
+            trigger.querySelectorAll('.fb-thumb').forEach(function(t) { t.classList.remove('selected'); });
+            btn.classList.add('selected');
+
+            feedbackState[widgetId] = { sentiment: sentiment, usefulness: 0, satisfaction: 0, text: '' };
+
+            var surveyEl = document.getElementById('fbSurvey-' + widgetId);
+            if (!surveyEl) return;
+
+            var widgetNames = {
+                'riasec': 'Interest Themes (RIASEC)',
+                'congruence': 'Congruence & Clarity',
+                'engagement': 'Student Engagement',
+                'career-plan': 'Career Clarity'
+            };
+
+            surveyEl.innerHTML =
+                '<div class="fb-survey-label">How useful is this widget?</div>' +
+                '<div class="fb-stars" id="fbUse-' + widgetId + '">' +
+                    [1,2,3,4,5].map(function(n) {
+                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'usefulness\',' + n + ',this,event)">' + n + '</span>';
+                    }).join('') +
+                '</div>' +
+                '<div class="fb-survey-label">How satisfied are you with the data shown?</div>' +
+                '<div class="fb-stars" id="fbSat-' + widgetId + '">' +
+                    [1,2,3,4,5].map(function(n) {
+                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'satisfaction\',' + n + ',this,event)">' + n + '</span>';
+                    }).join('') +
+                '</div>' +
+                '<div class="fb-survey-label">Any additional feedback?</div>' +
+                '<textarea class="fb-textarea" id="fbText-' + widgetId + '" placeholder="Tell us what you think..." rows="2"></textarea>' +
+                '<button class="fb-submit" onclick="submitFeedback(\'' + widgetId + '\',event)">Submit Feedback</button>' +
+                '<div class="fb-thanks" id="fbThanks-' + widgetId + '"></div>';
+
+            surveyEl.classList.add('open');
+        }
+
+        function rateFeedback(widgetId, field, val, btn, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            feedbackState[widgetId][field] = val;
+            var container = btn.closest('.fb-stars');
+            container.querySelectorAll('.fb-star').forEach(function(s) {
+                s.classList.toggle('selected', parseInt(s.dataset.val) <= val);
+            });
+        }
+
+        function submitFeedback(widgetId, e) {
+            if (e) { e.stopPropagation(); e.preventDefault(); }
+            var state = feedbackState[widgetId];
+            if (!state) return;
+
+            var textEl = document.getElementById('fbText-' + widgetId);
+            state.text = textEl ? textEl.value : '';
+
+            var widgetNames = {
+                'riasec': 'Interest Themes (RIASEC)',
+                'congruence': 'Congruence & Clarity',
+                'engagement': 'Student Engagement',
+                'career-plan': 'Career Clarity'
+            };
+
+            var payload = {
+                timestamp: new Date().toISOString(),
+                widget: widgetId,
+                widgetName: widgetNames[widgetId] || widgetId,
+                sentiment: state.sentiment,
+                usefulness: state.usefulness,
+                satisfaction: state.satisfaction,
+                comments: state.text,
+                page: 'overview',
+                comparisonMode: currentComparisonMode
+            };
+
+            // Send to Google Apps Script endpoint
+            var GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+            if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                }).catch(function(err) { console.warn('Feedback send error:', err); });
+            }
+
+            // Log to console for now
+            console.log('Feedback submitted:', payload);
+            trackEvent('feedback_submit', 'feedback', widgetId, state.usefulness);
+
+            // Show thanks
+            var thanksEl = document.getElementById('fbThanks-' + widgetId);
+            if (thanksEl) {
+                thanksEl.textContent = 'Thank you for your feedback!';
+                thanksEl.style.display = 'block';
+            }
+
+            // Hide form after brief delay
+            setTimeout(function() {
+                var surveyEl = document.getElementById('fbSurvey-' + widgetId);
+                if (surveyEl) surveyEl.classList.remove('open');
+            }, 2000);
         }
 
         const MODAL_DATA = {
