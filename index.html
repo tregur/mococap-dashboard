@@ -14,13 +14,17 @@
         }
 
         :root {
-            --g: #2563eb;
-            --bg: #ffffff;
-            --surface: #f8f9fa;
-            --bdr: #e5e7eb;
-            --t1: #111827;
-            --t2: #4b5563;
-            --t3: #9ca3af;
+            --g: #0d9488;
+            --g-light: #ccfbf1;
+            --bg: #fafaf9;
+            --surface: #f5f5f4;
+            --bdr: #e7e5e4;
+            --t1: #1c1917;
+            --t2: #57534e;
+            --t3: #a8a29e;
+            --positive: #0d9488;
+            --attention: #d97706;
+            --celebrate: #7c3aed;
         }
 
         html, body {
@@ -366,6 +370,195 @@
             font-size: 11px;
             color: var(--t3);
             margin-top: 0.5rem;
+        }
+
+        /* === Educator-Friendly Overview === */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--g-light) 0%, #f0fdf4 100%);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            margin-bottom: 1.25rem;
+        }
+        .welcome-greeting {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--t1);
+            margin-bottom: 0.25rem;
+        }
+        .welcome-summary {
+            font-size: 14px;
+            color: var(--t2);
+            line-height: 1.5;
+            margin: 0;
+        }
+        .metric-highlights {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+        @media (min-width: 900px) {
+            .metric-highlights { grid-template-columns: repeat(4, 1fr); }
+        }
+        .metric-highlight-card {
+            background: #fff;
+            border: 1px solid var(--bdr);
+            border-radius: 14px;
+            padding: 1rem 1.1rem;
+            transition: box-shadow 0.2s;
+        }
+        .metric-highlight-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .mh-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--t3);
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin-bottom: 0.5rem;
+        }
+        .mh-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--t1);
+        }
+        .mh-trend {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 0.35rem;
+        }
+        .mh-trend.up { color: var(--positive); }
+        .mh-trend.down { color: var(--attention); }
+        .mh-context {
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: 0.25rem;
+        }
+        .overview-section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            margin-top: 0.5rem;
+        }
+        .overview-section-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--t1);
+            margin: 0;
+        }
+        .overview-section-header .section-icon {
+            font-size: 18px;
+        }
+        .deep-dive-section {
+            margin-top: 1.5rem;
+        }
+        .deep-dive-toggle {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--g);
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border-radius: 10px;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.2s;
+        }
+        .deep-dive-toggle:hover {
+            background: var(--bdr);
+        }
+        .deep-dive-toggle::-webkit-details-marker { display: none; }
+        .deep-dive-toggle::before { content: '+ '; font-weight: 700; }
+        .deep-dive-section[open] .deep-dive-toggle::before { content: '- '; }
+        .deep-dive-content {
+            margin-top: 1rem;
+        }
+        /* === Modular Widget System === */
+        .widget-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 600px) {
+            .widget-grid { grid-template-columns: 1fr; }
+        }
+        .widget {
+            background: #fff;
+            border: 1px solid var(--bdr);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.2s;
+            overflow: hidden;
+            min-width: 0;
+        }
+        .widget:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+        }
+        .widget--wide {
+            grid-column: 1 / -1;
+        }
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+        .widget-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--t1);
+        }
+        .widget-badge {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
+        .widget-badge--positive { background: var(--g-light); color: #0f766e; }
+        .widget-badge--attention { background: #fef3c7; color: #92400e; }
+        .widget-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .widget-footer {
+            font-size: 11px;
+            color: var(--t3);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+        .widget-chart-wrap {
+            position: relative;
+            width: 100%;
+        }
+
+        .overview-chart-card {
+            background: #fff;
+            border: 1px solid var(--bdr);
+            border-radius: 14px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .overview-chart-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--t1);
+            margin-bottom: 0.25rem;
+        }
+        .overview-chart-desc {
+            font-size: 12px;
+            color: var(--t3);
+            margin-bottom: 1rem;
         }
 
         .trends-section {
@@ -1703,7 +1896,7 @@
             transform: translateY(-1px);
         }
         .insight-card[data-severity="positive"] { border-top: 3px solid var(--g); }
-        .insight-card[data-severity="negative"] { border-top: 3px solid #dc2626; }
+        .insight-card[data-severity="negative"] { border-top: 3px solid var(--attention); }
         .insight-card[data-severity="neutral"]  { border-top: 3px solid #f59e0b; }
         .insight-card[data-severity="info"]     { border-top: 3px solid #3b82f6; }
 
@@ -1749,10 +1942,10 @@
             border-radius: 4px;
             letter-spacing: 0.05em;
         }
-        .ic-severity--positive { background: #dbeafe; color: #1e40af; }
-        .ic-severity--negative { background: #fee2e2; color: #991b1b; }
+        .ic-severity--positive { background: var(--g-light); color: #0f766e; }
+        .ic-severity--negative { background: #fef3c7; color: #92400e; }
         .ic-severity--neutral  { background: #fef3c7; color: #92400e; }
-        .ic-severity--info     { background: #dbeafe; color: #1e40af; }
+        .ic-severity--info     { background: #e0f2fe; color: #0369a1; }
 
         .ic-body {
             padding: 0.85rem 1rem;
@@ -1770,10 +1963,10 @@
             font-weight: 700;
             margin-bottom: 0.4rem;
         }
-        .ic-value--positive { color: #1e40af; }
-        .ic-value--negative { color: #dc2626; }
+        .ic-value--positive { color: #0f766e; }
+        .ic-value--negative { color: #b45309; }
         .ic-value--neutral  { color: #854d0e; }
-        .ic-value--info     { color: #1e40af; }
+        .ic-value--info     { color: #0369a1; }
 
         .ic-detail {
             font-size: 12px;
@@ -2226,101 +2419,163 @@
 
                 <div class="content">
                     <div class="page active" id="overview">
-                        <div class="month-nav" id="monthNav"></div>
-                        <div id="categoryChips" style="display:none;">
-                        </div>
                         <div id="monthDetailView" style="display:none;"></div>
                         <div id="monthViewContent">
 
-                        <!-- PRIMARY WIDGETS: Congruence & Certainty front and center -->
-                        <div class="bubble-chart-wrap" id="overviewScoresSection">
-                            <div class="metric-detail" style="margin-bottom:0.5rem;">Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
-                            <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty by School</div>
-                            <div id="overviewScoresCanvasWrap" style="position:relative;height:680px;"><canvas id="overviewScoresCanvas"></canvas></div>
-                            <div id="overviewScoresTable"></div>
+                        <!-- A: KEY METRICS (top of page) -->
+                        <div class="metric-highlights" id="educatorMetrics">
+                            <!-- Dynamically populated by renderEducatorOverview() -->
                         </div>
 
-                        <div class="bubble-chart-wrap" id="correlationSpotlight">
-                            <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
-                                <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape</div>
+                        <!-- B: WIDGET GRID — modular data viz chips -->
+                        <div class="widget-grid" id="widgetGrid">
+                            <div class="widget" id="widgetRiasecDonut">
+                                <div class="widget-header">
+                                    <span class="widget-title">Personality Themes (RIASEC)</span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="riasecDonutCanvas"></canvas></div>
+                                </div>
+                                <div class="widget-footer" id="riasecDonutFooter">Distribution of student personality types</div>
                             </div>
-                            <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see personality match. | SY 2025-26</div>
-                            <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
-                                <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
+                            <div class="widget" id="widgetCongruenceTime">
+                                <div class="widget-header">
+                                    <span class="widget-title">Congruence &amp; Clarity Over Time</span>
+                                    <span class="widget-badge widget-badge--positive" id="congruenceBadge">85.1% match</span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="congruenceTimeCanvas"></canvas></div>
+                                </div>
+                                <div class="widget-footer" id="congruenceTimeFooter">Career-personality match and clarity trend, Aug–Dec</div>
                             </div>
-                            <div id="bubbleColorKey" style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.5rem;padding:4px 0;">
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>Realistic</span>
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block;"></span>Investigative</span>
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#eab308;display:inline-block;"></span>Artistic</span>
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Social</span>
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;"></span>Enterprising</span>
-                                <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>Conventional</span>
+                            <div class="widget" id="widgetEngagement">
+                                <div class="widget-header">
+                                    <span class="widget-title">Student Engagement</span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="engagementTrendChart"></canvas></div>
+                                </div>
+                                <div class="widget-footer">Sessions &amp; students reached each month</div>
                             </div>
-                            <div style="position:relative;height:480px;"><canvas id="riasecBubbleChart"></canvas></div>
+                            <div class="widget" id="widgetClarity">
+                                <div class="widget-header">
+                                    <span class="widget-title">Career Clarity</span>
+                                </div>
+                                <div class="widget-body">
+                                    <div class="widget-chart-wrap" style="height:200px;"><canvas id="clarityDonutCanvas"></canvas></div>
+                                </div>
+                                <div class="widget-footer" id="clarityDonutFooter">Where students stand on their career direction</div>
+                            </div>
                         </div>
 
-                        <!-- TOP 3 MONTHLY INSIGHTS: Ranked by divergence from trend and program impact -->
-                        <div id="monthDivergenceCards"></div>
+                        <!-- C: WELCOME + CONTEXT -->
+                        <div class="welcome-section">
+                            <h2 class="welcome-greeting" id="welcomeGreeting">Welcome back!</h2>
+                            <p class="welcome-summary" id="welcomeSummary">Here's how your program is doing.</p>
+                        </div>
 
-                        <div class="kpi-grid" id="dynamicKPIs">
+                        <!-- D: WINS & CELEBRATIONS -->
+                        <div class="overview-section-header"><span class="section-icon">&#127881;</span><h3>What's Going Well</h3></div>
+                        <div id="educatorWins" class="ic-grid">
                             <!-- Dynamically populated -->
                         </div>
 
-                        <div id="congruenceCertaintyScorecard"></div>
-                        <div id="sectorImpactSummary"></div>
+                        <!-- E: RECOMMENDED ACTIONS -->
+                        <div class="overview-section-header"><span class="section-icon">&#9889;</span><h3>Recommended Next Steps</h3></div>
+                        <div id="educatorActions" class="ic-grid">
+                            <!-- Dynamically populated -->
+                        </div>
 
-                        <div class="hero-section">
-                            <div class="hero-chart">
-                                <canvas id="heroChart"></canvas>
+                        <!-- F: EXPANDABLE DEEP DIVE -->
+                        <details class="deep-dive-section" id="deepDiveSection">
+                            <summary class="deep-dive-toggle">See detailed analytics</summary>
+                            <div class="deep-dive-content">
+                                <div class="month-nav" id="monthNav"></div>
+                                <div id="categoryChips" style="display:none;"></div>
+
+                                <div class="bubble-chart-wrap" id="overviewScoresSection">
+                                    <div class="metric-detail" style="margin-bottom:0.5rem;">Career-personality match and confidence by school. Dashed lines = district averages. Hover for Clear Plan %. | SY 2025-26</div>
+                                    <div class="bubble-chart-title" style="margin-bottom:0.5rem;">Congruence & Certainty by School</div>
+                                    <div id="overviewScoresCanvasWrap" style="position:relative;height:680px;"><canvas id="overviewScoresCanvas"></canvas></div>
+                                    <div id="overviewScoresTable"></div>
+                                </div>
+
+                                <div class="bubble-chart-wrap" id="correlationSpotlight">
+                                    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:0.5rem;margin-bottom:0.5rem;">
+                                        <div class="bubble-chart-title" style="margin-bottom:0;">Career-Personality Landscape</div>
+                                    </div>
+                                    <div class="metric-detail" id="bubbleChartDesc">Click a RIASEC type to see careers under it. Click a career to see personality match. | SY 2025-26</div>
+                                    <div id="bubbleFilterBar" style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+                                        <button class="seg-pill active" onclick="setBubbleView('all', this);" style="font-size:11px;padding:4px 10px;">All Types</button>
+                                    </div>
+                                    <div id="bubbleColorKey" style="display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:0.5rem;padding:4px 0;">
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#ef4444;display:inline-block;"></span>Realistic</span>
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#3b82f6;display:inline-block;"></span>Investigative</span>
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#eab308;display:inline-block;"></span>Artistic</span>
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#22c55e;display:inline-block;"></span>Social</span>
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#f97316;display:inline-block;"></span>Enterprising</span>
+                                        <span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:#555;"><span style="width:10px;height:10px;border-radius:50%;background:#8b5cf6;display:inline-block;"></span>Conventional</span>
+                                    </div>
+                                    <div style="position:relative;height:480px;"><canvas id="riasecBubbleChart"></canvas></div>
+                                </div>
+
+                                <div id="monthDivergenceCards"></div>
+
+                                <div class="kpi-grid" id="dynamicKPIs">
+                                    <!-- Dynamically populated -->
+                                </div>
+
+                                <div id="congruenceCertaintyScorecard"></div>
+                                <div id="sectorImpactSummary"></div>
+
+                                <div class="hero-section">
+                                    <div class="hero-chart">
+                                        <canvas id="heroChart"></canvas>
+                                    </div>
+                                    <div class="hero-highlights" id="dynamicHighlights">
+                                        <!-- Dynamically populated -->
+                                    </div>
+                                </div>
+
+                                <div class="section-narrative" id="dynamicSummary">
+                                    <!-- Dynamically populated by generateDynamicOverview() -->
+                                </div>
+
+                                <div class="insight-box alert" id="dataQualityPanel" style="display:none;">
+                                    <!-- Dynamically populated by computeDataQuality() -->
+                                </div>
+
+                                <div class="alert-banner" id="alertBanner">
+                                    <div class="alert-banner-title">Norm-Based Alerts</div>
+                                    <div class="alert-banner-list" id="alertBannerList"></div>
+                                </div>
+
+                                <div id="correlationCards">
+                                    <!-- Dynamically populated correlation insight cards -->
+                                </div>
+
+                                <div class="chart-card" style="margin-bottom:1rem;" id="patternFlagsCard">
+                                    <div class="chart-title">Pattern Flags — Automated Outlier Detection</div>
+                                    <div id="patternFlags" style="padding:0.5rem 0;"></div>
+                                </div>
+
+                                <div class="trends-section">
+                                    <div class="trends-title" id="trendsSectionTitle">Month-to-Month Changes</div>
+                                    <div class="trend-grid" id="dynamicTrends">
+                                        <!-- Dynamically populated -->
+                                    </div>
+                                </div>
+
+                                <div class="chart-grid">
+                                    <div class="chart-card">
+                                        <div class="chart-title">Career Clarity Distribution</div>
+                                        <div class="metric-detail">Student self-reported career clarity: "Unsure" (no direction), "Some Idea" (exploring options), or "Clear Plan" (specific career goal). Based on post-session surveys. | SY 2025-26 cumulative (10,006 students)</div>
+                                        <div class="chart-container"><canvas id="clarityDistChart"></canvas></div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="hero-highlights" id="dynamicHighlights">
-                                <!-- Dynamically populated -->
-                            </div>
-                        </div>
+                        </details>
 
-                        <div class="section-narrative" id="dynamicSummary">
-                            <!-- Dynamically populated by generateDynamicOverview() -->
-                        </div>
-
-                        <div class="insight-box alert" id="dataQualityPanel" style="display:none;">
-                            <!-- Dynamically populated by computeDataQuality() -->
-                        </div>
-
-                        <!-- October Deep Dive moved to Monthly Report → October tab -->
-
-                        <div class="alert-banner" id="alertBanner">
-                            <div class="alert-banner-title">Norm-Based Alerts</div>
-                            <div class="alert-banner-list" id="alertBannerList"></div>
-                        </div>
-
-                        <div id="correlationCards">
-                            <!-- Dynamically populated correlation insight cards -->
-                        </div>
-
-                        <div class="chart-card" style="margin-bottom:1rem;" id="patternFlagsCard">
-                            <div class="chart-title">Pattern Flags — Automated Outlier Detection</div>
-                            <div id="patternFlags" style="padding:0.5rem 0;"></div>
-                        </div>
-
-                        <div class="trends-section">
-                            <div class="trends-title" id="trendsSectionTitle">Month-to-Month Changes</div>
-                            <div class="trend-grid" id="dynamicTrends">
-                                <!-- Dynamically populated -->
-                            </div>
-                        </div>
-
-                        <div class="chart-grid">
-                            <div class="chart-card">
-                                <div class="chart-title">Engagement Trend (Aug-Dec)</div>
-                                <div class="metric-detail">Total coaching sessions and unique students reached each month, Aug–Dec 2025. Tracks program scale and student participation over the school year. | SY 2025-26</div>
-                                <div class="chart-container"><canvas id="engagementTrendChart"></canvas></div>
-                            </div>
-                            <div class="chart-card">
-                                <div class="chart-title">Career Clarity Distribution</div>
-                                <div class="metric-detail">Student self-reported career clarity: "Unsure" (no direction), "Some Idea" (exploring options), or "Clear Plan" (specific career goal). Based on post-session surveys. | SY 2025-26 cumulative (10,006 students)</div>
-                                <div class="chart-container"><canvas id="clarityDistChart"></canvas></div>
-                            </div>
-                        </div>
                         </div><!-- end monthViewContent -->
                     </div>
 
@@ -4095,6 +4350,305 @@
                     panel.style.display = 'block';
                 }
             }
+        }
+
+        function renderEducatorOverview() {
+            var months = Object.keys(DATA.alignment_trajectory);
+            var latestMonth = months[months.length - 1];
+            var prevMonth = months[months.length - 2];
+            var latest = DATA.alignment_trajectory[latestMonth];
+            var prev = DATA.alignment_trajectory[prevMonth];
+
+            var allSchools = Object.values(DATA.schools);
+            var validSchools = allSchools.filter(function(s) { return s.metrics.avg_certainty > 0 && s.survey_n >= 30; });
+            var totalSessions = Object.values(DATA.sessions_trend).reduce(function(a,b) { return a+b; }, 0);
+            var totalStudents = Object.values(DATA.unique_trend).reduce(function(a,b) { return a+b; }, 0);
+            var schoolCount = allSchools.length;
+
+            var latestSessions = DATA.sessions_trend[latestMonth];
+            var prevSessions = DATA.sessions_trend[prevMonth];
+            var latestStudents = DATA.unique_trend[latestMonth];
+            var prevStudents = DATA.unique_trend[prevMonth];
+
+            var avgCertainty = validSchools.length > 0 ? (validSchools.reduce(function(s,sc) { return s + sc.metrics.avg_certainty * sc.survey_n; }, 0) / validSchools.reduce(function(s,sc) { return s + sc.survey_n; }, 0)).toFixed(2) : latest.avg_certainty.toFixed(2);
+
+            // === A: WELCOME GREETING ===
+            var hour = new Date().getHours();
+            var greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+            var greetEl = document.getElementById('welcomeGreeting');
+            var sumEl = document.getElementById('welcomeSummary');
+            if (greetEl) greetEl.textContent = greeting + '!';
+
+            // Build a warm summary line
+            var sessionsDelta = ((latestSessions - prevSessions) / prevSessions * 100).toFixed(0);
+            var clarityDelta = (latest.pct_clear - prev.pct_clear).toFixed(1);
+            var summaryParts = [];
+            if (parseFloat(clarityDelta) > 0) {
+                summaryParts.push('Career clarity is up ' + clarityDelta + ' points from ' + prevMonth);
+            }
+            summaryParts.push((totalStudents/1000).toFixed(1) + 'K students reached across ' + schoolCount + ' schools this year');
+            if (sumEl) sumEl.textContent = summaryParts.join('. ') + '.';
+
+            // === B: METRIC HIGHLIGHT CARDS ===
+            var metricsEl = document.getElementById('educatorMetrics');
+            if (metricsEl) {
+                function metricCard(label, value, trendVal, trendLabel, context) {
+                    var trendHtml = '';
+                    if (trendVal && trendVal !== '') {
+                        var trendNum = parseFloat(trendVal);
+                        var isUp = trendNum >= 0;
+                        var arrow = isUp ? '&#9650;' : '&#9660;';
+                        var trendClass = isUp ? 'up' : 'down';
+                        trendHtml = '<div class="mh-trend ' + trendClass + '">' + arrow + ' ' + (isUp ? '+' : '') + trendVal + ' ' + trendLabel + '</div>';
+                    } else if (trendLabel) {
+                        trendHtml = '<div class="mh-trend" style="color:var(--t3);">' + trendLabel + '</div>';
+                    }
+                    return '<div class="metric-highlight-card">' +
+                        '<div class="mh-label">' + label + '</div>' +
+                        '<div class="mh-value">' + value + '</div>' +
+                        trendHtml +
+                        '<div class="mh-context">' + context + '</div>' +
+                    '</div>';
+                }
+
+                var sessionsPctChange = ((latestSessions - prevSessions) / prevSessions * 100).toFixed(1);
+                var studentsPctChange = ((latestStudents - prevStudents) / prevStudents * 100).toFixed(1);
+                var certaintyDelta = (latest.avg_certainty - prev.avg_certainty).toFixed(2);
+
+                metricsEl.innerHTML =
+                    metricCard('Students Reached', (totalStudents/1000).toFixed(1) + 'K', studentsPctChange + '%', 'from ' + prevMonth, latestStudents.toLocaleString() + ' students in ' + latestMonth) +
+                    metricCard('Career Clarity', latest.pct_clear + '%', clarityDelta + 'pp', 'from ' + prevMonth, 'Students with a clear career plan') +
+                    metricCard('Career Confidence', avgCertainty + '/5', certaintyDelta, 'from ' + prevMonth, 'How certain students feel about their path') +
+                    metricCard('Helpfulness', DATA.benchmarks.avg_helpful.toFixed(1) + '/5', '', 'target: 3.75', 'How students rate session quality');
+            }
+
+            // === C: WINS & CELEBRATIONS ===
+            var winsEl = document.getElementById('educatorWins');
+            if (winsEl) {
+                var wins = [];
+                // Win 1: Congruence rate
+                if (DATA.congruence.match_rate > 80) {
+                    wins.push(buildInsightCard({
+                        id: 'win-congruence', category: 'personality', severity: 'positive',
+                        title: DATA.congruence.match_rate + '% of students matched to careers that fit their personality',
+                        value: DATA.congruence.match_rate + '%',
+                        detail: 'Students are being guided toward careers that align with who they are. This strong match rate across ' + schoolCount + ' schools shows the coaching process is working.'
+                    }));
+                }
+                // Win 2: Clarity trajectory
+                if (parseFloat(clarityDelta) > 0) {
+                    wins.push(buildInsightCard({
+                        id: 'win-clarity', category: 'career', severity: 'positive',
+                        title: 'Career clarity continues to rise — up ' + clarityDelta + ' points',
+                        value: latest.pct_clear + '%',
+                        detail: 'More students report having a clear career plan compared to ' + prevMonth + '. The coaching is helping students move from "unsure" to "I have a direction."'
+                    }));
+                }
+                // Win 3: Student reach
+                if (totalStudents > 40000) {
+                    wins.push(buildInsightCard({
+                        id: 'win-reach', category: 'engagement', severity: 'positive',
+                        title: 'Over ' + (totalStudents/1000).toFixed(0) + 'K students reached this school year',
+                        value: (totalStudents/1000).toFixed(1) + 'K',
+                        detail: totalSessions.toLocaleString() + ' coaching sessions delivered across ' + schoolCount + ' schools. Your work is making a difference.'
+                    }));
+                }
+                // Win 4: Confidence data from October
+                if (typeof OCTOBER_FULL !== 'undefined' && OCTOBER_FULL.confidence && OCTOBER_FULL.confidence.pct_positive > 50) {
+                    wins.push(buildInsightCard({
+                        id: 'win-confidence', category: 'program', severity: 'positive',
+                        title: OCTOBER_FULL.confidence.pct_positive + '% of students report career confidence',
+                        value: OCTOBER_FULL.confidence.pct_positive + '%',
+                        detail: 'Up ' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year. Students are feeling more confident about their futures thanks to your coaching.'
+                    }));
+                }
+                // Show top 2 wins max
+                winsEl.innerHTML = wins.slice(0, 2).join('');
+            }
+
+            // === D: RECOMMENDED ACTIONS ===
+            var actionsEl = document.getElementById('educatorActions');
+            if (actionsEl) {
+                var actions = [];
+
+                // Action 1: CTE exposure (highest impact from research)
+                actions.push(buildInsightCard({
+                    id: 'action-cte', category: 'career', severity: 'neutral',
+                    title: 'Show "Some Idea" students CTE career pathways',
+                    value: DATA.future_thinking['Some Idea'].toLocaleString() + ' students',
+                    detail: DATA.future_thinking['Some Idea'].toLocaleString() + ' students have "some idea" about their career but haven\'t committed to a direction yet. They\'re closest to clarity.',
+                    soWhat: 'CTE exposure is the single most powerful way to move students from "exploring" to "I have a plan." These students just need a nudge.',
+                    nextStep: 'In your next sessions with these students, walk through 2-3 CTE pathways that match their personality type. Ask them to pick one to research further.',
+                    sources: [{label: 'Oct 2025 Analysis', action: 'page:sources'}]
+                }));
+
+                // Action 2: Follow-up with written next steps
+                actions.push(buildInsightCard({
+                    id: 'action-nextsteps', category: 'program', severity: 'neutral',
+                    title: 'End each session with a specific, written next step',
+                    value: 'High Impact',
+                    detail: 'Students who leave with a concrete action item are significantly more likely to follow through and build career certainty over time.',
+                    soWhat: 'When students own a next step ("research this career," "talk to this person"), they stay engaged between sessions.',
+                    nextStep: 'Before ending each session, ask: "What is one thing you will do before we meet again?" Write it down together.',
+                    sources: [{label: 'Oct 2025 Analysis', action: 'page:sources'}]
+                }));
+
+                // Action 3: Helpfulness improvement (if below target)
+                if (DATA.benchmarks.avg_helpful < 3.75) {
+                    actions.push(buildInsightCard({
+                        id: 'action-helpful', category: 'program', severity: 'negative',
+                        title: 'Boost session helpfulness rating',
+                        value: DATA.benchmarks.avg_helpful.toFixed(2) + '/5',
+                        detail: 'Current helpfulness is ' + DATA.benchmarks.avg_helpful.toFixed(2) + '/5, below the 3.75 target. Students who find sessions helpful become more certain about their career path.',
+                        soWhat: 'Session quality is the strongest driver of career certainty. Small improvements here compound into big outcomes.',
+                        nextStep: 'Start each session by asking what the student needs most today. Use a quick "was this helpful?" check-in at the end.',
+                        sources: [{label: 'Oct 2025 Analysis', action: 'page:sources'}]
+                    }));
+                }
+
+                // Show top 3 actions
+                actionsEl.innerHTML = actions.slice(0, 3).join('');
+            }
+        }
+
+        function renderRiasecDonutWidget() {
+            var c = destroyAndGet('riasecDonutCanvas');
+            if (!c) return;
+            var themes = DATA.riasec_themes;
+            var labels = Object.keys(themes);
+            var values = labels.map(function(k) { return themes[k]; });
+            var total = values.reduce(function(a,b) { return a+b; }, 0);
+            var colors = {Realistic:'#ef4444', Investigative:'#3b82f6', Artistic:'#eab308', Social:'#22c55e', Enterprising:'#f97316', Conventional:'#8b5cf6'};
+            new Chart(c, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: labels.map(function(l) { return colors[l] || '#94a3b8'; }),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + (ctx.raw / total * 100).toFixed(1) + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            var topTheme = labels[0];
+            var topPct = (values[0] / total * 100).toFixed(0);
+            var footer = document.getElementById('riasecDonutFooter');
+            if (footer) footer.textContent = total.toLocaleString() + ' students — ' + topTheme + ' is the top theme at ' + topPct + '%';
+        }
+
+        function renderCongruenceTimeWidget() {
+            var c = destroyAndGet('congruenceTimeCanvas');
+            if (!c) return;
+            var months = Object.keys(DATA.alignment_trajectory);
+            var clarity = months.map(function(m) { return DATA.alignment_trajectory[m].pct_clear; });
+            var certainty = months.map(function(m) { return DATA.alignment_trajectory[m].avg_certainty; });
+
+            new Chart(c, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        {
+                            label: 'Clear Plan %',
+                            data: clarity,
+                            borderColor: 'var(--g)',
+                            backgroundColor: 'rgba(13,148,136,0.1)',
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#0d9488',
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Certainty (1-5)',
+                            data: certainty,
+                            borderColor: '#7c3aed',
+                            backgroundColor: 'transparent',
+                            borderDash: [4, 3],
+                            tension: 0.3,
+                            pointRadius: 4,
+                            pointBackgroundColor: '#7c3aed',
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { intersect: false, mode: 'index' },
+                    plugins: {
+                        legend: { position: 'top', labels: { boxWidth: 10, padding: 8, font: { size: 11 } } }
+                    },
+                    scales: {
+                        y: { title: { display: true, text: 'Clear Plan %', font: { size: 10 } }, min: 15, max: 25, ticks: { font: { size: 10 } } },
+                        y1: { position: 'right', title: { display: true, text: 'Certainty', font: { size: 10 } }, min: 3.5, max: 4.1, ticks: { font: { size: 10 } }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+
+            var badge = document.getElementById('congruenceBadge');
+            if (badge) badge.textContent = DATA.congruence.match_rate + '% match';
+            var footer = document.getElementById('congruenceTimeFooter');
+            var lastClarity = clarity[clarity.length - 1];
+            var firstClarity = clarity[0];
+            if (footer) footer.textContent = 'Clarity: ' + firstClarity + '% → ' + lastClarity + '% (+' + (lastClarity - firstClarity).toFixed(1) + 'pp since Aug)';
+        }
+
+        function renderClarityDonutWidget() {
+            var c = destroyAndGet('clarityDonutCanvas');
+            if (!c) return;
+            var ft = DATA.future_thinking;
+            var labels = ['Unsure', 'Some Idea', 'Clear Plan'];
+            var values = [ft['Unsure'], ft['Some Idea'], ft['Clear Plan']];
+            var total = values.reduce(function(a,b) { return a+b; }, 0);
+            var colors = ['#a8a29e', '#d97706', '#0d9488'];
+
+            new Chart(c, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: values,
+                        backgroundColor: colors,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 8, padding: 6, font: { size: 10 } } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    return ctx.label + ': ' + ctx.raw.toLocaleString() + ' (' + (ctx.raw / total * 100).toFixed(1) + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            var footer = document.getElementById('clarityDonutFooter');
+            if (footer) footer.textContent = ft['Some Idea'].toLocaleString() + ' students with "Some Idea" — closest to clarity';
         }
 
         function generateDynamicOverview() {
@@ -7103,27 +7657,50 @@
             });
         }
 
-        function initDashboard() {
-            try { computeDataQuality(); } catch(e) { console.error('computeDataQuality error:', e); }
-            try { populateCoachFilter(); } catch(e) { console.error('populateCoachFilter error:', e); }
-            try { computeNorms(); } catch(e) { console.error('computeNorms error:', e); }
+        var deepDiveRendered = false;
+        function renderDeepDiveCharts() {
+            if (deepDiveRendered) return;
+            deepDiveRendered = true;
             try { renderMonthNav(); } catch(e) { console.error('renderMonthNav error:', e); }
             try { generateDynamicOverview(); } catch(e) { console.error('generateDynamicOverview error:', e); }
             try { renderCorrelationSpotlight(); } catch(e) { console.error('renderCorrelationSpotlight error:', e); }
             try { renderMonthDivergenceCards(); } catch(e) { console.error('renderMonthDivergenceCards error:', e); }
-            try { renderRiasecMonthsHeatmap(); } catch(e) { console.error('renderRiasecMonthsHeatmap error:', e); }
-            try { renderSchoolRiasecHeatmap(); } catch(e) { console.error('renderSchoolRiasecHeatmap error:', e); }
-            try { populateSchoolTable(); } catch(e) { console.error('populateSchoolTable error:', e); }
             try { initCharts(); } catch(e) { console.error('initCharts error:', e); }
-            try { applyGlobalFilters(); } catch(e) { console.error('applyGlobalFilters error:', e); }
             try { generatePatternFlags(); } catch(e) { console.error('generatePatternFlags error:', e); }
-            try { populateCoachTable(); } catch(e) { console.error('populateCoachTable error:', e); }
-            try { initStaticInsightCards(); } catch(e) { console.error('initStaticInsightCards error:', e); }
-            // Overview page charts (the only visible page at init)
             try { renderOverviewScoresChart(); } catch(e) { console.error('renderOverviewScoresChart error:', e); }
             try { renderCongruenceCertaintyScorecard(); } catch(e) { console.error('Scorecard error:', e); }
             try { renderSectorImpactSummary(); } catch(e) { console.error('Sector summary error:', e); }
             try { renderOverviewOctoberCharts(); } catch(e) { console.error('Overview Oct charts error:', e); }
+        }
+
+        function initDashboard() {
+            try { computeDataQuality(); } catch(e) { console.error('computeDataQuality error:', e); }
+            try { populateCoachFilter(); } catch(e) { console.error('populateCoachFilter error:', e); }
+            try { computeNorms(); } catch(e) { console.error('computeNorms error:', e); }
+            try { renderRiasecMonthsHeatmap(); } catch(e) { console.error('renderRiasecMonthsHeatmap error:', e); }
+            try { renderSchoolRiasecHeatmap(); } catch(e) { console.error('renderSchoolRiasecHeatmap error:', e); }
+            try { populateSchoolTable(); } catch(e) { console.error('populateSchoolTable error:', e); }
+            try { applyGlobalFilters(); } catch(e) { console.error('applyGlobalFilters error:', e); }
+            try { populateCoachTable(); } catch(e) { console.error('populateCoachTable error:', e); }
+            try { initStaticInsightCards(); } catch(e) { console.error('initStaticInsightCards error:', e); }
+
+            // Educator-friendly overview (renders immediately)
+            try { renderEducatorOverview(); } catch(e) { console.error('renderEducatorOverview error:', e); }
+            // Widget charts
+            try { renderRiasecDonutWidget(); } catch(e) { console.error('riasecDonut error:', e); }
+            try { renderCongruenceTimeWidget(); } catch(e) { console.error('congruenceTime error:', e); }
+            try { renderEngagementTrendChart(); } catch(e) { console.error('engagementTrendChart error:', e); }
+            try { renderClarityDonutWidget(); } catch(e) { console.error('clarityDonut error:', e); }
+
+            // Deep-dive charts render lazily when the section is opened
+            var deepDive = document.getElementById('deepDiveSection');
+            if (deepDive) {
+                deepDive.addEventListener('toggle', function() {
+                    if (deepDive.open) {
+                        setTimeout(function() { renderDeepDiveCharts(); }, 100);
+                    }
+                });
+            }
             // Hidden-page charts are deferred to showPage() — Chart.js needs display:block to render properly
         }
 
@@ -7150,10 +7727,14 @@
             setTimeout(function() {
                 try {
                 if (pageId === 'overview') {
-                    initCharts();
-                    renderOverviewOctoberCharts();
-                    renderOverviewScoresChart();
-                    renderRiasecBubbleChart();
+                    renderEducatorOverview();
+                    renderRiasecDonutWidget();
+                    renderCongruenceTimeWidget();
+                    renderEngagementTrendChart();
+                    renderClarityDonutWidget();
+                    // Re-render deep-dive charts only if section is open
+                    var dd = document.getElementById('deepDiveSection');
+                    if (dd && dd.open) { renderDeepDiveCharts(); }
                 } else if (pageId === 'congruence') {
                     renderCongruenceDonutChart();
                     renderCongruenceVsCertaintyChart();
