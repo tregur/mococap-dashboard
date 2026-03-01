@@ -279,7 +279,9 @@
             align-items: center;
             gap: 0.75rem;
             flex-wrap: nowrap;
-            overflow-x: auto;
+            overflow: visible;
+            position: relative;
+            z-index: 100;
         }
 
         .header h1 {
@@ -1413,11 +1415,11 @@
         }
         .ms-display.open .ms-arrow { transform: rotate(180deg); }
         .ms-dropdown {
-            position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+            position: absolute; top: calc(100% + 4px); left: 0;
             background: #fff; border: 1px solid var(--bdr); border-radius: 8px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 2px 8px rgba(0,0,0,0.04);
-            z-index: 1000; display: none; overflow: hidden;
-            min-width: 280px;
+            z-index: 1000; display: none;
+            min-width: 300px;
         }
         .ms-dropdown.open { display: block; }
         .ms-search-wrap {
@@ -1430,7 +1432,7 @@
         }
         .ms-search:focus { border-color: var(--g); }
         .ms-options {
-            max-height: 240px; overflow-y: auto; padding: 4px 0;
+            max-height: 320px; overflow-y: auto; padding: 4px 0;
         }
         .ms-options::-webkit-scrollbar { width: 4px; }
         .ms-options::-webkit-scrollbar-thumb { background: var(--bdr); border-radius: 4px; }
@@ -1446,6 +1448,22 @@
         }
         .ms-option-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .ms-option-meta { margin-left: auto; font-size: 10px; color: var(--t3); white-space: nowrap; }
+        .ms-group-header {
+            display: flex; align-items: center; gap: 6px; padding: 8px 12px 4px; font-size: 10px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.5px; color: var(--t3); border-top: 1px solid var(--bdr);
+            position: sticky; top: 0; background: var(--surface); z-index: 1; user-select: none;
+        }
+        .ms-group-header:first-child { border-top: none; }
+        .ms-group-header svg { opacity: 0.6; }
+        .ms-group-label { flex: 1; }
+        .ms-group-count { font-weight: 500; color: var(--t3); opacity: 0.7; }
+        .ms-group-select-btn {
+            font-size: 9px; padding: 1px 6px; border: 1px solid var(--bdr); border-radius: 4px;
+            background: transparent; color: var(--t3); cursor: pointer; font-family: inherit;
+            transition: all 0.15s; line-height: 1.4;
+        }
+        .ms-group-select-btn:hover { border-color: var(--g); color: var(--g); background: var(--g-light); }
+        .ms-option[data-level] { padding-left: 24px; }
         .ms-divider { height: 1px; background: var(--bdr); margin: 4px 8px; }
         .ms-special {
             display: flex; align-items: center; gap: 8px;
@@ -2890,70 +2908,76 @@
                             <div class="widget" id="widgetRiasecDonut" data-page="riasec">
                                 <div class="widget-header">
                                     <span class="widget-title">Interest Themes (RIASEC)</span>
+                                    <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">SY 2025-26 | 23,695 students</span>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="riasecDonutCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:260px;"><canvas id="riasecDonutCanvas"></canvas></div>
                                 </div>
                                 <div class="widget-insight" id="riasecInsight"></div>
                                 <div class="widget-action" id="riasecAction"></div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
                                     <div class="widget-deeplink" onclick="showPage('riasec')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
-                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('riasec','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('riasec','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('riasec','up',this,event,'viz')" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('riasec','down',this,event,'viz')" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
                                 </div>
                                 <div class="fb-survey" id="fbSurvey-riasec"></div>
                             </div>
                             <div class="widget" id="widgetCongruenceTime" data-page="congruence">
                                 <div class="widget-header">
                                     <span class="widget-title">Congruence &amp; Clarity</span>
+                                    <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Aug–Dec 2025</span>
                                     <div class="widget-mini-pills" id="congruenceTimePills">
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','1M',this)">1M</span>
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','3M',this)">3M</span>
                                         <span class="widget-mini-pill active" onclick="switchWidgetRange('congruence','6M',this)">6M</span>
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','ALL',this)">ALL</span>
                                     </div>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="congruenceTimeCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:260px;"><canvas id="congruenceTimeCanvas"></canvas></div>
                                 </div>
                                 <div class="widget-insight" id="congruenceInsight"></div>
                                 <div class="widget-action" id="congruenceAction"></div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
                                     <div class="widget-deeplink" onclick="showPage('congruence')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
-                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('congruence','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('congruence','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('congruence','up',this,event,'viz')" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('congruence','down',this,event,'viz')" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
                                 </div>
                                 <div class="fb-survey" id="fbSurvey-congruence"></div>
                             </div>
                             <div class="widget" id="widgetEngagement" data-page="engagement">
                                 <div class="widget-header">
                                     <span class="widget-title">Student Engagement</span>
+                                    <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Aug–Dec 2025</span>
                                     <div class="widget-mini-pills" id="engagementTimePills">
+                                        <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','1M',this)">1M</span>
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','3M',this)">3M</span>
                                         <span class="widget-mini-pill active" onclick="switchWidgetRange('engagement','6M',this)">6M</span>
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','ALL',this)">ALL</span>
                                     </div>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="engagementTrendChart"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:260px;"><canvas id="engagementTrendChart"></canvas></div>
                                 </div>
                                 <div class="widget-insight" id="engagementInsight"></div>
                                 <div class="widget-action" id="engagementAction"></div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
                                     <div class="widget-deeplink" onclick="showPage('engagement')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
-                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('engagement','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('engagement','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('engagement','up',this,event,'viz')" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('engagement','down',this,event,'viz')" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
                                 </div>
                                 <div class="fb-survey" id="fbSurvey-engagement"></div>
                             </div>
                             <div class="widget" id="widgetClarity" data-page="career-plan">
                                 <div class="widget-header">
                                     <span class="widget-title">Career Clarity</span>
+                                    <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Dec 2025 | 10,006 surveyed</span>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="widget-chart-wrap" style="height:180px;"><canvas id="clarityDonutCanvas"></canvas></div>
+                                    <div class="widget-chart-wrap" style="height:260px;"><canvas id="clarityDonutCanvas"></canvas></div>
                                 </div>
                                 <div class="widget-insight" id="clarityInsight"></div>
                                 <div class="widget-action" id="clarityAction"></div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.75rem;">
                                     <div class="widget-deeplink" onclick="showPage('career-plan')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> View details</div>
-                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('career-plan','up',this,event)" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('career-plan','down',this,event)" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
+                                    <div class="fb-trigger"><span class="fb-prompt">Helpful?</span><span class="fb-thumb" onclick="openFeedback('career-plan','up',this,event,'viz')" title="Thumbs up"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></span><span class="fb-thumb" onclick="openFeedback('career-plan','down',this,event,'viz')" title="Thumbs down"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg></span></div>
                                 </div>
                                 <div class="fb-survey" id="fbSurvey-career-plan"></div>
                             </div>
@@ -4371,14 +4395,70 @@
             saveInsightRatings(ratings);
 
             var insightTitle = card.querySelector('.ic-title') ? card.querySelector('.ic-title').textContent : insightId;
+
+            // Send the initial thumbs rating to Google Sheets
             sendFeedbackToSheet({
                 timestamp: new Date().toISOString(),
                 user: sessionStorage.getItem('mococap_user') || 'Unknown',
-                insightId: insightId,
-                insightTitle: insightTitle,
-                rating: action,
+                feedbackType: 'insight',
+                widget: insightId,
+                widgetName: insightTitle,
+                sentiment: action,
                 page: document.querySelector('.nav-item.active .nav-label') ? document.querySelector('.nav-item.active .nav-label').textContent : ''
             });
+
+            // Open the modal for detailed insight feedback (only on new ratings, not clears)
+            if (action !== 'cleared') {
+                // Store the insight name for the modal
+                WIDGET_NAMES[insightId] = insightTitle;
+                feedbackState[insightId] = { sentiment: action, type: 'insight', q1: 0, q2: 0, text: '' };
+
+                // Capture insight card preview context
+                var insightDetail = card.querySelector('.ic-detail') ? card.querySelector('.ic-detail').textContent.trim() : '';
+                var insightSoWhat = card.querySelector('.ic-action-sowhat span:last-child') ? card.querySelector('.ic-action-sowhat span:last-child').textContent.trim() : '';
+                var insightNextStep = card.querySelector('.ic-action-nextstep span:last-child') ? card.querySelector('.ic-action-nextstep span:last-child').textContent.trim() : '';
+                var insightValue = card.querySelector('.ic-value') ? card.querySelector('.ic-value').textContent.trim() : '';
+                var insightCategory = card.querySelector('.ic-category-label') ? card.querySelector('.ic-category-label').textContent.trim() : '';
+                var insightSeverity = card.querySelector('.ic-severity') ? card.querySelector('.ic-severity').textContent.trim() : '';
+
+                var previewHtml = '<div style="background:#f9f7f3;border:1px solid #e8e0d4;border-radius:8px;padding:0.75rem;margin-bottom:1rem;">' +
+                    '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">' +
+                        '<span style="font-size:9px;text-transform:uppercase;font-weight:700;color:#8c8070;">' + insightCategory + '</span>' +
+                        (insightSeverity ? '<span style="font-size:9px;padding:1px 6px;border-radius:4px;background:#f5f0e8;color:#6b5e4b;font-weight:600;">' + insightSeverity + '</span>' : '') +
+                    '</div>' +
+                    '<div style="font-weight:700;font-size:12px;color:#2d2a26;line-height:1.4;">' + insightTitle + '</div>' +
+                    (insightValue ? '<div style="font-size:14px;font-weight:800;color:#3d6b35;margin:4px 0;">' + insightValue + '</div>' : '') +
+                    (insightDetail ? '<div style="font-size:10px;color:#8c8070;margin-top:4px;line-height:1.4;max-height:40px;overflow:hidden;">' + insightDetail.substring(0, 150) + (insightDetail.length > 150 ? '...' : '') + '</div>' : '') +
+                    (insightSoWhat ? '<div style="font-size:10px;margin-top:6px;"><strong style="color:#6b5e4b;">So What:</strong> <span style="color:#8c8070;">' + insightSoWhat.substring(0, 100) + (insightSoWhat.length > 100 ? '...' : '') + '</span></div>' : '') +
+                '</div>';
+
+                var sentLabel = action === 'up' ? 'Helpful' : 'Not helpful';
+                var modal = ensureModal();
+                document.getElementById('modalTitle').textContent = 'Feedback: Insight';
+                document.getElementById('modalBody').innerHTML =
+                    previewHtml +
+                    '<p style="margin:0 0 1rem;color:#6b5e4b;font-size:13px;">You rated this insight <strong>' + sentLabel + '</strong>. Help us improve! <em>(optional)</em></p>' +
+                    '<div class="fb-survey-label">How clear is this insight?</div>' +
+                    '<div class="fb-stars" id="fbQ1-' + insightId + '">' +
+                        [1,2,3,4,5].map(function(n) {
+                            return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + insightId + '\',\'q1\',' + n + ',this,event)">' + n + '</span>';
+                        }).join('') +
+                    '</div>' +
+                    '<div class="fb-survey-label" style="margin-top:1rem;">How useful are the "So What" / "Next Step" suggestions?</div>' +
+                    '<div class="fb-stars" id="fbQ2-' + insightId + '">' +
+                        [1,2,3,4,5].map(function(n) {
+                            return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + insightId + '\',\'q2\',' + n + ',this,event)">' + n + '</span>';
+                        }).join('') +
+                    '</div>' +
+                    '<div class="fb-survey-label" style="margin-top:1rem;">Any additional feedback?</div>' +
+                    '<textarea class="fb-textarea" id="fbText-' + insightId + '" placeholder="How could we make this insight clearer or more actionable?" rows="3" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px;margin-top:0.25rem;"></textarea>' +
+                    '<div style="display:flex;gap:0.5rem;margin-top:1rem;">' +
+                        '<button class="fb-submit" onclick="submitFeedback(\'' + insightId + '\',event)" style="flex:1;padding:10px;background:var(--g);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;">Submit</button>' +
+                        '<button onclick="closeModal()" style="padding:10px 16px;background:transparent;color:var(--t3);border:1px solid var(--bdr);border-radius:6px;font-weight:600;cursor:pointer;font-family:inherit;">Skip</button>' +
+                    '</div>' +
+                    '<div class="fb-thanks" id="fbThanks-' + insightId + '" style="text-align:center;margin-top:0.5rem;color:var(--g);font-weight:600;"></div>';
+                modal.classList.add('active');
+            }
         }
 
         // ===== Insight Card Builder =====
@@ -4965,7 +5045,7 @@
             var range = widgetRanges[widgetId] || '6M';
             var allMonths = Object.keys(DATA.alignment_trajectory);
             if (range === 'ALL') return allMonths;
-            var n = range === '3M' ? 3 : range === '6M' ? 6 : allMonths.length;
+            var n = range === '1M' ? 1 : range === '3M' ? 3 : range === '6M' ? 6 : allMonths.length;
             return allMonths.slice(-n);
         }
 
@@ -8536,6 +8616,9 @@
                 });
             }
             // Hidden-page charts are deferred to showPage() — Chart.js needs display:block to render properly
+
+            // Inject feedback thumbs into all chart-cards/widgets across all pages
+            try { injectFeedbackTriggers(); } catch(e) { console.error('injectFeedbackTriggers error:', e); }
         }
 
         function showPage(pageId) {
@@ -8547,7 +8630,7 @@
             var navItems = document.querySelectorAll('.nav-item');
             var pageMap = {overview:0, congruence:1, 'career-plan':2, 'program-perf':3, engagement:4, riasec:5, sectors:6, distribution:7, experts:8, 'monthly-report':9, schools:10, sources:11};
             if (pageMap[pageId] !== undefined && navItems[pageMap[pageId]]) navItems[pageMap[pageId]].classList.add('active');
-            const titles = {overview: 'Overview', congruence: 'Career-Interest Congruence', 'career-plan': 'Career Plan Trajectory', 'program-perf': 'Program Performance', engagement: 'Monthly Engagement', riasec: 'RIASEC Type Distribution', sectors: 'Priority Sectors', distribution: 'Top Career Selections', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
+            const titles = {overview: 'Overview', congruence: 'Congruence', 'career-plan': 'Career Plan', 'program-perf': 'Program Performance', engagement: 'Engagement', riasec: 'RIASEC Themes', sectors: 'Priority Sectors', distribution: 'Distribution', experts: 'Council of Experts', 'monthly-report': 'Monthly Report', schools: 'School Data', sources: 'Methodology & Sources'};
             document.getElementById('pageTitle').textContent = titles[pageId] || 'Dashboard';
             trackEvent('page_view', 'navigation', pageId);
             // Reset month view when navigating to overview
@@ -8571,6 +8654,7 @@
                     if (dd && dd.open) { renderDeepDiveCharts(); }
                 } else if (pageId === 'congruence') {
                     renderCongruenceDonutChart();
+                    renderRiasecCongruenceBarsChart();
                     renderCongruenceVsCertaintyChart();
                 } else if (pageId === 'career-plan') {
                     renderAlignmentTrendChart();
@@ -9064,10 +9148,21 @@
         function filterSchoolOptions(query) {
             var q = query.toLowerCase().trim();
             var opts = document.querySelectorAll('#msOptions .ms-option');
+            var visibleByLevel = {};
             opts.forEach(function(opt) {
                 var label = opt.querySelector('.ms-option-label');
                 var text = label ? label.textContent.toLowerCase() : '';
-                opt.style.display = (!q || text.indexOf(q) >= 0) ? '' : 'none';
+                var show = !q || text.indexOf(q) >= 0;
+                opt.style.display = show ? '' : 'none';
+                if (show) {
+                    var lvl = opt.getAttribute('data-level') || '';
+                    visibleByLevel[lvl] = (visibleByLevel[lvl] || 0) + 1;
+                }
+            });
+            // Show/hide group headers based on whether they have visible children
+            document.querySelectorAll('#msOptions .ms-group-header').forEach(function(hdr) {
+                var lvl = hdr.getAttribute('data-level') || '';
+                hdr.style.display = (visibleByLevel[lvl] > 0 || !q) ? '' : 'none';
             });
         }
 
@@ -9076,25 +9171,81 @@
             if (!container) return;
             container.innerHTML = '';
             var schools = Object.values(DATA.schools).sort(function(a,b) { return a.school.localeCompare(b.school); });
+
+            // Group schools by level
+            var groups = { 'High': [], 'Middle': [], 'Special': [] };
             schools.forEach(function(s) {
-                var div = document.createElement('div');
-                div.className = 'ms-option';
-                div.onclick = function(e) { toggleSchoolSelection(s.school, e); };
-                var cb = document.createElement('input');
-                cb.type = 'checkbox';
-                cb.value = s.school;
-                cb.onclick = function(e) { e.stopPropagation(); toggleSchoolSelection(s.school); };
-                var label = document.createElement('span');
-                label.className = 'ms-option-label';
-                label.textContent = s.school;
-                var meta = document.createElement('span');
-                meta.className = 'ms-option-meta';
-                meta.textContent = 'N=' + s.survey_n;
-                div.appendChild(cb);
-                div.appendChild(label);
-                div.appendChild(meta);
-                container.appendChild(div);
+                var lvl = s.level || 'Special';
+                if (!groups[lvl]) groups[lvl] = [];
+                groups[lvl].push(s);
             });
+
+            var levelLabels = { 'High': 'High Schools', 'Middle': 'Middle Schools', 'Special': 'Special Programs' };
+            var levelIcons = { 'High': '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-6h6v6"/></svg>', 'Middle': '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/></svg>', 'Special': '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>' };
+
+            ['High', 'Middle', 'Special'].forEach(function(lvl) {
+                if (!groups[lvl] || groups[lvl].length === 0) return;
+
+                // Group header
+                var header = document.createElement('div');
+                header.className = 'ms-group-header';
+                header.setAttribute('data-level', lvl);
+                var countSelected = groups[lvl].filter(function(s) { return currentComparisonSchools.indexOf(s.school) >= 0; }).length;
+                header.innerHTML = levelIcons[lvl] + ' <span class="ms-group-label">' + levelLabels[lvl] + '</span> <span class="ms-group-count">(' + groups[lvl].length + ')</span>' +
+                    '<button class="ms-group-select-btn" onclick="event.stopPropagation(); toggleLevelSelection(\'' + lvl + '\')">Select All</button>';
+                container.appendChild(header);
+
+                // School options in this group
+                groups[lvl].forEach(function(s) {
+                    var div = document.createElement('div');
+                    div.className = 'ms-option';
+                    div.setAttribute('data-level', lvl);
+                    div.onclick = function(e) { toggleSchoolSelection(s.school, e); };
+                    var cb = document.createElement('input');
+                    cb.type = 'checkbox';
+                    cb.value = s.school;
+                    cb.onclick = function(e) { e.stopPropagation(); toggleSchoolSelection(s.school); };
+                    var label = document.createElement('span');
+                    label.className = 'ms-option-label';
+                    label.textContent = s.school;
+                    var meta = document.createElement('span');
+                    meta.className = 'ms-option-meta';
+                    meta.textContent = 'N=' + s.survey_n;
+                    div.appendChild(cb);
+                    div.appendChild(label);
+                    div.appendChild(meta);
+                    container.appendChild(div);
+                });
+            });
+        }
+
+        function toggleLevelSelection(level) {
+            var schoolsInLevel = Object.values(DATA.schools).filter(function(s) { return s.level === level; });
+            var allSelected = schoolsInLevel.every(function(s) { return currentComparisonSchools.indexOf(s.school) >= 0; });
+
+            if (allSelected) {
+                // Deselect all in this level
+                schoolsInLevel.forEach(function(s) {
+                    var idx = currentComparisonSchools.indexOf(s.school);
+                    if (idx >= 0) currentComparisonSchools.splice(idx, 1);
+                });
+            } else {
+                // Select all in this level
+                schoolsInLevel.forEach(function(s) {
+                    if (currentComparisonSchools.indexOf(s.school) < 0) {
+                        currentComparisonSchools.push(s.school);
+                    }
+                });
+            }
+
+            if (currentComparisonSchools.length === 0) {
+                currentComparisonMode = 'district';
+            } else {
+                currentComparisonMode = 'schools';
+            }
+            updateMsDisplay();
+            updateMsHighlights();
+            switchComparisonMode(currentComparisonMode);
         }
 
         function populateCoachFilter() {
@@ -9333,52 +9484,134 @@
             });
         }
 
-        // === Feedback Survey System ===
+        // === Feedback Survey System (Modal) ===
         var feedbackState = {};
 
-        function openFeedback(widgetId, sentiment, btn, e) {
+        // Widget name registry — covers all pages
+        var WIDGET_NAMES = {
+            'riasec': 'Interest Themes (RIASEC)',
+            'congruence': 'Congruence & Clarity',
+            'engagement': 'Student Engagement',
+            'career-plan': 'Career Clarity',
+            'congruence-donut': 'Career-Interest Match Distribution',
+            'congruence-bars': 'Congruence by RIASEC Type',
+            'congruence-certainty': 'Certainty by Match Level',
+            'congruence-heatmap': 'RIASEC Congruence Heatmap',
+            'clarity-trajectory': 'Career Clarity Trajectory',
+            'certainty-riasec': 'Certainty by RIASEC Type',
+            'helpfulness-type': 'Session Helpfulness by Type',
+            'session-type-mix': 'Session Type Mix',
+            'perf-regression': 'What Drives Student Outcomes',
+            'dosage-response': 'Dosage-Response: Sessions vs Certainty',
+            'graduation-rates': 'Graduation Rates',
+            'farms-vs-grad': 'FARMS % vs Graduation Rate',
+            'coach-performance': 'Top Coaches by Volume & Outcomes',
+            'monthly-trend': 'Monthly Session Trend',
+            'program-reach': 'Program Reach by Month',
+            'yoy-comparison': 'Year-over-Year Comparison',
+            'session-types-oct': 'Session Type Distribution (October)',
+            'grade-dist-oct': 'Grade Distribution (October)',
+            'followup-patterns': 'Follow-Up Request Patterns',
+            'riasec-dist': 'RIASEC Type Distribution',
+            'theme-depth': 'RIASEC Theme Depth Distribution',
+            'school-riasec-heatmap': 'School x RIASEC Heatmap',
+            'cte-pathway': 'CTE Pathway Interest',
+            'top-careers': 'Top 10 Career Selections',
+            'bls-reality': 'Labor Market Reality Check',
+            'clarity-dist-deep': 'Career Clarity Distribution',
+            'pattern-flags': 'Pattern Flags'
+        };
+
+        // Ensure modal overlay exists (creates it if needed)
+        function ensureModal() {
+            var overlay = document.getElementById('modalOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'modalOverlay';
+                overlay.className = 'modal-overlay';
+                overlay.innerHTML = '<div class="modal-box"><div class="modal-head"><h3 id="modalTitle"></h3><button class="modal-close" onclick="closeModal()">✕</button></div><div class="modal-body" id="modalBody"></div></div>';
+                overlay.addEventListener('click', function(ev) { if (ev.target === overlay) closeModal(); });
+                document.body.appendChild(overlay);
+            }
+            // Ensure modalTitle and modalBody exist inside the box
+            var box = overlay.querySelector('.modal-box');
+            if (!document.getElementById('modalTitle')) {
+                box.innerHTML = '<div class="modal-head"><h3 id="modalTitle"></h3><button class="modal-close" onclick="closeModal()">✕</button></div><div class="modal-body" id="modalBody"></div>';
+            }
+            return overlay;
+        }
+
+        // Feedback type: 'viz' for data viz charts, 'insight' for insight cards
+        function openFeedback(widgetId, sentiment, btn, e, feedbackType) {
             if (e) { e.stopPropagation(); e.preventDefault(); }
             // Toggle thumb selection
             var trigger = btn.closest('.fb-trigger');
             trigger.querySelectorAll('.fb-thumb').forEach(function(t) { t.classList.remove('selected'); });
             btn.classList.add('selected');
 
-            feedbackState[widgetId] = { sentiment: sentiment, usefulness: 0, satisfaction: 0, text: '' };
+            var fType = feedbackType || 'viz';
+            feedbackState[widgetId] = { sentiment: sentiment, type: fType, q1: 0, q2: 0, text: '' };
 
-            var surveyEl = document.getElementById('fbSurvey-' + widgetId);
-            if (!surveyEl) return;
+            var wName = WIDGET_NAMES[widgetId] || widgetId.replace(/-/g, ' ').replace(/\b\w/g, function(l) { return l.toUpperCase(); });
+            var sentLabel = sentiment === 'up' ? 'Helpful' : 'Not helpful';
 
-            var widgetNames = {
-                'riasec': 'Interest Themes (RIASEC)',
-                'congruence': 'Congruence & Clarity',
-                'engagement': 'Student Engagement',
-                'career-plan': 'Career Clarity'
-            };
+            // Capture widget context for preview
+            var parentCard = btn.closest('.chart-card') || btn.closest('.widget') || btn.closest('.heatmap-container') || btn.closest('.priority-sector-card');
+            var previewHtml = '';
+            if (parentCard) {
+                var chartTitle = parentCard.querySelector('.chart-title, .widget-title, .heatmap-title, .sector-name');
+                var chartDesc = parentCard.querySelector('.metric-detail, .sector-detail, .widget-insight');
+                var canvas = parentCard.querySelector('canvas');
+                var previewImg = '';
+                if (canvas) {
+                    try { previewImg = '<img src="' + canvas.toDataURL('image/jpeg', 0.5) + '" style="width:100%;max-height:120px;object-fit:contain;border-radius:4px;">'; } catch(err) {}
+                }
+                previewHtml = '<div style="background:#f9f7f3;border:1px solid #e8e0d4;border-radius:8px;padding:0.75rem;margin-bottom:1rem;">' +
+                    (previewImg ? '<div style="margin-bottom:0.5rem;">' + previewImg + '</div>' : '') +
+                    '<div style="font-weight:700;font-size:12px;color:#2d2a26;">' + (chartTitle ? chartTitle.textContent.trim() : wName) + '</div>' +
+                    (chartDesc ? '<div style="font-size:10px;color:#8c8070;margin-top:4px;line-height:1.4;max-height:40px;overflow:hidden;">' + chartDesc.textContent.trim().substring(0, 150) + (chartDesc.textContent.length > 150 ? '...' : '') + '</div>' : '') +
+                '</div>';
+            }
 
-            surveyEl.innerHTML =
-                '<div class="fb-survey-label">How useful is this widget?</div>' +
-                '<div class="fb-stars" id="fbUse-' + widgetId + '">' +
+            // Personalized questions based on feedback type
+            var q1Label, q2Label, placeholder;
+            if (fType === 'insight') {
+                q1Label = 'How clear is this insight?';
+                q2Label = 'How useful are the "So What" / "Next Step" suggestions?';
+                placeholder = 'How could we make this insight clearer or more actionable?';
+            } else {
+                q1Label = 'How easy is this chart to read and understand?';
+                q2Label = 'Does this visualization answer your questions about the data?';
+                placeholder = 'What data would you like to see, or how could this chart be improved?';
+            }
+
+            var modal = ensureModal();
+            document.getElementById('modalTitle').textContent = 'Feedback: ' + wName;
+            document.getElementById('modalBody').innerHTML =
+                previewHtml +
+                '<p style="margin:0 0 1rem;color:#6b5e4b;font-size:13px;">You rated this <strong>' + sentLabel + '</strong>. Help us improve!</p>' +
+                '<div class="fb-survey-label">' + q1Label + '</div>' +
+                '<div class="fb-stars" id="fbQ1-' + widgetId + '">' +
                     [1,2,3,4,5].map(function(n) {
-                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'usefulness\',' + n + ',this,event)">' + n + '</span>';
+                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'q1\',' + n + ',this,event)">' + n + '</span>';
                     }).join('') +
                 '</div>' +
-                '<div class="fb-survey-label">How satisfied are you with the data shown?</div>' +
-                '<div class="fb-stars" id="fbSat-' + widgetId + '">' +
+                '<div class="fb-survey-label" style="margin-top:1rem;">' + q2Label + '</div>' +
+                '<div class="fb-stars" id="fbQ2-' + widgetId + '">' +
                     [1,2,3,4,5].map(function(n) {
-                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'satisfaction\',' + n + ',this,event)">' + n + '</span>';
+                        return '<span class="fb-star" data-val="' + n + '" onclick="rateFeedback(\'' + widgetId + '\',\'q2\',' + n + ',this,event)">' + n + '</span>';
                     }).join('') +
                 '</div>' +
-                '<div class="fb-survey-label">Any additional feedback?</div>' +
-                '<textarea class="fb-textarea" id="fbText-' + widgetId + '" placeholder="Tell us what you think..." rows="2"></textarea>' +
-                '<button class="fb-submit" onclick="submitFeedback(\'' + widgetId + '\',event)">Submit Feedback</button>' +
-                '<div class="fb-thanks" id="fbThanks-' + widgetId + '"></div>';
-
-            surveyEl.classList.add('open');
+                '<div class="fb-survey-label" style="margin-top:1rem;">Any additional feedback?</div>' +
+                '<textarea class="fb-textarea" id="fbText-' + widgetId + '" placeholder="' + placeholder + '" rows="3" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:13px;margin-top:0.25rem;"></textarea>' +
+                '<button class="fb-submit" onclick="submitFeedback(\'' + widgetId + '\',event)" style="margin-top:1rem;width:100%;padding:10px;background:var(--g);color:#fff;border:none;border-radius:6px;font-weight:600;cursor:pointer;">Submit Feedback</button>' +
+                '<div class="fb-thanks" id="fbThanks-' + widgetId + '" style="text-align:center;margin-top:0.5rem;color:var(--g);font-weight:600;"></div>';
+            modal.classList.add('active');
         }
 
         function rateFeedback(widgetId, field, val, btn, e) {
             if (e) { e.stopPropagation(); e.preventDefault(); }
-            feedbackState[widgetId][field] = val;
+            if (feedbackState[widgetId]) feedbackState[widgetId][field] = val;
             var container = btn.closest('.fb-stars');
             container.querySelectorAll('.fb-star').forEach(function(s) {
                 s.classList.toggle('selected', parseInt(s.dataset.val) <= val);
@@ -9393,22 +9626,22 @@
             var textEl = document.getElementById('fbText-' + widgetId);
             state.text = textEl ? textEl.value : '';
 
-            var widgetNames = {
-                'riasec': 'Interest Themes (RIASEC)',
-                'congruence': 'Congruence & Clarity',
-                'engagement': 'Student Engagement',
-                'career-plan': 'Career Clarity'
-            };
+            var fType = state.type || 'viz';
+            var activePage = document.querySelector('.nav-item.active .nav-label');
+            var pageName = activePage ? activePage.textContent : 'overview';
 
             var payload = {
                 timestamp: new Date().toISOString(),
+                feedbackType: fType,
                 widget: widgetId,
-                widgetName: widgetNames[widgetId] || widgetId,
+                widgetName: WIDGET_NAMES[widgetId] || widgetId,
                 sentiment: state.sentiment,
-                usefulness: state.usefulness,
-                satisfaction: state.satisfaction,
+                question1Score: state.q1,
+                question1Label: fType === 'insight' ? 'Clarity' : 'Readability',
+                question2Score: state.q2,
+                question2Label: fType === 'insight' ? 'Suggestion Quality' : 'Answers Questions',
                 comments: state.text,
-                page: 'overview',
+                page: pageName,
                 comparisonMode: currentComparisonMode
             };
 
@@ -9419,39 +9652,131 @@
                 localStorage.setItem('mococap_feedback', JSON.stringify(saved));
             } catch(err) { console.warn('localStorage save error:', err); }
 
+            // Add user name to payload
+            payload.user = sessionStorage.getItem('mococap_user') || 'Unknown';
+
             // Send to Google Apps Script endpoint
-            var GOOGLE_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
-            if (GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                }).catch(function(err) { console.warn('Feedback send error:', err); });
-            }
+            sendFeedbackToSheet(payload);
 
             console.log('Feedback recorded:', payload);
-            trackEvent('feedback_submit', 'feedback', widgetId, state.usefulness);
+            trackEvent('feedback_submit', 'feedback', widgetId, state.q1);
 
-            // Show thanks
+            // Show thanks in modal, then close
             var thanksEl = document.getElementById('fbThanks-' + widgetId);
             if (thanksEl) {
                 thanksEl.textContent = 'Thank you for your feedback!';
                 thanksEl.style.display = 'block';
             }
 
-            // Hide form after brief delay
+            // Close modal after brief delay
             setTimeout(function() {
-                var surveyEl = document.getElementById('fbSurvey-' + widgetId);
-                if (surveyEl) surveyEl.classList.remove('open');
-            }, 2000);
+                closeModal();
+            }, 1500);
+        }
+
+        // Generate feedback trigger HTML for any widget
+        function makeFeedbackTrigger(widgetId, feedbackType) {
+            var fType = feedbackType || 'viz';
+            return '<div class="fb-trigger">' +
+                '<span class="fb-prompt">Helpful?</span>' +
+                '<span class="fb-thumb" onclick="openFeedback(\'' + widgetId + '\',\'up\',this,event,\'' + fType + '\')" title="Thumbs up">' +
+                    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>' +
+                '</span>' +
+                '<span class="fb-thumb" onclick="openFeedback(\'' + widgetId + '\',\'down\',this,event,\'' + fType + '\')" title="Thumbs down">' +
+                    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10zM17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>' +
+                '</span>' +
+            '</div>';
+        }
+
+        // Inject feedback thumbs into all chart-cards and insight-boxes across all pages
+        function injectFeedbackTriggers() {
+            // Map of chart-card canvas/div IDs to widget IDs
+            var chartIdMap = {
+                'congruenceDonutChart': 'congruence-donut',
+                'riasecCongruenceBars': 'congruence-bars',
+                'congruenceVsCertaintyChart': 'congruence-certainty',
+                'heatmapRiasecMonths': 'congruence-heatmap',
+                'alignmentTrendChart': 'clarity-trajectory',
+                'certaintyByRiasecChart': 'certainty-riasec',
+                'helpfulnessByTypeChart': 'helpfulness-type',
+                'sessionTypeMixChart': 'session-type-mix',
+                'perfRegressionBars': 'perf-regression',
+                'dosageChart': 'dosage-response',
+                'gradChart': 'graduation-rates',
+                'farmsChart': 'farms-vs-grad',
+                'coachTableBody': 'coach-performance',
+                'monthlyTrendChart': 'monthly-trend',
+                'reachChart': 'program-reach',
+                'yoyChart': 'yoy-comparison',
+                'engSessionTypesChart': 'session-types-oct',
+                'engGradeDistChart': 'grade-dist-oct',
+                'engFollowupChart': 'followup-patterns',
+                'riasecDistChart': 'riasec-dist',
+                'themeDepthChart': 'theme-depth',
+                'heatmapSchoolsRiasec': 'school-riasec-heatmap',
+                'sectorsCTEChart': 'cte-pathway',
+                'distributionChart': 'top-careers',
+                'blsTableBody': 'bls-reality',
+                'clarityDistChart': 'clarity-dist-deep',
+                'patternFlags': 'pattern-flags'
+            };
+
+            // Find all chart-cards that don't already have feedback
+            document.querySelectorAll('.chart-card').forEach(function(card) {
+                if (card.querySelector('.fb-trigger')) return; // Already has feedback
+
+                // Try to identify this card by looking for a canvas or known element
+                var widgetId = null;
+                Object.keys(chartIdMap).forEach(function(elemId) {
+                    if (card.querySelector('#' + elemId) || card.querySelector('[id="' + elemId + '"]')) {
+                        widgetId = chartIdMap[elemId];
+                    }
+                });
+
+                // If no known ID, generate one from the chart title
+                if (!widgetId) {
+                    var titleEl = card.querySelector('.chart-title');
+                    if (titleEl) {
+                        widgetId = 'chart-' + titleEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 40);
+                    }
+                }
+
+                if (widgetId) {
+                    var triggerHtml = makeFeedbackTrigger(widgetId, 'viz');
+                    card.insertAdjacentHTML('beforeend', triggerHtml);
+                }
+            });
+
+            // Add feedback to heatmap containers
+            document.querySelectorAll('.heatmap-container').forEach(function(container) {
+                if (container.querySelector('.fb-trigger')) return;
+                var titleEl = container.querySelector('.heatmap-title');
+                var widgetId = null;
+                if (container.querySelector('#heatmapRiasecMonths')) widgetId = 'congruence-heatmap';
+                else if (container.querySelector('#heatmapSchoolsRiasec')) widgetId = 'school-riasec-heatmap';
+                else if (titleEl) widgetId = 'heatmap-' + titleEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 40);
+
+                if (widgetId) {
+                    container.insertAdjacentHTML('beforeend', makeFeedbackTrigger(widgetId, 'viz'));
+                }
+            });
+
+            // Add feedback to priority sector cards
+            document.querySelectorAll('.priority-sector-card').forEach(function(card) {
+                if (card.querySelector('.fb-trigger')) return;
+                var nameEl = card.querySelector('.sector-name');
+                if (nameEl) {
+                    var widgetId = 'sector-' + nameEl.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').substring(0, 40);
+                    card.insertAdjacentHTML('beforeend', makeFeedbackTrigger(widgetId, 'insight'));
+                }
+            });
         }
 
         function exportFeedback() {
             try {
                 var data = JSON.parse(localStorage.getItem('mococap_feedback') || '[]');
                 if (data.length === 0) { alert('No feedback recorded yet.'); return; }
-                var headers = ['timestamp', 'widget', 'widgetName', 'sentiment', 'usefulness', 'satisfaction', 'comments', 'page', 'comparisonMode'];
+                var headers = ['timestamp', 'feedbackType', 'widget', 'widgetName', 'sentiment', 'question1Label', 'question1Score', 'question2Label', 'question2Score', 'comments', 'page', 'comparisonMode', 'user'];
                 var csv = headers.join(',') + '\n';
                 data.forEach(function(row) {
                     csv += headers.map(function(h) {
