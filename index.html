@@ -2136,7 +2136,8 @@
         <div class="login-box">
             <h1>MoCo CAP</h1>
             <p>Impact Dashboard</p>
-            <input type="password" id="passwordInput" placeholder="Enter password">
+            <input type="text" id="nameInput" placeholder="Your name" autocomplete="name" onkeydown="if(event.key==='Enter'){document.getElementById('passwordInput').focus();}">
+            <input type="password" id="passwordInput" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPassword();">
             <button onclick="checkPassword()">Access Dashboard</button>
         </div>
     </div>
@@ -3086,9 +3087,16 @@
 
     <script>
         function checkPassword() {
+            const name = document.getElementById('nameInput').value.trim();
             const pwd = document.getElementById('passwordInput').value;
+            if (!name) {
+                alert('Please enter your name');
+                document.getElementById('nameInput').focus();
+                return;
+            }
             if(pwd === 'Educators') {
                 sessionStorage.setItem('mococap_auth', 'true');
+                sessionStorage.setItem('mococap_user', name);
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('mainContent').classList.add('visible');
                 setTimeout(initDashboard, 100);
@@ -3572,6 +3580,20 @@
             return icons[category] || icons.data;
         }
 
+        // ===== Google Sheets Feedback =====
+        // Replace with your deployed Google Apps Script web app URL
+        var GOOGLE_SCRIPT_URL = '';
+
+        function sendFeedbackToSheet(payload) {
+            if (!GOOGLE_SCRIPT_URL) return;
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(function(err) { console.warn('Feedback send error:', err); });
+        }
+
         // ===== Rating System =====
         function getInsightRatings() {
             try { return JSON.parse(localStorage.getItem('mococap_insight_ratings')) || {}; }
@@ -3585,16 +3607,29 @@
             const card = btn.closest('.insight-card');
             const upBtn = card.querySelector('.ic-rate-up');
             const downBtn = card.querySelector('.ic-rate-down');
+            var action;
             if (ratings[insightId] === direction) {
                 delete ratings[insightId];
                 upBtn.classList.remove('active-up');
                 downBtn.classList.remove('active-down');
+                action = 'cleared';
             } else {
                 ratings[insightId] = direction;
                 upBtn.classList.toggle('active-up', direction === 'up');
                 downBtn.classList.toggle('active-down', direction === 'down');
+                action = direction;
             }
             saveInsightRatings(ratings);
+
+            var insightTitle = card.querySelector('.ic-title') ? card.querySelector('.ic-title').textContent : insightId;
+            sendFeedbackToSheet({
+                timestamp: new Date().toISOString(),
+                user: sessionStorage.getItem('mococap_user') || 'Unknown',
+                insightId: insightId,
+                insightTitle: insightTitle,
+                rating: action,
+                page: document.querySelector('.nav-item.active .nav-label') ? document.querySelector('.nav-item.active .nav-label').textContent : ''
+            });
         }
 
         // ===== Insight Card Builder =====
@@ -7863,12 +7898,14 @@
         document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
 
         window.addEventListener('load', () => {
-            if(sessionStorage.getItem('mococap_auth') === 'true') {
+            if(sessionStorage.getItem('mococap_auth') === 'true' && sessionStorage.getItem('mococap_user')) {
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('mainContent').classList.add('visible');
                 setTimeout(initDashboard, 100);
             } else {
-                document.getElementById('passwordInput').focus();
+                sessionStorage.removeItem('mococap_auth');
+                sessionStorage.removeItem('mococap_user');
+                document.getElementById('nameInput').focus();
             }
         });
     </script>
