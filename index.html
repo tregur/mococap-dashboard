@@ -2887,6 +2887,7 @@
                         <div class="filter-divider"></div>
                         <button class="alerts-btn" onclick="downloadPdf()" title="Download as PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF</button>
                         <button class="alerts-btn" onclick="exportFeedback()" title="Export survey feedback as CSV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Feedback</button>
+                        <button class="alerts-btn" onclick="showSurveyPreview()" title="Preview the student survey instrument" style="background:#f0ebe0;border-color:#d4c9b0;">📝 Student Survey Preview</button>
                         <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">🔄 Reset</button>
                     </div>
                 </div>
@@ -10137,6 +10138,153 @@
         function closeModal() {
             const overlay = document.getElementById('modalOverlay');
             if(overlay) overlay.classList.remove('active');
+        }
+
+        function showSurveyPreview() {
+            let overlay = document.getElementById('modalOverlay');
+            if(!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'modalOverlay';
+                overlay.className = 'modal-overlay';
+                overlay.innerHTML = '<div class="modal-box" style="max-width:720px;"></div>';
+                overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+                document.body.appendChild(overlay);
+            }
+            const box = overlay.querySelector('.modal-box');
+            box.style.maxWidth = '720px';
+            box.innerHTML = `
+                <div class="modal-head">
+                    <h3>📝 Student Survey Preview</h3>
+                    <button class="modal-close" onclick="closeModal()">✕</button>
+                </div>
+                <div class="modal-body" style="padding:1.5rem;">
+                    <div style="display:flex;gap:0.5rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+                        <button class="month-tab active" onclick="switchSurveyTab('current',this)">Current Survey</button>
+                        <button class="month-tab" onclick="switchSurveyTab('recommended',this)">📊 Recommended Updates</button>
+                    </div>
+
+                    <div id="surveyTab-current">
+                        <div style="background:var(--surface);padding:1rem;border-radius:8px;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--t3);margin-bottom:0.5rem;">ADMINISTRATION</div>
+                            <div style="font-size:13px;line-height:1.6;">
+                                <strong>Format:</strong> Post-session anonymous survey (embedded in MoCo CAP platform)<br>
+                                <strong>Frequency:</strong> After every career coaching session<br>
+                                <strong>Time:</strong> ~3 minutes to complete<br>
+                                <strong>Delivery:</strong> In-session on school devices — no separate login required
+                            </div>
+                        </div>
+
+                        <div style="font-weight:700;font-size:13px;margin-bottom:0.75rem;color:var(--t1);">Current Survey Questions:</div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q1 — CAREER CERTAINTY</div>
+                            <div style="font-size:13px;">"How certain are you about your career direction?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Scale: 1 (Very Unlikely) → 5 (Very Likely)</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q2 — SESSION HELPFULNESS</div>
+                            <div style="font-size:13px;">"This session was helpful for my career planning."</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Scale: Strongly Disagree → Strongly Agree (5-point Likert)</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q3 — CAREER CLARITY</div>
+                            <div style="font-size:13px;">"How would you describe your career thinking right now?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Unsure / Some Idea / Clear Plan</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q4 — RIASEC INTEREST</div>
+                            <div style="font-size:13px;">"Which of these activity types interest you most?" (select all that apply)</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Hands-on (R) / Analytical (I) / Creative (A) / Helping (S) / Leading (E) / Organizing (C)</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q5 — CTE OPENNESS</div>
+                            <div style="font-size:13px;">"Are you open to learning more about Career & Technical Education pathways?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Yes / No / Not sure</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q6 — NEXT STEPS</div>
+                            <div style="font-size:13px;">"I left this session with clear next steps for my career exploration."</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Scale: Strongly Disagree → Strongly Agree (5-point Likert)</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:1rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q7 — FOLLOW-UP</div>
+                            <div style="font-size:13px;">"What kind of follow-up support would help you?" (select all that apply)</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Mentoring connection / Advisor meeting / More exploration / Check-in / None needed</div>
+                        </div>
+
+                        <div style="border-left:3px solid var(--g);padding-left:1rem;margin-bottom:0.5rem;">
+                            <div style="font-size:11px;color:var(--g);font-weight:600;margin-bottom:0.25rem;">Q8 — CAREER SELECTION</div>
+                            <div style="font-size:13px;">"What career interests you most right now?" (free text or O*NET list)</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Open-ended, mapped to O*NET SOC codes</div>
+                        </div>
+                    </div>
+
+                    <div id="surveyTab-recommended" style="display:none;">
+                        <div style="background:#fef3c7;padding:1rem;border-radius:8px;margin-bottom:1.25rem;border-left:3px solid #f59e0b;">
+                            <div style="font-weight:700;font-size:13px;margin-bottom:0.5rem;">📊 Based on dashboard data analysis, these survey updates would fill key data gaps:</div>
+                            <div style="font-size:12px;color:var(--t2);line-height:1.5;">These recommendations come from "Regression Analysis Pending" and "Data Needed" callouts across the monthly reports. No separate student login is needed — all questions are embedded in post-session surveys.</div>
+                        </div>
+
+                        <div style="font-weight:700;font-size:13px;margin-bottom:0.75rem;color:var(--t1);">🆕 New Questions to Add:</div>
+
+                        <div style="border-left:3px solid #f59e0b;padding-left:1rem;margin-bottom:1rem;background:#fffbeb;padding:0.75rem 1rem;border-radius:0 6px 6px 0;">
+                            <div style="font-size:11px;color:#92400e;font-weight:600;margin-bottom:0.25rem;">NEW Q9 — CTE PATHWAY SELECTION</div>
+                            <div style="font-size:13px;">"Which CTE pathway interests you most?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Arts, Media & Comm / Business Mgmt / Health & Bio / Mfg, Eng & Tech / Law, Govt & Safety / Not sure</div>
+                            <div style="font-size:10px;color:#92400e;margin-top:0.4rem;">🔗 Fills: Monthly Report "CTE pathway breakdown pending" in Nov & Dec</div>
+                        </div>
+
+                        <div style="border-left:3px solid #f59e0b;padding-left:1rem;margin-bottom:1rem;background:#fffbeb;padding:0.75rem 1rem;border-radius:0 6px 6px 0;">
+                            <div style="font-size:11px;color:#92400e;font-weight:600;margin-bottom:0.25rem;">NEW Q10 — MENTORING FORMAT</div>
+                            <div style="font-size:13px;">"If you want mentoring, what format works best for you?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: In-person at school / Virtual / Group session / Text/chat-based / No preference</div>
+                            <div style="font-size:10px;color:#92400e;margin-top:0.4rem;">🔗 Fills: Follow-Up Patterns need more granularity on mentoring preferences. Note: no separate login or portal — options should work within school hours.</div>
+                        </div>
+
+                        <div style="border-left:3px solid #f59e0b;padding-left:1rem;margin-bottom:1rem;background:#fffbeb;padding:0.75rem 1rem;border-radius:0 6px 6px 0;">
+                            <div style="font-size:11px;color:#92400e;font-weight:600;margin-bottom:0.25rem;">NEW Q11 — SEMESTER REFLECTION (Dec only)</div>
+                            <div style="font-size:13px;">"What was your biggest career insight this semester?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Open-ended, 1-2 sentences</div>
+                            <div style="font-size:10px;color:#92400e;margin-top:0.4rem;">🔗 Fills: End-of-semester narrative data for program impact stories</div>
+                        </div>
+
+                        <div style="border-left:3px solid #f59e0b;padding-left:1rem;margin-bottom:1.25rem;background:#fffbeb;padding:0.75rem 1rem;border-radius:0 6px 6px 0;">
+                            <div style="font-size:11px;color:#92400e;font-weight:600;margin-bottom:0.25rem;">NEW Q12 — SESSION FORMAT PREFERENCE</div>
+                            <div style="font-size:13px;">"What type of session helps you most?"</div>
+                            <div style="font-size:11px;color:var(--t3);margin-top:0.25rem;">Options: Whole group / Small group / One-on-one / Hands-on activity / Guest speaker</div>
+                            <div style="font-size:10px;color:#92400e;margin-top:0.4rem;">🔗 Fills: Session Type Mix needs student preference data to optimize format allocation</div>
+                        </div>
+
+                        <div style="font-weight:700;font-size:13px;margin-bottom:0.75rem;color:var(--t1);">🔄 Frequency Updates:</div>
+
+                        <div style="background:var(--surface);padding:1rem;border-radius:8px;margin-bottom:1rem;">
+                            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid #e5e5e5;font-size:12px;"><span><strong>Post-session survey</strong></span><span>Keep: every session ✅</span></div>
+                            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid #e5e5e5;font-size:12px;"><span><strong>RIASEC assessment</strong></span><span>Change: once/semester → twice/semester</span></div>
+                            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid #e5e5e5;font-size:12px;"><span><strong>Career selection update</strong></span><span>Change: once → quarterly pulse check</span></div>
+                            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;border-bottom:1px solid #e5e5e5;font-size:12px;"><span><strong>Semester reflection (Q11)</strong></span><span>New: Dec & May only</span></div>
+                            <div style="display:flex;justify-content:space-between;padding:0.4rem 0;font-size:12px;"><span><strong>Break check-in</strong></span><span>New: 3-question digital pulse over winter/spring break — SMS or in-platform, <strong>no separate login</strong></span></div>
+                        </div>
+
+                        <div class="insight-box" style="margin-top:0.5rem;">
+                            <strong>💡 Key principle:</strong> Students don't check email enough and logging into a separate system is a barrier. All survey touchpoints should be: (1) embedded in session time, (2) mobile-friendly, or (3) delivered via SMS/text for break periods. Never require a separate portal login.
+                        </div>
+                    </div>
+                </div>
+            `;
+            overlay.classList.add('active');
+        }
+
+        function switchSurveyTab(tab, btn) {
+            document.getElementById('surveyTab-current').style.display = tab === 'current' ? '' : 'none';
+            document.getElementById('surveyTab-recommended').style.display = tab === 'recommended' ? '' : 'none';
+            btn.parentElement.querySelectorAll('.month-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
         }
 
         function generatePatternFlags() {
