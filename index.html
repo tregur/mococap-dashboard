@@ -4326,7 +4326,7 @@
         Chart.defaults.borderColor = 'rgba(0,0,0,0.04)';
         Chart.defaults.font.family = "'Inter', sans-serif";
         Chart.defaults.font.weight = 500;
-        Chart.defaults.scale.grid = {color: 'rgba(0,0,0,0.04)', drawBorder: false};
+        Chart.defaults.scale.grid = {color: 'rgba(0,0,0,0.04)', drawBorder: false, lineWidth: 1};
         Chart.defaults.elements.line.borderWidth = 2.5;
         Chart.defaults.elements.line.tension = 0.3;
         Chart.defaults.elements.point.radius = 0;
@@ -8363,7 +8363,7 @@
                             borderRadius: 4
                         }]
                     },
-                    options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {beginAtZero: true, max: 100, title: {display: true, text: '% Positive'}}}}
+                    options: {indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {min: 0, max: 100, title: {display: true, text: '% Positive'}}}}
                 });
             }
 
