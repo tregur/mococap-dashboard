@@ -2887,7 +2887,7 @@
                         <div class="filter-divider"></div>
                         <button class="alerts-btn" onclick="downloadPdf()" title="Download as PDF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> PDF</button>
                         <button class="alerts-btn" onclick="exportFeedback()" title="Export survey feedback as CSV"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Feedback</button>
-                        <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">Reset</button>
+                        <button class="alerts-btn" onclick="resetFilters()" style="color: var(--t3);">🔄 Reset</button>
                     </div>
                 </div>
 
@@ -2907,7 +2907,7 @@
                         <div class="widget-grid" id="widgetGrid">
                             <div class="widget" id="widgetRiasecDonut" data-page="riasec">
                                 <div class="widget-header">
-                                    <span class="widget-title">Interest Themes (RIASEC)</span>
+                                    <span class="widget-title">🧭 Interest Themes (RIASEC)</span>
                                     <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">SY 2025-26 | 23,695 students</span>
                                 </div>
                                 <div class="widget-body">
@@ -2923,7 +2923,7 @@
                             </div>
                             <div class="widget" id="widgetCongruenceTime" data-page="congruence">
                                 <div class="widget-header">
-                                    <span class="widget-title">Congruence &amp; Clarity</span>
+                                    <span class="widget-title">🎯 Congruence &amp; Clarity</span>
                                     <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Aug–Dec 2025</span>
                                     <div class="widget-mini-pills" id="congruenceTimePills">
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('congruence','1M',this)">1M</span>
@@ -2945,7 +2945,7 @@
                             </div>
                             <div class="widget" id="widgetEngagement" data-page="engagement">
                                 <div class="widget-header">
-                                    <span class="widget-title">Student Engagement</span>
+                                    <span class="widget-title">📈 Student Engagement</span>
                                     <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Aug–Dec 2025</span>
                                     <div class="widget-mini-pills" id="engagementTimePills">
                                         <span class="widget-mini-pill" onclick="switchWidgetRange('engagement','1M',this)">1M</span>
@@ -2967,7 +2967,7 @@
                             </div>
                             <div class="widget" id="widgetClarity" data-page="career-plan">
                                 <div class="widget-header">
-                                    <span class="widget-title">Career Clarity</span>
+                                    <span class="widget-title">💬 Career Clarity</span>
                                     <span class="widget-badge" style="background:#f5f0e8;color:#6b5e4b;font-size:9px;">Dec 2025 | 10,006 surveyed</span>
                                 </div>
                                 <div class="widget-body">
@@ -2985,7 +2985,7 @@
 
                         <!-- C: WELCOME + CONTEXT -->
                         <div class="welcome-section">
-                            <h2 class="welcome-greeting" id="welcomeGreeting">Welcome back!</h2>
+                            <h2 class="welcome-greeting" id="welcomeGreeting">👋 Welcome back!</h2>
                             <p class="welcome-summary" id="welcomeSummary">Here's how your program is doing.</p>
                         </div>
 
@@ -3003,7 +3003,7 @@
 
                         <!-- F: EXPANDABLE DEEP DIVE -->
                         <details class="deep-dive-section" id="deepDiveSection">
-                            <summary class="deep-dive-toggle">See detailed analytics</summary>
+                            <summary class="deep-dive-toggle">🔭 See detailed analytics</summary>
                             <div class="deep-dive-content">
                                 <div class="month-nav" id="monthNav"></div>
                                 <div id="categoryChips" style="display:none;"></div>
@@ -3101,7 +3101,7 @@
                             <div class="metric-detail">Sources: MoCo CAP Enriched Dataset (2,962 students); O*NET 28.1 Database; Holland, J.L. (1997) Making vocational choices, 3rd ed.</div>
                         </div>
                         <div class="insight-box positive">
-                            <strong>Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest interest-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
+                            <strong>✅ Investigative types lead at 88.1%</strong> — STEM-oriented students have the clearest interest-career alignment in O*NET. Conventional types lag at 78.9%, as C-type careers (accounting, admin) may not appeal to adolescents despite strong aptitude fit. Consider showcasing "hidden gem" Conventional careers (data analytics, UX research, project management).
                         </div>
                         <div class="chart-grid">
                             <div class="chart-card">
@@ -3109,7 +3109,7 @@
                                 <div class="metric-detail">Congruence = how well a student's career interest matches their RIASEC RIASEC type (Holland Code). High (≥2 codes match), Medium (1 code), Low (adjacent), No Match. | SY 2025-26 cumulative (2,962 students)</div>
                                 <div class="chart-container"><canvas id="congruenceDonutChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> 85.1% match rate is strong — focus coaching resources on the 14.9% No Match students who need targeted career exploration to find their fit.
+                                    <strong>💡 So What:</strong> 85.1% match rate is strong — focus coaching resources on the 14.9% No Match students who need targeted career exploration to find their fit.
                                 </div>
                             </div>
                             <div class="chart-card">
@@ -3117,7 +3117,7 @@
                                 <div class="metric-detail">Match percentage for each of the 6 Holland RIASEC types: Realistic, Investigative, Artistic, Social, Enterprising, Conventional. Higher % = better career-interest fit for that type. | SY 2025-26</div>
                                 <div class="chart-container" style="height: auto; min-height: 400px;"><div id="riasecCongruenceBars"></div></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Investigative leads at 88.1% match; Conventional lags at 78.9%. Recommend showcasing hidden-gem Conventional careers (logistics, data analysis, finance) to close the gap.
+                                    <strong>💡 So What:</strong> Investigative leads at 88.1% match; Conventional lags at 78.9%. Recommend showcasing hidden-gem Conventional careers (logistics, data analysis, finance) to close the gap.
                                 </div>
                             </div>
                         </div>
@@ -3131,9 +3131,9 @@
                         </div>
 
                         <div class="heatmap-container">
-                            <div class="heatmap-title">RIASEC Congruence Heatmap: Types x Months</div>
+                            <div class="heatmap-title">🗺️ RIASEC Congruence Heatmap: Types x Months</div>
                             <div class="insight-box" style="margin-bottom:1rem;">
-                                <strong>Why This Matters:</strong> Tracking how each RIASEC type's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
+                                <strong>Why This Matters:</strong> Tracking how each RIASEC type's career alignment evolves over the school year reveals which types benefit most from sustained coaching. <strong>💡 So What:</strong> Types with declining congruence need targeted interventions; types with rising congruence can serve as coaching models.
                             </div>
                             <table class="heatmap-table" id="heatmapRiasecMonths">
                                 <!-- Dynamically populated -->
@@ -3188,7 +3188,7 @@
                                 <div class="metric-detail">% of students rating their session as "Agree" or "Strongly Agree" it was helpful, broken down by delivery format. Based on 1,012 student responses. | Oct 2025</div>
                                 <div style="position:relative;height:220px;"><canvas id="helpfulnessByTypeChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> One-on-one sessions are rated most helpful but represent only 1.8% of total sessions. Consider increasing 1:1 coaching allocation to boost overall impact.
+                                    <strong>💡 So What:</strong> One-on-one sessions are rated most helpful but represent only 1.8% of total sessions. Consider increasing 1:1 coaching allocation to boost overall impact.
                                 </div>
                                 <div id="ic-helpfulness-type"></div>
                             </div>
@@ -3197,7 +3197,7 @@
                                 <div class="metric-detail">Distribution of coaching session formats: whole group (classroom), small group, one-on-one, exploration activity, or other. Shows how program time is allocated. | Oct 2025</div>
                                 <div style="position:relative;height:220px;"><canvas id="sessionTypeMixChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Whole group dominates at 81.9% of sessions. Diversifying the format mix toward more small-group and 1:1 coaching could improve individual outcomes.
+                                    <strong>💡 So What:</strong> Whole group dominates at 81.9% of sessions. Diversifying the format mix toward more small-group and 1:1 coaching could improve individual outcomes.
                                 </div>
                             </div>
                         </div>
@@ -3207,7 +3207,7 @@
                             <div class="metric-detail">Based on 1,012 student survey responses in October 2025. Each item shows how strongly it affects student outcomes, ranked by priority for counselor action.</div>
                             <div id="perfRegressionBars"></div>
                             <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                <strong>So What:</strong> Session quality is the strongest predictor of student outcomes. Focus on improving session helpfulness ratings over simply increasing raw session count.
+                                <strong>💡 So What:</strong> Session quality is the strongest predictor of student outcomes. Focus on improving session helpfulness ratings over simply increasing raw session count.
                             </div>
                         </div>
                         <!-- YoY Improvement Cards -->
@@ -3233,7 +3233,7 @@
                                 <div class="metric-detail">FARMS = Free and Reduced-Price Meals (proxy for economic disadvantage). Higher FARMS % correlates with lower graduation rates. Shows equity context for targeting coaching resources. | MCPS Data 2023</div>
                                 <div class="chart-container"><canvas id="farmsChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Higher FARMS % schools show lower graduation rates — equity demands more intensive coaching support at these sites to close the career certainty gap.
+                                    <strong>💡 So What:</strong> Higher FARMS % schools show lower graduation rates — equity demands more intensive coaching support at these sites to close the career certainty gap.
                                 </div>
                             </div>
                         </div>
@@ -3262,7 +3262,7 @@
                                 <div class="metric-detail">Total coaching sessions delivered each month. Peak in October reflects college application season. Nov-Dec decline is seasonal (winter break, finals). | Aug–Dec 2025</div>
                                 <div class="chart-container"><canvas id="monthlyTrendChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> October peak reflects college application season. Plan targeted programming for seasonal dips (Nov-Dec) to maintain momentum through winter break.
+                                    <strong>💡 So What:</strong> October peak reflects college application season. Plan targeted programming for seasonal dips (Nov-Dec) to maintain momentum through winter break.
                                 </div>
                             </div>
                             <div class="chart-card">
@@ -3270,7 +3270,7 @@
                                 <div class="metric-detail">Unique students reached each month (deduplicated). Measures breadth of program coverage across the student body. | Aug–Dec 2025</div>
                                 <div class="chart-container"><canvas id="reachChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Reach stays stable even as total sessions decline — student interest remains strong. Opportunity to deepen engagement per student, not just breadth.
+                                    <strong>💡 So What:</strong> Reach stays stable even as total sessions decline — student interest remains strong. Opportunity to deepen engagement per student, not just breadth.
                                 </div>
                             </div>
                         </div>
@@ -3289,7 +3289,7 @@
                                 <div class="metric-detail">Breakdown of how October coaching sessions were delivered. Whole group dominates at 81.9%. One-on-one is most effective but only 1.8% of sessions. | Oct 2025, 1,012 students</div>
                                 <div style="position:relative;height:250px;"><canvas id="engSessionTypesChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Whole group at 81.9% means most students get the same experience. Increasing small-group and 1:1 sessions could meaningfully improve individual outcomes.
+                                    <strong>💡 So What:</strong> Whole group at 81.9% means most students get the same experience. Increasing small-group and 1:1 sessions could meaningfully improve individual outcomes.
                                 </div>
                             </div>
                             <div class="chart-card">
@@ -3297,7 +3297,7 @@
                                 <div class="metric-detail">Percentage of October students by grade level. Grade 6 surged +17pp year-over-year while Grade 8 declined -16pp. | Oct 2025, 1,012 students</div>
                                 <div style="position:relative;height:250px;"><canvas id="engGradeDistChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Grade 6 surged +17pp year-over-year. Ensure career coaching content is age-appropriate and developmentally relevant for these younger students.
+                                    <strong>💡 So What:</strong> Grade 6 surged +17pp year-over-year. Ensure career coaching content is age-appropriate and developmentally relevant for these younger students.
                                 </div>
                             </div>
                         </div>
@@ -3307,7 +3307,7 @@
                             <div class="metric-detail">Types of follow-up support students requested after their session. Compared Oct 2025 vs Oct 2024. All categories declining YoY despite improved core outcomes. | Oct 2025 vs Oct 2024</div>
                             <div style="position:relative;height:220px;"><canvas id="engFollowupChart"></canvas></div>
                             <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                <strong>So What:</strong> All follow-up categories declining YoY despite improved outcomes — students may need less support, or the follow-up request process itself needs review and simplification.
+                                <strong>💡 So What:</strong> All follow-up categories declining YoY despite improved outcomes — students may need less support, or the follow-up request process itself needs review and simplification.
                             </div>
                         </div>
                         <div id="engOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
@@ -3335,7 +3335,7 @@
                             <div class="metric-detail">Number of RIASEC types each student identifies with. "0 themes" = no clear type yet. "3+ themes" = interests spanning multiple RIASEC types. 57.9% of students have 2 or more types. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="themeDepthChart"></canvas></div>
                             <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                <strong>So What:</strong> 57.9% of students have 2+ RIASEC themes. Multi-theme students need coaching help narrowing their focus toward concrete career pathways.
+                                <strong>💡 So What:</strong> 57.9% of students have 2+ RIASEC themes. Multi-theme students need coaching help narrowing their focus toward concrete career pathways.
                             </div>
                         </div>
                         <div id="riasecOctoberCards" class="ic-grid" style="margin-bottom:1rem;"></div>
@@ -3352,7 +3352,7 @@
                                 </select>
                             </div>
                             <div class="insight-box" style="margin-bottom:1rem;">
-                                <strong>Why This Matters:</strong> Schools that skew heavily toward one RIASEC type may need broader career exposure programming. <strong>So What:</strong> Identify schools with narrow type distributions and prioritize cross-domain career exploration activities.
+                                <strong>Why This Matters:</strong> Schools that skew heavily toward one RIASEC type may need broader career exposure programming. <strong>💡 So What:</strong> Identify schools with narrow type distributions and prioritize cross-domain career exploration activities.
                             </div>
                             <div style="overflow-x:auto;">
                                 <table class="heatmap-table" id="heatmapSchoolsRiasec">
@@ -3373,42 +3373,42 @@
                         </div>
                         <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">1. Biosciences & Health Technology</div>
+                            <div class="sector-name">1. 🧬 Biosciences & Health Technology</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Investigative</span><span class="riasec-tag secondary">Realistic</span></div>
                             <div class="sector-detail">Matches 3,811 Investigative + 5,011 Realistic students. NIH, FDA, and 400+ biotech firms in MoCo. Career paths: lab technician, biomedical engineer, clinical research coordinator, pharmaceutical sales.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">2. Information Technology & Cybersecurity</div>
+                            <div class="sector-name">2. 🔒 Information Technology & Cybersecurity</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Investigative</span><span class="riasec-tag secondary">Conventional</span></div>
                             <div class="sector-detail">Strong I+C alignment with 3,811 + 2,357 students. MoCo hosts NIST and growing cyber corridor. Career paths: SOC analyst, network engineer, data scientist, IT project manager.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">3. Professional & Business Services</div>
+                            <div class="sector-name">3. 💼 Professional & Business Services</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Enterprising</span><span class="riasec-tag secondary">Conventional</span></div>
                             <div class="sector-detail">E+C types (3,050 + 2,357) are natural fits. Largest employment sector in MoCo. Career paths: management consultant, accountant, financial analyst, HR specialist, marketing manager.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">4. Retail, Hospitality & Tourism</div>
+                            <div class="sector-name">4. 🏨 Retail, Hospitality & Tourism</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Social</span><span class="riasec-tag secondary">Enterprising</span></div>
                             <div class="sector-detail">S+E alignment (4,637 + 3,050). Growing sector post-pandemic. Career paths: hotel management, event planning, restaurant management, retail operations, customer experience design.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">5. Health Services & Social Assistance</div>
+                            <div class="sector-name">5. ⚕️ Health Services & Social Assistance</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Social</span><span class="riasec-tag secondary">Investigative</span></div>
                             <div class="sector-detail">S+I types (4,637 + 3,811) — largest student pool. MoCo has major hospital systems (Adventist, Suburban, Holy Cross). Career paths: registered nurse, physical therapist, social worker, counselor, medical assistant.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">6. Education & Training</div>
+                            <div class="sector-name">6. 🎓 Education & Training</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Social</span><span class="riasec-tag secondary">Artistic</span></div>
                             <div class="sector-detail">S+A types (4,637 + 4,829). MCPS is the county's largest employer. Career paths: teacher, instructional designer, school counselor, education administrator, curriculum developer.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">7. Advanced Manufacturing & Construction</div>
+                            <div class="sector-name">7. ⚙️ Advanced Manufacturing & Construction</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Realistic</span><span class="riasec-tag secondary">Conventional</span></div>
                             <div class="sector-detail">R+C types (5,011 + 2,357). Growing demand for skilled trades and STEM manufacturing. Career paths: CNC machinist, electrician, construction manager, quality control, supply chain logistics.</div>
                         </div>
                         <div class="priority-sector-card">
-                            <div class="sector-name">8. Real Estate & Development</div>
+                            <div class="sector-name">8. 🏗️ Real Estate & Development</div>
                             <div class="sector-riasec"><span class="riasec-tag primary">Enterprising</span><span class="riasec-tag secondary">Realistic</span></div>
                             <div class="sector-detail">E+R types (3,050 + 5,011). Active MoCo development market. Career paths: real estate agent, property manager, urban planner, architect, construction project manager.</div>
                         </div>
@@ -3418,7 +3418,7 @@
                             <div class="metric-detail">Student interest in Career & Technical Education pathways that align with MoCo's priority sectors. CTE combines classroom learning with hands-on career experience. 87.1% of students are open to CTE. | Oct 2025, 1,012 students</div>
                             <div style="position:relative;height:250px;"><canvas id="sectorsCTEChart"></canvas></div>
                             <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                <strong>So What:</strong> 87.1% of students are open to CTE — a strong pipeline for sector-aligned programming. Partner with CTE pathways to connect interest to enrollment.
+                                <strong>💡 So What:</strong> 87.1% of students are open to CTE — a strong pipeline for sector-aligned programming. Partner with CTE pathways to connect interest to enrollment.
                             </div>
                         </div>
                         <div id="sectorsOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
@@ -3430,7 +3430,7 @@
                         </div>
                         <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
                         <div class="insight-box alert">
-                            <strong>Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (7.1%) + "Actors" (1.5%) = 8.6% pursuing glamour careers with very limited labor market capacity (~16,500 national positions, -3% growth). The program should add a "Career Reality Check" module that pairs aspiration data with BLS outlook data. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
+                            <strong>⚠️ Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (7.1%) + "Actors" (1.5%) = 8.6% pursuing glamour careers with very limited labor market capacity (~16,500 national positions, -3% growth). The program should add a "Career Reality Check" module that pairs aspiration data with BLS outlook data. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
                         </div>
                         <div class="chart-grid" style="grid-template-columns: 1fr;">
                             <div class="chart-card">
@@ -3438,7 +3438,7 @@
                                 <div class="metric-detail">Most frequently selected career interests among all students. % = share of total career selections. The top 10 account for only 28.7% of selections, indicating diverse interests across 200+ career codes. | SY 2025-26 (18,920 students)</div>
                                 <div class="chart-container"><canvas id="distributionChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>So What:</strong> Top 10 careers account for only 28.7% of selections — healthy diversity. But athlete and actor aspirations need a reality-check conversation paired with viable backup pathways.
+                                    <strong>💡 So What:</strong> Top 10 careers account for only 28.7% of selections — healthy diversity. But athlete and actor aspirations need a reality-check conversation paired with viable backup pathways.
                                 </div>
                             </div>
                         </div>
@@ -3452,7 +3452,7 @@
                                 </table>
                             </div>
                             <div class="insight-box" style="margin-top:0.75rem;">
-                                <strong>So What:</strong> The top student interest (Athletes, 7.1%) has limited labor market capacity and no formal educational pathway. Meanwhile, careers with the strongest outlooks — Veterinarians (+10%), Engineers (+7%), Nurses (+5%) — all rank lower in student interest. The program should add a "Career Reality Check" module that pairs aspiration with BLS data, and highlight career-adjacent pivots: athlete → sports medicine/kinesiology, actor → media production/UX design. Montgomery County context: median household income is $125,076, unemployment is just 2.6%, and major employers include NIH (20K+ jobs), Lockheed Martin (10K+), and Marriott International.
+                                <strong>💡 So What:</strong> The top student interest (Athletes, 7.1%) has limited labor market capacity and no formal educational pathway. Meanwhile, careers with the strongest outlooks — Veterinarians (+10%), Engineers (+7%), Nurses (+5%) — all rank lower in student interest. The program should add a "Career Reality Check" module that pairs aspiration with BLS data, and highlight career-adjacent pivots: athlete → sports medicine/kinesiology, actor → media production/UX design. Montgomery County context: median household income is $125,076, unemployment is just 2.6%, and major employers include NIH (20K+ jobs), Lockheed Martin (10K+), and Marriott International.
                                 <div class="metric-detail" style="margin-top:0.5rem;">Sources: BLS OOH May 2024; MoCo Economic Indicators 2025; FRED/Census 2023</div>
                             </div>
                         </div>
@@ -3480,7 +3480,7 @@
                                 </div>
                                 <div class="expert-body">
                                     <div class="expert-section">
-                                        <div class="expert-section-title green">✓ Key Findings</div>
+                                        <div class="expert-section-title green">✅ Key Findings</div>
                                         <div class="expert-text">
                                             With <span class="expert-metric">10,006</span> survey responses across 65 schools, this dataset has strong statistical power — margins of error range from ±0.03 to ±0.81pp at 95% confidence. The <span class="expert-metric">85.1%</span> congruence rate is remarkably high and statistically significant. Investigative types show the highest match at <span class="expert-metric">88.1%</span> while Conventional types lag at <span class="expert-metric">78.9%</span> — a 9.2pp gap warranting investigation.
                                             <br><br>
@@ -3488,13 +3488,13 @@
                                         </div>
                                     </div>
                                     <div class="expert-section">
-                                        <div class="expert-section-title red">⚠ Data Quality Flags</div>
+                                        <div class="expert-section-title red">🚩 Data Quality Flags</div>
                                         <div class="expert-text">
                                             Seven schools have fewer than 25 survey responses (Benjamin Banneker, Cabin John, Gaithersburg MS, James Hubert Blake, Rocky Hill, Takoma Park, William H. Farquhar), making their metrics unreliable. Col. Zadok Magruder shows <span class="expert-metric">0% clear plan</span> with 170 responses — this is an outlier that suggests a data collection issue rather than a true signal. Wheaton HS reports <span class="expert-metric">certainty=2.0</span> with only 21 responses — likely assessment fatigue or incomplete surveys. Recommend excluding schools with fewer than 30 responses from aggregate comparisons.
                                         </div>
                                     </div>
                                     <div class="expert-section">
-                                        <div class="expert-section-title blue">→ Recommendations</div>
+                                        <div class="expert-section-title blue">🎯 Recommendations</div>
                                         <div class="expert-text">
                                             1) Implement a minimum N threshold (N≥30) for school-level reporting to avoid misleading metrics. 2) Add confidence intervals to all displayed metrics. 3) Run a regression analysis on dosage (sessions per student) vs. certainty — the scatter data suggests a positive dose-response curve, especially for high schools above 5 sessions. 4) Create a "statistical health" flag for each school based on sample adequacy. 5) Track the helpfulness decline — if Jan continues below 3.68, trigger a program review.
                                         </div>
@@ -3532,7 +3532,7 @@
                                         </div>
                                     </div>
                                     <div class="expert-section">
-                                        <div class="expert-section-title blue">→ Recommendations</div>
+                                        <div class="expert-section-title blue">🎯 Recommendations</div>
                                         <div class="expert-text">
                                             1) Implement differentiated dosage: high-FARMS schools should target 6+ sessions per student vs. the current average of ~3. 2) Develop age-appropriate career exploration curricula — middle schoolers should focus on RIASEC identity exploration while high schoolers transition to concrete career planning. 3) Launch a peer mentoring program pairing high-certainty students (4.5+ rating) with undecided peers. 4) Track longitudinal outcomes — do students with high congruence actually persist in related post-secondary pathways? 5) Consider adding family engagement components at Title I schools to address cultural barriers to career exploration.
                                         </div>
@@ -3570,7 +3570,7 @@
                                         </div>
                                     </div>
                                     <div class="expert-section">
-                                        <div class="expert-section-title blue">→ Recommendations</div>
+                                        <div class="expert-section-title blue">🎯 Recommendations</div>
                                         <div class="expert-text">
                                             1) Create a "Career Reality Check" module that pairs aspiration data with BLS occupational outlook and local demand data. 2) Map each MoCo Priority Sector to primary RIASEC codes and identify which student RIASEC types are natural fits. 3) Develop "career adjacent" suggestions — e.g., students interested in athletics could explore sports medicine (Investigative), sports management (Enterprising), or kinesiology (Realistic). 4) Partner with Montgomery County Economic Development to feature local employers and internship pipelines. 5) Add wage/demand data alongside career exploration results so students see labor market realities early.
                                         </div>
@@ -3610,7 +3610,7 @@
                                         </div>
                                     </div>
                                     <div class="expert-section">
-                                        <div class="expert-section-title blue">→ Recommendations</div>
+                                        <div class="expert-section-title blue">🎯 Recommendations</div>
                                         <div class="expert-text">
                                             1) Implement secondary and tertiary RIASEC code analysis — students' 3-letter Holland codes (e.g., SAE, RIA) provide much richer career matching than primary type alone. 2) Add the RIASEC hexagonal distance metric to congruence calculations — a Realistic student choosing an Investigative career (adjacent) vs. a Social career (opposite) have very different congruence levels. 3) Cross-reference top career picks against O*NET RIASEC codes to validate student self-awareness. 4) Consider administering the Self-Directed Search (SDS) as a validation instrument for a random sample. 5) Track "RIASEC stability" across monthly assessments — type consistency over time is a key indicator of career maturity (Holland, 1997).
                                         </div>
@@ -3667,21 +3667,21 @@
                             <p><strong>Monthly Data Review:</strong> Each month, new data is loaded and evaluated across all program metrics. Select a month below to view that period's detailed report. The October analysis includes the deepest sample with regression analysis from Cristina's research findings.</p>
                         </div>
                         <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
-                            <button class="month-tab active" onclick="showMonth('oct', this)">October 2025</button>
-                            <button class="month-tab" onclick="showMonth('nov', this)">November 2025</button>
-                            <button class="month-tab" onclick="showMonth('dec', this)">December 2025</button>
+                            <button class="month-tab active" onclick="showMonth('oct', this)">🍂 October 2025</button>
+                            <button class="month-tab" onclick="showMonth('nov', this)">🦃 November 2025</button>
+                            <button class="month-tab" onclick="showMonth('dec', this)">❄️ December 2025</button>
                         </div>
                         <div id="monthReport-oct" class="month-content active">
                             <div class="chart-card">
                                 <div class="chart-title">October 2025 — Deep Dive Report</div>
                                 <div class="metric-detail">Source: October 2025 Findings (1,012 students surveyed; 18,920 students served full year) | findings Montg Oct 25.xlsx</div>
                                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0;">
-                                    <div class="kpi-card"><div class="kpi-label">October Students</div><div class="kpi-value">1,012</div><div class="metric-detail">50% Middle / 50% High School</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Full Year Students</div><div class="kpi-value">18,920</div><div class="metric-detail">Cumulative through Oct</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Helpfulness</div><div class="kpi-value">71.5%</div><div class="metric-detail">Agree + Strongly Agree</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Career Confidence</div><div class="kpi-value">77.3%</div><div class="metric-detail">YoY: +6.27pp ↑</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">CTE Openness</div><div class="kpi-value">87.1%</div><div class="metric-detail">Open to learning more</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Want Follow-Up</div><div class="kpi-value">70.6%</div><div class="metric-detail">34.1% want mentoring</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">👥 October Students</div><div class="kpi-value">1,012</div><div class="metric-detail">50% Middle / 50% High School</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">🎓 Full Year Students</div><div class="kpi-value">18,920</div><div class="metric-detail">Cumulative through Oct</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">🤝 Helpfulness</div><div class="kpi-value">71.5%</div><div class="metric-detail">Agree + Strongly Agree</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">🚀 Career Confidence</div><div class="kpi-value">77.3%</div><div class="metric-detail">YoY: +6.27pp ↑</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">🛤️ CTE Openness</div><div class="kpi-value">87.1%</div><div class="metric-detail">Open to learning more</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">📬 Want Follow-Up</div><div class="kpi-value">70.6%</div><div class="metric-detail">34.1% want mentoring</div></div>
                                 </div>
                             </div>
 
@@ -3692,7 +3692,7 @@
                                     <div id="regressionBars"></div>
                                 </div>
                                 <div class="insight-box" style="margin-top:1rem;">
-                                    <strong>So What:</strong> Showing students CTE career pathways is the single most powerful way to keep them engaged — students who explore even 2-3 pathways are dramatically less likely to disengage. When sessions feel helpful, students become more certain about their career, and that certainty makes them rate future sessions even higher — creating a positive cycle. Students who leave with clear, specific next steps develop much stronger career plans. <em>What to do: End every session with 1-2 written, specific next steps the student owns. Make sure every student explores at least 2-3 CTE pathways.</em>
+                                    <strong>💡 So What:</strong> Showing students CTE career pathways is the single most powerful way to keep them engaged — students who explore even 2-3 pathways are dramatically less likely to disengage. When sessions feel helpful, students become more certain about their career, and that certainty makes them rate future sessions even higher — creating a positive cycle. Students who leave with clear, specific next steps develop much stronger career plans. <em>What to do: End every session with 1-2 written, specific next steps the student owns. Make sure every student explores at least 2-3 CTE pathways.</em>
                                 </div>
                             </div>
 
@@ -3706,7 +3706,7 @@
                                     <div style="text-align:center;padding:1rem;background:var(--surface);border-radius:8px;"><div style="font-size:24px;font-weight:700;color:var(--g);">40.9%</div><div style="font-size:11px;color:var(--t3);">3+ themes</div></div>
                                 </div>
                                 <div class="insight-box alert" style="margin-top:1rem;">
-                                    <strong>So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more RIASEC types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
+                                    <strong>⚠️ So What — Broad Interests Are a Double-Edged Sword:</strong> 57.9% of October students identify with 2 or more RIASEC types. While having broad interests boosts engagement, it also makes it harder for students to narrow down a career direction. Students with "too many possible selves" struggle to commit to a plan. <em>What to do: For students with many interests, use values clarification activities ("If you could only do one of these for 5 years, which would it be?"), realistic career previews, and help them find careers that blend their interests (e.g., Artistic + Social → art therapy, teaching).</em>
                                     <div class="metric-detail" style="margin-top:0.5rem;">Source: Oct 2025 Analysis; Holland interest-career model</div>
                                 </div>
                             </div>
@@ -3718,7 +3718,7 @@
                                     <canvas id="ctePathwayChart" height="200"></canvas>
                                 </div>
                                 <div class="insight-box positive" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their RIASEC type.</em>
+                                    <strong>✅ 💡 So What:</strong> Arts, Media & Communication (29.1%) dominates CTE interest — aligning with the high number of Artistic-type students (4,829). Showing students CTE pathways is the single most powerful way to keep them engaged. Currently 28% of students haven't explored any CTE options — these are the highest-risk students for disengagement. <em>What to do: Make sure every student explores at least 2-3 CTE pathways. Suggest pathways that match their RIASEC type.</em>
                                 </div>
                             </div>
 
@@ -3734,7 +3734,7 @@
                                     <div style="display:flex;justify-content:space-between;padding:0.5rem 0;"><span>Exploration Follow-Up Requests</span><span style="color:#dc2626;font-weight:700;">-11.64pp ↓</span></div>
                                 </div>
                                 <div class="insight-box" style="margin-top:0.75rem;">
-                                    <strong>So What:</strong> The Grade 6 expansion (+17pp) is the single biggest demographic shift. Younger students are less differentiated in RIASEC themes (explaining the +14.77pp jump in zero-theme students) and have different follow-up needs. The declining follow-up requests (-4 to -12pp across all types) despite improving core outcomes is a paradox requiring investigation — are students satisfied after one session, or are follow-up offerings not resonating with the younger cohort? <em>Recommendation: Develop age-differentiated session models and reframe follow-up as "action support" rather than "more sessions."</em>
+                                    <strong>💡 So What:</strong> The Grade 6 expansion (+17pp) is the single biggest demographic shift. Younger students are less differentiated in RIASEC themes (explaining the +14.77pp jump in zero-theme students) and have different follow-up needs. The declining follow-up requests (-4 to -12pp across all types) despite improving core outcomes is a paradox requiring investigation — are students satisfied after one session, or are follow-up offerings not resonating with the younger cohort? <em>Recommendation: Develop age-differentiated session models and reframe follow-up as "action support" rather than "more sessions."</em>
                                     <div class="metric-detail" style="margin-top:0.5rem;">Source: findings Montg Oct 25.xlsx, Sheet 5</div>
                                 </div>
                             </div>
@@ -3746,7 +3746,7 @@
                                     <canvas id="followupChart" height="180"></canvas>
                                 </div>
                                 <div class="insight-box" style="margin-top:0.5rem;">
-                                    <strong>So What:</strong> Mentoring connections are the #1 requested follow-up (34.1%). Students who have access to knowledgeable adults in career fields develop greater career clarity. Yet all follow-up types are declining year-over-year. <em>What to do: Build mentoring infrastructure — alumni mentors, professional connections, peer mentoring. Formalize job shadowing and guest speaker programs to give students the adult career connections they're asking for.</em>
+                                    <strong>💡 So What:</strong> Mentoring connections are the #1 requested follow-up (34.1%). Students who have access to knowledgeable adults in career fields develop greater career clarity. Yet all follow-up types are declining year-over-year. <em>What to do: Build mentoring infrastructure — alumni mentors, professional connections, peer mentoring. Formalize job shadowing and guest speaker programs to give students the adult career connections they're asking for.</em>
                                 </div>
                             </div>
                         </div>
@@ -3756,13 +3756,13 @@
                                 <div class="chart-title">November 2025 Summary</div>
                                 <div class="metric-detail">Source: MoCo CAP Score Card, November 2025</div>
                                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0;">
-                                    <div class="kpi-card"><div class="kpi-label">Sessions</div><div class="kpi-value">8,270</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Unique Students</div><div class="kpi-value">7,858</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Clear Plan %</div><div class="kpi-value">21.4%</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Avg Certainty</div><div class="kpi-value">3.95/5</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">📋 Sessions</div><div class="kpi-value">8,270</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">👥 Unique Students</div><div class="kpi-value">7,858</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">✅ Clear Plan %</div><div class="kpi-value">21.4%</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">💪 Avg Certainty</div><div class="kpi-value">3.95/5</div></div>
                                 </div>
                                 <div class="insight-box">
-                                    <strong>So What:</strong> November represents the post-peak plateau. Sessions dropped 56% from October's college-application-driven surge, but certainty PEAKED at 3.95/5 — the highest monthly average. This suggests the Oct→Nov transition includes the most engaged students who continued into the program. <em>The Change: -56% sessions, +0.10 certainty. Why: Self-selection effect. Next Steps: Track whether these "sticky" students show higher long-term outcomes.</em>
+                                    <strong>💡 So What:</strong> November represents the post-peak plateau. Sessions dropped 56% from October's college-application-driven surge, but certainty PEAKED at 3.95/5 — the highest monthly average. This suggests the Oct→Nov transition includes the most engaged students who continued into the program. <em>The Change: -56% sessions, +0.10 certainty. Why: Self-selection effect. Next Steps: Track whether these "sticky" students show higher long-term outcomes.</em>
                                     <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, November 2025 (8,270 sessions)</div>
                                 </div>
                             </div>
@@ -3773,13 +3773,13 @@
                                 <div class="chart-title">December 2025 Summary</div>
                                 <div class="metric-detail">Source: MoCo CAP Score Card, December 2025</div>
                                 <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0;">
-                                    <div class="kpi-card"><div class="kpi-label">Sessions</div><div class="kpi-value">8,169</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Unique Students</div><div class="kpi-value">7,715</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Clear Plan %</div><div class="kpi-value">22.1%</div></div>
-                                    <div class="kpi-card"><div class="kpi-label">Avg Certainty</div><div class="kpi-value">3.87/5</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">📋 Sessions</div><div class="kpi-value">8,169</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">👥 Unique Students</div><div class="kpi-value">7,715</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">✅ Clear Plan %</div><div class="kpi-value">22.1%</div></div>
+                                    <div class="kpi-card"><div class="kpi-label">💪 Avg Certainty</div><div class="kpi-value">3.87/5</div></div>
                                 </div>
                                 <div class="insight-box">
-                                    <strong>So What:</strong> December shows seasonal effects (winter break Dec 22-Jan 2, final exams). Sessions stable at 8,169 (-1.2% from Nov). Certainty dipped from 3.95→3.87 — within natural variance but warrants monitoring. <strong>The bright spot: Clear Plan % hit its highest mark (22.1%, up from 21.4% in Nov)</strong>, meaning the program's cumulative impact on career clarity continues to build even as casual engagement softens. <em>The Change: -0.08 certainty, +0.7pp clarity. Why: Seasonal + end-of-semester fatigue. Next Steps: Plan "Career Kickstart" for January return; track whether Jan bounces back above 3.90.</em>
+                                    <strong>💡 So What:</strong> December shows seasonal effects (winter break Dec 22-Jan 2, final exams). Sessions stable at 8,169 (-1.2% from Nov). Certainty dipped from 3.95→3.87 — within natural variance but warrants monitoring. <strong>The bright spot: Clear Plan % hit its highest mark (22.1%, up from 21.4% in Nov)</strong>, meaning the program's cumulative impact on career clarity continues to build even as casual engagement softens. <em>The Change: -0.08 certainty, +0.7pp clarity. Why: Seasonal + end-of-semester fatigue. Next Steps: Plan "Career Kickstart" for January return; track whether Jan bounces back above 3.90.</em>
                                     <div class="metric-detail" style="margin-top:0.5rem;">Source: MoCo CAP Score Card, December 2025 (8,169 sessions)</div>
                                 </div>
                             </div>
@@ -3815,7 +3815,7 @@
                         <div style="max-width: 800px;">
                             <h2 style="font-size: 18px; margin-bottom: 1rem;">Methodology & Data Sources</h2>
                             <div class="chart-card">
-                                <div class="chart-title">Data Definitions</div>
+                                <div class="chart-title">📐 Data Definitions</div>
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
                                     <p><strong>Sessions YTD (49,467):</strong> Count of all unique student interactions through MoCo CAP platform, July-December 2025.</p>
                                     <p><strong>Unique Students (47,163):</strong> De-duplicated student IDs. Est. 68% reach of MCPS high school population.</p>
@@ -3826,7 +3826,7 @@
                                 </div>
                             </div>
                             <div class="chart-card" style="margin-top: 1rem;">
-                                <div class="chart-title">Survey Design & Sampling</div>
+                                <div class="chart-title">🔬 Survey Design & Sampling</div>
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
                                     <p>Sample Size: 10,006 responses across 65 MCPS schools</p>
                                     <p>Confidence Level: 95% (all metrics have 200+ responses)</p>
@@ -3835,7 +3835,7 @@
                                 </div>
                             </div>
                             <div class="chart-card" style="margin-top: 1rem;">
-                                <div class="chart-title">References</div>
+                                <div class="chart-title">📚 References</div>
                                 <div style="padding: 0.5rem 0; line-height: 1.8;">
                                     <p>Holland, J. L. (1997). Making vocational choices (3rd ed.). Psychological Assessment Resources.</p>
                                     <p>O*NET 28.1 Database. (2023). National Center for O*NET Development.</p>
@@ -4529,8 +4529,8 @@
             var actionHtml = '';
             if (cfg.soWhat || cfg.nextStep) {
                 actionHtml = '<div class="ic-action">';
-                if (cfg.soWhat) actionHtml += '<div class="ic-action-sowhat"><span class="ic-action-label">So What</span><span>' + cfg.soWhat + '</span></div>';
-                if (cfg.nextStep) actionHtml += '<div class="ic-action-nextstep"><span class="ic-action-label">Next Step</span><span>' + cfg.nextStep + '</span></div>';
+                if (cfg.soWhat) actionHtml += '<div class="ic-action-sowhat"><span class="ic-action-label">💡 So What</span><span>' + cfg.soWhat + '</span></div>';
+                if (cfg.nextStep) actionHtml += '<div class="ic-action-nextstep"><span class="ic-action-label">👉 Next Step</span><span>' + cfg.nextStep + '</span></div>';
                 actionHtml += '</div>';
             }
 
@@ -5645,7 +5645,7 @@
 
                 summaryEl.innerHTML = '<p><strong>Program Snapshot (' + latestMonth + ' 2025):</strong> MoCo CAP has reached <strong>' + (totalStudents/1000).toFixed(1) + 'K unique students</strong> across ' + schoolCount + ' MCPS schools through ' + totalSessions.toLocaleString() + ' sessions. The <strong>' + DATA.congruence.match_rate + '% career-interest match rate</strong> indicates strong alignment between student interests and career selections.</p>' +
                 '<p>Career clarity trajectory: <strong>' + latest.pct_clear + '%</strong> of students now report a clear career plan (<span style="color:' + clarityColor + '">' + clarityIcon + ' ' + (parseFloat(clarityDelta) >= 0 ? '+' : '') + clarityDelta + 'pp from ' + prevMonth + '</span>). The "Some Idea" group (' + DATA.future_thinking['Some Idea'].toLocaleString() + ' students, ' + (DATA.future_thinking['Some Idea'] / (DATA.future_thinking['Unsure'] + DATA.future_thinking['Some Idea'] + DATA.future_thinking['Clear Plan']) * 100).toFixed(1) + '%) is the highest-impact group to focus on — these students are closest to having a clear plan.</p>' +
-                '<p><strong>So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year). The top 3 actions to accelerate impact: <strong>(1)</strong> Show the "Some Idea" group CTE career pathways — this is the single most powerful way to move students toward clarity, <strong>(2)</strong> End every session with specific, written next steps the student owns, <strong>(3)</strong> Connect students with mentors (70.6% want follow-up support).</p>' +
+                '<p><strong>💡 So What:</strong> The program is working — ' + OCTOBER_FULL.confidence.pct_positive + '% of October students report career confidence (' + OCTOBER_FULL.confidence.yoy_change + ' year-over-year). The top 3 actions to accelerate impact: <strong>(1)</strong> Show the "Some Idea" group CTE career pathways — this is the single most powerful way to move students toward clarity, <strong>(2)</strong> End every session with specific, written next steps the student owns, <strong>(3)</strong> Connect students with mentors (70.6% want follow-up support).</p>' +
                 '<div class="metric-detail">Sources: MoCo CAP Score Card ' + latestMonth + ' 2025; Oct 2025 Analysis (' + OCTOBER_FULL.n_sample.toLocaleString() + ' students surveyed, ' + OCTOBER_FULL.n_full_year.toLocaleString() + ' total served)</div>';
             }
 
@@ -5677,12 +5677,12 @@
                 const avgCertainty = validSchools.length > 0 ? (validSchools.reduce((s,sc) => s + sc.metrics.avg_certainty * sc.survey_n, 0) / validSchools.reduce((s,sc) => s + sc.survey_n, 0)).toFixed(2) : latest.avg_certainty.toFixed(2);
 
                 kpisEl.innerHTML =
-                    '<div class="kpi-card"><div class="kpi-label">Students Reached</div><div class="kpi-value">' + (totalStudents/1000).toFixed(1) + 'K</div><div class="kpi-subtext">YTD 2025-26 ' + kpiIcon(totalStudents, 30000, 40000) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Interest Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Clear Plan %</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'clear_plan\')">' + latest.pct_clear + '%</span></div><div class="kpi-subtext">Career Clarity ' + kpiIcon(latest.pct_clear, 15, 25) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Avg Certainty</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'certainty\')">' + avgCertainty + '/5</span></div><div class="kpi-subtext">Career Confidence ' + kpiIcon(parseFloat(avgCertainty), 3.5, 4.0) + '</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Schools</div><div class="kpi-value">' + schoolCount + '</div><div class="kpi-subtext">Participating</div></div>' +
-                    '<div class="kpi-card"><div class="kpi-label">Survey N</div><div class="kpi-value">' + (totalSurvey/1000).toFixed(1) + 'K</div><div class="kpi-subtext">Respondents</div></div>';
+                    '<div class="kpi-card"><div class="kpi-label">👥 Students Reached</div><div class="kpi-value">' + (totalStudents/1000).toFixed(1) + 'K</div><div class="kpi-subtext">YTD 2025-26 ' + kpiIcon(totalStudents, 30000, 40000) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">🎯 Congruence Rate</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'congruence\')">' + DATA.congruence.match_rate + '%</span></div><div class="kpi-subtext">Career-Interest Match ' + kpiIcon(DATA.congruence.match_rate, 75, 85) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">✅ Clear Plan %</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'clear_plan\')">' + latest.pct_clear + '%</span></div><div class="kpi-subtext">Career Clarity ' + kpiIcon(latest.pct_clear, 15, 25) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">💪 Avg Certainty</div><div class="kpi-value"><span class="clickable-metric" onclick="showModal(\'certainty\')">' + avgCertainty + '/5</span></div><div class="kpi-subtext">Career Confidence ' + kpiIcon(parseFloat(avgCertainty), 3.5, 4.0) + '</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">🏫 Schools</div><div class="kpi-value">' + schoolCount + '</div><div class="kpi-subtext">Participating</div></div>' +
+                    '<div class="kpi-card"><div class="kpi-label">📝 Survey N</div><div class="kpi-value">' + (totalSurvey/1000).toFixed(1) + 'K</div><div class="kpi-subtext">Respondents</div></div>';
             }
 
             // Dynamic Trends
@@ -7080,8 +7080,8 @@
             var div = document.createElement('div');
             div.className = 'widget-insight' + negClass;
             div.innerHTML = '<span class="widget-insight-trend ' + trendClass + '">' + arrow + '</span>' +
-                '<strong>So what:</strong> ' + config.soWhat +
-                '<span class="widget-insight-action"><strong>Next step:</strong> ' + config.action + '</span>';
+                '<strong>💡 So what:</strong> ' + config.soWhat +
+                '<span class="widget-insight-action"><strong>👉 Next step:</strong> ' + config.action + '</span>';
             target.appendChild(div);
         }
 
@@ -8064,7 +8064,7 @@
                 '</div>' +
                 '<div class="widget-insight" style="margin-top:0.5rem;">' +
                     '<div class="widget-insight-trend" style="color:' + (clearLast > clearFirst ? 'var(--g)' : '#dc2626') + ';">&#9650; All 4 metrics trending in the right direction</div>' +
-                    '<div class="widget-insight-text"><strong>So what:</strong> ' +
+                    '<div class="widget-insight-text"><strong>💡 So what:</strong> ' +
                         (certPeaked ? 'Career confidence peaked at ' + Math.max.apply(null, certByMonth).toFixed(2) + ' in ' + certPeakMonth + ' and has dipped slightly — this may be seasonal (finals/winter break) but warrants monitoring. ' : '') +
                         'At the current pace of +' + monthlyGain + 'pp/month in career clarity, the program is on track to reach ' + clearTarget + '% by ' + (monthsToTarget !== 'N/A' && monthsToTarget <= 12 ? 'approximately ' + monthsToTarget + ' months from now' : 'mid-2026') + '.' +
                     '</div>' +
@@ -8170,7 +8170,7 @@
                 '<div class="widget-insight-trend" style="color:' + (strongSectors >= 5 ? 'var(--g)' : '#f59e0b') + ';">' +
                     (strongSectors >= 5 ? '&#9650;' : '&#9679;') + ' ' + strongSectors + ' of 8 sectors show strong student alignment' +
                 '</div>' +
-                '<div class="widget-insight-text"><strong>So what:</strong> ' +
+                '<div class="widget-insight-text"><strong>💡 So what:</strong> ' +
                     (weakSectors > 0 ? weakSectors + ' sector' + (weakSectors > 1 ? 's' : '') + ' need' + (weakSectors === 1 ? 's' : '') + ' more student awareness and exposure. ' : '') +
                     'Montgomery County\'s economy depends on these 8 sectors for 80%+ of job growth through 2030. Students who explore sector-aligned careers have significantly better post-graduation outcomes.' +
                 '</div>' +
