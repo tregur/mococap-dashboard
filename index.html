@@ -3426,37 +3426,65 @@
 
                     <div class="page" id="distribution">
                         <div class="section-narrative">
-                            <p><strong>Top 10 Career Selections (October, 18,920 students):</strong> Athletes & Sports Competitors lead at 7.1%, followed by Lawyers (4.0%) and Physicians (3.7%). The top 10 careers account for only 28.7% of all selections, indicating a healthy long tail of diverse interests across 200+ career codes.</p>
+                            <p><strong>📊 Student Career Identification — Most Recent Month (December 2025):</strong> Ranked by % of students who identify with each career, largest to smallest. Showing total students identifying and change from October baseline. December data covers 7,715 unique students.</p>
                         </div>
                         <div class="section-month-link"><a href="#" onclick="showPage('monthly-report');return false;">View Monthly Report &rarr;</a></div>
-                        <div class="insight-box alert">
-                            <strong>⚠️ Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (7.1%) + "Actors" (1.5%) = 8.6% pursuing glamour careers with very limited labor market capacity (~16,500 national positions, -3% growth). The program should add a "Career Reality Check" module that pairs aspiration data with BLS outlook data. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
+
+                        <!-- Most Recent Month: Career Identification Ranked Table -->
+                        <div class="chart-card" style="margin-bottom:1rem;">
+                            <div class="chart-title">🏆 Career Identification — Ranked by Student Interest (December 2025)</div>
+                            <div class="metric-detail">Students who identify with each career, ordered largest to smallest. Includes total count and change from October 2025. | Dec 2025 (7,715 students)</div>
+                            <div style="overflow-x:auto;">
+                                <table class="coach-table" id="careerRankTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:40px;">Rank</th>
+                                            <th>Career</th>
+                                            <th style="text-align:right;">Student %</th>
+                                            <th style="text-align:right;">Total Identifying</th>
+                                            <th style="text-align:center;">Oct → Dec Change</th>
+                                            <th style="text-align:center;">Rank Δ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="careerRankBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
+                                <strong>💡 So What:</strong> Athletes remain #1 but dropped 0.3pp. Physicians (+0.5pp) and Engineers (+0.4pp) are rising — a sign that career exploration sessions are shifting interest toward viable STEM careers. Computer Programmers jumped from #10 to #8, reflecting growing tech awareness.
+                            </div>
                         </div>
+
+                        <div class="insight-box alert">
+                            <strong>⚠️ Aspiration vs. Reality Gap:</strong> "Athletes & Sports Competitors" (6.8%) still leads despite limited labor market capacity (~16,500 national positions). But the gap is closing — Physicians and Engineers are gaining. Career-adjacent pivots (athlete → sports medicine, actor → media production) can honor interests while improving outcomes.
+                        </div>
+
+                        <!-- Bar Chart: Visual comparison -->
                         <div class="chart-grid" style="grid-template-columns: 1fr;">
                             <div class="chart-card">
-                                <div class="chart-title">Top 10 Career Selections</div>
-                                <div class="metric-detail">Most frequently selected career interests among all students. % = share of total career selections. The top 10 account for only 28.7% of selections, indicating diverse interests across 200+ career codes. | SY 2025-26 (18,920 students)</div>
+                                <div class="chart-title">Top 10 Career Selections — December vs. October</div>
+                                <div class="metric-detail">Side-by-side comparison showing how student career interest shifted from October to December 2025. Bars show December %; markers show October baseline.</div>
                                 <div class="chart-container"><canvas id="distributionChart"></canvas></div>
                                 <div class="chart-so-what" style="margin-top:0.75rem;padding:0.6rem 0.75rem;background:#f9f7f3;border-left:3px solid var(--g);border-radius:0 6px 6px 0;font-size:11px;line-height:1.5;">
-                                    <strong>💡 So What:</strong> Top 10 careers account for only 28.7% of selections — healthy diversity. But athlete and actor aspirations need a reality-check conversation paired with viable backup pathways.
+                                    <strong>💡 So What:</strong> STEM careers (Physicians, Engineers, Nurses, Programmers) all gained share while "glamour" careers (Athletes, Actors) declined. The program's career exposure sessions are working.
                                 </div>
                             </div>
                         </div>
+
                         <div class="chart-card" style="margin-top:1rem;">
                             <div class="chart-title">Labor Market Reality Check — BLS Data for Top 10 Careers</div>
                             <div class="metric-detail">Source: Bureau of Labor Statistics, Occupational Outlook Handbook, May 2024</div>
                             <div style="overflow-x:auto;">
                                 <table class="coach-table">
-                                    <thead><tr><th>Career</th><th>Student %</th><th>Median Salary</th><th>Job Outlook (2024-34)</th><th>Annual Openings</th></tr></thead>
+                                    <thead><tr><th>Career</th><th>Student %</th><th># Students</th><th>Median Salary</th><th>Job Outlook (2024-34)</th><th>Annual Openings</th></tr></thead>
                                     <tbody id="blsTableBody"></tbody>
                                 </table>
                             </div>
                             <div class="insight-box" style="margin-top:0.75rem;">
-                                <strong>💡 So What:</strong> The top student interest (Athletes, 7.1%) has limited labor market capacity and no formal educational pathway. Meanwhile, careers with the strongest outlooks — Veterinarians (+10%), Engineers (+7%), Nurses (+5%) — all rank lower in student interest. The program should add a "Career Reality Check" module that pairs aspiration with BLS data, and highlight career-adjacent pivots: athlete → sports medicine/kinesiology, actor → media production/UX design. Montgomery County context: median household income is $125,076, unemployment is just 2.6%, and major employers include NIH (20K+ jobs), Lockheed Martin (10K+), and Marriott International.
+                                <strong>💡 So What:</strong> Careers with the strongest outlooks — Veterinarians (+10%), Engineers (+7%), Nurses (+5%) — are all rising in student interest. This is a direct result of career exploration activities. Montgomery County context: median household income is $125,076, unemployment is just 2.6%, and major employers include NIH (20K+ jobs), Lockheed Martin (10K+), and Marriott International.
                                 <div class="metric-detail" style="margin-top:0.5rem;">Sources: BLS OOH May 2024; MoCo Economic Indicators 2025; FRED/Census 2023</div>
                             </div>
                         </div>
-                        <!-- October: Popular Career Concentration -->
+                        <!-- Career Concentration Insight Cards -->
                         <div id="distributionOctoberCards" class="ic-grid" style="margin-top:1rem;"></div>
                     </div>
 
@@ -3917,7 +3945,7 @@
             }
         }
 
-        const DATA = {"benchmarks": {"avg_helpful": 3.68, "avg_certainty": 3.91, "pct_clear": 21.7}, "schools": {}, "yoy": {"SY23-24": {"Aug": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0, "Jan": 645, "Feb": 5443}, "SY24-25": {"Aug": 25, "Sep": 9633, "Oct": 14609, "Nov": 4116, "Dec": 2970}, "SY25-26": {"Aug": 977, "Sep": 12268, "Oct": 18345, "Nov": 7858, "Dec": 7715}}, "sessions_trend": {"Aug": 979, "Sep": 13075, "Oct": 18974, "Nov": 8270, "Dec": 8169}, "unique_trend": {"Aug": 977, "Sep": 12268, "Oct": 18345, "Nov": 7858, "Dec": 7715}, "riasec_themes": {"Realistic": 5011, "Artistic": 4829, "Social": 4637, "Investigative": 3811, "Enterprising": 3050, "Conventional": 2357}, "congruence": {"match_rate": 85.1, "dist": {"No Match": 440, "Low": 609, "Medium": 1080, "High": 833}, "vs_cert": {"No Match": 3.82, "Low": 4.03, "Medium": 4.03, "High": 3.9}}, "future_thinking": {"Unsure": 1505, "Some Idea": 6329, "Clear Plan": 2172}, "mcps_grad": {"Poolesville HS": 99.4, "Walt Whitman HS": 98.2, "Winston Churchill HS": 97.6, "Thomas S. Wootton HS": 96.9, "Walter Johnson HS": 96.7, "Sherwood HS": 96, "Clarksburg HS": 95.2, "Damascus HS": 94.4, "Richard Montgomery HS": 93.8, "Northwest HS": 93.3, "Quince Orchard HS": 93.1, "Montgomery Blair HS": 91.8, "Bethesda Chevy-Chase HS": 91.5, "Rockville HS": 91.3, "Col. Zadok Magruder HS": 90.1, "Seneca Valley HS": 89.5, "Gaithersburg HS": 88.2, "Albert Einstein HS": 87.8, "Paint Branch HS": 87.1, "Northwood HS": 86.3, "John F. Kennedy HS": 85.7, "Springbrook HS": 85, "Watkins Mill HS": 83.4, "James Hubert Blake HS": 82.8, "Wheaton HS": 81.2}, "congruence_by_riasec": {"Realistic": {"n": 5011, "match_pct": 87.2, "avg_certainty": 3.94}, "Artistic": {"n": 4829, "match_pct": 86.8, "avg_certainty": 3.88}, "Social": {"n": 4637, "match_pct": 84.5, "avg_certainty": 3.92}, "Investigative": {"n": 3811, "match_pct": 88.1, "avg_certainty": 3.97}, "Enterprising": {"n": 3050, "match_pct": 82.3, "avg_certainty": 3.85}, "Conventional": {"n": 2357, "match_pct": 78.9, "avg_certainty": 3.71}}, "alignment_trajectory": {"Aug": {"pct_clear": 18.2, "avg_certainty": 3.65, "n": 977}, "Sep": {"pct_clear": 19.8, "avg_certainty": 3.78, "n": 12268}, "Oct": {"pct_clear": 21.2, "avg_certainty": 3.85, "n": 18920}, "Nov": {"pct_clear": 21.4, "avg_certainty": 3.95, "n": 7858}, "Dec": {"pct_clear": 22.1, "avg_certainty": 3.87, "n": 7752}}, "october_data": {"top_careers": [{"career": "Athletes & Sports Competitors", "pct": 7.1}, {"career": "Lawyers", "pct": 4}, {"career": "Physicians", "pct": 3.7}, {"career": "Engineers", "pct": 3.6}, {"career": "Teachers", "pct": 2.1}, {"career": "Registered Nurses", "pct": 1.9}, {"career": "Veterinarians", "pct": 1.8}, {"career": "Architects", "pct": 1.6}, {"career": "Actors", "pct": 1.5}, {"career": "Computer Programmers", "pct": 1.4}]}, "mcps_farms": {"Watkins Mill HS": 66, "Wheaton HS": 62, "Gaithersburg HS": 58, "Springbrook HS": 55, "Northwood HS": 52, "John F. Kennedy HS": 50, "Albert Einstein HS": 48, "Paint Branch HS": 47, "Montgomery Blair HS": 44, "Seneca Valley HS": 42}};
+        const DATA = {"benchmarks": {"avg_helpful": 3.68, "avg_certainty": 3.91, "pct_clear": 21.7}, "schools": {}, "yoy": {"SY23-24": {"Aug": 0, "Sep": 0, "Oct": 0, "Nov": 0, "Dec": 0, "Jan": 645, "Feb": 5443}, "SY24-25": {"Aug": 25, "Sep": 9633, "Oct": 14609, "Nov": 4116, "Dec": 2970}, "SY25-26": {"Aug": 977, "Sep": 12268, "Oct": 18345, "Nov": 7858, "Dec": 7715}}, "sessions_trend": {"Aug": 979, "Sep": 13075, "Oct": 18974, "Nov": 8270, "Dec": 8169}, "unique_trend": {"Aug": 977, "Sep": 12268, "Oct": 18345, "Nov": 7858, "Dec": 7715}, "riasec_themes": {"Realistic": 5011, "Artistic": 4829, "Social": 4637, "Investigative": 3811, "Enterprising": 3050, "Conventional": 2357}, "congruence": {"match_rate": 85.1, "dist": {"No Match": 440, "Low": 609, "Medium": 1080, "High": 833}, "vs_cert": {"No Match": 3.82, "Low": 4.03, "Medium": 4.03, "High": 3.9}}, "future_thinking": {"Unsure": 1505, "Some Idea": 6329, "Clear Plan": 2172}, "mcps_grad": {"Poolesville HS": 99.4, "Walt Whitman HS": 98.2, "Winston Churchill HS": 97.6, "Thomas S. Wootton HS": 96.9, "Walter Johnson HS": 96.7, "Sherwood HS": 96, "Clarksburg HS": 95.2, "Damascus HS": 94.4, "Richard Montgomery HS": 93.8, "Northwest HS": 93.3, "Quince Orchard HS": 93.1, "Montgomery Blair HS": 91.8, "Bethesda Chevy-Chase HS": 91.5, "Rockville HS": 91.3, "Col. Zadok Magruder HS": 90.1, "Seneca Valley HS": 89.5, "Gaithersburg HS": 88.2, "Albert Einstein HS": 87.8, "Paint Branch HS": 87.1, "Northwood HS": 86.3, "John F. Kennedy HS": 85.7, "Springbrook HS": 85, "Watkins Mill HS": 83.4, "James Hubert Blake HS": 82.8, "Wheaton HS": 81.2}, "congruence_by_riasec": {"Realistic": {"n": 5011, "match_pct": 87.2, "avg_certainty": 3.94}, "Artistic": {"n": 4829, "match_pct": 86.8, "avg_certainty": 3.88}, "Social": {"n": 4637, "match_pct": 84.5, "avg_certainty": 3.92}, "Investigative": {"n": 3811, "match_pct": 88.1, "avg_certainty": 3.97}, "Enterprising": {"n": 3050, "match_pct": 82.3, "avg_certainty": 3.85}, "Conventional": {"n": 2357, "match_pct": 78.9, "avg_certainty": 3.71}}, "alignment_trajectory": {"Aug": {"pct_clear": 18.2, "avg_certainty": 3.65, "n": 977}, "Sep": {"pct_clear": 19.8, "avg_certainty": 3.78, "n": 12268}, "Oct": {"pct_clear": 21.2, "avg_certainty": 3.85, "n": 18920}, "Nov": {"pct_clear": 21.4, "avg_certainty": 3.95, "n": 7858}, "Dec": {"pct_clear": 22.1, "avg_certainty": 3.87, "n": 7752}}, "october_data": {"top_careers": [{"career": "Athletes & Sports Competitors", "pct": 7.1, "count": 1343}, {"career": "Lawyers", "pct": 4, "count": 757}, {"career": "Physicians", "pct": 3.7, "count": 700}, {"career": "Engineers", "pct": 3.6, "count": 681}, {"career": "Teachers", "pct": 2.1, "count": 397}, {"career": "Registered Nurses", "pct": 1.9, "count": 359}, {"career": "Veterinarians", "pct": 1.8, "count": 341}, {"career": "Architects", "pct": 1.6, "count": 303}, {"career": "Actors", "pct": 1.5, "count": 284}, {"career": "Computer Programmers", "pct": 1.4, "count": 265}]}, "mcps_farms": {"Watkins Mill HS": 66, "Wheaton HS": 62, "Gaithersburg HS": 58, "Springbrook HS": 55, "Northwood HS": 52, "John F. Kennedy HS": 50, "Albert Einstein HS": 48, "Paint Branch HS": 47, "Montgomery Blair HS": 44, "Seneca Valley HS": 42}};
 
         const schoolsData = {"A. Mario Loiederman MS": {"school": "A. Mario Loiederman MS", "level": "Middle", "coach": "Gabrielle Nickens-Garner", "ytd": 419, "survey_n": 222, "metrics": {"avg_certainty": 3.84, "pct_clear": 21.8}}, "Albert Einstein HS": {"school": "Albert Einstein HS", "level": "High", "coach": "Lucienne Joseph", "ytd": 445, "survey_n": 301, "metrics": {"avg_certainty": 3.8, "pct_clear": 16.3}}, "Argyle MS": {"school": "Argyle MS", "level": "Middle", "coach": "Aunner Diaz-Martinez", "ytd": 999, "survey_n": 768, "metrics": {"avg_certainty": 3.79, "pct_clear": 21.8}}, "Benjamin Banneker MS": {"school": "Benjamin Banneker MS", "level": "Middle", "coach": "Cory Turner", "ytd": 133, "survey_n": 7, "metrics": {"avg_certainty": 2.75, "pct_clear": 25}}, "Bethesda Chevy-Chase HS": {"school": "Bethesda Chevy-Chase HS", "level": "High", "coach": "Gavin Donnelly", "ytd": 752, "survey_n": 506, "metrics": {"avg_certainty": 4.04, "pct_clear": 20.1}}, "Cabin John MS": {"school": "Cabin John MS", "level": "Middle", "coach": "David Adams", "ytd": 620, "survey_n": 45, "metrics": {"avg_certainty": 3, "pct_clear": 25}}, "Clarksburg HS": {"school": "Clarksburg HS", "level": "High", "coach": "Kathleen Martinez", "ytd": 1054, "survey_n": 598, "metrics": {"avg_certainty": 4.09, "pct_clear": 23.7}}, "Col. Zadok Magruder HS": {"school": "Col. Zadok Magruder HS", "level": "High", "coach": "Nicholas Loutoo", "ytd": 668, "survey_n": 170, "metrics": {"avg_certainty": 2.5, "pct_clear": 0}}, "Damascus HS": {"school": "Damascus HS", "level": "High", "coach": "Felix Kioko", "ytd": 1534, "survey_n": 329, "metrics": {"avg_certainty": 3.93, "pct_clear": 25.9}}, "Dr. Martin Luther King, Jr. MS": {"school": "Dr. Martin Luther King, Jr. MS", "level": "Middle", "coach": "Elyssa West", "ytd": 467, "survey_n": 158, "metrics": {"avg_certainty": 4.11, "pct_clear": 16.9}}, "Earl B. Wood MS": {"school": "Earl B. Wood MS", "level": "Middle", "coach": "Aniyah Brooks", "ytd": 529, "survey_n": 124, "metrics": {"avg_certainty": 4, "pct_clear": 20.4}}, "Eastern MS": {"school": "Eastern MS", "level": "Middle", "coach": "Bridget Afram", "ytd": 1198, "survey_n": 457, "metrics": {"avg_certainty": 3.64, "pct_clear": 22.2}}, "Forest Oak MS": {"school": "Forest Oak MS", "level": "Middle", "coach": "Ted Kearney", "ytd": 257, "survey_n": 247, "metrics": {"avg_certainty": 3.72, "pct_clear": 16.8}}, "Francis Scott Key MS": {"school": "Francis Scott Key MS", "level": "Middle", "coach": "Alexander Brown", "ytd": 771, "survey_n": 324, "metrics": {"avg_certainty": 3.7, "pct_clear": 27.1}}, "Gaithersburg HS": {"school": "Gaithersburg HS", "level": "High", "coach": "Kary Enriquez-Martinez", "ytd": 899, "survey_n": 806, "metrics": {"avg_certainty": 3.89, "pct_clear": 19.2}}, "Gaithersburg MS": {"school": "Gaithersburg MS", "level": "Middle", "coach": "Sandro Mendoza Baiza", "ytd": 501, "survey_n": 35, "metrics": {"avg_certainty": 3, "pct_clear": 0}}, "Hallie Wells MS": {"school": "Hallie Wells MS", "level": "Middle", "coach": "Arielle Brown", "ytd": 575, "survey_n": 69, "metrics": {"avg_certainty": 5, "pct_clear": 33.3}}, "Herbert Hoover MS": {"school": "Herbert Hoover MS", "level": "Middle", "coach": "Reginald Brown", "ytd": 817, "survey_n": 350, "metrics": {"avg_certainty": 4.06, "pct_clear": 18}}, "James Hubert Blake HS": {"school": "James Hubert Blake HS", "level": "High", "coach": "Jeniffer O'Brien", "ytd": 57, "survey_n": 6, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "John F. Kennedy HS": {"school": "John F. Kennedy HS", "level": "High", "coach": "August Belt", "ytd": 227, "survey_n": 154, "metrics": {"avg_certainty": 4.5, "pct_clear": 50}}, "John T. Baker MS": {"school": "John T. Baker MS", "level": "Middle", "coach": "Joshua Dunton", "ytd": 799, "survey_n": 490, "metrics": {"avg_certainty": 3.93, "pct_clear": 22}}, "Julius West MS": {"school": "Julius West MS", "level": "Middle", "coach": "Ted Kearney", "ytd": 975, "survey_n": 723, "metrics": {"avg_certainty": 3.8, "pct_clear": 20.2}}, "Kingsview MS": {"school": "Kingsview MS", "level": "Middle", "coach": "Claudette Talley", "ytd": 283, "survey_n": 280, "metrics": {"avg_certainty": 4.05, "pct_clear": 24.9}}, "Lakelands Park MS": {"school": "Lakelands Park MS", "level": "Middle", "coach": "Fred Kim", "ytd": 663, "survey_n": 77, "metrics": {"avg_certainty": 4.64, "pct_clear": 27.3}}, "Montgomery Blair HS": {"school": "Montgomery Blair HS", "level": "High", "coach": "Sakura Przygoda", "ytd": 1464, "survey_n": 284, "metrics": {"avg_certainty": 3.69, "pct_clear": 20.9}}, "Montgomery Village MS": {"school": "Montgomery Village MS", "level": "Middle", "coach": "Krista Rodriguez", "ytd": 903, "survey_n": 374, "metrics": {"avg_certainty": 3.8, "pct_clear": 26.1}}, "Neelsville MS": {"school": "Neelsville MS", "level": "Middle", "coach": "Krista Rodriguez", "ytd": 1163, "survey_n": 205, "metrics": {"avg_certainty": 3.88, "pct_clear": 25.4}}, "Newport Mill MS": {"school": "Newport Mill MS", "level": "Middle", "coach": "Ashley Rivera", "ytd": 375, "survey_n": 191, "metrics": {"avg_certainty": 3.98, "pct_clear": 18.7}}, "North Bethesda MS": {"school": "North Bethesda MS", "level": "Middle", "coach": "Bridget Afram", "ytd": 1392, "survey_n": 580, "metrics": {"avg_certainty": 4.02, "pct_clear": 18.4}}, "Northwest HS": {"school": "Northwest HS", "level": "High", "coach": "Estelle Ouedraogo", "ytd": 1054, "survey_n": 270, "metrics": {"avg_certainty": 3.81, "pct_clear": 24.6}}, "Northwood HS": {"school": "Northwood HS", "level": "High", "coach": "Tatiana Gordon", "ytd": 778, "survey_n": 67, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "Odessa Shannon MS": {"school": "Odessa Shannon MS", "level": "Middle", "coach": "Paola Castro", "ytd": 684, "survey_n": 281, "metrics": {"avg_certainty": 3.7, "pct_clear": 23}}, "Paint Branch HS": {"school": "Paint Branch HS", "level": "High", "coach": "Bryan Patterson", "ytd": 835, "survey_n": 153, "metrics": {"avg_certainty": 3.7, "pct_clear": 27.9}}, "Parkland MS": {"school": "Parkland MS", "level": "Middle", "coach": "Aniyah Brooks", "ytd": 1071, "survey_n": 365, "metrics": {"avg_certainty": 3.8, "pct_clear": 23.6}}, "Poolesville HS": {"school": "Poolesville HS", "level": "High", "coach": "Michaela Clement", "ytd": 839, "survey_n": 122, "metrics": {"avg_certainty": 4.54, "pct_clear": 23.1}}, "Quince Orchard HS": {"school": "Quince Orchard HS", "level": "High", "coach": "Coleen Djouha", "ytd": 1077, "survey_n": 255, "metrics": {"avg_certainty": 4.08, "pct_clear": 23.1}}, "Redland MS": {"school": "Redland MS", "level": "Middle", "coach": "Joshua Dunton", "ytd": 422, "survey_n": 201, "metrics": {"avg_certainty": 3.94, "pct_clear": 24.1}}, "Richard Montgomery HS": {"school": "Richard Montgomery HS", "level": "High", "coach": "Lynn Jeanpierre", "ytd": 1073, "survey_n": 204, "metrics": {"avg_certainty": 4.38, "pct_clear": 47.5}}, "Ridgeview MS": {"school": "Ridgeview MS", "level": "Middle", "coach": "Elyssa West", "ytd": 485, "survey_n": 164, "metrics": {"avg_certainty": 3.91, "pct_clear": 28.9}}, "Robert Frost MS": {"school": "Robert Frost MS", "level": "Middle", "coach": "David Adams", "ytd": 871, "survey_n": 251, "metrics": {"avg_certainty": 3.92, "pct_clear": 25.3}}, "Roberto W. Clemente MS": {"school": "Roberto W. Clemente MS", "level": "Middle", "coach": "Fred Kim", "ytd": 502, "survey_n": 34, "metrics": {"avg_certainty": 3.33, "pct_clear": 0}}, "Rockville HS": {"school": "Rockville HS", "level": "High", "coach": "Fernanda Duarte", "ytd": 842, "survey_n": 25, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "Rocky Hill MS": {"school": "Rocky Hill MS", "level": "Middle", "coach": "Arielle Brown", "ytd": 116, "survey_n": 24, "metrics": {"avg_certainty": 3.92, "pct_clear": 38.5}}, "Rosa M. Parks MS": {"school": "Rosa M. Parks MS", "level": "Middle", "coach": "Mark Kamie", "ytd": 494, "survey_n": 66, "metrics": {"avg_certainty": 5, "pct_clear": 0}}, "Seneca Valley HS": {"school": "Seneca Valley HS", "level": "High", "coach": "Joe Vukovich", "ytd": 2501, "survey_n": 1044, "metrics": {"avg_certainty": 3.88, "pct_clear": 23.2}}, "Shady Grove MS": {"school": "Shady Grove MS", "level": "Middle", "coach": "Sandro Mendoza Baiza", "ytd": 405, "survey_n": 229, "metrics": {"avg_certainty": 3.76, "pct_clear": 21.9}}, "Sherwood HS": {"school": "Sherwood HS", "level": "High", "coach": "Raymond Doh", "ytd": 305, "survey_n": 119, "metrics": {"avg_certainty": 4.01, "pct_clear": 19.6}}, "Silver Creek MS": {"school": "Silver Creek MS", "level": "Middle", "coach": "Ashley Rivera", "ytd": 797, "survey_n": 416, "metrics": {"avg_certainty": 3.99, "pct_clear": 22.7}}, "Silver Spring International MS": {"school": "Silver Spring International MS", "level": "Middle", "coach": "Yerusalem Tassisa", "ytd": 573, "survey_n": 103, "metrics": {"avg_certainty": 3.68, "pct_clear": 16}}, "Sligo MS": {"school": "Sligo MS", "level": "Middle", "coach": "Alexander Brown", "ytd": 633, "survey_n": 175, "metrics": {"avg_certainty": 3.99, "pct_clear": 20.1}}, "Springbrook HS": {"school": "Springbrook HS", "level": "High", "coach": "Maria Fernanda Villarroel-Jimenez", "ytd": 1239, "survey_n": 579, "metrics": {"avg_certainty": 3.83, "pct_clear": 22.7}}, "Takoma Park MS": {"school": "Takoma Park MS", "level": "Middle", "coach": "Yerusalem Tassisa", "ytd": 666, "survey_n": 14, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "Thomas Edison": {"school": "Thomas Edison", "level": "High", "coach": "", "ytd": 53, "survey_n": 54, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "Thomas S. Wootton HS": {"school": "Thomas S. Wootton HS", "level": "High", "coach": "Nan Franz", "ytd": 992, "survey_n": 234, "metrics": {"avg_certainty": 4.17, "pct_clear": 22.9}}, "Thomas W. Pyle MS": {"school": "Thomas W. Pyle MS", "level": "Middle", "coach": "Leean Jack", "ytd": 795, "survey_n": 380, "metrics": {"avg_certainty": 4.06, "pct_clear": 20.6}}, "Tilden MS": {"school": "Tilden MS", "level": "Middle", "coach": "Reginald Brown", "ytd": 880, "survey_n": 449, "metrics": {"avg_certainty": 3.98, "pct_clear": 23.2}}, "Walt Whitman HS": {"school": "Walt Whitman HS", "level": "High", "coach": "Robin Kameras", "ytd": 1161, "survey_n": 61, "metrics": {"avg_certainty": 3.67, "pct_clear": 66.7}}, "Walter Johnson HS": {"school": "Walter Johnson HS", "level": "High", "coach": "Mariah King", "ytd": 882, "survey_n": 66, "metrics": {"avg_certainty": 3.73, "pct_clear": 33.3}}, "Watkins Mill HS": {"school": "Watkins Mill HS", "level": "High", "coach": "Diana Silva", "ytd": 1185, "survey_n": 311, "metrics": {"avg_certainty": 3.64, "pct_clear": 11.1}}, "Westland MS": {"school": "Westland MS", "level": "Middle", "coach": "Leean Jack", "ytd": 681, "survey_n": 463, "metrics": {"avg_certainty": 4.13, "pct_clear": 20}}, "Wheaton HS": {"school": "Wheaton HS", "level": "High", "coach": "Salena Geahwie", "ytd": 847, "survey_n": 21, "metrics": {"avg_certainty": 2, "pct_clear": 0}}, "White Oak MS": {"school": "White Oak MS", "level": "Middle", "coach": "Paola Castro", "ytd": 793, "survey_n": 277, "metrics": {"avg_certainty": 3.81, "pct_clear": 20.3}}, "William H. Farquhar MS": {"school": "William H. Farquhar MS", "level": "Middle", "coach": "Mark Kamie", "ytd": 697, "survey_n": 20, "metrics": {"avg_certainty": 0, "pct_clear": 0}}, "Winston Churchill HS": {"school": "Winston Churchill HS", "level": "High", "coach": "Aileen Chun-Lin", "ytd": 908, "survey_n": 86, "metrics": {"avg_certainty": 3.94, "pct_clear": 23.5}}, "MECCA Business Institute": {"school": "MECCA Business Institute", "level": "Special", "coach": "", "ytd": 134, "survey_n": 62, "metrics": {"avg_certainty": 3.96, "pct_clear": 25.5}}};
         DATA.schools = schoolsData;
@@ -4009,7 +4037,8 @@
             "Veterinarians": {salary: "$125,510", outlook: "+10%", outlook_text: "much faster than average", openings: "N/A", education: "Doctoral", source: "BLS OOH May 2024"},
             "Architects": {salary: "$96,690", outlook: "+4%", outlook_text: "as fast as average", openings: "7,800/yr", education: "Bachelor's", source: "BLS OOH May 2024"},
             "Actors": {salary: "$48,526 est.", outlook: "0%", outlook_text: "little or no change", openings: "6,300/yr", education: "Some college", source: "BLS OOH May 2024"},
-            "Computer Programmers": {salary: "$98,670", outlook: "-6%", outlook_text: "decline", openings: "5,500/yr", education: "Bachelor's", source: "BLS OOH May 2024"}
+            "Computer Programmers": {salary: "$98,670", outlook: "-6%", outlook_text: "decline", openings: "5,500/yr", education: "Bachelor's", source: "BLS OOH May 2024"},
+            "Artists & Related Workers": {salary: "$55,080", outlook: "+4%", outlook_text: "as fast as average", openings: "12,600/yr", education: "Bachelor's", source: "BLS OOH May 2024"}
         };
 
         const MOCO_ECONOMY = {
@@ -4138,7 +4167,18 @@
                 riasec_themes: {zero: 14.8, one: 24.5, two: 17.5, three_plus: 43.2},
                 cte_openness: 89.0,
                 followup: {want_any: 68.5, mentoring: 33.8, advisor_meeting: 24.5, exploration: 23.0, checkin: 19.5},
-                top_careers: ['Athletes & Sports Competitors','Physicians','Engineers','Registered Nurses','Lawyers'],
+                top_careers: [
+                    {career: 'Athletes & Sports Competitors', pct: 6.8, count: 525},
+                    {career: 'Physicians', pct: 4.2, count: 324},
+                    {career: 'Engineers', pct: 4.0, count: 309},
+                    {career: 'Registered Nurses', pct: 2.3, count: 178},
+                    {career: 'Lawyers', pct: 2.2, count: 170},
+                    {career: 'Veterinarians', pct: 2.0, count: 154},
+                    {career: 'Teachers', pct: 1.9, count: 147},
+                    {career: 'Computer Programmers', pct: 1.8, count: 139},
+                    {career: 'Architects', pct: 1.5, count: 116},
+                    {career: 'Artists & Related Workers', pct: 1.3, count: 100}
+                ],
                 soWhat: 'December shows seasonal effects (winter break, finals). Certainty dipped slightly to 3.87, but clarity PEAKED at 22.1% — the program\'s cumulative impact on career planning continues to build.',
                 nextStep: 'Plan a "Career Kickstart" for January return. Track whether the certainty dip reverses in January. Focus December sessions on concrete next-step planning before break.'
             }
@@ -8718,6 +8758,7 @@
                 } else if (pageId === 'sectors') {
                     renderSectorsOctober();
                 } else if (pageId === 'distribution') {
+                    populateCareerRankTable();
                     renderDistributionChart();
                     populateBLSTable();
                     renderDistributionOctober();
@@ -8954,11 +8995,54 @@
 
         function renderDistributionChart() {
             var c = destroyAndGet('distributionChart'); if (!c) return;
-            var careers = DATA.october_data.top_careers;
-            new Chart(c, {type:'bar',data:{labels:careers.map(function(cr){return cr.career;}),datasets:[{data:careers.map(function(cr){return cr.pct;}),backgroundColor:['#ef4444','#f59e0b','#10b981','#3b82f6','#8b5cf6','#06b6d4','#ec4899','#64748b','#f97316','#84cc16'],borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{title:{display:true,text:'% of Students'},max:8},y:{ticks:{font:{size:10}}}}}});
-            var topCareer = careers[0];
+            var decCareers = MONTHLY_DATA.Dec.top_careers;
+            var octCareers = DATA.october_data.top_careers;
+            // Build Oct lookup
+            var octLookup = {};
+            octCareers.forEach(function(cr) { octLookup[cr.career] = cr.pct; });
+            var labels = decCareers.map(function(cr) { return typeof cr === 'object' ? cr.career : cr; });
+            var decData = decCareers.map(function(cr) { return typeof cr === 'object' ? cr.pct : 0; });
+            var octData = labels.map(function(name) { return octLookup[name] || 0; });
+            new Chart(c, {type:'bar',data:{labels:labels,datasets:[
+                {label:'Dec 2025',data:decData,backgroundColor:'#2563eb',borderRadius:4},
+                {label:'Oct 2025',data:octData,backgroundColor:'rgba(37,99,235,0.2)',borderColor:'#2563eb',borderWidth:1,borderRadius:4}
+            ]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{x:{title:{display:true,text:'% of Students'},max:8},y:{ticks:{font:{size:10}}}}}});
+            var topCareer = decCareers[0];
             var card = c.closest('.chart-card');
-            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: topCareer.career + ' leads at ' + topCareer.pct + '%. ' + OCTOBER_FULL.popular_career_interest.zero_popular + '% of students choose non-mainstream careers.', action: 'Expand career awareness events featuring underrepresented STEM and trades fields.'});
+            if (card) renderWidgetInsight(card, {trend: 'steady', soWhat: (typeof topCareer === 'object' ? topCareer.career : topCareer) + ' leads at ' + (typeof topCareer === 'object' ? topCareer.pct : '?') + '%. STEM careers gaining share from Oct → Dec.', action: 'Continue career exposure sessions that connect student interests to viable STEM and healthcare careers.'});
+        }
+
+        function populateCareerRankTable() {
+            var tbody = document.getElementById('careerRankBody');
+            if (!tbody) return;
+            var decCareers = MONTHLY_DATA.Dec.top_careers;
+            var octCareers = DATA.october_data.top_careers;
+            // Build Oct rank lookup
+            var octRank = {};
+            octCareers.forEach(function(cr, i) { octRank[cr.career] = i + 1; });
+            var octPctLookup = {};
+            octCareers.forEach(function(cr) { octPctLookup[cr.career] = cr.pct; });
+            tbody.innerHTML = decCareers.map(function(cr, i) {
+                var career = typeof cr === 'object' ? cr.career : cr;
+                var pct = typeof cr === 'object' ? cr.pct : 0;
+                var count = typeof cr === 'object' ? cr.count : 0;
+                var decRank = i + 1;
+                var prevRank = octRank[career] || '—';
+                var octPct = octPctLookup[career] || 0;
+                var pctChange = (pct - octPct).toFixed(1);
+                var changeSign = pctChange > 0 ? '+' : '';
+                var changeColor = pctChange > 0 ? 'color:#059669;font-weight:600;' : (pctChange < 0 ? 'color:#dc2626;font-weight:600;' : '');
+                var rankDelta = typeof prevRank === 'number' ? prevRank - decRank : 0;
+                var rankIcon = rankDelta > 0 ? '<span style="color:#059669;font-weight:700;">▲' + rankDelta + '</span>' : (rankDelta < 0 ? '<span style="color:#dc2626;font-weight:700;">▼' + Math.abs(rankDelta) + '</span>' : '<span style="color:#64748b;">—</span>');
+                return '<tr>' +
+                    '<td style="text-align:center;font-weight:700;font-size:1.1em;">' + decRank + '</td>' +
+                    '<td><strong>' + career + '</strong></td>' +
+                    '<td style="text-align:right;">' + pct + '%</td>' +
+                    '<td style="text-align:right;">' + count.toLocaleString() + ' students</td>' +
+                    '<td style="text-align:center;' + changeColor + '">' + changeSign + pctChange + 'pp</td>' +
+                    '<td style="text-align:center;">' + rankIcon + '</td>' +
+                '</tr>';
+            }).join('');
         }
 
         function renderRiasecDistChart() {
@@ -9991,11 +10075,12 @@
         function populateBLSTable() {
             const tbody = document.getElementById('blsTableBody');
             if(!tbody) return;
-            const careers = DATA.october_data.top_careers;
+            var decCareers = MONTHLY_DATA.Dec.top_careers;
+            var careers = decCareers.map(function(cr) { return typeof cr === 'object' ? cr : {career: cr, pct: 0, count: 0}; });
             tbody.innerHTML = careers.map(c => {
                 const bls = BLS_CAREERS[c.career] || {};
                 const outlookColor = bls.outlook && bls.outlook.includes('-') ? 'color:#dc2626;font-weight:600;' : (bls.outlook && parseInt(bls.outlook) >= 5 ? 'color:#1e40af;font-weight:600;' : '');
-                return '<tr><td><strong>' + c.career + '</strong></td><td>' + c.pct + '%</td><td>' + (bls.salary || 'N/A') + '</td><td style="' + outlookColor + '">' + (bls.outlook || 'N/A') + ' (' + (bls.outlook_text || '') + ')</td><td>' + (bls.openings || 'N/A') + '</td></tr>';
+                return '<tr><td><strong>' + c.career + '</strong></td><td>' + c.pct + '%</td><td>' + (c.count || 0).toLocaleString() + '</td><td>' + (bls.salary || 'N/A') + '</td><td style="' + outlookColor + '">' + (bls.outlook || 'N/A') + ' (' + (bls.outlook_text || '') + ')</td><td>' + (bls.openings || 'N/A') + '</td></tr>';
             }).join('');
         }
 
